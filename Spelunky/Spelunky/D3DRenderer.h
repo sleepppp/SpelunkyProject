@@ -25,9 +25,10 @@ private:
 	ID3D11DepthStencilView* mD3DDepthStencilView;
 	ID3D11DepthStencilState* mDepthStencilDisableState;
 	ID3D11Texture2D* mD3DBackBufferTexture2D;
-public:
+private:
+	friend class SingletonBase<D3DRenderer>;
 	D3DRenderer();
-	~D3DRenderer();
+	virtual ~D3DRenderer();
 private:
 	void CreateDevice();
 	void CreateBackBuffer();
@@ -39,6 +40,7 @@ public:
 	ID3D11Device*const GetDevice()const { return mD3DDevice; }
 	ID3D11DeviceContext*const GetDeviceContext()const { return mD3DDeviceContext; }
 	IDXGISwapChain* const GetSwapChain()const { return mD3DSwapChain; }
+	ID3D11Texture2D* GetBackBufferTexture2d()const { return this->mD3DBackBufferTexture2D; }
 };
 #define _D3DRenderer D3DRenderer::Get()
 #define _D3DDevice D3DRenderer::Get()->GetDevice()

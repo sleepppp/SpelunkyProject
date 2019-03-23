@@ -28,6 +28,7 @@ void Program::Render()
 	D3DRenderer::Get()->BeginRender();
 	D2DRenderer::Get()->BeginRender();
 	{
+		_SceneManager->Render();
 		_TimeManager->Render();
 	}
 	D2DRenderer::Get()->EndRender();

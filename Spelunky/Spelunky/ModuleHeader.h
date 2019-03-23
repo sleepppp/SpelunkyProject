@@ -10,3 +10,9 @@
 #include "D2DRenderer.h"
 #include "Image.h"
 #include "ImageManager.h"
+#include "SceneManager.h"
+
+#include "SceneBase.h"
+#include "ObjectPool.h"
+#include "UpdatePool.h"
+#include "RenderPool.h"

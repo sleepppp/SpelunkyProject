@@ -1,5 +1,5 @@
 #pragma once
-class UpdatePool
+class UpdatePool final
 {
 	BlockAssign(UpdatePool)
 private:

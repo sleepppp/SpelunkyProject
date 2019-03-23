@@ -2,6 +2,7 @@
 #include "SingletonBase.h"
 class TimeManager : public SingletonBase<TimeManager>
 {
+	BlockAssign(TimeManager)
 private:
 	static float _lockFps;
 private:
@@ -22,19 +23,18 @@ private:
 private:
 	void Tick(float lockFPS = 60.0f);
 	void StartClock();
-public:
-	BlockAssign(TimeManager)
-public:
+private:
+	friend class SingletonBase<TimeManager>;
 	TimeManager();
-	~TimeManager();
-
+	virtual ~TimeManager();
+public:
 	void Start() { isStart = true; StartClock(); }
 	void Stop() { isStart = false; }
 	void Update();
 	void Render();
 
 	unsigned long GetFrameRate() const { return frameRate; }
-	float DeltaTime()const { return this->timeElapsed; }
+	inline float DeltaTime()const { return this->timeElapsed; }
 	float GetWorldTime()const { return this->worldTime; }
 	float GetTimeScale()const { return this->timeScale; }
 	void SetTimeScale(float scale) { this->timeScale = scale; }

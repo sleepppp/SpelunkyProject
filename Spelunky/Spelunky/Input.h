@@ -15,10 +15,11 @@ private:
 	std::bitset<KeyMax> mKeyPast;
 	std::bitset<KeyMax> mKeyCurrent;
 	Vector2 mMousePosition;
-public:
+private:
+	friend class SingletonBase<Input>;
 	Input();
 	virtual ~Input();
-
+public:
 	void Update();
 	//한번 눌렸다면
 	bool GetKeyDown(int key);

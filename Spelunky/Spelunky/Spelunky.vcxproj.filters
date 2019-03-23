@@ -79,9 +79,6 @@
     <Filter Include="System\Interface">
       <UniqueIdentifier>{8882a2fb-300f-408d-8984-8591f02a7726}</UniqueIdentifier>
     </Filter>
-    <Filter Include="System\Interface\MainInterface">
-      <UniqueIdentifier>{df378020-7519-47ad-80d0-494df2c2f315}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System\GameEngine\SceneManager">
       <UniqueIdentifier>{4a2c5da9-f0ea-4b3b-b005-f5dc69316cc8}</UniqueIdentifier>
     </Filter>
@@ -102,6 +99,12 @@
     </Filter>
     <Filter Include="System\GameEngine\RenderPool">
       <UniqueIdentifier>{19ad81b9-35ef-468b-83ad-a2b1392c7fe8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\GameEngine\SceneManager\LoadingScene">
+      <UniqueIdentifier>{72a1de35-2ef1-414e-9433-25a78e9745d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\GameEngine\LightSystem">
+      <UniqueIdentifier>{758828ee-c207-4d2a-9c7f-dd0c6bdf734d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -219,11 +222,14 @@
     <ClInclude Include="UpdatePool.h">
       <Filter>System\GameEngine\UpdatePool</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectInterface.h">
-      <Filter>System\Interface\MainInterface</Filter>
-    </ClInclude>
     <ClInclude Include="RenderPool.h">
       <Filter>System\GameEngine\RenderPool</Filter>
+    </ClInclude>
+    <ClInclude Include="LightingManager.h">
+      <Filter>System\GameEngine\LightSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectInterface.h">
+      <Filter>System\Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -320,11 +326,14 @@
     <ClCompile Include="UpdatePool.cpp">
       <Filter>System\GameEngine\UpdatePool</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectInterface.cpp">
-      <Filter>System\Interface\MainInterface</Filter>
-    </ClCompile>
     <ClCompile Include="RenderPool.cpp">
       <Filter>System\GameEngine\RenderPool</Filter>
+    </ClCompile>
+    <ClCompile Include="LightingManager.cpp">
+      <Filter>System\GameEngine\LightSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectInterface.cpp">
+      <Filter>System\Interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

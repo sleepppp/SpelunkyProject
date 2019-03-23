@@ -4,15 +4,14 @@ class IUpdate
 {
 	BlockAssign(IUpdate)
 private:
-	bool mUpdateActive; 
+	class GameObject* iUpdateObject; 
+private:
+	friend class GameObject;
+	explicit IUpdate(class GameObject* pObject);
+	virtual ~IUpdate();
 public:
-	IUpdate():mUpdateActive(true) {}
-	virtual ~IUpdate() {}
-
 	virtual void Update() = 0;
-
-	const bool& GetUpdateActive()const { return this->mUpdateActive; }
-	void SetUpdateActive(bool b) { this->mUpdateActive = b; }
+	inline class GameObject*const GetUpdateObject()const { return iUpdateObject; }
 };
 
 
@@ -20,15 +19,14 @@ class IRender
 {
 	BlockAssign(IRender)
 private:
-	bool mRenderActive; 
+	class GameObject* iRenderObject;
+private:
+	friend class GameObject;
+	explicit IRender(class GameObject* pObject);
+	virtual ~IRender();
 public:
-	IRender() :mRenderActive(true) {}
-	virtual ~IRender() {}
-
 	virtual void Render() = 0;
-
-	const bool& GetRenderActive()const { return this->mRenderActive; }
-	void SetRenderActive(bool b) { this->mRenderActive = b; }
+	inline class GameObject*const GetRenderObject()const { return iRenderObject; }
 };
 
 

@@ -24,10 +24,11 @@ private:
 	
 	ID2D1SolidColorBrush* mDefaultBrushList[((UINT)DefaultBrush::End)];
 	unordered_map<wstring, IDWriteTextFormat*> mFontList;
-public:
+private:
+	friend class SingletonBase<D2DRenderer>;
 	D2DRenderer();
 	virtual ~D2DRenderer();
-
+public:
 	void BeginRender();
 	void EndRender();
 private:

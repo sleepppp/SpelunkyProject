@@ -2,6 +2,7 @@
 #include "UpdatePool.h"
 
 #include "ObjectInterface.h"
+#include "GameObject.h"
 UpdatePool::UpdatePool()
 {
 }
@@ -15,7 +16,7 @@ void UpdatePool::Update()
 {
 	for (UINT i = 0; i < mUpdateList.size(); ++i)
 	{
-		if (mUpdateList[i]->GetUpdateActive())
+		if (mUpdateList[i]->GetUpdateObject()->GetActive())
 			mUpdateList[i]->Update();
 	}
 }

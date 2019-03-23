@@ -11,7 +11,6 @@ class SingletonBase
 {
 	static T* mInstance;
 protected:
-
 	SingletonBase() {};
 	virtual ~SingletonBase() {};
 public:

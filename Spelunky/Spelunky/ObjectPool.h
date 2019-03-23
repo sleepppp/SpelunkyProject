@@ -1,6 +1,6 @@
 #pragma once
 
-class ObjectPool
+class ObjectPool final
 {
 	BlockAssign(ObjectPool)
 private:
