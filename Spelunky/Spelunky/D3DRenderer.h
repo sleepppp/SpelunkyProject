@@ -1,5 +1,9 @@
 #pragma once
 #include "SingletonBase.h"
+/****************************************************************************
+## D2DRenderer ##
+@@ Author : ±Ç¼ø¿ì , Date : 2019.03.20
+*****************************************************************************/
 class D3DRenderer final : public SingletonBase<D3DRenderer>
 {
 	BlockAssign(D3DRenderer)

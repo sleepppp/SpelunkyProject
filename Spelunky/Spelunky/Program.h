@@ -1,6 +1,7 @@
 #pragma once
 class Program
 {
+	BlockAssign(Program)
 public:
 	Program();
 	~Program();

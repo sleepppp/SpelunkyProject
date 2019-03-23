@@ -20,8 +20,10 @@
 #include <time.h>
 #include <iostream>
 #include <assert.h>
+#include <functional>
 
 #include <vector>
+#include <stack>
 #include <map>
 #include <unordered_map>
 

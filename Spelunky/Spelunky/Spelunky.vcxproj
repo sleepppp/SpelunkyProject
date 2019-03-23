@@ -152,6 +152,7 @@
     <ClInclude Include="Buffer.h" />
     <ClInclude Include="D2DRenderer.h" />
     <ClInclude Include="D3DRenderer.h" />
+    <ClInclude Include="DataContext.h" />
     <ClInclude Include="DefineHeader.h" />
     <ClInclude Include="EnumStructHeader.h" />
     <ClInclude Include="Figure.h" />
@@ -163,11 +164,19 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="LibraryHeader.h" />
     <ClInclude Include="Line.h" />
+    <ClInclude Include="Loading.h" />
+    <ClInclude Include="ObjectInterface.h" />
     <ClInclude Include="Math.h" />
+    <ClInclude Include="MessageComponent.h" />
+    <ClInclude Include="MessageManager.h" />
     <ClInclude Include="ModuleHeader.h" />
+    <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="Program.h" />
+    <ClInclude Include="RenderPool.h" />
     <ClInclude Include="RenderTargetBuffer.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SceneBase.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderBuffer.h" />
     <ClInclude Include="Spelunky.h" />
@@ -177,6 +186,7 @@
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="SingletonBase.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="UpdatePool.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
@@ -185,6 +195,7 @@
     <ClCompile Include="D2DRenderer + DrawFunc.cpp" />
     <ClCompile Include="D2DRenderer.cpp" />
     <ClCompile Include="D3DRenderer.cpp" />
+    <ClCompile Include="DataContext.cpp" />
     <ClCompile Include="Figure.cpp" />
     <ClCompile Include="FloatEllipse.cpp" />
     <ClCompile Include="FloatRect.cpp" />
@@ -193,9 +204,17 @@
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Line.cpp" />
+    <ClCompile Include="Loading.cpp" />
+    <ClCompile Include="ObjectInterface.cpp" />
     <ClCompile Include="Math.cpp" />
+    <ClCompile Include="MessageComponent.cpp" />
+    <ClCompile Include="MessageManager.cpp" />
+    <ClCompile Include="ObjectPool.cpp" />
     <ClCompile Include="Program.cpp" />
+    <ClCompile Include="RenderPool.cpp" />
     <ClCompile Include="RenderTargetBuffer.cpp" />
+    <ClCompile Include="SceneBase.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Spelunky.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -207,6 +226,7 @@
     <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="UpdatePool.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
