@@ -1,0 +1,29 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Fortran module files
+*.mod
+*.smod
+
+# Executables
+*.out
+*.app
+
+Spelunky/.vs/
+Spelunky/Debug/
+Spelunky/Release/
+Spelunky/Spelunky/Debug/
+Spelunky/Spelunky/Release/
+Spelunky/x64/
+Spelunky/Spelunky/x64
+

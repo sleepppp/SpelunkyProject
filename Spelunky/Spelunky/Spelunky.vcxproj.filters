@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="MainHeaderCpp">
+      <UniqueIdentifier>{e2a991eb-6080-48e5-8dca-1e83e2540fc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{1088763d-db18-49c3-be4f-02707dbb3234}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{c276c53d-0ad7-4acc-9e61-b7f084f40036}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainEntry">
+      <UniqueIdentifier>{5fd42d8a-95e6-40ca-8644-5971392ed66c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Window">
+      <UniqueIdentifier>{2e3e480f-7c22-4601-b6ed-9ef01f8f90b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Input">
+      <UniqueIdentifier>{86c2e3dc-712c-4456-bf54-0641c7edd10c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Time">
+      <UniqueIdentifier>{c521516d-1ff5-4a67-8329-df29d968d302}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\GameEngine">
+      <UniqueIdentifier>{c1b4395d-81f4-48d1-84a3-550d0b1d6227}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Direct3D">
+      <UniqueIdentifier>{56ffe07e-de2f-4b75-80ae-46e53b5958ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Direct2D">
+      <UniqueIdentifier>{9c8dee2f-3dec-4b9d-8aa2-ec26830e6a26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Image">
+      <UniqueIdentifier>{17523eae-943d-4bd0-8dbd-bff333d94d74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{94f043af-f5e7-4dab-aaa6-d434dbfc6453}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Math">
+      <UniqueIdentifier>{ab238667-bd38-4ee5-b864-5883b8402f42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\String">
+      <UniqueIdentifier>{61b60a8b-7f86-4e8e-879e-7043a6aa993a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Util\Figure">
+      <UniqueIdentifier>{8b6f8296-0ae8-4b36-aa2b-43b665048919}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\TSingleton">
+      <UniqueIdentifier>{1a6d4e90-4ecd-4494-bc0e-af3f75c6e8c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Buffer">
+      <UniqueIdentifier>{f4ccaa47-b077-4052-ac27-e0a66e42c609}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Shader">
+      <UniqueIdentifier>{4a004394-2304-44d1-8033-70e319060031}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\HLSL">
+      <UniqueIdentifier>{90d93320-48d0-4d74-8450-771d15b5cdd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\GameEngine\GameObject">
+      <UniqueIdentifier>{41c72129-c039-4559-8c3d-b3cb7a15b16f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Transform">
+      <UniqueIdentifier>{0bc34f54-b005-4369-be8b-22023b78e710}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Resource.h">
+      <Filter>리소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Spelunky.h">
+      <Filter>리소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>리소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>MainHeaderCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="DefineHeader.h">
+      <Filter>MainHeaderCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="EnumStructHeader.h">
+      <Filter>MainHeaderCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleHeader.h">
+      <Filter>MainHeaderCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="LibraryHeader.h">
+      <Filter>MainHeaderCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Program.h">
+      <Filter>MainEntry</Filter>
+    </ClInclude>
+    <ClInclude Include="StringHelper.h">
+      <Filter>Util\String</Filter>
+    </ClInclude>
+    <ClInclude Include="Math.h">
+      <Filter>Util\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>Util\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Figure.h">
+      <Filter>Util\Figure</Filter>
+    </ClInclude>
+    <ClInclude Include="FloatEllipse.h">
+      <Filter>Util\Figure</Filter>
+    </ClInclude>
+    <ClInclude Include="FloatRect.h">
+      <Filter>Util\Figure</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>Util\Figure</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>System\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="D2DRenderer.h">
+      <Filter>System\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>System\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageManager.h">
+      <Filter>System\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>System\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>System\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="SingletonBase.h">
+      <Filter>System\TSingleton</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderBuffer.h">
+      <Filter>Shader\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffer.h">
+      <Filter>Shader\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Shader\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderTargetBuffer.h">
+      <Filter>Shader\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="D3DRenderer.h">
+      <Filter>System\Direct3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Util\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>System\GameEngine\GameObject</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Spelunky.cpp">
+      <Filter>MainHeaderCpp</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>리소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Program.cpp">
+      <Filter>MainEntry</Filter>
+    </ClCompile>
+    <ClCompile Include="StringHelper.cpp">
+      <Filter>Util\String</Filter>
+    </ClCompile>
+    <ClCompile Include="Math.cpp">
+      <Filter>Util\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>Util\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Figure.cpp">
+      <Filter>Util\Figure</Filter>
+    </ClCompile>
+    <ClCompile Include="FloatEllipse.cpp">
+      <Filter>Util\Figure</Filter>
+    </ClCompile>
+    <ClCompile Include="FloatRect.cpp">
+      <Filter>Util\Figure</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>Util\Figure</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>System\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="D2DRenderer + DrawFunc.cpp">
+      <Filter>System\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="D2DRenderer.cpp">
+      <Filter>System\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>System\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageManager.cpp">
+      <Filter>System\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>System\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>System\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Buffer.cpp">
+      <Filter>Shader\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Shader\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderTargetBuffer.cpp">
+      <Filter>Shader\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="D3DRenderer.cpp">
+      <Filter>System\Direct3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Util\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>System\GameEngine\GameObject</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Spelunky.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Spelunky.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Deferred.hlsl">
+      <Filter>Shader\HLSL</Filter>
+    </None>
+    <None Include="Lighting.hlsl">
+      <Filter>Shader\HLSL</Filter>
+    </None>
+  </ItemGroup>
+</Project>
