@@ -33,3 +33,8 @@ void SceneBase::Render()
 {
 	mRenderPool->Render();
 }
+
+LightingManager * const SceneBase::GetLightManager() const
+{
+	return mRenderPool->GetLightManager();
+}

@@ -3,8 +3,8 @@
 D2DRenderTarget에 작성된 결과 값을 통해 라이팅 처리
 **********************************************************************/
 
-static const float _WinSizeX = 1536.0f;
-static const float _WinSzieY = 912.0f;
+static const float _WinSizeX = 1600.0f;
+static const float _WinSzieY = 900.0f;
 static const uint MaxPointLight = 30;
 
 static const float2 arrBasePos[4] =
@@ -56,7 +56,6 @@ cbuffer PointLightBuffer : register(b1)
     float3 _pointLightPadding;
     PointLightData _pointLightList[MaxPointLight];
 }
-
 
 
 PixelInput VS(uint vertexID : SV_VertexID)

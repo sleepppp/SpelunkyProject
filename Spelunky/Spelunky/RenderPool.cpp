@@ -9,6 +9,7 @@
 #include <algorithm>
 
 RenderPool::RenderPool()
+	:mIsZorder(false)
 {
 	for (int i = 0; i < (int)Layer::End; ++i)
 	{
@@ -42,18 +43,12 @@ void RenderPool::Release()
 
 void RenderPool::Render()
 {
-	if (mIsZoder)
+	if (mIsZorder)
 		this->ZOrder();
 
-	RenderIter iter = mRenderList.begin();
-	for (; iter != mRenderList.end(); ++iter)
-	{
-		for (UINT i = 0; i < iter->second.size(); ++i)
-		{
-			if (iter->second[i]->GetRenderObject()->GetActive() == true)
-				iter->second[i]->Render();
-		}
-	}
+	this->ObjectRender();
+	this->Lighting();
+	this->UIRender();
 }
 
 void RenderPool::RequestRender(const Layer & layer, IRender * const pRender)
@@ -92,14 +87,33 @@ void RenderPool::RemoveRender(const IRender * const pRender)
 
 void RenderPool::ObjectRender()
 {
+	RenderIter iter = mRenderList.begin();
+	for (; iter != mRenderList.end(); ++iter)
+	{
+		if (iter->first == Layer::UI)continue; 
+		for (UINT i = 0; i < iter->second.size(); ++i)
+		{
+			if (iter->second[i]->GetRenderObject()->GetActive() == true)
+				iter->second[i]->Render();
+		}
+	}
 }
 
 void RenderPool::Lighting()
 {
+	this->mLightManager->BeginLighting();
+	this->mLightManager->Lighting();
+	this->mLightManager->EndLighting();
 }
 
 void RenderPool::UIRender()
 {
+	RenderIter iter = mRenderList.find(Layer::UI);
+	for (UINT i = 0; i < iter->second.size(); ++i)
+	{
+		if (iter->second[i]->GetRenderObject()->GetActive() == true)
+			iter->second[i]->Render();
+	}
 }
 
 void RenderPool::ZOrder()

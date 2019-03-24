@@ -103,24 +103,24 @@ void D3DRenderer::CreateDevice()
 	}
 	//실패했으면 에러 메세지 
 	assert(SUCCEEDED(hr));
-	{
-		DXGI_SWAP_CHAIN_DESC sd;
-		ZeroMemory(&sd, sizeof(sd));
-		sd.BufferCount = 1;
-		sd.BufferDesc.Width = width;
-		sd.BufferDesc.Height = height;
-		sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		sd.BufferDesc.RefreshRate.Numerator = 60;
-		sd.BufferDesc.RefreshRate.Denominator = 1;
-		sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-		sd.OutputWindow = windowDesc.handle;
-		sd.SampleDesc.Count = 1;
-		sd.SampleDesc.Quality = 0;
-		sd.Windowed = TRUE;
+	
+	DXGI_SWAP_CHAIN_DESC sd;
+	ZeroMemory(&sd, sizeof(sd));
+	sd.BufferCount = 1;
+	sd.BufferDesc.Width = width;
+	sd.BufferDesc.Height = height;
+	sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	sd.BufferDesc.RefreshRate.Numerator = 60;
+	sd.BufferDesc.RefreshRate.Denominator = 1;
+	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+	sd.OutputWindow = windowDesc.handle;
+	sd.SampleDesc.Count = 1;
+	sd.SampleDesc.Quality = 0;
+	sd.Windowed = TRUE;
 
-		hr = dxgiFactory->CreateSwapChain(mD3DDevice, &sd, &mD3DSwapChain);
-		assert(SUCCEEDED(hr));
-	}
+	hr = dxgiFactory->CreateSwapChain(mD3DDevice, &sd, &mD3DSwapChain);
+	assert(SUCCEEDED(hr));
+
 	//-----------------------------------------------------------------------------------------------------------------------
 	dxgiFactory->MakeWindowAssociation(windowDesc.handle, DXGI_MWA_NO_ALT_ENTER);
 	dxgiFactory->Release();

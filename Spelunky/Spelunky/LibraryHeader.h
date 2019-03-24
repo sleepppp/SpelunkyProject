@@ -3,7 +3,13 @@
 
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib,"d3d11.lib")
+
+#ifdef _DEBUG
 #pragma comment(lib,"D3DX11.lib")
+#else
+#pragma comment(lib,"../Libraries/d3dx11.lib")
+#endif
+
 #pragma comment(lib,"d3dCompiler.lib")
 #pragma comment(lib,"d2d1.lib")
 #pragma comment(lib,"dwrite.lib")

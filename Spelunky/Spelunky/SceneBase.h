@@ -1,15 +1,15 @@
 #pragma once
 class SceneBase
 {
+	BlockAssign(SceneBase)
 protected:
 	class ObjectPool* mObjectPool;
 	class UpdatePool* mUpdatePool; 
 	class RenderPool* mRenderPool;
-private:
+protected:
 	friend class SceneManager;
-	virtual ~SceneBase();
-public:
 	SceneBase();
+	virtual ~SceneBase();
 
 	virtual void Init();
 	virtual void Release();
@@ -19,5 +19,5 @@ public:
 	class ObjectPool*const GetObjectPool()const { return this->mObjectPool; }
 	class UpdatePool*const GetUpdatePool()const { return this->mUpdatePool; }
 	class RenderPool*const GetRenderPool()const { return this->mRenderPool; }
+	class LightingManager* const GetLightManager()const;
 };
-

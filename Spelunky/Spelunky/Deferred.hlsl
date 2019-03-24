@@ -2,10 +2,6 @@
 ## Deferred.hlsl ##
 라이팅 결과 값을 다시 화면에 렌더링
 **********************************************************************/
-
-static const float WinSizeX = 1536.0f;
-static const float WinSzieY = 912.0f;
-
 Texture2D _gBuffer : register(t0);
 Texture2D _lightingBuffer : register(t1);
 SamplerState _defaultSampler : register(s0);

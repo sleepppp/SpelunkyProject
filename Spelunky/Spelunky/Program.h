@@ -6,8 +6,6 @@ public:
 	Program();
 	~Program();
 
-	void Init();
-	void Release();
 	void Update();
 	void Render();
 };

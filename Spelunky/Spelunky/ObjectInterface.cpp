@@ -3,7 +3,7 @@
 
 #include "GameObject.h"
 
-IUpdate::IUpdate(GameObject * pObject)
+IUpdate::IUpdate(GameObject *const pObject)
 	:iUpdateObject(pObject)
 {
 	_World->GetUpdatePool()->RequestUpdate(this);
@@ -14,7 +14,7 @@ IUpdate::~IUpdate()
 	_World->GetUpdatePool()->RemoveUpdate(this);
 }
 
-IRender::IRender(GameObject * pObject)
+IRender::IRender(GameObject *const pObject)
 	:iRenderObject(pObject)
 {
 	_World->GetRenderPool()->RequestRender(iRenderObject->GetLayer(),this);

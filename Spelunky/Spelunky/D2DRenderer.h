@@ -17,7 +17,7 @@ private:
 	typedef unordered_map<wstring, IDWriteTextFormat*>::iterator TextIter;
 private:
 	ID2D1Factory* mD2DFactory;
-	ID2D1RenderTarget*	mD2DRenderTarget ;
+	ID2D1RenderTarget*	mD2DRenderTarget;
 	IDXGISurface*		mD2DSurface;
 
 	IDWriteFactory* mDWFactory; 

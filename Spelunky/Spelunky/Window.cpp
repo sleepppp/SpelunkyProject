@@ -139,7 +139,6 @@ WPARAM Window::Run()
 	this->CreateSingleton();
 	//=======================================================
 	this->_program = new Program;
-	this->_program->Init();
 	TimeManager::Get()->Start();
 	//============Main Loop===================================
 	while (true)
@@ -160,7 +159,6 @@ WPARAM Window::Run()
 		}
 	}
 	//=======================================================
-	_program->Release();
 	SafeDelete(_program);
 	//================Release Manager===============================
 	this->DeleteSingleton();

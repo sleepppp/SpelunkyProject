@@ -45,7 +45,7 @@ namespace Figure
 
 
 	/****************************************************************************************************
-	## IntersectAABBAABB ##
+	## IntersectRectToRect ##
 	@@ FloatRect* rc1 : 렉트 1
 	@@ FloatRect* rc2 : 렉트 2
 
@@ -58,6 +58,34 @@ namespace Figure
 		if (rc1->right < rc2->left || rc1->left > rc2->right) return false;
 		if (rc1->bottom < rc2->top || rc1->top > rc2->bottom) return false;
 		return true;
+	}
+	/****************************************************************************************************
+	## IntersectRectToRect ##
+	@@ FloatRect* result : 충돌 영역 반환
+	@@ FloatRect* rc1 : 렉트 1
+	@@ FloatRect* rc2 : 렉트 2
+
+	@@ return bool : 충동 여부
+
+	회전값이 없는 FloatRect충돌 검사 후 결과 값 반환
+	*****************************************************************************************************/
+	inline bool IntersectRectToRect(FloatRect*const result, const FloatRect*const rc1, const FloatRect* const rc2)
+	{
+		if (rc1->left < rc2->right && rc1->right > rc2->left)
+		{
+			if (rc1->top < rc2->bottom && rc1->bottom > rc2->top)
+			{
+				if (result)
+				{
+					result->left = Math::Max(rc1->left, rc2->left);
+					result->right = Math::Min(rc1->right, rc2->right);
+					result->top = Math::Max(rc1->top, rc2->top);
+					result->bottom = Math::Min(rc1->bottom, rc2->bottom);
+				}
+				return true; 
+			}
+		}
+		return false; 
 	}
 
 	/****************************************************************************************************

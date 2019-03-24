@@ -13,7 +13,7 @@ private:
 
 	class LightingManager* mLightManager; 
 
-	bool mIsZoder;
+	bool mIsZorder;
 private:
 	friend class SceneBase;
 	RenderPool();
@@ -25,7 +25,9 @@ public:
 	void RemoveRender(const Layer& layer, class IRender*const pRender);
 	void RemoveRender(const IRender*const pRender);
 
-	void SetZOrder(const bool& b) { mIsZoder = b; }
+	void SetZOrder(const bool& b) { mIsZorder = b; }
+
+	class LightingManager*const GetLightManager()const { return mLightManager; }
 private:
 	void ObjectRender();
 	void Lighting();

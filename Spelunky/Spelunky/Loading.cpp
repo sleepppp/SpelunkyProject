@@ -57,5 +57,6 @@ void Loading::Threading()
 	}
 	//여기까지 왔다면 로딩이 끝났다는 뜻이므로 mIsLoadingEnd값 true로 바꿔준다.
 	mIsLoadingEnd = true;
+	mLoadingFuncList.clear();
 }
 

@@ -106,6 +106,12 @@
     <Filter Include="System\GameEngine\LightSystem">
       <UniqueIdentifier>{758828ee-c207-4d2a-9c7f-dd0c6bdf734d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System\DebugSystem">
+      <UniqueIdentifier>{1b1a322e-6351-4b49-b8b2-dbb8761d05f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\File">
+      <UniqueIdentifier>{9dad287f-9d50-4188-9f5e-35cda007b18f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -231,6 +237,15 @@
     <ClInclude Include="ObjectInterface.h">
       <Filter>System\Interface</Filter>
     </ClInclude>
+    <ClInclude Include="BinaryFile.h">
+      <Filter>Util\File</Filter>
+    </ClInclude>
+    <ClInclude Include="Path.h">
+      <Filter>Util\File</Filter>
+    </ClInclude>
+    <ClInclude Include="TextFile.h">
+      <Filter>Util\File</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Spelunky.cpp">
@@ -334,6 +349,15 @@
     </ClCompile>
     <ClCompile Include="ObjectInterface.cpp">
       <Filter>System\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryFile.cpp">
+      <Filter>Util\File</Filter>
+    </ClCompile>
+    <ClCompile Include="Path.cpp">
+      <Filter>Util\File</Filter>
+    </ClCompile>
+    <ClCompile Include="TextFile.cpp">
+      <Filter>Util\File</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

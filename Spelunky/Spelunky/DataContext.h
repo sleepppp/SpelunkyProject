@@ -18,6 +18,7 @@ struct TagMessage
 class DataContextValue
 {
 	class GameObject;
+	BlockAssign(DataContextValue)
 private:
 	void* data;
 	string typeName;

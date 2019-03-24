@@ -155,6 +155,9 @@ void TimeManager::Render()
 	}
 #else
 	{
+		_D2DRenderer->RenderText(5, 5, L"WorldTime : " + StringHelper::StringToWString(to_string(this->worldTime)), 20, D2DRenderer::DefaultBrush::White);
+		_D2DRenderer->RenderText(5, 30, L"DeltaTime : " + StringHelper::StringToWString(to_string(this->timeElapsed)), 20, D2DRenderer::DefaultBrush::White);
+		_D2DRenderer->RenderText(5, 55, L"FPS : " + StringHelper::StringToWString(to_string(this->frameRate)), 20, D2DRenderer::DefaultBrush::White);
 	}
 #endif
 }

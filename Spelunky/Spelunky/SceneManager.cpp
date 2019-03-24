@@ -87,6 +87,14 @@ void SceneManager::LoadScene(const string & name, const bool & init)
 	mState = State::FadeOut;
 }
 
+LightingManager * const SceneManager::GetLightManager() const
+{
+	if(mNowScene)
+		return mNowScene->GetLightManager();
+
+	return nullptr;
+}
+
 void SceneManager::ChangeScene()
 {
 	if (mChangeSceneInfo.name.empty() == false)

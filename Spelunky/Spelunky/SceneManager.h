@@ -8,12 +8,12 @@ private:
 	{
 		None,Load,FadeOut,FadeIn
 	};
-	struct ChnageSceneInfo
+	struct ChangeSceneInfo
 	{
 		string name; 
 		bool isInit; 
 
-		ChnageSceneInfo()
+		ChangeSceneInfo()
 			:name(""), isInit(true) {}
 	};
 private:
@@ -25,7 +25,7 @@ private:
 	Figure::FloatRect mScreenRect; 
 	SceneManager::State mState;
 
-	ChnageSceneInfo mChangeSceneInfo;
+	ChangeSceneInfo mChangeSceneInfo;
 private:
 	friend class SingletonBase<SceneManager>;
 	SceneManager();
@@ -39,9 +39,12 @@ public:
 	class SceneBase*const FindScene(const string& name);
 	class SceneBase*const GetNowScene()const { return mNowScene; }
 	void LoadScene(const string& name,const bool& init = true);
+
+	class LightingManager* const GetLightManager()const;
 private:
 	void ChangeScene();
 };
 
 #define _SceneManager SceneManager::Get()
 #define _World SceneManager::Get()->GetNowScene()
+#define _LightManager SceneManager::Get()->GetLightManager()

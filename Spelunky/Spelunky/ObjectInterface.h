@@ -7,11 +7,12 @@ private:
 	class GameObject* iUpdateObject; 
 private:
 	friend class GameObject;
-	explicit IUpdate(class GameObject* pObject);
+	explicit IUpdate(class GameObject*const pObject);
 	virtual ~IUpdate();
-public:
-	virtual void Update() = 0;
+private:
+	friend class UpdatePool;
 	inline class GameObject*const GetUpdateObject()const { return iUpdateObject; }
+	virtual void Update() = 0;
 };
 
 
@@ -22,11 +23,12 @@ private:
 	class GameObject* iRenderObject;
 private:
 	friend class GameObject;
-	explicit IRender(class GameObject* pObject);
+	explicit IRender(class GameObject*const pObject);
 	virtual ~IRender();
-public:
-	virtual void Render() = 0;
+private:
+	friend class RenderPool;
 	inline class GameObject*const GetRenderObject()const { return iRenderObject; }
+	virtual void Render() = 0;
 };
 
 

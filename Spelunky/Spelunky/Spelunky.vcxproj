@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BinaryFile.h" />
     <ClInclude Include="Buffer.h" />
     <ClInclude Include="D2DRenderer.h" />
     <ClInclude Include="D3DRenderer.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="MessageManager.h" />
     <ClInclude Include="ModuleHeader.h" />
     <ClInclude Include="ObjectPool.h" />
+    <ClInclude Include="Path.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="RenderPool.h" />
     <ClInclude Include="RenderTargetBuffer.h" />
@@ -184,6 +186,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StringHelper.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TextFile.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="SingletonBase.h" />
     <ClInclude Include="Transform.h" />
@@ -192,6 +195,7 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BinaryFile.cpp" />
     <ClCompile Include="Buffer.cpp" />
     <ClCompile Include="D2DRenderer + DrawFunc.cpp" />
     <ClCompile Include="D2DRenderer.cpp" />
@@ -212,6 +216,7 @@
     <ClCompile Include="MessageComponent.cpp" />
     <ClCompile Include="MessageManager.cpp" />
     <ClCompile Include="ObjectPool.cpp" />
+    <ClCompile Include="Path.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="RenderPool.cpp" />
     <ClCompile Include="RenderTargetBuffer.cpp" />
@@ -226,6 +231,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="StringHelper.cpp" />
+    <ClCompile Include="TextFile.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UpdatePool.cpp" />
