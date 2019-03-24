@@ -150,10 +150,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BinaryFile.h" />
+    <ClInclude Include="Bounding.h" />
     <ClInclude Include="Buffer.h" />
+    <ClInclude Include="CollisionInterface.h" />
     <ClInclude Include="D2DRenderer.h" />
     <ClInclude Include="D3DRenderer.h" />
     <ClInclude Include="DataContext.h" />
+    <ClInclude Include="DebugSystem.h" />
     <ClInclude Include="DefineHeader.h" />
     <ClInclude Include="EnumStructHeader.h" />
     <ClInclude Include="Figure.h" />
@@ -174,6 +177,7 @@
     <ClInclude Include="ModuleHeader.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="Path.h" />
+    <ClInclude Include="Physics.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="RenderPool.h" />
     <ClInclude Include="RenderTargetBuffer.h" />
@@ -196,11 +200,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BinaryFile.cpp" />
+    <ClCompile Include="Bounding.cpp" />
     <ClCompile Include="Buffer.cpp" />
+    <ClCompile Include="CollisionInterface.cpp" />
     <ClCompile Include="D2DRenderer + DrawFunc.cpp" />
     <ClCompile Include="D2DRenderer.cpp" />
     <ClCompile Include="D3DRenderer.cpp" />
     <ClCompile Include="DataContext.cpp" />
+    <ClCompile Include="DebugSystem.cpp" />
     <ClCompile Include="Figure.cpp" />
     <ClCompile Include="FloatEllipse.cpp" />
     <ClCompile Include="FloatRect.cpp" />
@@ -217,6 +224,7 @@
     <ClCompile Include="MessageManager.cpp" />
     <ClCompile Include="ObjectPool.cpp" />
     <ClCompile Include="Path.cpp" />
+    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="RenderPool.cpp" />
     <ClCompile Include="RenderTargetBuffer.cpp" />

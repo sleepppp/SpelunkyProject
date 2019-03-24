@@ -88,6 +88,51 @@ namespace Figure
 		return false; 
 	}
 
+
+	/****************************************************************************************************
+	## IntersectRectReaction ##
+	*****************************************************************************************************/
+	inline bool IntersectRectReaction(FloatRect* const rcMove, const FloatRect*const rcHold)
+	{
+		FloatRect rcInter;
+
+		if (IntersectRectToRect(&rcInter, rcHold, rcMove) == false) return false;
+
+		float interW = rcInter.right - rcInter.left;
+		float interH = rcInter.bottom - rcInter.top;
+
+		if (interW > interH)
+		{
+			//위
+			if (rcInter.top == rcHold->top)
+			{
+				rcMove->top -= interH;
+				rcMove->bottom -= interH;
+			}
+			//아래
+			else if (rcInter.bottom == rcHold->bottom)
+			{
+				rcMove->top += interH;
+				rcMove->bottom += interH;
+			}
+		}
+		else
+		{
+			if (rcInter.left == rcHold->left)
+			{
+				rcMove->left -= interW;
+				rcMove->right -= interW;
+			}
+			else if (rcInter.right == rcHold->right)
+			{
+				rcMove->left += interW;
+				rcMove->right += interW;
+			}
+		}
+
+		return true;
+	}
+
 	/****************************************************************************************************
 	## Vector2InRect ##
 	@@ FloatRect* rc : 렉트

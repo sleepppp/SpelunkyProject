@@ -50,6 +50,7 @@ public:
 	const Vector2& GetSize()const { return this->mSize; }
 	const Pivot::Enum& GetPivot()const { return this->mPivot; }
 	const Figure::FloatRect& GetRect()const { return this->mRect; }
+	Figure::FloatRect*const GetLPRect() { return &mRect; }
 	class GameObject*const GetGameObject()const { return this->mGameObject; }
 
 	Transform*const GetParent()const { return this->mParent; }

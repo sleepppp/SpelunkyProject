@@ -112,6 +112,12 @@
     <Filter Include="Util\File">
       <UniqueIdentifier>{9dad287f-9d50-4188-9f5e-35cda007b18f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System\GameEngine\Physics">
+      <UniqueIdentifier>{d33101e3-315e-4790-9917-501981ec3b44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Collision">
+      <UniqueIdentifier>{57cf0628-9075-48cd-8294-7c2591b7f619}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -246,6 +252,18 @@
     <ClInclude Include="TextFile.h">
       <Filter>Util\File</Filter>
     </ClInclude>
+    <ClInclude Include="DebugSystem.h">
+      <Filter>System\DebugSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics.h">
+      <Filter>System\GameEngine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionInterface.h">
+      <Filter>System\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Bounding.h">
+      <Filter>Util\Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Spelunky.cpp">
@@ -358,6 +376,18 @@
     </ClCompile>
     <ClCompile Include="TextFile.cpp">
       <Filter>Util\File</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugSystem.cpp">
+      <Filter>System\DebugSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics.cpp">
+      <Filter>System\GameEngine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionInterface.cpp">
+      <Filter>System\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Bounding.cpp">
+      <Filter>Util\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

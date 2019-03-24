@@ -28,5 +28,6 @@ void Program::Render()
 		}
 		D2DRenderer::Get()->EndRender();
 	}
+	ImGui::Render();
 	D3DRenderer::Get()->EndRender();
 }

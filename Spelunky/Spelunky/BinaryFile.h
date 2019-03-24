@@ -1,7 +1,8 @@
 #pragma once
 
-class BinaryWriter
+class BinaryWriter final
 {
+	BlockAssign(BinaryWriter)
 public:
 	BinaryWriter();
 	~BinaryWriter();
@@ -18,7 +19,6 @@ public:
 
 	void String(const string& data);
 	void Byte(void* data,const UINT& dataSize);
-
 protected:
 	HANDLE fileHandle;
 	DWORD size;
@@ -26,8 +26,9 @@ protected:
 
 //////////////////////////////////////////////////////////////////////////
 
-class BinaryReader
+class BinaryReader final
 {
+	BlockAssign(BinaryReader)
 public:
 	BinaryReader();
 	~BinaryReader();

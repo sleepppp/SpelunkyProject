@@ -84,7 +84,6 @@ Window::Window()
 		, rect.right - rect.left, rect.bottom - rect.top
 		, TRUE
 	);
-	//ShowWindow
 	ShowWindow(_windowDesc.handle, Window::_windowDesc.command);
 	ShowCursor(true);
 }
@@ -108,6 +107,7 @@ Window::~Window()
 ************************************************************************/
 LRESULT Window::WndProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	if (ImGui::WndProc((UINT*)handle, message, wParam, lParam)) return true;
 	switch (message)
 	{
 	case WM_MOUSEMOVE:
@@ -178,6 +178,10 @@ void Window::CreateSingleton()
 	Input::Create();
 	D3DRenderer::Create();
 	D2DRenderer::Create();
+	ImGui::Create(Window::GetHandle(), _D3DDevice, _D3DDeviceContext);
+	{
+		ImGui::StyleColorsClassic();
+	}
 	ImageManager::Create();
 	SceneManager::Create();
 }
@@ -188,6 +192,7 @@ void Window::DeleteSingleton()
 {
 	SceneManager::Delete();
 	ImageManager::Delete();
+	ImGui::Delete();
 	D2DRenderer::Delete();
 	D3DRenderer::Delete();
 	Input::Delete();
@@ -200,4 +205,5 @@ void Window::UpdateSingleton()
 {
 	Input::Get()->Update();
 	TimeManager::Get()->Update();
+	ImGui::Update();
 }
