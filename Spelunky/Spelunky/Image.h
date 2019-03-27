@@ -46,8 +46,8 @@ private:
 	virtual ~Image();
 	Image operator = (const Image& image) {}
 public:
-	void Render(const int& x,const int& y,const Pivot::Enum& pivot = Pivot::Center,const bool& isRelativePos = false);
-	void FrameRender(const int& x,const int& y,const int& frameX,const int& frameY,const Pivot::Enum& pivot = Pivot::Center,
+	void Render(const Vector2& position,const Pivot::Enum& pivot = Pivot::Center,const bool& isRelativePos = false);
+	void FrameRender(const Vector2& position,const int& frameX,const int& frameY,const Pivot::Enum& pivot = Pivot::Center,
 		const bool& isRelativePos = false);
 
 	void ResetRenderOption();
@@ -65,9 +65,9 @@ public:
 	const UINT& GetWidth() const{ return mBitmap->GetPixelSize().width; }
 	const UINT& GetHeight()const{ return mBitmap->GetPixelSize().height; }
 	const Vector2& GetSize()const { return this->mSize; }
-	const Vector2& GetFrameSize(const int& frame = 0) const { return Vector2(mFrameInfo[frame].width, mFrameInfo[frame].height); }
+	const Vector2 GetFrameSize(const int& frame = 0) const { return Vector2(mFrameInfo[frame].width, mFrameInfo[frame].height); }
 	const TagLoadedImageInfo& GetLoadInfo() const { return mLoadInfo; }
 private:
-	const Vector2 GetPivotPosition(const int& x,const int& y, Pivot::Enum pivot);
+	const Vector2 GetPivotPosition(const float& x,const float& y, Pivot::Enum pivot);
 };
 

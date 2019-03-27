@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "UpdatePool.h"
 
-#include "ObjectInterface.h"
+#include "GameObject.h"
 #include "GameObject.h"
 UpdatePool::UpdatePool()
 {
@@ -16,7 +16,7 @@ void UpdatePool::Update()
 {
 	for (UINT i = 0; i < mUpdateList.size(); ++i)
 	{
-		if (mUpdateList[i]->GetUpdateObject()->GetActive())
+		if (mUpdateList[i]->GetActive())
 			mUpdateList[i]->Update();
 	}
 }
@@ -26,12 +26,12 @@ void UpdatePool::Release()
 	mUpdateList.clear();
 }
 
-void UpdatePool::RequestUpdate( IUpdate *const pUpdate)
+void UpdatePool::RequestUpdate(GameObject *const pUpdate)
 {
 	this->mUpdateList.push_back(pUpdate);
 }
 
-void UpdatePool::RemoveUpdate(const IUpdate *const pUpdate)
+void UpdatePool::RemoveUpdate(const GameObject *const pUpdate)
 {
 	for (UINT i = 0; i < mUpdateList.size(); ++i)
 	{

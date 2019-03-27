@@ -11,8 +11,9 @@ protected:
 	friend class SceneManager;
 	SceneBase();
 	virtual ~SceneBase();
-
-	virtual void Init();
+public:
+	virtual void Init() = 0;
+	virtual void PostInit();
 	virtual void Release();
 	virtual void Update();
 	virtual void Render();

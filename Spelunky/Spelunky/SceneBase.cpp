@@ -17,7 +17,10 @@ SceneBase::~SceneBase()
 	SafeDelete(mObjectPool);
 }
 
-void SceneBase::Init() {}
+void SceneBase::PostInit()
+{
+	mObjectPool->Init();
+}
 
 void SceneBase::Release()
 {

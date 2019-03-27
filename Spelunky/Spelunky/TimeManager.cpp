@@ -5,7 +5,7 @@
 
 #include "StringHelper.h"
 
-float TimeManager::_lockFps = 500.f;
+float TimeManager::_lockFps = 300.f;
 
 TimeManager::TimeManager()
 {
@@ -149,9 +149,9 @@ void TimeManager::Render()
 {
 #ifdef _DEBUG
 	{
-		_D2DRenderer->RenderText(5, 5, L"WorldTime : " + StringHelper::StringToWString(to_string(this->worldTime)), 20,D2DRenderer::DefaultBrush::White);
-		_D2DRenderer->RenderText(5, 30, L"DeltaTime : " + StringHelper::StringToWString(to_string(this->timeElapsed)), 20, D2DRenderer::DefaultBrush::White);
-		_D2DRenderer->RenderText(5, 55, L"FPS : " + StringHelper::StringToWString(to_string(this->frameRate)), 20, D2DRenderer::DefaultBrush::White);
+		_D2DRenderer->RenderText(5, 25, L"WorldTime : " + StringHelper::StringToWString(to_string(this->worldTime)), 20,D2DRenderer::DefaultBrush::White);
+		_D2DRenderer->RenderText(5, 50, L"DeltaTime : " + StringHelper::StringToWString(to_string(this->timeElapsed)), 20, D2DRenderer::DefaultBrush::White);
+		_D2DRenderer->RenderText(5, 75, L"FPS : " + StringHelper::StringToWString(to_string(this->frameRate)), 20, D2DRenderer::DefaultBrush::White);
 	}
 #else
 	{

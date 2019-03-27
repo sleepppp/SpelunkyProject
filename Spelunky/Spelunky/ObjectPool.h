@@ -9,6 +9,7 @@ private:
 	friend class SceneBase;
 	ObjectPool();
 	virtual ~ObjectPool();
+	void Init();
 	void Release();
 public:
 	void AddObject(class GameObject*const pObject);

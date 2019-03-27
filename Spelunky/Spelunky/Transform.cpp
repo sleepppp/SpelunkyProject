@@ -221,6 +221,31 @@ void Transform::Translate(const Vector2 & moveValue)
 
 	this->UpdateTransform();
 }
+/*************************************************************************************
+## ResetByRect ##
+**************************************************************************************/
+void Transform::ResetByRect()
+{
+	Vector2 pos;
+	switch (mPivot)
+	{
+	case Pivot::LeftTop:
+		pos.x = mRect.left;
+		pos.y = mRect.top;
+		break;
+	case Pivot::Center:
+		pos.x = mRect.left + mSize.x / 2.f;
+		pos.y = mRect.top + mSize.y / 2.f;
+		break;
+	case Pivot::Bottom:
+		pos.x = mRect.left + mSize.x / 2.f;
+		pos.y = mRect.bottom;
+		this->SetWorldPosition(pos);
+		break;
+	default:
+		break;
+	}
+}
 /**************************************************************************************
 ## Render ##
 @@ DefaultBrush brush : 브러쉬
@@ -249,6 +274,31 @@ void Transform::RenderHierarchy(const bool & bRelativeCamera)
 		_D2DRenderer->DrawLine(mWorldPosition, mFirstChild->mWorldPosition,
 			D2DRenderer::DefaultBrush::Red);
 	}
+}
+/*************************************************************************************
+## GetCenterPos ##
+@@ return Vector2 : 중심좌표
+**************************************************************************************/
+Vector2 Transform::GetCenterPos()
+{
+	Vector2 result; 
+	switch (mPivot)
+	{
+	case Pivot::LeftTop:
+		result.x = mRect.left + mSize.x / 2.f;
+		result.y = mRect.top + mSize.y / 2.f;
+		break;
+	case Pivot::Center:
+		result = mWorldPosition;
+		break;
+	case Pivot::Bottom:
+		result.x = mRect.left + mSize.x / 2.f;
+		result.y = mRect.bottom;
+		break;
+	default:
+		break;
+	}
+	return result;
 }
 /*************************************************************************************
 ## UpdateTransform ##

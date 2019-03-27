@@ -6,6 +6,7 @@
 
 #include "TimeManager.h"
 #include "Input.h"
+#include "CameraManager.h"
 #include "D3DRenderer.h"
 #include "D2DRenderer.h"
 #include "Image.h"
@@ -17,3 +18,4 @@
 #include "UpdatePool.h"
 #include "RenderPool.h"
 #include "Physics.h"
+#include "DebugSystem.h"

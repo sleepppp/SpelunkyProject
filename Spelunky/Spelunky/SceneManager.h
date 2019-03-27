@@ -11,15 +11,20 @@ private:
 	struct ChangeSceneInfo
 	{
 		string name; 
+		string nextName;
 		bool isInit; 
+		bool isLoading;
 
 		ChangeSceneInfo()
-			:name(""), isInit(true) {}
+			:name(""), isInit(true), isLoading(false){}
 	};
 private:
-	typedef unordered_map<string, class SceneBase*>::iterator SceneIter; 
+	typedef unordered_map<string, class SceneBase*>::iterator SceneIter;
+	typedef unordered_map<string, class LoadingScene*>::iterator LoadingIter;
 private:
 	unordered_map<string, class SceneBase*> mSceneList;
+	unordered_map<string, class LoadingScene*> mLoadingList;
+
 	class SceneBase* mNowScene; 
 	float mFadeAlpha; 
 	Figure::FloatRect mScreenRect; 
@@ -36,11 +41,15 @@ public:
 	void PostRender();
 
 	void AddScene(const string& name, class SceneBase* const pScene);
+	void AddLoadingScene(const string& name, class LoadingScene* const pLoading);
 	class SceneBase*const FindScene(const string& name);
-	class SceneBase*const GetNowScene()const { return mNowScene; }
+	class LoadingScene*const FindLoadingScene(const string& name);
+	class SceneBase*const GetNowScene()const;
 	void LoadScene(const string& name,const bool& init = true);
+	void LoadSceneByLoading(const string& loadingName, const string& nextSceneName);
 
 	class LightingManager* const GetLightManager()const;
+	void InitFirstScene();
 private:
 	void ChangeScene();
 };

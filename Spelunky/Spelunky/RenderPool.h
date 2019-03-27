@@ -8,8 +8,8 @@ public:
 		Background = 0, Object,Tile,Effect,UI,End
 	};
 private:
-	typedef unordered_map<Layer, vector<class IRender*>>::iterator RenderIter;
-	unordered_map<Layer, vector<class IRender*>> mRenderList;
+	typedef unordered_map<Layer, vector<class GameObject*>>::iterator RenderIter;
+	unordered_map<Layer, vector<class GameObject*>> mRenderList;
 
 	class LightingManager* mLightManager; 
 
@@ -21,9 +21,9 @@ private:
 	void Release();
 	void Render();
 public:
-	void RequestRender(const Layer& layer, class IRender*const pRender);
-	void RemoveRender(const Layer& layer, class IRender*const pRender);
-	void RemoveRender(const IRender*const pRender);
+	void RequestRender(const Layer& layer, class GameObject*const pRender);
+	void RemoveRender(const Layer& layer, class GameObject*const pRender);
+	void RemoveRender(const GameObject*const pRender);
 
 	void SetZOrder(const bool& b) { mIsZorder = b; }
 

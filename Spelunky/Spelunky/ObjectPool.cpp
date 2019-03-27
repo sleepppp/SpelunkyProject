@@ -14,6 +14,12 @@ ObjectPool::~ObjectPool()
 	mObjectList.clear();
 }
 
+void ObjectPool::Init()
+{
+	for (UINT i = 0; i < mObjectList.size(); ++i)
+		mObjectList[i]->Init();
+}
+
 void ObjectPool::Release()
 {
 	for (UINT i = 0; i < mObjectList.size(); ++i)

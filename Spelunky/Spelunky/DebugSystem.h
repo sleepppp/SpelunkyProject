@@ -8,10 +8,8 @@ private:
 	DebugSystem();
 	virtual ~DebugSystem();
 private:
-	bool mIsDebug;
-
+	bool mIsOpenCameraGui;
 public:
-	inline const bool& GetDebugMode()const { return this->mIsDebug; }
-	void SetDebugMode(const bool& b) { this->mIsDebug; }
+	void Render();
 };
 

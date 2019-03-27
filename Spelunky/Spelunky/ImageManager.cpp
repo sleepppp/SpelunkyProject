@@ -2,6 +2,11 @@
 #include "ImageManager.h"
 
 #include "Image.h"
+#include "Path.h"
+#include "StringHelper.h"
+
+#include <io.h>
+
 ImageManager::ImageManager()
 	:mWicFactory(nullptr)
 {
@@ -144,4 +149,46 @@ void ImageManager::DeleteAll()
 		SafeDelete(iter->second);
 	}
 	mImageList.clear();
+}
+/********************************************************************************
+## LoadFolder ##
+해당 폴더의 모든 png를 찾아 이미지로 등록
+@@ const string path : 파일 경로
+@@ const string filter : 찾을 파일 필터
+********************************************************************************/
+void ImageManager::LoadFolder(const string path, const string filter)
+{
+	std::string searching = path + filter;
+
+	std::vector<std::string> return_;
+
+	_finddata_t fd;
+	long handle = _findfirst(searching.c_str(), &fd);  //현재 폴더 내 모든 파일을 찾는다.
+
+	if (handle == -1)return;
+
+	int result = 0;
+	do
+	{
+		string filePath = path + fd.name;
+
+		if (filter == "*.png")
+			this->AddImage(Path::GetFileNameWithoutExtension(fd.name), StringHelper::StringToWString(filePath));
+
+		result = _findnext(handle, &fd);
+	} while (result != -1);
+
+	_findclose(handle);
+}
+
+/********************************************************************************
+## LoadAllResource ##
+********************************************************************************/
+void ImageManager::LoadAllResource()
+{
+	this->LoadFolder("../Resources/Background 01/", "*.png");
+	this->LoadFolder("../Resources/Element 01/", "*.png");
+	this->LoadFolder("../Resources/Items/", "*.png");
+	this->LoadFolder("../Resources/Soil 01/", "*.png");
+	this->LoadFolder("../Resources/Wood 01/", "*.png");
 }

@@ -3,7 +3,7 @@ class UpdatePool final
 {
 	BlockAssign(UpdatePool)
 private:
-	vector<class IUpdate*> mUpdateList;
+	vector<class GameObject*> mUpdateList;
 private:
 	friend class SceneBase;
 	UpdatePool();
@@ -11,7 +11,7 @@ private:
 	void Update();
 	void Release();
 public:
-	void RequestUpdate(class IUpdate*const pUpdate);
-	void RemoveUpdate(const class IUpdate*const pUpdate);
+	void RequestUpdate(class GameObject*const pUpdate);
+	void RemoveUpdate(const class GameObject*const pUpdate);
 };
 

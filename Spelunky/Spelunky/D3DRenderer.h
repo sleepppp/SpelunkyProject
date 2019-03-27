@@ -9,7 +9,7 @@ class D3DRenderer final : public SingletonBase<D3DRenderer>
 	BlockAssign(D3DRenderer)
 private:
 	//DirectX11 ----------------------------------------
-//그래픽카드 드라이버 타입
+	//그래픽카드 드라이버 타입
 	D3D_DRIVER_TYPE mDriverType;
 	//direct 지원 레벨 검사해줄 피쳐레벨
 	D3D_FEATURE_LEVEL mFeatureLevel;

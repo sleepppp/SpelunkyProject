@@ -68,16 +68,23 @@ Image::~Image()
 @@ Pivot::Enum pivot : 그릴 피봇 
 @@ bool isRelative : 카메라 보정 여부 
 *********************************************************************************/
-void Image::Render(const int& x,const int& y,const Pivot::Enum& pivot,const bool& isRelativePos)
+void Image::Render(const Vector2& position,const Pivot::Enum& pivot,const bool& isRelativePos)
 {
 	//그릴 사이즈 = 사이즈 * 스케일
 	this->mSize = mSize * mScale;
 	//렌더링 좌표
-	Vector2 renderPos = GetPivotPosition(x, y, pivot);
+	Vector2 renderPos = GetPivotPosition(position.x, position.y, pivot);
 
 	if (isRelativePos)
 	{
-		//TODO 카메라 보정 추가 	
+		//카메라
+		float zoom = _Camera->GetZoom();
+		Vector2 zoomScale = Vector2(zoom, zoom);
+		mSize.x = mSize.x * zoomScale.x;
+		mSize.y = mSize.y * zoomScale.y;
+
+		//카메라 상대좌표
+		renderPos = _Camera->GetRelativeVector2(renderPos);
 	}
 	//렌더링 좌표 기준으로 렉트 생성
 	Figure::FloatRect renderRc(renderPos, mSize,Pivot::LeftTop);
@@ -126,7 +133,7 @@ void Image::Render(const int& x,const int& y,const Pivot::Enum& pivot,const bool
 @@ Pivot::Enum pivot : 그릴 피봇 
 @@ bool isRalative : 카메라 보정 여부 
 *********************************************************************************/
-void Image::FrameRender(const int& x,const int& y,const int& frameX,const int& frameY,const Pivot::Enum& pivot,const bool& isRelativePos)
+void Image::FrameRender(const Vector2& position,const int& frameX,const int& frameY,const Pivot::Enum& pivot,const bool& isRelativePos)
 {
 	//프레임이 최대 프레임을 벗어났다면 그리지 않는다. 
 	if (frameX >= this->mMaxFrameX || frameY >= this->mMaxFrameY)
@@ -139,11 +146,18 @@ void Image::FrameRender(const int& x,const int& y,const int& frameX,const int& f
 	//사이즈 = 사이즈 * 스케일 
 	this->mSize = mSize * mScale;
 	//그릴 좌표 
-	Vector2 renderPos = GetPivotPosition(x, y, pivot);
+	Vector2 renderPos = GetPivotPosition(position.x, position.y, pivot);
 
 	if (isRelativePos)
 	{
-		//TODO카메라 보정 추가	
+		//카메라
+		float zoom = _Camera->GetZoom();
+		Vector2 zoomScale = Vector2(zoom, zoom);
+		mSize.x = mSize.x * zoomScale.x;
+		mSize.y = mSize.y * zoomScale.y;
+
+		//카메라 상대좌표
+		renderPos = _Camera->GetRelativeVector2(renderPos);
 	}
 	//카메라 클리핑 
 	Figure::FloatRect renderRc(renderPos, mSize, Pivot::LeftTop);
@@ -203,7 +217,7 @@ void Image::ResetRenderOption()
 
 피봇과 크기 기반으로 좌표 반환
 *********************************************************************************/
-const Vector2 Image::GetPivotPosition(const int & x, const int & y, Pivot::Enum pivot)
+const Vector2 Image::GetPivotPosition(const float & x, const float & y, Pivot::Enum pivot)
 {
 	if (pivot == Pivot::LeftTop)
 		return Vector2(x, y);

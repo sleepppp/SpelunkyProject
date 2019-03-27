@@ -22,6 +22,10 @@ public:
 private:
 	ID2D1Bitmap* CreateD2DBitmapFromFile(const wstring& file);
 	void DeleteAll();
+
+	void LoadFolder(const string path, const string filter);
+public:
+	void LoadAllResource();
 };
 
 #define _ImageManager ImageManager::Get()

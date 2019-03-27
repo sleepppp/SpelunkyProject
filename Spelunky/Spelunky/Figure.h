@@ -88,15 +88,15 @@ namespace Figure
 		return false; 
 	}
 
-
 	/****************************************************************************************************
 	## IntersectRectReaction ##
 	*****************************************************************************************************/
-	inline bool IntersectRectReaction(FloatRect* const rcMove, const FloatRect*const rcHold)
+	inline bool IntersectRectReaction(FloatRect* const rcMove, const FloatRect*const rcHold,Direction::Enum*const pOutDirection = nullptr)
 	{
 		FloatRect rcInter;
 
-		if (IntersectRectToRect(&rcInter, rcHold, rcMove) == false) return false;
+		if (IntersectRectToRect(&rcInter, rcHold, rcMove) == false) 
+			return false;
 
 		float interW = rcInter.right - rcInter.left;
 		float interH = rcInter.bottom - rcInter.top;
@@ -108,12 +108,16 @@ namespace Figure
 			{
 				rcMove->top -= interH;
 				rcMove->bottom -= interH;
+				if (pOutDirection)
+					*pOutDirection = Direction::Bottom;
 			}
 			//¾Æ·¡
 			else if (rcInter.bottom == rcHold->bottom)
 			{
 				rcMove->top += interH;
 				rcMove->bottom += interH;
+				if (pOutDirection)
+					*pOutDirection = Direction::Top;
 			}
 		}
 		else
@@ -122,11 +126,15 @@ namespace Figure
 			{
 				rcMove->left -= interW;
 				rcMove->right -= interW;
+				if (pOutDirection)
+					*pOutDirection = Direction::Right;
 			}
 			else if (rcInter.right == rcHold->right)
 			{
 				rcMove->left += interW;
 				rcMove->right += interW;
+				if (pOutDirection)
+					*pOutDirection = Direction::Left;
 			}
 		}
 
@@ -280,4 +288,25 @@ namespace Figure
 		return false;
 	}
 
+	/****************************************************************************************************
+	## RectMake ##
+	*****************************************************************************************************/
+	inline Figure::FloatRect RectMake(const float& x, const float& y,const float& width,const float& height)
+	{
+		Figure::FloatRect result;
+		result.left = x;
+		result.top = y;
+		result.right = x + width;
+		result.bottom = y + height;
+		return result;
+	}
+	inline Figure::FloatRect RectMake(const Vector2& pos,const Vector2& size)
+	{
+		Figure::FloatRect result;
+		result.left = pos.x;
+		result.top = pos.y;
+		result.right = pos.x + size.x;
+		result.bottom = pos.y + size.y;
+		return result;
+	}
 }

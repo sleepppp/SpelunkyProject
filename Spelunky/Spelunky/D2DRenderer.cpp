@@ -37,7 +37,7 @@ D2DRenderer::~D2DRenderer()
 void D2DRenderer::BeginRender()
 {
 	mD2DRenderTarget->BeginDraw();
-	mD2DRenderTarget->Clear();
+	mD2DRenderTarget->Clear(D2D1::ColorF(0x444444));
 }
 /*****************************************************
 ## EndRender ##

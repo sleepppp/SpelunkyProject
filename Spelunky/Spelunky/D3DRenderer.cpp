@@ -218,11 +218,11 @@ void D3DRenderer::CreateDepthStencilState()
 *******************************************************************************************/
 void D3DRenderer::BeginRender()
 {
+	//±íÀÌ ¹öÆÛ¿Í ·»´õÅ¸°Ù ºä ¹ÙÀÎµù
+	mD3DDeviceContext->OMSetRenderTargets(1, &mD3DRenderTargetView, nullptr);
 	//RenderTargetView ClearÇØÁØ´Ù.
 	float color[4] = { 0.3f,0.3f,0.3f,1.0f };
 	mD3DDeviceContext->ClearRenderTargetView(mD3DRenderTargetView, color);
-	//±íÀÌ ¹öÆÛ¿Í ·»´õÅ¸°Ù ºä ¹ÙÀÎµù
-	mD3DDeviceContext->OMSetRenderTargets(1, &mD3DRenderTargetView, nullptr);
 }
 /*******************************************************************************************
 ## EndRender ##

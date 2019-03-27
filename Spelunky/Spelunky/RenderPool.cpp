@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "RenderPool.h"
 
-#include "ObjectInterface.h"
+#include "GameObject.h"
 #include "LightingManager.h"
 #include "GameObject.h"
 #include "Transform.h"
@@ -13,7 +13,7 @@ RenderPool::RenderPool()
 {
 	for (int i = 0; i < (int)Layer::End; ++i)
 	{
-		mRenderList.insert(make_pair((Layer)i, vector<IRender*>()));
+		mRenderList.insert(make_pair((Layer)i, vector<GameObject*>()));
 	}
 
 	mLightManager = new LightingManager;
@@ -51,12 +51,12 @@ void RenderPool::Render()
 	this->UIRender();
 }
 
-void RenderPool::RequestRender(const Layer & layer, IRender * const pRender)
+void RenderPool::RequestRender(const Layer & layer, GameObject * const pRender)
 {
 	this->mRenderList[layer].push_back(pRender);
 }
 
-void RenderPool::RemoveRender(const Layer & layer, IRender * const pRender)
+void RenderPool::RemoveRender(const Layer & layer, GameObject * const pRender)
 {
 	RenderIter iter = mRenderList.find(layer);
 	for (UINT i = 0; i < iter->second.size(); ++iter)
@@ -69,7 +69,7 @@ void RenderPool::RemoveRender(const Layer & layer, IRender * const pRender)
 	}
 }
 
-void RenderPool::RemoveRender(const IRender * const pRender)
+void RenderPool::RemoveRender(const GameObject * const pRender)
 {
 	RenderIter iter = mRenderList.begin();
 	for (; iter != mRenderList.end(); ++iter)
@@ -93,7 +93,7 @@ void RenderPool::ObjectRender()
 		if (iter->first == Layer::UI)continue; 
 		for (UINT i = 0; i < iter->second.size(); ++i)
 		{
-			if (iter->second[i]->GetRenderObject()->GetActive() == true)
+			if (iter->second[i]->GetActive() == true)
 				iter->second[i]->Render();
 		}
 	}
@@ -111,7 +111,7 @@ void RenderPool::UIRender()
 	RenderIter iter = mRenderList.find(Layer::UI);
 	for (UINT i = 0; i < iter->second.size(); ++i)
 	{
-		if (iter->second[i]->GetRenderObject()->GetActive() == true)
+		if (iter->second[i]->GetActive() == true)
 			iter->second[i]->Render();
 	}
 }
@@ -120,10 +120,10 @@ void RenderPool::ZOrder()
 {
 	//오름차순 기준으로 zorder
 	sort(mRenderList[Layer::Object].begin(), mRenderList[Layer::Object].end(),
-		[this](IRender* render1, IRender* render2)
+		[this](GameObject* render1, GameObject* render2)
 	{
-		if (render1->GetRenderObject()->GetTransform()->GetRect().bottom < 
-			render2->GetRenderObject()->GetTransform()->GetRect().bottom)
+		if (render1->GetTransform()->GetRect().bottom < 
+			render2->GetTransform()->GetRect().bottom)
 			return true;
 		return false;
 	});

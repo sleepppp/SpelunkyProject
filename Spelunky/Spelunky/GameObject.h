@@ -16,6 +16,8 @@ public:
 
 	virtual void Init() {}
 	virtual void Release() {}
+	virtual void Update() {}
+	virtual void Render() {}
 public:
 	inline class Transform* const GetTransform()const { return this->mTransform; }
 	const string& GetName()const { return this->mName; }

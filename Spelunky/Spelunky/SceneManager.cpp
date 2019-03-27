@@ -2,9 +2,9 @@
 #include "SceneManager.h"
 
 #include "SceneBase.h"
-
+#include "LoadingScene.h"
 SceneManager::SceneManager()
-	:mNowScene(nullptr), mFadeAlpha(0.f),mScreenRect(Vector2(0.f,0.f),Vector2(_WinSizeX,_WinSizeY),Pivot::LeftTop),
+	:mNowScene(nullptr), mFadeAlpha(1.f),mScreenRect(Vector2(0.f,0.f),Vector2(_WinSizeX,_WinSizeY),Pivot::LeftTop),
 	mState(State::None)
 {
 
@@ -71,6 +71,11 @@ void SceneManager::AddScene(const string & name, SceneBase * const pScene)
 	mSceneList.insert(make_pair(name, pScene));
 }
 
+void SceneManager::AddLoadingScene(const string & name, LoadingScene * const pLoading)
+{
+	mLoadingList.insert(make_pair(name, pLoading));
+}
+
 
 SceneBase * const SceneManager::FindScene(const string & name)
 {
@@ -80,11 +85,42 @@ SceneBase * const SceneManager::FindScene(const string & name)
 	return nullptr;
 }
 
+LoadingScene * const SceneManager::FindLoadingScene(const string & name)
+{
+	LoadingIter iter = mLoadingList.find(name);
+	if (iter != mLoadingList.end())
+		return iter->second;
+	return nullptr;
+}
+
+SceneBase * const SceneManager::GetNowScene() const
+{
+	return mNowScene;
+}
+
 void SceneManager::LoadScene(const string & name, const bool & init)
 {
 	mChangeSceneInfo.name = name;
 	mChangeSceneInfo.isInit = init;
+	mChangeSceneInfo.isLoading = false;
+	mChangeSceneInfo.nextName.clear();
 	mState = State::FadeOut;
+}
+
+void SceneManager::LoadSceneByLoading(const string & loadingName, const string & nextSceneName)
+{
+	mChangeSceneInfo.name = loadingName;
+	mChangeSceneInfo.nextName = nextSceneName;
+	mChangeSceneInfo.isInit = true;
+	mChangeSceneInfo.isLoading = true;
+	mState = State::FadeOut;
+	
+	LoadingScene* loadingScene = this->FindLoadingScene(loadingName);
+	loadingScene->SetNextSceneName(nextSceneName);
+	loadingScene->AddThreadFunc([this]() 
+	{
+		_SceneManager->FindScene(mChangeSceneInfo.nextName)->Init();
+	});
 }
 
 LightingManager * const SceneManager::GetLightManager() const
@@ -95,11 +131,20 @@ LightingManager * const SceneManager::GetLightManager() const
 	return nullptr;
 }
 
+void SceneManager::InitFirstScene()
+{
+	ChangeScene();
+}
+
 void SceneManager::ChangeScene()
 {
 	if (mChangeSceneInfo.name.empty() == false)
 	{
-		SceneBase* tempScene = this->FindScene(mChangeSceneInfo.name);
+		SceneBase* tempScene = nullptr;
+		if (mChangeSceneInfo.isLoading == false)
+			tempScene = this->FindScene(mChangeSceneInfo.name);
+		else
+			tempScene = this->FindLoadingScene(mChangeSceneInfo.name);
 		if (tempScene)
 		{
 			if (mNowScene)
@@ -108,7 +153,9 @@ void SceneManager::ChangeScene()
 			mNowScene = tempScene;
 			if (mChangeSceneInfo.isInit)
 				mNowScene->Init();
+			mNowScene->PostInit();
 			mState = State::FadeIn;
+
 		}
 	}
 }

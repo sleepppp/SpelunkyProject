@@ -55,9 +55,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Util\Figure">
-      <UniqueIdentifier>{8b6f8296-0ae8-4b36-aa2b-43b665048919}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System\TSingleton">
       <UniqueIdentifier>{1a6d4e90-4ecd-4494-bc0e-af3f75c6e8c6}</UniqueIdentifier>
     </Filter>
@@ -84,9 +81,6 @@
     </Filter>
     <Filter Include="System\GameEngine\SceneManager\SceneBase">
       <UniqueIdentifier>{8b6009e4-5490-4430-895b-05748257905f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="System\GameObject">
-      <UniqueIdentifier>{41c72129-c039-4559-8c3d-b3cb7a15b16f}</UniqueIdentifier>
     </Filter>
     <Filter Include="System\GameEngine\ObjectPool">
       <UniqueIdentifier>{899efce5-8949-4e19-94aa-eadf50314ca5}</UniqueIdentifier>
@@ -115,8 +109,41 @@
     <Filter Include="System\GameEngine\Physics">
       <UniqueIdentifier>{d33101e3-315e-4790-9917-501981ec3b44}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainEntry\TestScene">
+      <UniqueIdentifier>{cd8aa660-112c-4def-a6fd-5593c33ab904}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Util\Collision">
-      <UniqueIdentifier>{57cf0628-9075-48cd-8294-7c2591b7f619}</UniqueIdentifier>
+      <UniqueIdentifier>{8b8401ae-3061-4d1f-ba20-13234146e0b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\GameObjectBase">
+      <UniqueIdentifier>{41c72129-c039-4559-8c3d-b3cb7a15b16f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Camera">
+      <UniqueIdentifier>{932673ea-058b-4604-974b-8c0ecbb21d8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject">
+      <UniqueIdentifier>{53a16da6-ca74-4017-9002-3b9e11b2f257}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\Tile">
+      <UniqueIdentifier>{89147711-0561-48da-bf82-10a1d3645d53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Figure">
+      <UniqueIdentifier>{8b6f8296-0ae8-4b36-aa2b-43b665048919}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainEntry\MapToolScene">
+      <UniqueIdentifier>{0960c492-a87a-450f-ae24-71e353aa36cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainEntry\MapToolScene\MapGenerator">
+      <UniqueIdentifier>{e9d5672e-e4e5-4cce-8f6b-0a7b3f75df4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\UI">
+      <UniqueIdentifier>{3140c81d-a813-4f3b-955c-ed5ac2a39cf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\UI\Button">
+      <UniqueIdentifier>{3cb2ac71-9fd5-4fa0-8ac9-7d428f817a5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\UI\Canvas">
+      <UniqueIdentifier>{a6f983ee-2247-4f0f-9719-0957cb41554e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -217,7 +244,7 @@
       <Filter>System\MessageModule</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>System\GameObject</Filter>
+      <Filter>System\GameObjectBase</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>System\GameEngine\SceneManager</Filter>
@@ -240,9 +267,6 @@
     <ClInclude Include="LightingManager.h">
       <Filter>System\GameEngine\LightSystem</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectInterface.h">
-      <Filter>System\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="BinaryFile.h">
       <Filter>Util\File</Filter>
     </ClInclude>
@@ -261,8 +285,47 @@
     <ClInclude Include="CollisionInterface.h">
       <Filter>System\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="Bounding.h">
+    <ClInclude Include="TestScene.h">
+      <Filter>MainEntry\TestScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Rigidbody.h">
       <Filter>Util\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingScene.h">
+      <Filter>System\GameEngine\SceneManager\LoadingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraManager.h">
+      <Filter>System\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="TileManager.h">
+      <Filter>InGameObject\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>InGameObject\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="MapGenerator.h">
+      <Filter>MainEntry\MapToolScene\MapGenerator</Filter>
+    </ClInclude>
+    <ClInclude Include="MapToolScene.h">
+      <Filter>MainEntry\MapToolScene</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageButton.h">
+      <Filter>Util\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassicButton.h">
+      <Filter>Util\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Util\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas.h">
+      <Filter>Util\UI\Canvas</Filter>
+    </ClInclude>
+    <ClInclude Include="UIBase.h">
+      <Filter>Util\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MapPallete.h">
+      <Filter>MainEntry\MapToolScene\MapGenerator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -333,7 +396,7 @@
       <Filter>Util\Transform</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>System\GameObject</Filter>
+      <Filter>System\GameObjectBase</Filter>
     </ClCompile>
     <ClCompile Include="DataContext.cpp">
       <Filter>System\MessageModule</Filter>
@@ -365,9 +428,6 @@
     <ClCompile Include="LightingManager.cpp">
       <Filter>System\GameEngine\LightSystem</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectInterface.cpp">
-      <Filter>System\Interface</Filter>
-    </ClCompile>
     <ClCompile Include="BinaryFile.cpp">
       <Filter>Util\File</Filter>
     </ClCompile>
@@ -386,8 +446,47 @@
     <ClCompile Include="CollisionInterface.cpp">
       <Filter>System\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="Bounding.cpp">
+    <ClCompile Include="TestScene.cpp">
+      <Filter>MainEntry\TestScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Rigidbody.cpp">
       <Filter>Util\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingScene.cpp">
+      <Filter>System\GameEngine\SceneManager\LoadingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraManager.cpp">
+      <Filter>System\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="TileManager.cpp">
+      <Filter>InGameObject\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>InGameObject\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="MapGenerator.cpp">
+      <Filter>MainEntry\MapToolScene\MapGenerator</Filter>
+    </ClCompile>
+    <ClCompile Include="MapToolScene.cpp">
+      <Filter>MainEntry\MapToolScene</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageButton.cpp">
+      <Filter>Util\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="ClassicButton.cpp">
+      <Filter>Util\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Util\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas.cpp">
+      <Filter>Util\UI\Canvas</Filter>
+    </ClCompile>
+    <ClCompile Include="UIBase.cpp">
+      <Filter>Util\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MapPallete.cpp">
+      <Filter>MainEntry\MapToolScene\MapGenerator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

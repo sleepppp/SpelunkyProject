@@ -26,6 +26,7 @@
 #include <stack>
 #include <map>
 #include <unordered_map>
+#include <list>
 
 using namespace std;
 
@@ -43,9 +44,7 @@ using namespace std;
 #endif
 
 
+#define IsMouseOnGui ImGui::GetIO().WantCaptureMouse
 
-
-
-
-
+extern bool _isDebug;
 

@@ -21,7 +21,7 @@ void D2DRenderer::RenderText(const int & x, const int & y, const wstring & text,
 	Vector2 pos(x, y);
 	if (isRelative)
 	{
-		//TODO 카메라 보정 추가 
+		pos = _Camera->GetRelativeVector2(pos);
 	}
 	
 	IDWriteTextLayout* layout = nullptr;
@@ -71,7 +71,7 @@ void D2DRenderer::RenderText(const int & x, const int & y, const wstring & text,
 	Vector2 pos(x, y);
 	if (isRelative)
 	{
-		//TODO 카메라 보정 추가 
+		pos = _Camera->GetRelativeVector2(pos);
 	}
 	IDWriteTextLayout* layout = nullptr;
 	//텍스트 레이아웃 생성
@@ -124,7 +124,7 @@ void D2DRenderer::RenderTextField(const int & x, const int & y, const wstring & 
 	Vector2 pos(x, y);
 	if (isRelative)
 	{
-		//TODO 카메라 보정 추가 
+		pos = _Camera->GetRelativeVector2(pos);
 	}
 	IDWriteTextLayout* layout = nullptr;
 	mDWFactory->CreateTextLayout(
@@ -173,7 +173,7 @@ void D2DRenderer::RenderTextField(const int & x, const int & y, const wstring & 
 	Vector2 pos(x, y);
 	if (isRelative)
 	{
-		//TODO 카메라 보정 추가 
+		pos = _Camera->GetRelativeVector2(pos);
 	}
 	IDWriteTextLayout* layout = nullptr;
 	mDWFactory->CreateTextLayout(
@@ -221,12 +221,15 @@ void D2DRenderer::DrawLine(const Vector2 & start, const Vector2 & end, const D2D
 
 	mD2DRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 
+	Vector2 startPos = start;
+	Vector2 endPos = end;
 	if (isRelativePos)
 	{
-		//TODO 카메라 보정 추가 
+		startPos = _Camera->GetRelativeVector2(start);
+		endPos = _Camera->GetRelativeVector2(end);
 	}
 
-	mD2DRenderTarget->DrawLine(D2D1::Point2F(start.x, start.y), D2D1::Point2F(end.x, end.y), brush, strokeWidth);
+	mD2DRenderTarget->DrawLine(D2D1::Point2F(startPos.x, startPos.y), D2D1::Point2F(endPos.x, endPos.y), brush, strokeWidth);
 	SafeRelease(brush);
 }
 /**********************************************************************************************
@@ -242,13 +245,16 @@ void D2DRenderer::DrawLine(const Vector2 & start, const Vector2 & end, const Def
 {
 	mD2DRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 
+	Vector2 startPos = start;
+	Vector2 endPos = end;
 	if (isRelativePos)
 	{
-		//TODO 카메라 보정 추가 
+		startPos = _Camera->GetRelativeVector2(start);
+		endPos = _Camera->GetRelativeVector2(end);
 	}
 
-	mD2DRenderTarget->DrawLine(D2D1::Point2F(start.x, start.y),
-		D2D1::Point2F(end.x, end.y), mDefaultBrushList[(UINT)defaultBrush], strokeWidth);
+	mD2DRenderTarget->DrawLine(D2D1::Point2F(startPos.x, startPos.y),
+		D2D1::Point2F(endPos.x, endPos.y), mDefaultBrushList[(UINT)defaultBrush], strokeWidth);
 
 }
 /**********************************************************************************************
@@ -262,13 +268,14 @@ void D2DRenderer::DrawLine(const Vector2 & start, const Vector2 & end, const Def
 void D2DRenderer::DrawRectangle(const Figure::FloatRect & rc, const D2D1::ColorF::Enum & color, 
 	const float & alpha, const bool & isRelativePos, const float & strokeWidth)
 {
+	Figure::FloatRect rect = rc;
 	if (isRelativePos)
 	{
-		//TODO 카메라 보정 추가 
+		rect = _Camera->GetRelativeRect(rect);
 	}
 	//카메라에 없으면 랜더x
-	if (rc.left > (float)_WinSizeX || rc.right < 0.f ||
-		rc.top  >(float)_WinSizeY || rc.bottom < 0.f)
+	if (rect.left > (float)_WinSizeX || rect.right < 0.f ||
+		rect.top  >(float)_WinSizeY || rect.bottom < 0.f)
 	{
 		return;
 	}
@@ -278,7 +285,7 @@ void D2DRenderer::DrawRectangle(const Figure::FloatRect & rc, const D2D1::ColorF
 
 	mD2DRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 
-	mD2DRenderTarget->DrawRectangle(D2D1::RectF((float)rc.left, (float)rc.top, (float)rc.right, (float)rc.bottom),
+	mD2DRenderTarget->DrawRectangle(D2D1::RectF((float)rect.left, (float)rect.top, (float)rect.right, (float)rect.bottom),
 		brush, strokeWidth);
 
 	SafeRelease(brush);
@@ -293,20 +300,21 @@ void D2DRenderer::DrawRectangle(const Figure::FloatRect & rc, const D2D1::ColorF
 void D2DRenderer::DrawRectangle(const Figure::FloatRect & rc, const DefaultBrush & defaultBrush, 
 	const bool & isRelativePos, const float & strokeWidth)
 {
+	Figure::FloatRect rect = rc;
 	if (isRelativePos)
 	{
-		//TODO 카메라 보정 추가 
+		rect = _Camera->GetRelativeRect(rect);
 	}
 	//카메라에 없으면 랜더x
-	if (rc.left > (float)_WinSizeX || rc.right < 0.f ||
-		rc.top  >(float) _WinSizeY || rc.bottom < 0.f)
+	if (rect.left > (float)_WinSizeX || rect.right < 0.f ||
+		rect.top  >(float)_WinSizeY || rect.bottom < 0.f)
 	{
 		return;
 	}
 
 	mD2DRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 
-	mD2DRenderTarget->DrawRectangle(D2D1::RectF((float)rc.left, (float)rc.top, (float)rc.right, (float)rc.bottom),
+	mD2DRenderTarget->DrawRectangle(D2D1::RectF((float)rect.left, (float)rect.top, (float)rect.right, (float)rect.bottom),
 		mDefaultBrushList[(UINT)defaultBrush], strokeWidth);
 
 }
@@ -325,8 +333,10 @@ void D2DRenderer::DrawEllipse(const Vector2 & origin, const float & radius, cons
 	Vector2 pos = origin;
 	if (isARelativePos)
 	{
-		//TODO 카메라 보정 추가 
+		rc = _Camera->GetRelativeRect(rc);
+		pos = _Camera->GetRelativeVector2(pos);
 	}
+	//카메라에 없으면 랜더x
 	if (rc.left > (float)_WinSizeX || rc.right < 0.f ||
 		rc.top  >(float)_WinSizeY || rc.bottom < 0.f)
 	{
@@ -358,8 +368,10 @@ void D2DRenderer::DrawEllipse(const Vector2 & origin, const float & radius, cons
 	Vector2 pos = origin;
 	if (isRelativePos)
 	{
-		//TODO 카메라 보정 추가 
+		rc = _Camera->GetRelativeRect(rc);
+		pos = _Camera->GetRelativeVector2(pos);
 	}
+	//카메라에 없으면 랜더x
 	if (rc.left > (float)_WinSizeX || rc.right < 0.f ||
 		rc.top  >(float)_WinSizeY || rc.bottom < 0.f)
 	{
@@ -390,12 +402,13 @@ void D2DRenderer::DrawEllipse(const Vector2 & origin, const float & radius, cons
 void D2DRenderer::FillRectangle(const Figure::FloatRect & rc, const D2D1::ColorF::Enum & color, const float & alpha,
 	const bool & isRelativePos)
 {
+	Figure::FloatRect rect = rc;
 	if (isRelativePos)
 	{
-		//TODO 카메라 보정 추가 
+		rect = _Camera->GetRelativeRect(rect);
 	}
-	if (rc.left > (float)_WinSizeX || rc.right < 0.f ||
-		rc.top  >(float) _WinSizeY || rc.bottom < 0.f)
+	if (rect.left > (float)_WinSizeX || rect.right < 0.f ||
+		rect.top  >(float) _WinSizeY || rect.bottom < 0.f)
 	{
 		return;
 	}
@@ -403,7 +416,7 @@ void D2DRenderer::FillRectangle(const Figure::FloatRect & rc, const D2D1::ColorF
 	ID2D1SolidColorBrush* brush;
 	mD2DRenderTarget->CreateSolidColorBrush(D2D1::ColorF(color, alpha), &brush);
 	mD2DRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
-	mD2DRenderTarget->FillRectangle(D2D1::RectF((float)rc.left, (float)rc.top, (float)rc.right, (float)rc.bottom), brush);
+	mD2DRenderTarget->FillRectangle(D2D1::RectF((float)rect.left, (float)rect.top, (float)rect.right, (float)rect.bottom), brush);
 
 	SafeRelease(brush);
 }
@@ -416,19 +429,20 @@ void D2DRenderer::FillRectangle(const Figure::FloatRect & rc, const D2D1::ColorF
 void D2DRenderer::FillRectangle(const Figure::FloatRect & rc, const DefaultBrush & defaultBrush, 
 	const bool & isRelativePos)
 {
+	Figure::FloatRect rect = rc;
 	if (isRelativePos)
 	{
-		//TODO 카메라 보정 추가 
+		rect = _Camera->GetRelativeRect(rect);
 	}
-	if (rc.left > (float)_WinSizeX || rc.right < 0.f ||
-		rc.top  >(float)_WinSizeY || rc.bottom < 0.f)
+	if (rect.left > (float)_WinSizeX || rect.right < 0.f ||
+		rect.top  >(float) _WinSizeY || rect.bottom < 0.f)
 	{
 		return;
 	}
 
 	mD2DRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 
-	mD2DRenderTarget->FillRectangle(D2D1::RectF((float)rc.left, (float)rc.top, (float)rc.right, (float)rc.bottom),
+	mD2DRenderTarget->FillRectangle(D2D1::RectF((float)rect.left, (float)rect.top, (float)rect.right, (float)rect.bottom),
 		mDefaultBrushList[(UINT)defaultBrush]);
 }
 /**********************************************************************************************
@@ -446,8 +460,10 @@ void D2DRenderer::FiilEllipse(const Vector2 & origin, const float & radius, cons
 	Vector2 pos = origin;
 	if (isRelative)
 	{
-		//TODO 카메라 보정 추가 
+		rc = _Camera->GetRelativeRect(rc);
+		pos = _Camera->GetRelativeVector2(pos);
 	}
+	//카메라에 없으면 랜더x
 	if (rc.left > (float)_WinSizeX || rc.right < 0.f ||
 		rc.top  >(float)_WinSizeY || rc.bottom < 0.f)
 	{
@@ -457,8 +473,8 @@ void D2DRenderer::FiilEllipse(const Vector2 & origin, const float & radius, cons
 	mD2DRenderTarget->CreateSolidColorBrush(D2D1::ColorF(color, alpha), &brush);
 
 	D2D1_ELLIPSE ellipse;
-	ellipse.point.x = origin.x;
-	ellipse.point.y = origin.y;
+	ellipse.point.x = pos.x;
+	ellipse.point.y = pos.y;
 	ellipse.radiusX = radius;
 	ellipse.radiusY = radius;
 
@@ -480,16 +496,18 @@ void D2DRenderer::FiilEllipse(const Vector2 & origin, const float & radius, cons
 	Vector2 pos = origin;
 	if (isRelativePos)
 	{
-		//TODO 카메라 보정 추가 
+		rc = _Camera->GetRelativeRect(rc);
+		pos = _Camera->GetRelativeVector2(pos);
 	}
+	//카메라에 없으면 랜더x
 	if (rc.left > (float)_WinSizeX || rc.right < 0.f ||
 		rc.top  >(float)_WinSizeY || rc.bottom < 0.f)
 	{
 		return;
 	}
 	D2D1_ELLIPSE ellipse;
-	ellipse.point.x = origin.x;
-	ellipse.point.y = origin.y;
+	ellipse.point.x = pos.x;
+	ellipse.point.y = pos.y;
 	ellipse.radiusX = radius;
 	ellipse.radiusY = radius;
 

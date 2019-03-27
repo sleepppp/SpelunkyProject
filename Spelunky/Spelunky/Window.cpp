@@ -112,6 +112,10 @@ LRESULT Window::WndProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_MOUSEMOVE:
 		Input::Get()->InputProc(message, wParam, lParam);
+		break;
+	case WM_MOUSEWHEEL :
+		CameraManager::Get()->CameraProc(message, wParam, lParam);
+		break;
 	case WM_KEYDOWN:
 		switch (wParam)
 		{
@@ -124,6 +128,7 @@ LRESULT Window::WndProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 		PostQuitMessage(0);
 		break;
 	}
+
 	return (DefWindowProc(handle, message, wParam, lParam));
 }
 
@@ -155,6 +160,7 @@ WPARAM Window::Run()
 		{
 			this->UpdateSingleton();
 			this->_program->Update();
+			CameraManager::Get()->Update();
 			this->_program->Render();
 		}
 	}
@@ -176,6 +182,7 @@ void Window::CreateSingleton()
 {
 	TimeManager::Create();
 	Input::Create();
+	CameraManager::Create();
 	D3DRenderer::Create();
 	D2DRenderer::Create();
 	ImGui::Create(Window::GetHandle(), _D3DDevice, _D3DDeviceContext);
@@ -184,17 +191,20 @@ void Window::CreateSingleton()
 	}
 	ImageManager::Create();
 	SceneManager::Create();
+	DebugSystem::Create();
 }
 /*************************************************
 ## DeleteSingleton ##
 **************************************************/
 void Window::DeleteSingleton()
 {
+	DebugSystem::Delete();
 	SceneManager::Delete();
 	ImageManager::Delete();
 	ImGui::Delete();
 	D2DRenderer::Delete();
 	D3DRenderer::Delete();
+	CameraManager::Delete();
 	Input::Delete();
 	TimeManager::Delete();
 }

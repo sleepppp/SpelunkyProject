@@ -1,10 +1,24 @@
 #include "stdafx.h"
 #include "Program.h"
 
+#include "TestScene.h"
+#include "LoadingScene.h"
+#include "MapToolScene.h"
 
 Program::Program()
 {
+	TestScene* scene = new TestScene;
+	_SceneManager->AddScene("TestScene",scene);
 
+	MapToolScene* toolScene = new MapToolScene;
+	_SceneManager->AddScene("MapToolScene", toolScene);
+
+	LoadingScene* load = new LoadingScene;
+	_SceneManager->AddLoadingScene("LoadingScene", load);
+
+	load->AddThreadFunc([]() {_ImageManager->LoadAllResource(); });
+	_SceneManager->LoadSceneByLoading("LoadingScene","MapToolScene");
+	_SceneManager->InitFirstScene();
 }
 
 Program::~Program() 
@@ -15,6 +29,8 @@ Program::~Program()
 void Program::Update()
 {
 	_SceneManager->Update();
+	if (_Input->GetKeyDown(VK_F1))
+		_isDebug = !_isDebug;
 }
 
 void Program::Render()
@@ -24,10 +40,11 @@ void Program::Render()
 		D2DRenderer::Get()->BeginRender();
 		{
 			_SceneManager->Render();
-			_TimeManager->Render();
+			DebugSystem::Get()->Render();
 		}
 		D2DRenderer::Get()->EndRender();
 	}
 	ImGui::Render();
 	D3DRenderer::Get()->EndRender();
+	_SceneManager->PostRender();
 }
