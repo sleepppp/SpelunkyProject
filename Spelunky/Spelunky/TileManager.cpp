@@ -12,7 +12,7 @@ TileManager::TileManager(const UINT & tileX, const UINT & tileY)
 		mTileList[y].assign(tileX, nullptr);
 		for (UINT x = 0; x < tileX; ++x)
 		{
-			mTileList[y][x] = new Tile(tileSize * CastingFloat(x), tileSize * CastingFloat(y));
+			mTileList[y][x] = new Tile(tileSize / 2.f + tileSize * CastingFloat(x), tileSize / 2.f +  tileSize * CastingFloat(y));
 		}
 	}
 }
@@ -81,9 +81,9 @@ void TileManager::Render()
 
 Tile * const TileManager::GetTile(int indexX, int indexY)
 {
-	if (indexY < 0 || indexY >= mTileList.size())
+	if (indexY < 0 || indexY >= (int)mTileList.size())
 		return nullptr;
-	if (indexX < 0 || indexX >= mTileList[0].size())
+	if (indexX < 0 || indexX >= (int)mTileList[0].size())
 		return nullptr;
 	return mTileList[indexY][indexX];
 }
@@ -96,7 +96,7 @@ void TileManager::BuildByCellularAutomata(const float& wallRatio,const int& seco
 		{
 			mTileList[y][x]->Reset();
 			if (y == 0 || x == 0 || y == mTileList.size() - 1 || x == mTileList[0].size() - 1)
-				mTileList[y][x]->SetType(Tile::Type::Soil);
+				mTileList[y][x]->SetType(Tile::Type::Default);
 		}
 	}
 
@@ -107,14 +107,14 @@ void TileManager::BuildByCellularAutomata(const float& wallRatio,const int& seco
 	{
 		int randomIndexX = Math::Random(0, (int)mTileList[0].size() - 1);
 		int randomIndexY = Math::Random(0, (int)mTileList.size() - 1);
-		if (mTileList[randomIndexY][randomIndexX]->GetType() != Tile::Type::Soil)
+		if (mTileList[randomIndexY][randomIndexX]->GetType() != Tile::Type::Default)
 		{
-			mTileList[randomIndexY][randomIndexX]->SetType(Tile::Type::Soil);
+			mTileList[randomIndexY][randomIndexX]->SetType(Tile::Type::Default);
 			++wallCount;
 		}
 	}
 
-	for (UINT i = 0; i < secondPropess; ++i)
+	for (UINT i = 0; i < (UINT)secondPropess; ++i)
 	{
 		for (UINT y = 1; y < mTileList.size() - 1; ++y)
 		{
@@ -127,13 +127,13 @@ void TileManager::BuildByCellularAutomata(const float& wallRatio,const int& seco
 					{
 						for (UINT tempX = x - 1; tempX < x + 2; ++tempX)
 						{
-							if (mTileList[tempY][tempX]->GetType() == Tile::Type::Soil)
+							if (mTileList[tempY][tempX]->GetType() == Tile::Type::Default)
 								++count;
 						}
 					}
 
 					if (count >= 5)
-						mTileList[y][x]->SetType(Tile::Type::Soil);
+						mTileList[y][x]->SetType(Tile::Type::Default);
 				}
 			}
 		}
@@ -147,13 +147,13 @@ void TileManager::TrimTile()
 		for (UINT x = 1; x < mTileList.size() - 1; ++x)
 		{
 			int wallCount = 0; 
-			if (mTileList[y][x]->GetType() == Tile::Type::Soil)
+			if (mTileList[y][x]->GetType() == Tile::Type::Default)
 			{
 				for (UINT tempY = y - 1; tempY < y + 2; ++tempY)
 				{
 					for (UINT tempX = x - 1; tempX < x + 2; ++tempX)
 					{
-						if (mTileList[tempY][tempX]->GetType() == Tile::Type::Soil)
+						if (mTileList[tempY][tempX]->GetType() == Tile::Type::Default)
 							++wallCount;
 					}
 					if (wallCount >= 3)

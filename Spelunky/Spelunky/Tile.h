@@ -9,7 +9,7 @@ public:
 private:
 	enum class Type : int
 	{
-		Soil = 0,Wood,Rock,Empty
+		Default = 0,Rock,Empty
 	};
 private:
 	class Image* mImage;
@@ -17,7 +17,8 @@ private:
 	Type mType; 
 private:
 	friend class TileManager;
-	friend class MapGenerator;
+	friend class MapTool;
+	friend class TileMapGenerator;
 	Tile() = delete;
 	explicit Tile(const float& x, const float& y);
 	explicit Tile(const Vector2& pos);
@@ -29,8 +30,9 @@ public:
 	const Figure::FloatRect& GetRect()const { return mRect; }
 	const Type& GetType()const { return mType; }
 	void SetType(const Type& type) { mType = type; }
-	void SetImage(class Image*const pImage) { mImage = pImage; }
+	void SetImage(class Image*const pImage) { mImage = pImage; if (!mImage)mType = Type::Default; }
 	void SetImage(const string& key);
-	Vector2 GetPosition() { return Vector2(mRect.left, mRect.top); }
+	class Image* GetImage()const { return mImage; }
+	Vector2 GetPosition() { return mRect.GetCenter(); }
 };
 

@@ -4,7 +4,7 @@ class MapToolScene : public SceneBase
 {
 	BlockAssign(MapToolScene)
 private:
-	class MapGenerator* mGenerator;
+	class MapTool* mGenerator;
 public:
 	MapToolScene();
 	virtual ~MapToolScene();

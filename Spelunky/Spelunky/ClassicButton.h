@@ -7,9 +7,10 @@ private:
 	static float _upAlpha; 
 private:
 	D2D1::ColorF::Enum mColor;
+	wstring mText;
 public:
 	ClassicButton() = delete;
-	explicit ClassicButton(const D2D1::ColorF::Enum& color,const Vector2& pos, const Vector2& size, const Pivot::Enum& pivot,
+	explicit ClassicButton(const wstring&  text , const D2D1::ColorF::Enum& color,const Vector2& pos, const Vector2& size, const Pivot::Enum& pivot,
 		class Transform*const pParent = nullptr);
 	virtual ~ClassicButton();
 

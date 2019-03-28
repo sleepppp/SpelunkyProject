@@ -31,6 +31,14 @@ const RECT Figure::FloatRect::GetRect()
 	return { (LONG)left,(LONG)top,(LONG)right,(LONG)bottom };
 }
 /**************************************************************************************************
+## FloatRect::GetCenter ##
+@@ return Vector2 : ¡ﬂΩ… ¡¬«•
+**************************************************************************************************/
+Vector2 Figure::FloatRect::GetCenter()
+{
+	return Vector2(left + (right - left)/2.f , top + (bottom - top)/2.f);
+}
+/**************************************************************************************************
 ## FloatRect::Update ##
 @@ Vector2 pos : ¡¬«•
 @@ Vector2 size : ªÁ¿Ã¡Ó

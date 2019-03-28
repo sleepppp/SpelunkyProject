@@ -21,4 +21,8 @@ void ImageButton::Render()
 		mImage->SetSize(mTransform->GetSize());
 		mImage->Render(mTransform->GetWorldPosition(), mTransform->GetPivot(), false);
 	}
+	else
+	{
+		_D2DRenderer->FillRectangle(mTransform->GetRect(), D2D1::ColorF::Gray, 0.3f, false);
+	}
 }

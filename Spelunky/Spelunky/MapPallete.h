@@ -1,24 +1,21 @@
 #pragma once
 class MapPallete final 
 {
-private:
-	struct Slot
-	{
-		class ImageButton* button;
-
-		Slot()
-			:button(nullptr) {}
-	};
 public:
 	MapPallete(const MapPallete& t) = delete;
 	const MapPallete& operator=(const MapPallete& t) = delete;
 private:
 	class Canvas* mCanvas;
-
-	vector<class Slot> mButtonList;
+	vector<class MapPalletePannel*> mPannels;
+	int mCurrentPannelIndex;
 
 	Vector2 mPickOffset; 
 	bool mIsPick; 
+
+	class ClassicButton* mPannelButton;
+	class ClassicButton* mEraseButton;
+
+	class Image* mCurrentImage;
 public:
 	MapPallete();
 	~MapPallete();
@@ -27,6 +24,7 @@ public:
 	void Render(); 
 
 	const bool MouseOnPallete();
+	class Image* GetCurrentImage()const { return mCurrentImage; }
 private:
 	void CanvasUpdate(); 
 };

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "MapToolScene.h"
 
-#include "MapGenerator.h"
+#include "MapTool.h"
 MapToolScene::MapToolScene()
 {
 	
@@ -15,7 +15,7 @@ MapToolScene::~MapToolScene()
 
 void MapToolScene::Init()
 {
-	mGenerator = new MapGenerator;
+	mGenerator = new MapTool;
 }
 
 void MapToolScene::Release()

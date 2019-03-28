@@ -23,7 +23,7 @@
     <ProjectGuid>{78037806-28CB-4C17-AD07-2B2E357D8171}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Spelunky</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -175,8 +175,9 @@
     <ClInclude Include="Line.h" />
     <ClInclude Include="Loading.h" />
     <ClInclude Include="LoadingScene.h" />
-    <ClInclude Include="MapGenerator.h" />
+    <ClInclude Include="MapTool.h" />
     <ClInclude Include="MapPallete.h" />
+    <ClInclude Include="MapPalletePannel.h" />
     <ClInclude Include="MapToolScene.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="MessageComponent.h" />
@@ -202,6 +203,7 @@
     <ClInclude Include="TextFile.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileManager.h" />
+    <ClInclude Include="TileMapGenerator.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="SingletonBase.h" />
     <ClInclude Include="Transform.h" />
@@ -235,8 +237,9 @@
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="Loading.cpp" />
     <ClCompile Include="LoadingScene.cpp" />
-    <ClCompile Include="MapGenerator.cpp" />
+    <ClCompile Include="MapTool.cpp" />
     <ClCompile Include="MapPallete.cpp" />
+    <ClCompile Include="MapPalletePannel.cpp" />
     <ClCompile Include="MapToolScene.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="MessageComponent.cpp" />
@@ -263,6 +266,7 @@
     <ClCompile Include="TextFile.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileManager.cpp" />
+    <ClCompile Include="TileMapGenerator.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UIBase.cpp" />

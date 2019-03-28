@@ -3,59 +3,53 @@
 
 #include "Canvas.h"
 #include "ImageButton.h"
+#include "ClassicButton.h"
 #include "Transform.h"
+
+#include "MapPalletePannel.h"
 
 MapPallete::MapPallete()
 	:mCanvas(new Canvas((D2D1::ColorF::Enum)0x555599, 0.6f, Vector2(_WinSizeX - 300, _WinSizeY / 2 - 300), Vector2(300, 500), Pivot::LeftTop)),
-	mIsPick(false)
+	mIsPick(false),mCurrentPannelIndex(0)
 {
-	float size = 80.f;
-	float offsetX = (300.f - size) / 4.f / 4.f;
+	mPannels.push_back(new MapPalletePannel());
+	mPannels.back()->CreateSoilPannel(mCanvas);
+	mPannels.push_back(new MapPalletePannel());
+	mPannels.back()->CreateWoodPannel(mCanvas);
+
 	Vector2 canvasPos = mCanvas->GetTransform()->GetWorldPosition();
-	int index = 1;
-	for (UINT y = 0; y < 5; ++y)
-	{
-		for (UINT x = 0; x < 3; ++x)
-		{
-			Vector2 worldPos
-			(
-				canvasPos.x + offsetX + offsetX * x + size * (float)x, 
-				canvasPos.y + offsetX + offsetX * y + size * (float)y
-			);
-			Slot slot;
-			string key = "Soil-";
-			if (index < 10)
-				key = key +  "0" + to_string(index);
-			else
-				key = key +  to_string(index);
-			slot.button = new ImageButton(key, worldPos, Vector2(size, size), Pivot::LeftTop, mCanvas->GetTransform());
-			mButtonList.push_back(slot);
-			++index;
-		}
-	}
+	mPannelButton = new ClassicButton(L"  Next",(D2D1::ColorF::Enum)0x555599, canvasPos - Vector2(0, 30),
+		Vector2(50, 30), Pivot::LeftTop, mCanvas->GetTransform());
+	mEraseButton = new ClassicButton(L"  Erase", (D2D1::ColorF::Enum)0x555599, canvasPos + Vector2(50, -30),
+		Vector2(50, 30), Pivot::LeftTop, mCanvas->GetTransform());
 }
 
 
 MapPallete::~MapPallete()
 {
-	for (UINT i = 0; i < mButtonList.size(); ++i)
-	{
-		SafeDelete(mButtonList[i].button);
-	}
-	mButtonList.clear();
+	SafeDelete(mEraseButton);
+	SafeDelete(mPannelButton);
+	for (UINT i = 0; i < mPannels.size(); ++i)
+		SafeDelete(mPannels[i]);
 	SafeDelete(mCanvas);
 }
 
 void MapPallete::Update()
 {
 	this->CanvasUpdate();
-
-	for (UINT i = 0; i < mButtonList.size(); ++i)
+	if (mPannelButton->Update())
 	{
-		if (mButtonList[i].button->Update())
-		{
+		if (++mCurrentPannelIndex >= CastingInt(mPannels.size()))
+			mCurrentPannelIndex = 0;
+	}
+	if (mEraseButton->Update())
+		mCurrentImage = nullptr;
 
-		}
+	ImageButton* pTarget = nullptr;
+	if (mPannels[mCurrentPannelIndex]->Update(&pTarget))
+	{
+		if(pTarget)
+			mCurrentImage = pTarget->GetImage();
 	}
 
 }
@@ -63,14 +57,14 @@ void MapPallete::Update()
 void MapPallete::Render()
 {
 	mCanvas->Render();
-
-	for (UINT i = 0; i < mButtonList.size(); ++i)
-		mButtonList[i].button->Render();
+	mPannels[mCurrentPannelIndex]->Render();
+	mPannelButton->Render();
+	mEraseButton->Render();
 }
 
 const bool MapPallete::MouseOnPallete()
 {
-	return mCanvas->IsOnMouse();
+	return (mCanvas->IsOnMouse() || mPannelButton->IsOnMouse() || mEraseButton->IsOnMouse());
 }
 
 void MapPallete::CanvasUpdate()
