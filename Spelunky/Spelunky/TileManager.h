@@ -17,8 +17,5 @@ public:
 
 	class Tile*const GetTile(int indexX, int indexY);
 	UINT GetMapTileSize() { return mTileList.size() * mTileList[0].size(); }
-
-	void BuildByCellularAutomata(const float& wallRatio = 0.4f,const int& secondPropess = 1);
-	void TrimTile();
 };
 

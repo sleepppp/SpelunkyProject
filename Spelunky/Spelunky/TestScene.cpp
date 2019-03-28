@@ -5,6 +5,6 @@
 
 void TestScene::Init()
 {
-	TileManager* tileManager = new TileManager(100,100);
+	TileManager* tileManager = new TileManager(40,32);
 	this->mObjectPool->AddObject(tileManager);
 }

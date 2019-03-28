@@ -38,9 +38,16 @@ void Tile::Reset()
 	this->mImage = nullptr;
 }
 
+void Tile::SetImage(Image * const pImage)
+{
+	mImage = pImage;
+	if (mImage == nullptr)
+		mType = Type::Empty;
+}
+
 void Tile::SetImage(const string & key)
 {
 	this->mImage = _ImageManager->FindImage(key);
-	if (!mImage)
-		mType = Type::Default;
+	if (mImage)
+		mType = Type::Empty;
 }

@@ -14,5 +14,6 @@ public:
 	void Render()final override;
 
 	class Image*const GetImage()const { return mImage; }
+	void SetImage(const string& str);
 };
 

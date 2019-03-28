@@ -16,6 +16,10 @@ MapPallete::MapPallete()
 	mPannels.back()->CreateSoilPannel(mCanvas);
 	mPannels.push_back(new MapPalletePannel());
 	mPannels.back()->CreateWoodPannel(mCanvas);
+	mPannels.push_back(new MapPalletePannel());
+	mPannels.back()->CreateElementPannel(mCanvas);
+	mPannels.push_back(new MapPalletePannel());
+	mPannels.back()->CreateRealPannel(mCanvas);
 
 	Vector2 canvasPos = mCanvas->GetTransform()->GetWorldPosition();
 	mPannelButton = new ClassicButton(L"  Next",(D2D1::ColorF::Enum)0x555599, canvasPos - Vector2(0, 30),
@@ -46,10 +50,15 @@ void MapPallete::Update()
 		mCurrentImage = nullptr;
 
 	ImageButton* pTarget = nullptr;
-	if (mPannels[mCurrentPannelIndex]->Update(&pTarget))
+	Tile::Type type;
+	if (mPannels[mCurrentPannelIndex]->Update(&pTarget,&type))
 	{
-		if(pTarget)
+		if (pTarget)
+		{
 			mCurrentImage = pTarget->GetImage();
+			mCurrentType = type;
+
+		}
 	}
 
 }

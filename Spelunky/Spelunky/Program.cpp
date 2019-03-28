@@ -17,7 +17,7 @@ Program::Program()
 	_SceneManager->AddLoadingScene("LoadingScene", load);
 
 	load->AddThreadFunc([]() {_ImageManager->LoadAllResource(); });
-	_SceneManager->LoadSceneByLoading("LoadingScene","MapToolScene");
+	_SceneManager->LoadSceneByLoading("LoadingScene","TestScene");
 	_SceneManager->InitFirstScene();
 }
 

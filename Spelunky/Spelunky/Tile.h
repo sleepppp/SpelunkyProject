@@ -6,10 +6,10 @@ private:
 	static float _tileSize;
 public:
 	static const float& GetTileSize() { return _tileSize; }
-private:
+public:
 	enum class Type : int
 	{
-		Default = 0,Rock,Empty
+		Soil = 0 ,Wood,Rock,Box, Rope,Ladder,Entry,Exit,Empty
 	};
 private:
 	class Image* mImage;
@@ -30,7 +30,7 @@ public:
 	const Figure::FloatRect& GetRect()const { return mRect; }
 	const Type& GetType()const { return mType; }
 	void SetType(const Type& type) { mType = type; }
-	void SetImage(class Image*const pImage) { mImage = pImage; if (!mImage)mType = Type::Default; }
+	void SetImage(class Image*const pImage);
 	void SetImage(const string& key);
 	class Image* GetImage()const { return mImage; }
 	Vector2 GetPosition() { return mRect.GetCenter(); }

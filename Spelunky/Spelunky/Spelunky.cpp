@@ -21,7 +21,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	desc.bFullScreen = false;				//전체화면 여부 
 	Window::SetDesc(&desc);
 	//타임 시드 초기화 
-	srand((UINT)time(0));
+	srand(GetTickCount());
 	//윈도우 생성 및 메인 루프 
 	Window* window = new Window();
 	WPARAM wParam = window->Run();

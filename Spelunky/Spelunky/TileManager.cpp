@@ -1,20 +1,12 @@
 #include "stdafx.h"
 #include "TileManager.h"
 
-
+#include "TileMapGenerator.h"
 TileManager::TileManager(const UINT & tileX, const UINT & tileY)
 	:GameObject("TileManager",Vector2(),Vector2(),Pivot::LeftTop,RenderPool::Layer::Tile)
 {
-	float tileSize = Tile::GetTileSize();
-	mTileList.assign(tileY, vector<Tile*>());
-	for (UINT y = 0; y < tileY; ++y)
-	{
-		mTileList[y].assign(tileX, nullptr);
-		for (UINT x = 0; x < tileX; ++x)
-		{
-			mTileList[y][x] = new Tile(tileSize / 2.f + tileSize * CastingFloat(x), tileSize / 2.f +  tileSize * CastingFloat(y));
-		}
-	}
+	TileMapGenerator generator;
+	generator.CreateByCellularAutomata(&mTileList, tileX, tileY ,0.33f,3,5);
 }
 
 
@@ -47,18 +39,23 @@ void TileManager::Render()
 	{
 		ImGui::Begin("TileManager");
 		{
-			static float wallRatio = 0.4f;
-			static int processCount = 1;
-			ImGui::SliderFloat("WallRatio", &wallRatio, 0.1f, 0.9f);
-			ImGui::SliderInt("ProcessCount", &processCount, 0, 5);
-			if (ImGui::Button("Accept"))
-				this->BuildByCellularAutomata(wallRatio, processCount);
-			ImGui::SameLine();
-			if (ImGui::Button("Trim"))
-				this->TrimTile();
+			static float wallRatio = 0.3f;
+			static int secondPass = 3;
+			static int trimPass = 5;
+
+			ImGui::SliderFloat("WallRatio", &wallRatio, 0.1f, 0.8f);
+			ImGui::SliderInt("SecondPass", &secondPass, 1, 10);
+			ImGui::SliderInt("TrimPass", &trimPass, 1, 10);
+
+			if (ImGui::Button("ReGenerate"))
+			{
+				static TileMapGenerator generator;
+				generator.BuildByCellularAutomata(&mTileList, wallRatio, secondPass, trimPass);
+			}
 		}
 		ImGui::End();
 	}
+
 	float tileSize = Tile::GetTileSize();
 	Figure::FloatRect cameraRc = _Camera->GetCameraRect();
 	float zoomFactor = _Camera->GetZoom();
@@ -88,84 +85,4 @@ Tile * const TileManager::GetTile(int indexX, int indexY)
 	return mTileList[indexY][indexX];
 }
 
-void TileManager::BuildByCellularAutomata(const float& wallRatio,const int& secondPropess)
-{
-	for (UINT y = 0; y < mTileList.size(); ++y)
-	{
-		for (UINT x = 0; x < mTileList[y].size(); ++x)
-		{
-			mTileList[y][x]->Reset();
-			if (y == 0 || x == 0 || y == mTileList.size() - 1 || x == mTileList[0].size() - 1)
-				mTileList[y][x]->SetType(Tile::Type::Default);
-		}
-	}
 
-	int wallSize = CastingInt(CastingFloat(GetMapTileSize()) * wallRatio);
-	int wallCount = 0;
-
-	while (wallCount < wallSize)
-	{
-		int randomIndexX = Math::Random(0, (int)mTileList[0].size() - 1);
-		int randomIndexY = Math::Random(0, (int)mTileList.size() - 1);
-		if (mTileList[randomIndexY][randomIndexX]->GetType() != Tile::Type::Default)
-		{
-			mTileList[randomIndexY][randomIndexX]->SetType(Tile::Type::Default);
-			++wallCount;
-		}
-	}
-
-	for (UINT i = 0; i < (UINT)secondPropess; ++i)
-	{
-		for (UINT y = 1; y < mTileList.size() - 1; ++y)
-		{
-			for (UINT x = 1; x < mTileList.size() - 1; ++x)
-			{
-				if (mTileList[y][x]->GetType() == Tile::Type::Empty)
-				{
-					int count = 0;
-					for (UINT tempY = y - 1; tempY < y + 2; ++tempY)
-					{
-						for (UINT tempX = x - 1; tempX < x + 2; ++tempX)
-						{
-							if (mTileList[tempY][tempX]->GetType() == Tile::Type::Default)
-								++count;
-						}
-					}
-
-					if (count >= 5)
-						mTileList[y][x]->SetType(Tile::Type::Default);
-				}
-			}
-		}
-	}
-}
-
-void TileManager::TrimTile()
-{
-	for (UINT y = 1; y < mTileList.size() - 1; ++y)
-	{
-		for (UINT x = 1; x < mTileList.size() - 1; ++x)
-		{
-			int wallCount = 0; 
-			if (mTileList[y][x]->GetType() == Tile::Type::Default)
-			{
-				for (UINT tempY = y - 1; tempY < y + 2; ++tempY)
-				{
-					for (UINT tempX = x - 1; tempX < x + 2; ++tempX)
-					{
-						if (mTileList[tempY][tempX]->GetType() == Tile::Type::Default)
-							++wallCount;
-					}
-					if (wallCount >= 3)
-						break;
-				}
-
-				if (wallCount < 3)
-				{
-					mTileList[y][x]->SetType(Tile::Type::Empty);
-				}
-
-			}
-		}
-	}
-}

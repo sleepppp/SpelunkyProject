@@ -48,7 +48,7 @@ void MapTool::Update()
 				if (image)
 				{
 					mTileList[indexY][indexX]->SetImage(mPallete->GetCurrentImage());
-					mTileList[indexY][indexX]->SetType(Tile::Type::Default);
+					mTileList[indexY][indexX]->SetType(mPallete->GetCurrentType());
 				}
 				else
 				{
@@ -120,6 +120,9 @@ void MapTool::PostRender()
 			ImGui::SameLine();
 			if (ImGui::Button("Load"))
 				this->LoadData();
+			ImGui::SameLine();
+			if (ImGui::Button("Reset"))
+				this->Reset();
 		}
 		ImGui::End();
 	}
@@ -297,7 +300,7 @@ void MapTool::Reset()
 {
 	for (UINT y = 0; y < mTileList.size(); ++y)
 	{
-		for (UINT x = 0; x < mTileList.size(); ++x)
+		for (UINT x = 0; x < mTileList[y].size(); ++x)
 		{
 			mTileList[y][x]->SetImage(nullptr);
 		}

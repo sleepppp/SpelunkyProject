@@ -26,3 +26,8 @@ void ImageButton::Render()
 		_D2DRenderer->FillRectangle(mTransform->GetRect(), D2D1::ColorF::Gray, 0.3f, false);
 	}
 }
+
+void ImageButton::SetImage(const string & str)
+{
+	mImage = _ImageManager->FindImage(str);
+}
