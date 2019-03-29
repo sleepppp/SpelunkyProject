@@ -161,6 +161,7 @@
     <ClInclude Include="DataContext.h" />
     <ClInclude Include="DebugSystem.h" />
     <ClInclude Include="DefineHeader.h" />
+    <ClInclude Include="DelaunayScene.h" />
     <ClInclude Include="EnumStructHeader.h" />
     <ClInclude Include="Figure.h" />
     <ClInclude Include="FloatEllipse.h" />
@@ -207,6 +208,7 @@
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="SingletonBase.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="Triangle.h" />
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="UpdatePool.h" />
     <ClInclude Include="Vector2.h" />
@@ -225,6 +227,7 @@
     <ClCompile Include="D3DRenderer.cpp" />
     <ClCompile Include="DataContext.cpp" />
     <ClCompile Include="DebugSystem.cpp" />
+    <ClCompile Include="DelaunayScene.cpp" />
     <ClCompile Include="Figure.cpp" />
     <ClCompile Include="FloatEllipse.cpp" />
     <ClCompile Include="FloatRect.cpp" />
@@ -269,6 +272,7 @@
     <ClCompile Include="TileMapGenerator.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="UpdatePool.cpp" />
     <ClCompile Include="Vector2.cpp" />

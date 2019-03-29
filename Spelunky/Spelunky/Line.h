@@ -13,7 +13,7 @@ namespace Figure
 		Vector2 start;
 		Vector2 end;
 
-		FloatLine() = delete;
+		FloatLine() {}
 		explicit FloatLine(const Vector2& start, const Vector2& end);
 		explicit FloatLine(const Vector2& start, const float& angle, const float& dist = (float)MaxRayRange);
 	}Line;

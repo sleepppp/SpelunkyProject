@@ -31,5 +31,6 @@ public:
 	static float ToRadian(const Vector2* const pVector2);
 	static float Length(const Vector2* const pVector2);
 	static float Dot(const Vector2* const pVector2A, const Vector2* const pVector2B);
+	static float Cross(const Vector2*const pvector2A, const Vector2* const pVector2B);
 };
 

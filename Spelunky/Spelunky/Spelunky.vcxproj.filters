@@ -145,6 +145,9 @@
     <Filter Include="MainEntry\MapToolScene\MapTool">
       <UniqueIdentifier>{e9d5672e-e4e5-4cce-8f6b-0a7b3f75df4d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainEntry\Delaunay">
+      <UniqueIdentifier>{93ac3b38-222f-4fb9-a0a7-e1f618725d93}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -333,6 +336,12 @@
     <ClInclude Include="TileMapGenerator.h">
       <Filter>InGameObject\Tile</Filter>
     </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>Util\Figure</Filter>
+    </ClInclude>
+    <ClInclude Include="DelaunayScene.h">
+      <Filter>MainEntry\Delaunay</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Spelunky.cpp">
@@ -499,6 +508,12 @@
     </ClCompile>
     <ClCompile Include="TileMapGenerator.cpp">
       <Filter>InGameObject\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>Util\Figure</Filter>
+    </ClCompile>
+    <ClCompile Include="DelaunayScene.cpp">
+      <Filter>MainEntry\Delaunay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

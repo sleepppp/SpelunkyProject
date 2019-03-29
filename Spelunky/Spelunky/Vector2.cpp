@@ -89,9 +89,9 @@ Vector2 Vector2::operator/(const float & scalar)
 
 const bool Vector2::operator==(const Vector2 & v)
 {
-	if (this->x == v.x)
+	if (Math::FloatEqual(this->x, v.x))
 	{
-		if (this->y == v.y)
+		if (Math::FloatEqual(this->y ,v.y))
 			return true;
 	}
 	return false;
@@ -152,5 +152,16 @@ float Vector2::Length(const Vector2 * const pVector2)
 float Vector2::Dot(const Vector2 * const pVector2A, const Vector2 * const pVector2B)
 {
 	return pVector2A->x * pVector2B->x + pVector2A->y * pVector2B->y;
+}
+/****************************************************************************************************
+## static Cross ##
+@@ Vector2* pVector2A : º¤ÅÍ A
+@@ Vector2* pVector2B : º¤ÅÍ B
+
+@@ return float : µÎ º¤ÅÍÀÇ ¿ÜÀû °ª
+*****************************************************************************************************/
+Vector2 Vector2::Cross(const Vector2 * const pvector2A, const Vector2 * const pVector2B)
+{
+	return Vector2(pvector2A->x * pVector2B->y , pvector2A->y * pVector2B->x);
 }
 

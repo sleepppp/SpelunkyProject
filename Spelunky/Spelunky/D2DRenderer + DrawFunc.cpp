@@ -331,10 +331,12 @@ void D2DRenderer::DrawEllipse(const Vector2 & origin, const float & radius, cons
 {
 	Figure::FloatRect rc = Figure::RectMakePivot(origin, Vector2(radius,radius),Pivot::Center);
 	Vector2 pos = origin;
+	float tempRadius = radius;
 	if (isARelativePos)
 	{
 		rc = _Camera->GetRelativeRect(rc);
 		pos = _Camera->GetRelativeVector2(pos);
+		tempRadius = tempRadius * _Camera->GetZoom();
 	}
 	//카메라에 없으면 랜더x
 	if (rc.left > (float)_WinSizeX || rc.right < 0.f ||
@@ -346,8 +348,8 @@ void D2DRenderer::DrawEllipse(const Vector2 & origin, const float & radius, cons
 	D2D1_ELLIPSE ellipse;
 	ellipse.point.x = pos.x;
 	ellipse.point.y = pos.y;
-	ellipse.radiusX = radius;
-	ellipse.radiusY = radius;
+	ellipse.radiusX = tempRadius;
+	ellipse.radiusY = tempRadius;
 
 	mD2DRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 	mD2DRenderTarget->DrawEllipse(&ellipse, mDefaultBrushList[(UINT)defaultBrush], strokeWidth);
@@ -366,10 +368,12 @@ void D2DRenderer::DrawEllipse(const Vector2 & origin, const float & radius, cons
 {
 	Figure::FloatRect rc = Figure::RectMakePivot(origin, Vector2(radius, radius), Pivot::Center);
 	Vector2 pos = origin;
+	float tempRadius = radius;
 	if (isRelativePos)
 	{
 		rc = _Camera->GetRelativeRect(rc);
 		pos = _Camera->GetRelativeVector2(pos);
+		tempRadius = tempRadius * _Camera->GetZoom();
 	}
 	//카메라에 없으면 랜더x
 	if (rc.left > (float)_WinSizeX || rc.right < 0.f ||
@@ -384,8 +388,8 @@ void D2DRenderer::DrawEllipse(const Vector2 & origin, const float & radius, cons
 	D2D1_ELLIPSE ellipse;
 	ellipse.point.x = pos.x;
 	ellipse.point.y = pos.y;
-	ellipse.radiusX = radius;
-	ellipse.radiusY = radius;
+	ellipse.radiusX = tempRadius;
+	ellipse.radiusY = tempRadius;
 
 	mD2DRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 	mD2DRenderTarget->DrawEllipse(&ellipse, brush, strokeWidth);
@@ -458,10 +462,13 @@ void D2DRenderer::FiilEllipse(const Vector2 & origin, const float & radius, cons
 {
 	Figure::FloatRect rc = Figure::RectMakePivot(origin, Vector2(radius, radius), Pivot::Center);
 	Vector2 pos = origin;
+	float tempRadius = radius;
 	if (isRelative)
 	{
 		rc = _Camera->GetRelativeRect(rc);
 		pos = _Camera->GetRelativeVector2(pos);
+		tempRadius = tempRadius * _Camera->GetZoom();
+
 	}
 	//카메라에 없으면 랜더x
 	if (rc.left > (float)_WinSizeX || rc.right < 0.f ||
@@ -475,8 +482,8 @@ void D2DRenderer::FiilEllipse(const Vector2 & origin, const float & radius, cons
 	D2D1_ELLIPSE ellipse;
 	ellipse.point.x = pos.x;
 	ellipse.point.y = pos.y;
-	ellipse.radiusX = radius;
-	ellipse.radiusY = radius;
+	ellipse.radiusX = tempRadius;
+	ellipse.radiusY = tempRadius;
 
 	mD2DRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 	mD2DRenderTarget->FillEllipse(&ellipse, brush);
@@ -494,10 +501,12 @@ void D2DRenderer::FiilEllipse(const Vector2 & origin, const float & radius, cons
 {
 	Figure::FloatRect rc = Figure::RectMakePivot(origin, Vector2(radius, radius), Pivot::Center);
 	Vector2 pos = origin;
+	float tempRadius = radius;
 	if (isRelativePos)
 	{
 		rc = _Camera->GetRelativeRect(rc);
 		pos = _Camera->GetRelativeVector2(pos);
+		tempRadius = tempRadius * _Camera->GetZoom();
 	}
 	//카메라에 없으면 랜더x
 	if (rc.left > (float)_WinSizeX || rc.right < 0.f ||
@@ -508,8 +517,8 @@ void D2DRenderer::FiilEllipse(const Vector2 & origin, const float & radius, cons
 	D2D1_ELLIPSE ellipse;
 	ellipse.point.x = pos.x;
 	ellipse.point.y = pos.y;
-	ellipse.radiusX = radius;
-	ellipse.radiusY = radius;
+	ellipse.radiusX = tempRadius;
+	ellipse.radiusY = tempRadius;
 
 	mD2DRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 	mD2DRenderTarget->FillEllipse(&ellipse, mDefaultBrushList[(UINT)brush]);

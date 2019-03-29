@@ -4,6 +4,7 @@
 #include "TestScene.h"
 #include "LoadingScene.h"
 #include "MapToolScene.h"
+#include "DelaunayScene.h"
 
 Program::Program()
 {
@@ -13,11 +14,15 @@ Program::Program()
 	MapToolScene* toolScene = new MapToolScene;
 	_SceneManager->AddScene("MapToolScene", toolScene);
 
+	DelaunayScene* delaunayScene = new DelaunayScene;
+	_SceneManager->AddScene("DelaunayScene", delaunayScene);
+
+
 	LoadingScene* load = new LoadingScene;
 	_SceneManager->AddLoadingScene("LoadingScene", load);
 
 	load->AddThreadFunc([]() {_ImageManager->LoadAllResource(); });
-	_SceneManager->LoadSceneByLoading("LoadingScene","TestScene");
+	_SceneManager->LoadSceneByLoading("LoadingScene","DelaunayScene");
 	_SceneManager->InitFirstScene();
 }
 

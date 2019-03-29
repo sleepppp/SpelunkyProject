@@ -14,13 +14,7 @@ private:
 public:
 	static const float& GetGravity() { return _gravity; }
 private:
-	Vector2 mWorldSize; 
-	Vector2 mTileSize; 
-	int mTileCountX;
-	int mTileCountY; 
-
-	vector<vector<PhysicsTile>> mTileList;
-	vector<class Transform*> mDynamicList;
+	
 private:
 	friend class SceneBase; 
 	Physics();
@@ -28,6 +22,6 @@ private:
 	void Release();
 	void Update();
 public:
-
+	bool IntersectPhysics(Figure::FloatRect*const rc1, Figure::FloatRect*const rc2, const float& speed);
 };
 

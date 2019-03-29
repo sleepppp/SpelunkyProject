@@ -2,6 +2,7 @@
 #include "FloatRect.h"
 #include "FloatEllipse.h"
 #include "Line.h"
+#include "Triangle.h"
 /****************************************************************************
 ## Figure::Collision ##
 @@ Author : ±Ç¼ø¿ì , Date : 2019.03.19
@@ -206,15 +207,17 @@ namespace Figure
 	*****************************************************************************************************/
 	inline bool IntersectLineToLine(Vector2 *const pCollision, const Line& lineA, const Line& lineB)
 	{
-		float uA = ((lineB.end.x - lineB.start.x)*(lineA.start.y - lineB.start.y) - (lineB.end.y - lineB.start.y)*(lineA.start.x - lineB.start.x)) / ((lineB.end.y - lineB.start.y)*(lineA.end.x - lineA.start.x) - (lineB.end.x - lineB.start.x)*(lineA.end.y - lineA.start.y));
-		float uB = ((lineA.end.x - lineA.start.x)*(lineA.start.y - lineB.start.y) - (lineA.end.y - lineA.start.y)*(lineA.start.x - lineB.start.x)) / ((lineB.end.y - lineB.start.y)*(lineA.end.x - lineA.start.x) - (lineB.end.x - lineB.start.x)*(lineA.end.y - lineA.start.y));
+		float uA = ((lineB.end.x - lineB.start.x)*(lineA.start.y - lineB.start.y) - 
+			(lineB.end.y - lineB.start.y)*(lineA.start.x - lineB.start.x)) / ((lineB.end.y - lineB.start.y)*(lineA.end.x - lineA.start.x) - (lineB.end.x - lineB.start.x)*(lineA.end.y - lineA.start.y));
+		float uB = ((lineA.end.x - lineA.start.x)*(lineA.start.y - lineB.start.y) - 
+			(lineA.end.y - lineA.start.y)*(lineA.start.x - lineB.start.x)) / ((lineB.end.y - lineB.start.y)*(lineA.end.x - lineA.start.x) - (lineB.end.x - lineB.start.x)*(lineA.end.y - lineA.start.y));
 
 		if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) {
 
 			if (pCollision)
 			{
-				pCollision->x = lineA.start.y + (uA * (lineA.end.y - lineA.start.y));
-				pCollision->y = lineA.start.x + (uA * (lineA.end.x - lineA.start.x));
+				pCollision->y = lineA.start.y + (uA * (lineA.end.y - lineA.start.y));
+				pCollision->x = lineA.start.x + (uA * (lineA.end.x - lineA.start.x));
 			}
 			return true;
 		}
