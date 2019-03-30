@@ -25,6 +25,8 @@ namespace Figure
 		Vector2 GetExternalCenter();
 		float GetExternalRadius();
 		Figure::FloatEllipse GetExternalEllipse();
+	private:
+		void SortVertexByX();
 	};
 
 }

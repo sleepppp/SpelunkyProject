@@ -160,8 +160,8 @@ float Vector2::Dot(const Vector2 * const pVector2A, const Vector2 * const pVecto
 
 @@ return float : 두 벡터의 외적 값
 *****************************************************************************************************/
-Vector2 Vector2::Cross(const Vector2 * const pvector2A, const Vector2 * const pVector2B)
+float Vector2::Cross(const Vector2 * const pvector2A, const Vector2 * const pVector2B)
 {
-	return Vector2(pvector2A->x * pVector2B->y , pvector2A->y * pVector2B->x);
+	return pvector2A->x * pVector2B->y - pvector2A->y * pVector2B->x;
 }
 

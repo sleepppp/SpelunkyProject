@@ -6,6 +6,8 @@ private:
 	vector<Vector2> mVertexList;
 
 	Figure::FloatTriangle mTriangle;
+	Vector2 mCenter; 
+	float mRadius;
 public:
 	DelaunayScene();
 	virtual ~DelaunayScene();

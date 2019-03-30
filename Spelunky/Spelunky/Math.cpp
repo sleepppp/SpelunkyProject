@@ -172,3 +172,4 @@ const float Math::FloatMax = 3.402823E+38f;
 
 	return angle;
 }
+

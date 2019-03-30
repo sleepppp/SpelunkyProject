@@ -34,6 +34,7 @@ public:
 	//두 점 사이의 각을 반환
 	static float GetAngle(const float& x1, const float& y1, const float& x2, const float& y2);
 
+
 	/*********************************************************
 	## Min ##
 	두 수 중에서 작은 수를 반환
