@@ -105,7 +105,7 @@ namespace Figure
 		if (interW > interH)
 		{
 			//À§
-			if (rcInter.top == rcHold->top)
+			if (Math::FloatEqual(rcInter.top,rcHold->top))
 			{
 				rcMove->top -= interH;
 				rcMove->bottom -= interH;
@@ -113,7 +113,7 @@ namespace Figure
 					*pOutDirection = Direction::Bottom;
 			}
 			//¾Æ·¡
-			else if (rcInter.bottom == rcHold->bottom)
+			else if (Math::FloatEqual(rcInter.bottom ,rcHold->bottom))
 			{
 				rcMove->top += interH;
 				rcMove->bottom += interH;
@@ -123,14 +123,14 @@ namespace Figure
 		}
 		else
 		{
-			if (rcInter.left == rcHold->left)
+			if (Math::FloatEqual(rcInter.left ,rcHold->left))
 			{
 				rcMove->left -= interW;
 				rcMove->right -= interW;
 				if (pOutDirection)
 					*pOutDirection = Direction::Right;
 			}
-			else if (rcInter.right == rcHold->right)
+			else if (Math::FloatEqual(rcInter.right ,rcHold->right))
 			{
 				rcMove->left += interW;
 				rcMove->right += interW;

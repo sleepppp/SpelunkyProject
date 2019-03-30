@@ -41,7 +41,7 @@ bool Physics::IntersectPhysics(Figure::FloatRect * const rc1, Figure::FloatRect 
 	{
 		float factSpeed = interH / totalH * speed;
 		//À§
-		if (rcInter.top == rc2->top)
+		if (Math::FloatEqual(rcInter.top,rc2->top))
 		{
 			rc1->top -= factSpeed;
 			rc1->bottom -= factSpeed;
@@ -50,7 +50,7 @@ bool Physics::IntersectPhysics(Figure::FloatRect * const rc1, Figure::FloatRect 
 			rc2->bottom += factSpeed;
 		}
 		//¾Æ·¡
-		else if (rcInter.bottom == rc2->bottom)
+		else if (Math::FloatEqual(rcInter.bottom ,rc2->bottom))
 		{
 			rc1->top += factSpeed;
 			rc1->bottom += factSpeed;
@@ -63,7 +63,7 @@ bool Physics::IntersectPhysics(Figure::FloatRect * const rc1, Figure::FloatRect 
 	else
 	{
 		float factSpeed = interW / totalW * speed;
-		if (rcInter.left == rc2->left)
+		if (Math::FloatEqual(rcInter.left , rc2->left))
 		{
 			rc1->left -= factSpeed;
 			rc1->right -= factSpeed;
@@ -71,7 +71,7 @@ bool Physics::IntersectPhysics(Figure::FloatRect * const rc1, Figure::FloatRect 
 			rc2->left += factSpeed;
 			rc2->right += factSpeed;
 		}
-		else if (rcInter.right == rc2->right)
+		else if (Math::FloatEqual(rcInter.right , rc2->right))
 		{
 			rc1->left += factSpeed;
 			rc1->right += factSpeed;
