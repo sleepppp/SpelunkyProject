@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Tile.h"
 
-float Tile::_tileSize(100.f);
+float Tile::_tileSize(50.f);
 
 Tile::Tile(const float & x, const float & y)
 	:mRect(Vector2(x,y),Vector2(_tileSize, _tileSize),Pivot::Center), mType(Type::Empty),mImage(nullptr)

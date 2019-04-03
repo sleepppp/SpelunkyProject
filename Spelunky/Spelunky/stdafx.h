@@ -43,7 +43,6 @@ using namespace std;
 #endif
 #endif
 
-
 #define IsMouseOnGui ImGui::GetIO().WantCaptureMouse
 
 extern bool _isDebug;

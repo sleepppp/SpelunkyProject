@@ -22,7 +22,7 @@ Program::Program()
 	_SceneManager->AddLoadingScene("LoadingScene", load);
 
 	load->AddThreadFunc([]() {_ImageManager->LoadAllResource(); });
-	_SceneManager->LoadSceneByLoading("LoadingScene","TestScene");
+	_SceneManager->LoadSceneByLoading("LoadingScene","DelaunayScene");
 	_SceneManager->InitFirstScene();
 }
 

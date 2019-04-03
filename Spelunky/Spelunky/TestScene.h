@@ -9,8 +9,8 @@ private:
 	{
 		Figure::FloatRect rc;
 		D2D1::ColorF::Enum color;
-		vector<Figure::FloatRect*> link;
 	};
+
 private:
 	int mPass;
 	vector<Node> mList;
@@ -19,6 +19,7 @@ private:
 
 	vector<Vector2> mVertexList;
 	vector<Figure::FloatTriangle> mTriangleList;
+
 public:
 	explicit TestScene() {}
 	virtual ~TestScene() {}

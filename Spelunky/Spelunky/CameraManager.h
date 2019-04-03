@@ -12,7 +12,7 @@
 #define CameraMinDistance 30.f 
 
 #define CameraZoomMax 2.5f				//카메라 줌 최대값
-#define CameraZoomMin 0.5f				//카메라 줌 최소값
+#define CameraZoomMin 0.2f				//카메라 줌 최소값
 
 #define CameraDefaultStrength 2.58f
 #define CameraDefaultShakeTime 0.2f

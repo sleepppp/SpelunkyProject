@@ -14,10 +14,10 @@ void TestScene::Init()
 	float radius = 50.f; 
 	for (UINT i = 0; i < 100; ++i)
 	{
-		float randomX = Math::Random(center.x - radius, center.x + radius);
+		float randomX = Math::Random(center.x - radius * 2.f, center.x + radius * 2.f);
 		float randomY = Math::Random(center.y - radius, center.y + radius);
 		float randomWidth = Math::Random(radius , radius * 2.f);
-		float randomHeight = Math::Random(radius , radius * 2.f);
+		float randomHeight = Math::Random(radius , radius * 3.f);
 		Node node;
 		node.rc.Update(Vector2(randomX, randomY), Vector2(randomWidth, randomHeight), Pivot::Center);
 		node.color = D2D1::ColorF::Blue;
@@ -65,17 +65,22 @@ void TestScene::Render()
 		for(UINT i =0; i < mVertexList.size(); ++i)
 			_D2DRenderer->FiilEllipse(mVertexList[i], 5.f, D2DRenderer::DefaultBrush::Red, true);
 	}
-	if (mPass >= 3)
+	if (mPass == 3 || mPass == 4)
 	{
 		for (UINT i = 0; i < mTriangleList.size(); ++i)
 		{
 			mTriangleList[i].Render(D2D1::ColorF::Green);
 		}
 	}
+	if (mPass >= 5)
+	{
+
+	}
 
 	if (_isDebug)
 	{
 		ImGui::Begin("ProduralGenerator");
+		ImGui::Text("Pass : %d", mPass);
 		ImGui::SliderFloat("Power", &mSpeed, 100.f, 1000.f);
 		ImGui::InputInt("RoomCount", &mRoomCount);
 		if (ImGui::Button("Generate"))
@@ -158,6 +163,13 @@ void TestScene::NextPass()
 				}
 			}
 		}
+	}
+	else if (mPass == 5)
+	{
+	
+		
+		
+		
 	}
 
 }

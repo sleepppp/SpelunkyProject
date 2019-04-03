@@ -1,13 +1,29 @@
 #pragma once
 #include "SceneBase.h"
+#include <set>
 class DelaunayScene : public SceneBase
 {
 private:
-	vector<Vector2> mVertexList;
-
-	Figure::FloatTriangle mTriangle;
-	Vector2 mCenter; 
-	float mRadius;
+	struct TileRoom
+	{
+		int tileCountX; 
+		int tileCountY;
+		Figure::FloatRect rc;
+		bool isSelect;
+	};
+	struct Vertex
+	{
+		Vector2 pos;
+		set<Vertex*> link;
+		typedef set<Vertex*>::iterator LinkIter;
+	};
+private:
+	int mPass; 
+	vector<TileRoom*> mRoomList;
+	vector<Vertex> mVertexList;
+	vector<Figure::FloatTriangle> mTriangleList;
+	vector<Figure::FloatLine> mLineList;
+	vector<Figure::FloatLine> mFinalLineList;
 public:
 	DelaunayScene();
 	virtual ~DelaunayScene();
@@ -16,5 +32,8 @@ public:
 	void Release()override; 
 	void Update()override;
 	void Render()override; 
+private:
+	void NextPass();
+	void Reset();
 };
 

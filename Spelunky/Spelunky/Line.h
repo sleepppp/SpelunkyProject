@@ -16,5 +16,9 @@ namespace Figure
 		FloatLine() {}
 		explicit FloatLine(const Vector2& start, const Vector2& end);
 		explicit FloatLine(const Vector2& start, const float& angle, const float& dist = (float)MaxRayRange);
+
+		void Update(const Vector2& start, const Vector2& end);
+		float Length();
+		bool operator == (const FloatLine& line);
 	}Line;
 }
