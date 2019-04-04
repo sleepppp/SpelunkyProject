@@ -14,13 +14,18 @@ private:
 	struct Vertex
 	{
 		Vector2 pos;
-		set<Vertex*> link;
-		typedef set<Vertex*>::iterator LinkIter;
+		vector<Vertex*> link;
+		Vertex* prev;
+		bool isLink;
+		typedef vector<Vertex*>::iterator LinkIter;
+		Vertex()
+			:prev(nullptr),isLink(false) {}
 	};
 private:
 	int mPass; 
 	vector<TileRoom*> mRoomList;
-	vector<Vertex> mVertexList;
+	vector<Vertex*> mVertexList;
+	vector<Vector2> mTempVertexList;
 	vector<Figure::FloatTriangle> mTriangleList;
 	vector<Figure::FloatLine> mLineList;
 	vector<Figure::FloatLine> mFinalLineList;
@@ -35,5 +40,6 @@ public:
 private:
 	void NextPass();
 	void Reset();
+	Vertex* FindVertex(const Vector2& pos);
 };
 

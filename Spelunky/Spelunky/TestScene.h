@@ -3,23 +3,20 @@
 class TestScene :
 	public SceneBase
 {
-	//BlockAssign(TestScene)
 private:
-	struct Node
+	struct TileRoom
 	{
+		int tileCountX;
+		int tileCountY;
 		Figure::FloatRect rc;
-		D2D1::ColorF::Enum color;
 	};
 
-private:
-	int mPass;
-	vector<Node> mList;
-	float mSpeed;;
-	int mRoomCount;
-
-	vector<Vector2> mVertexList;
-	vector<Figure::FloatTriangle> mTriangleList;
-
+	struct Node
+	{
+		Vector2 pos;
+		vector<Node*> linkList;
+		
+	};
 public:
 	explicit TestScene() {}
 	virtual ~TestScene() {}
@@ -28,8 +25,6 @@ public:
 	void Release()override; 
 	void Update()override; 
 	void Render()override; 
-private:
-	void Reset();
-	void NextPass();
+
 };
 
