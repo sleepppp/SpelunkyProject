@@ -57,7 +57,7 @@ void TileManager::Render()
 	}
 
 	float tileSize = Tile::GetTileSize();
-	Figure::FloatRect cameraRc = _Camera->GetCameraRect();
+	Figure::FloatRect cameraRc = _Camera->GetRect();
 	float zoomFactor = _Camera->GetZoom();
 	float cameraRight = cameraRc.left + CastingFloat(_WinSizeX) / zoomFactor;
 	float cmearaBottom = cameraRc.top + CastingFloat(_WinSizeY) / zoomFactor;

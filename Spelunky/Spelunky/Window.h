@@ -23,10 +23,10 @@ private:
 public:
 	static void SetDesc(const Desc*const pDesc);
 	static void GetDesc(Desc*const pDesc);
-	static int GetWidth() { return _windowDesc.width; }
-	static int GetHeight() { return _windowDesc.height; }
-	static const HWND GetHandle() { return _windowDesc.handle; }
-	static const HDC GetHDC() { return _windowDesc.hdc; }
+	inline static int GetWidth() { return _windowDesc.width; }
+	inline static int GetHeight() { return _windowDesc.height; }
+	inline static const HWND GetHandle() { return _windowDesc.handle; }
+	inline static const HDC GetHDC() { return _windowDesc.hdc; }
 private:
 	class Program* _program;
 public:

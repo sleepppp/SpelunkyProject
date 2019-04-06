@@ -176,6 +176,7 @@
     <ClInclude Include="Line.h" />
     <ClInclude Include="Loading.h" />
     <ClInclude Include="LoadingScene.h" />
+    <ClInclude Include="Macro.h" />
     <ClInclude Include="MapTool.h" />
     <ClInclude Include="MapPallete.h" />
     <ClInclude Include="MapPalletePannel.h" />

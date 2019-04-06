@@ -29,6 +29,7 @@ private:
 	vector<Figure::FloatTriangle> mTriangleList;
 	vector<Figure::FloatLine> mLineList;
 	vector<Figure::FloatLine> mFinalLineList;
+	vector<vector<class Tile*>> mTileList;
 public:
 	DelaunayScene();
 	virtual ~DelaunayScene();
@@ -41,5 +42,6 @@ private:
 	void NextPass();
 	void Reset();
 	Vertex* FindVertex(const Vector2& pos);
+	
 };
 

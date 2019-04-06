@@ -99,6 +99,32 @@ void TileMapGenerator::BuildByCellularAutomata(vector<vector<class Tile*>>* cons
 	}
 }
 
+void TileMapGenerator::CreateTile(vector<vector<class Tile*>>* const pOutput, const UINT & tileX,const UINT & tileY)
+{
+	float tileSize = Tile::GetTileSize();
+	pOutput->assign(tileY, vector<Tile*>());
+	for (UINT y = 0; y < tileY; ++y)
+	{
+		pOutput->at(y).assign(tileX, nullptr);
+		for (UINT x = 0; x < tileX; ++x)
+		{
+			pOutput->at(y).at(x) = new Tile(tileSize / 2.f + tileSize * CastingFloat(x), tileSize / 2.f + tileSize * CastingFloat(y));
+		}
+	}
+}
+
+void TileMapGenerator::DeleteTile(vector<vector<class Tile*>>* const pOutput)
+{
+	for (UINT y = 0; y < pOutput->size(); ++y)
+	{
+		for (UINT x = 0; x < pOutput->size(); ++x)
+		{
+			SafeDelete(pOutput->at(y).at(x));
+		}
+	}
+	pOutput->clear();
+}
+
 void TileMapGenerator::TrimTile(vector<vector<class Tile*>>* pOutput, const int & trimPass)
 {
 	for (int i = 0; i < trimPass; ++i)

@@ -15,9 +15,6 @@
     <Filter Include="System">
       <UniqueIdentifier>{1088763d-db18-49c3-be4f-02707dbb3234}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Util">
-      <UniqueIdentifier>{c276c53d-0ad7-4acc-9e61-b7f084f40036}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainEntry">
       <UniqueIdentifier>{5fd42d8a-95e6-40ca-8644-5971392ed66c}</UniqueIdentifier>
     </Filter>
@@ -45,12 +42,6 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{94f043af-f5e7-4dab-aaa6-d434dbfc6453}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Util\Math">
-      <UniqueIdentifier>{ab238667-bd38-4ee5-b864-5883b8402f42}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Util\String">
-      <UniqueIdentifier>{61b60a8b-7f86-4e8e-879e-7043a6aa993a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="헤더 파일">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
@@ -67,9 +58,6 @@
     <Filter Include="Shader\HLSL">
       <UniqueIdentifier>{90d93320-48d0-4d74-8450-771d15b5cdd0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Util\Transform">
-      <UniqueIdentifier>{0bc34f54-b005-4369-be8b-22023b78e710}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System\MessageModule">
       <UniqueIdentifier>{7e40924f-152a-41ef-b251-87f8cf4772f6}</UniqueIdentifier>
     </Filter>
@@ -84,9 +72,6 @@
     </Filter>
     <Filter Include="System\GameEngine\ObjectPool">
       <UniqueIdentifier>{899efce5-8949-4e19-94aa-eadf50314ca5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Util\LoadingThread">
-      <UniqueIdentifier>{cc01e258-1867-4d97-8146-086e983205c5}</UniqueIdentifier>
     </Filter>
     <Filter Include="System\GameEngine\UpdatePool">
       <UniqueIdentifier>{6aff293f-d96a-4229-accd-cb0fa4253327}</UniqueIdentifier>
@@ -103,17 +88,11 @@
     <Filter Include="System\DebugSystem">
       <UniqueIdentifier>{1b1a322e-6351-4b49-b8b2-dbb8761d05f8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Util\File">
-      <UniqueIdentifier>{9dad287f-9d50-4188-9f5e-35cda007b18f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System\GameEngine\Physics">
       <UniqueIdentifier>{d33101e3-315e-4790-9917-501981ec3b44}</UniqueIdentifier>
     </Filter>
     <Filter Include="MainEntry\TestScene">
       <UniqueIdentifier>{cd8aa660-112c-4def-a6fd-5593c33ab904}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Util\Collision">
-      <UniqueIdentifier>{8b8401ae-3061-4d1f-ba20-13234146e0b7}</UniqueIdentifier>
     </Filter>
     <Filter Include="System\GameObjectBase">
       <UniqueIdentifier>{41c72129-c039-4559-8c3d-b3cb7a15b16f}</UniqueIdentifier>
@@ -127,11 +106,38 @@
     <Filter Include="InGameObject\Tile">
       <UniqueIdentifier>{89147711-0561-48da-bf82-10a1d3645d53}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Util\Figure">
-      <UniqueIdentifier>{8b6f8296-0ae8-4b36-aa2b-43b665048919}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainEntry\MapToolScene">
       <UniqueIdentifier>{0960c492-a87a-450f-ae24-71e353aa36cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainEntry\MapToolScene\MapTool">
+      <UniqueIdentifier>{e9d5672e-e4e5-4cce-8f6b-0a7b3f75df4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainEntry\Delaunay">
+      <UniqueIdentifier>{93ac3b38-222f-4fb9-a0a7-e1f618725d93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{c276c53d-0ad7-4acc-9e61-b7f084f40036}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Math">
+      <UniqueIdentifier>{ab238667-bd38-4ee5-b864-5883b8402f42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\String">
+      <UniqueIdentifier>{61b60a8b-7f86-4e8e-879e-7043a6aa993a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Transform">
+      <UniqueIdentifier>{0bc34f54-b005-4369-be8b-22023b78e710}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\LoadingThread">
+      <UniqueIdentifier>{cc01e258-1867-4d97-8146-086e983205c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\File">
+      <UniqueIdentifier>{9dad287f-9d50-4188-9f5e-35cda007b18f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Collision">
+      <UniqueIdentifier>{8b8401ae-3061-4d1f-ba20-13234146e0b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Figure">
+      <UniqueIdentifier>{8b6f8296-0ae8-4b36-aa2b-43b665048919}</UniqueIdentifier>
     </Filter>
     <Filter Include="Util\UI">
       <UniqueIdentifier>{3140c81d-a813-4f3b-955c-ed5ac2a39cf3}</UniqueIdentifier>
@@ -141,12 +147,6 @@
     </Filter>
     <Filter Include="Util\UI\Canvas">
       <UniqueIdentifier>{a6f983ee-2247-4f0f-9719-0957cb41554e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainEntry\MapToolScene\MapTool">
-      <UniqueIdentifier>{e9d5672e-e4e5-4cce-8f6b-0a7b3f75df4d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainEntry\Delaunay">
-      <UniqueIdentifier>{93ac3b38-222f-4fb9-a0a7-e1f618725d93}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -341,6 +341,9 @@
     </ClInclude>
     <ClInclude Include="DelaunayScene.h">
       <Filter>MainEntry\Delaunay</Filter>
+    </ClInclude>
+    <ClInclude Include="Macro.h">
+      <Filter>MainHeaderCpp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

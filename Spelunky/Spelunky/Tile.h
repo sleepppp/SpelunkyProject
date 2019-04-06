@@ -23,7 +23,7 @@ private:
 	explicit Tile(const float& x, const float& y);
 	explicit Tile(const Vector2& pos);
 	~Tile();
-	
+public:
 	void Render();
 	void Reset();
 public:

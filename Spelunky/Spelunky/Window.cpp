@@ -114,7 +114,7 @@ LRESULT Window::WndProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 		Input::Get()->InputProc(message, wParam, lParam);
 		break;
 	case WM_MOUSEWHEEL :
-		CameraManager::Get()->CameraProc(message, wParam, lParam);
+		CameraManager::Get()->CameraProc(wParam);
 		break;
 	case WM_KEYDOWN:
 		switch (wParam)

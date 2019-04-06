@@ -21,7 +21,7 @@ void Physics::Release()
 
 void Physics::Update()
 {
-
+	
 }
 
 bool Physics::IntersectPhysics(Figure::FloatRect * const rc1, Figure::FloatRect * const rc2, const float & speed)
@@ -40,6 +40,7 @@ bool Physics::IntersectPhysics(Figure::FloatRect * const rc1, Figure::FloatRect 
 	if (interW > interH)
 	{
 		float factSpeed = interH / totalH * speed;
+		//factSpeed = speed;
 		//À§
 		if (Math::FloatEqual(rcInter.top,rc2->top))
 		{
@@ -63,6 +64,7 @@ bool Physics::IntersectPhysics(Figure::FloatRect * const rc1, Figure::FloatRect 
 	else
 	{
 		float factSpeed = interW / totalW * speed;
+		factSpeed = speed;
 		if (Math::FloatEqual(rcInter.left , rc2->left))
 		{
 			rc1->left -= factSpeed;

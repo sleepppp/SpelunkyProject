@@ -28,7 +28,31 @@ void Tile::Render()
 
 	if (_isDebug)
 	{
-		_D2DRenderer->DrawRectangle(mRect, D2DRenderer::DefaultBrush::White, true,1.f);
+		D2DRenderer::DefaultBrush brush(D2DRenderer::DefaultBrush::White);
+		switch (mType)
+		{
+		case Tile::Type::Soil:
+			brush = D2DRenderer::DefaultBrush::Red;
+			break;
+		case Tile::Type::Wood:
+			brush = D2DRenderer::DefaultBrush::Red;
+			break;
+		case Tile::Type::Rock:
+			break;
+		case Tile::Type::Box:
+			break;
+		case Tile::Type::Rope:
+			break;
+		case Tile::Type::Ladder:
+			break;
+		case Tile::Type::Entry:
+			break;
+		case Tile::Type::Exit:
+			break;
+		case Tile::Type::Empty:
+			break;
+		}
+		_D2DRenderer->DrawRectangle(mRect, brush, true,1.f);
 	}
 }
 

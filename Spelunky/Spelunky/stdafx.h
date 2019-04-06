@@ -33,6 +33,7 @@ using namespace std;
 #include "LibraryHeader.h"
 #include "EnumStructHeader.h"
 #include "DefineHeader.h"
+#include "Macro.h"
 #include "ModuleHeader.h"
 
 #ifdef _DEBUG

@@ -22,6 +22,7 @@ namespace Figure
 		void Update(const Vector2& v0, const Vector2& v1, const Vector2& v2);
 		void Move(const Vector2& moveValue);
 		void Render(const D2D1::ColorF::Enum& color);
+
 		Vector2 GetExternalCenter();
 		float GetExternalRadius();
 		Figure::FloatEllipse GetExternalEllipse();

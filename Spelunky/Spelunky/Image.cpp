@@ -205,8 +205,16 @@ void Image::ResetRenderOption()
 {
 	this->mAlpha = 1.0f;
 	this->mScale = 1.0f;
-	this->mSize.x = (float)mBitmap->GetPixelSize().width;
-	this->mSize.y = (float)mBitmap->GetPixelSize().height;
+	if (mFrameInfo.size() <= 1)
+	{
+		this->mSize.x = (float)mBitmap->GetPixelSize().width;
+		this->mSize.y = (float)mBitmap->GetPixelSize().height;
+	}
+	else
+	{
+		this->mSize.x = mFrameInfo[0].width;
+		this->mSize.y = mFrameInfo[0].height;
+	}
 	this->mIsReverseAxisX = this->mIsReverseAxisY = false;
 }
 /********************************************************************************
