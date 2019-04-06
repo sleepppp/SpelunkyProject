@@ -32,7 +32,7 @@ void DelaunayScene::Init()
 	for (UINT i = 0; i < 150; ++i)
 	{
 		float randomX = Math::Random(center.x - 800.f, center.x + 800.f);
-		float randomY = Math::Random(center.y - 100.f, center.y + 100.f);
+		float randomY = Math::Random(center.y - 200.f, center.y + 200.f);
 		int randomWidthX = Math::Random(1, 10);
 		int randomHeightY = Math::Random(1, 10);
 		float width = CastingFloat(randomWidthX) * tileSize;
@@ -44,6 +44,7 @@ void DelaunayScene::Init()
 		node->isSelect = false;
 		mRoomList.push_back(node);
 	}
+
 }
 
 void DelaunayScene::Release()
@@ -115,9 +116,20 @@ void DelaunayScene::Render()
 	}
 	if (mPass >= 7)
 	{
-		for (UINT y = 0; y < mTileList.size(); ++y)
+		float tileSize = Tile::GetTileSize();
+		Figure::FloatRect cameraRc = _Camera->GetRect();
+		float zoomFactor = _Camera->GetZoom();
+		float cameraRight = cameraRc.left + CastingFloat(_WinSizeX) / zoomFactor;
+		float cmearaBottom = cameraRc.top + CastingFloat(_WinSizeY) / zoomFactor;
+
+		int left = Math::Clamp((int)(cameraRc.left / tileSize) - 1, 0, (int)mTileList[0].size());
+		int top = Math::Clamp((int)(cameraRc.top / tileSize) - 1, 0, (int)mTileList.size());
+		int right = Math::Clamp((int)(cameraRight / tileSize) + 1, 0, (int)mTileList[0].size() - 1);
+		int bottom = Math::Clamp((int)(cmearaBottom / tileSize) + 1, 0, (int)mTileList.size() - 1);
+
+		for (int y = top; y <= bottom; ++y)
 		{
-			for (UINT x = 0; x < mTileList[y].size(); ++x)
+			for (int x = left; x <= right; ++x)
 			{
 				mTileList[y][x]->Render();
 			}
@@ -393,7 +405,7 @@ void DelaunayScene::NextPass()
 				}
 			}
 		}
-		float tileSize = Tile::GetTileSize();
+		float tileSize = Tile::GetTileSize() / 2.f;
 		for (UINT i = 0; i < mLineList.size(); ++i)
 		{
 			TileRoom* room = new TileRoom;
@@ -493,32 +505,37 @@ void DelaunayScene::NextPass()
 
 void DelaunayScene::Reset()
 {
+	mPass = 0;
+	for (UINT i = 0; i < mRoomList.size(); ++i)
+		SafeDelete(mRoomList[i]);
+	mRoomList.clear();
 	for (UINT i = 0; i < mVertexList.size(); ++i)
 		SafeDelete(mVertexList[i]);
+	TileMapGenerator generator;
+	generator.DeleteTile(&mTileList);
+
 	mVertexList.clear();
 	mTempVertexList.clear();
 	mTriangleList.clear();
 	mLineList.clear();
 	mFinalLineList.clear();
 
-	TileMapGenerator generator;
-	generator.DeleteTile(&mTileList);
-
-	mPass = 0;
 	Vector2 center(_WinSizeX / 2, _WinSizeY / 2);
 	float tileSize = Tile::GetTileSize();
-	for (UINT i = 0; i < mRoomList.size(); ++i)
+	for (UINT i = 0; i < 150; ++i)
 	{
 		float randomX = Math::Random(center.x - 800.f, center.x + 800.f);
-		float randomY = Math::Random(center.y - 100.f, center.y + 100.f);
-		int randomWidthX = Math::Random(1, 4);
-		int randomHeightY = Math::Random(1, 4);
+		float randomY = Math::Random(center.y - 200.f, center.y + 200.f);
+		int randomWidthX = Math::Random(1, 10);
+		int randomHeightY = Math::Random(1, 10);
 		float width = CastingFloat(randomWidthX) * tileSize;
 		float height = CastingFloat(randomHeightY) * tileSize;
-		mRoomList[i]->rc.Update(Vector2(randomX, randomY), Vector2(width, height), Pivot::Center);
-		mRoomList[i]->tileCountX = randomWidthX;
-		mRoomList[i]->tileCountY = randomHeightY;
-		mRoomList[i]->isSelect = false;
+		TileRoom* node = new TileRoom;
+		node->rc.Update(Vector2(randomX, randomY), Vector2(width, height), Pivot::Center);
+		node->tileCountX = randomWidthX;
+		node->tileCountY = randomHeightY;
+		node->isSelect = false;
+		mRoomList.push_back(node);
 	}
 }
 
