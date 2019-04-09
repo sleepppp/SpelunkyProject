@@ -68,6 +68,24 @@ const float Math::FloatMax = 3.402823E+38f;
 {
 	return (float)(rand()) / (float)RAND_MAX;
 }
+float Math::RandNegative()
+{
+	int randomDot = Math::Random(0, 1);
+	float result = -1.f;
+	for (int i = 0; i < randomDot; ++i)
+		result *= -1.f;
+	return result;
+}
+bool Math::RandomBool()
+{
+	return static_cast<bool>(Math::Random(0, 1));
+}
+bool Math::PercentageBool(const float & percentage)
+{
+	if (Math::Random(0.f, 1.f) < percentage)
+		return true;
+	return false;
+}
 /**********************************************************
 ## Lerp ##
 비율을 통해 두 값을 선형 보간해서 반환

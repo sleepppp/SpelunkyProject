@@ -3,6 +3,7 @@
 
 #include "TileMapGenerator.h"
 #include "Tile.h"
+#include "BackGround.h"
 #include <algorithm>
 DelaunayScene::DelaunayScene()
 {
@@ -19,8 +20,7 @@ DelaunayScene::~DelaunayScene()
 	}
 	mRoomList.clear();
 
-	TileMapGenerator generator;
-	generator.DeleteTile(&mTileList);
+	TileMapGenerator::DeleteTile(&mTileList);
 }
 
 void DelaunayScene::Init()
@@ -44,11 +44,11 @@ void DelaunayScene::Init()
 		node->isSelect = false;
 		mRoomList.push_back(node);
 	}
-
 }
 
 void DelaunayScene::Release()
 {
+	SafeDelete(mBackGround);
 	for (UINT i = 0; i < mVertexList.size(); ++i)
 		SafeDelete(mVertexList[i]);
 	for (UINT i = 0; i < mRoomList.size(); ++i)
@@ -56,7 +56,6 @@ void DelaunayScene::Release()
 		SafeDelete(mRoomList[i]);
 	}
 	mRoomList.clear();
-	
 }
 
 void DelaunayScene::Update()
@@ -116,14 +115,19 @@ void DelaunayScene::Render()
 	}
 	if (mPass >= 7)
 	{
+		if (mBackGround)
+		{
+			mBackGround->Render();
+		}
+
 		float tileSize = Tile::GetTileSize();
 		Figure::FloatRect cameraRc = _Camera->GetRect();
 		float zoomFactor = _Camera->GetZoom();
 		float cameraRight = cameraRc.left + CastingFloat(_WinSizeX) / zoomFactor;
 		float cmearaBottom = cameraRc.top + CastingFloat(_WinSizeY) / zoomFactor;
 
-		int left = Math::Clamp((int)(cameraRc.left / tileSize) - 1, 0, (int)mTileList[0].size());
-		int top = Math::Clamp((int)(cameraRc.top / tileSize) - 1, 0, (int)mTileList.size());
+		int left = Math::Clamp((int)(cameraRc.left / tileSize) - 1, 0, (int)mTileList[0].size() -1);
+		int top = Math::Clamp((int)(cameraRc.top / tileSize) - 1, 0, (int)mTileList.size() -1);
 		int right = Math::Clamp((int)(cameraRight / tileSize) + 1, 0, (int)mTileList[0].size() - 1);
 		int bottom = Math::Clamp((int)(cmearaBottom / tileSize) + 1, 0, (int)mTileList.size() - 1);
 
@@ -134,10 +138,13 @@ void DelaunayScene::Render()
 				mTileList[y][x]->Render();
 			}
 		}
+	}	
+	if (_isDebug)
+	{
+		for (UINT i = 0; i < mPassageList.size(); ++i)
+			_D2DRenderer->FillRectangle(mPassageList[i], D2DRenderer::DefaultBrush::Yellow, true);
 	}
-	
-			
-
+		
 	if (_isDebug)
 	{
 		ImGui::Begin("MapGenerator");
@@ -154,7 +161,13 @@ void DelaunayScene::Render()
 
 void DelaunayScene::NextPass()
 {
+	//절차 생성 Pass ++ 
 	++mPass;
+
+	/*************************************************************************
+	## Pass 2 ## 
+	흩어진 방들중 랜덤한 10개의 방을 선택한다. 
+	*************************************************************************/
 	if (mPass == 2)
 	{
 		vector<TileRoom*> selectList;
@@ -176,6 +189,11 @@ void DelaunayScene::NextPass()
 			++addCount;
 		}
 	}
+	/*************************************************************************
+	## Pass 3 ##
+	선택된 방들을 이어주는 삼각형들을 생성 후 들로네 삼각분할 알고리즘에 적합한
+	삼각형들만 추려낸다. 그 후 해당 삼각형들을 잇는 선을 생성
+	*************************************************************************/
 	else if (mPass == 3)
 	{
 		//정점들을 기준으로 삼각형 생성
@@ -291,6 +309,11 @@ void DelaunayScene::NextPass()
 		});
 	
 	}
+	/*************************************************************************
+	## Pass 4 ##
+	최소 스패닝 트리 알고리즘에 의거해 가장 짧은 경로들을 탐색 그 후에는
+	일자 맵을 방지하기 위해 다른 루트들을 몇개 생성해준다. 
+	*************************************************************************/
 	else if(mPass == 4)
 	{ 
 		//시작점은 랜덤 정점 하나로부터
@@ -300,7 +323,7 @@ void DelaunayScene::NextPass()
 		//최소 스패닝이 n - 1이 될때까지 
 		while (mFinalLineList.size() < mVertexList.size() - 1)
 		{
-			//temp로 부터 가장 작은 경로를 탐색, 이때 다음점은 절대로 finalLineList에 포함되있지 않아햐 한다
+			//temp로 부터 가장 작은 경로를 탐색, 이때 다음점은 절대로 finalLineList에 포함되있지 않아야 한다
 			//먼저  link를 거리순으로 정렬한다 
 			for (UINT i = 0; i < tempVertex->link.size(); ++i)
 			{
@@ -342,6 +365,7 @@ void DelaunayScene::NextPass()
 				break;
 		}/*end while*/
 
+
 		mTempVertexList.clear();
 		for (UINT i = 0; i < mVertexList.size(); ++i)
 		{
@@ -375,6 +399,10 @@ void DelaunayScene::NextPass()
 			}
 		}
 	}
+	/*************************************************************************
+	## Pass 5 ##
+	4번째 Pass에서 나온 최소 경로들을 가로 선분,세로선분으로 분리해서 선을 재 구축한다. 
+	*************************************************************************/
 	else if (mPass == 5)
 	{
 		mLineList.clear();
@@ -393,6 +421,11 @@ void DelaunayScene::NextPass()
 			MakeRoot(mFinalLineList[i]);
 		}
 	}
+	/*************************************************************************
+	## Pass 6 ##
+	해당 선들이 지나는 방들은 전부 선택된 방으로 바꾸어 준다.
+	선들은 조그마한 통로크기의 방으로 변환
+	*************************************************************************/
 	else if (mPass == 6)
 	{
 		for (UINT i = 0; i < mLineList.size(); ++i)
@@ -427,8 +460,14 @@ void DelaunayScene::NextPass()
 				room->rc.right = mLineList[i].start.x + tileSize;
 			}
 			mRoomList.push_back(room);
+			mPassageList.push_back(room->rc);
 		}
 	}
+	/*************************************************************************
+	## Pass 7 ##
+	선택된 방들을 기준으로 타일맵을 구축한 후에 방들의 영역내에 있는 타일들은 전부
+	빈 공간으로 이외의 타일들은 장애물타일로 설정
+	*************************************************************************/
 	else if (mPass == 7)
 	{
 		for (UINT i = 0; i < mRoomList.size(); ++i)
@@ -463,8 +502,7 @@ void DelaunayScene::NextPass()
 		UINT tileX =(UINT)( mapSize.x / Tile::GetTileSize()) + 1;
 		UINT tileY = (UINT)(mapSize.y / Tile::GetTileSize()) + 1;
 		
-		TileMapGenerator generator;
-		generator.CreateTile(&mTileList, tileX , tileY);
+		TileMapGenerator::CreateTile(&mTileList, tileX , tileY);
 
 		for (UINT y = 0; y < mTileList.size(); ++y)
 		{
@@ -473,7 +511,10 @@ void DelaunayScene::NextPass()
 				mTileList[y][x]->SetType(Tile::Type::Soil);
 			}
 		}
-
+		for (UINT i = 0; i < mPassageList.size(); ++i)
+		{
+			mPassageList[i].Move(Vector2(-startMap.x, -startMap.y));
+		}
 		float tileSize = Tile::GetTileSize();
 		for (UINT i = 0; i < mRoomList.size(); ++i)
 		{
@@ -485,13 +526,10 @@ void DelaunayScene::NextPass()
 			int endIndexY = Math::Clamp(CastingInt(mRoomList[i]->rc.bottom / tileSize) ,0,(int)mTileList.size() - 1);
 
 			if (startIndexX > endIndexX)
-			{
 				std::swap(startIndexX, endIndexX);
-			}
 			if (startIndexY > endIndexY)
-			{
 				std::swap(startIndexY, endIndexY);
-			}
+
 			for (int y = startIndexY; y <= endIndexY; ++y)
 			{
 				for (int x = startIndexX; x <= endIndexX; ++x)
@@ -500,7 +538,153 @@ void DelaunayScene::NextPass()
 				}
 			}
 		}
+	
 	}	
+	/*************************************************************************
+	## Pass 8 ##
+	너무 넓게 흙으로 차 있는 공간은 비밀 방들을 생성한다.
+	*************************************************************************/
+	else if (mPass == 8)
+	{
+		//for (UINT i = 0; i < 100; ++i)
+		//{
+		//	int randomWidth = Math::Random(5, 10);
+		//	int randomHeight = Math::Random(3, 10);
+		//	vector<vector<Tile*>> result = TileMapGenerator::FindArea(&mTileList, randomWidth, randomHeight, Tile::Type::Soil);
+		//	for (UINT y = 0; y < result.size(); ++y)
+		//	{
+		//		for (UINT x = 0; x < result[y].size(); ++x)
+		//		{
+		//			result[y][x]->SetType(Tile::Type::Empty);
+		//		}
+		//	}
+		//
+		//}
+	}
+	/*************************************************************************
+	## Pass 9 ##
+	비어있는 공간들을 기준으로 
+	*************************************************************************/
+	else if (mPass == 9)
+	{
+		//통로를 막지 않는 기준에서 난수로 지형 생성
+		int tryCount = 0;
+		for (; tryCount < 100;)
+		{
+			int randomIndexX = Math::Random(1, mTileList[0].size() - 2);
+			int randomIndexY = Math::Random(1, mTileList.size() - 2);
+			if (mTileList[randomIndexY][randomIndexX]->GetType() == Tile::Type::Empty)
+			{
+				bool isChange = true;
+				for (UINT i = 0; i < mPassageList.size(); ++i)
+				{
+					if (Figure::IntersectRectToRect(&mPassageList[i],
+						&mTileList[randomIndexY][randomIndexX]->GetRect()))
+					{
+						isChange = false;
+						break;
+					}
+				}
+				if (isChange)
+				{
+					bool addPass = true;
+					while (addPass)
+					{
+						bool isVertical = (bool)Math::Random(0, 1);
+						int nextIndexX = randomIndexX;
+						int nextIndexY = randomIndexY;
+
+						if (isVertical)
+							nextIndexX = randomIndexX + (int)Math::RandNegative();
+						else
+							nextIndexY = randomIndexY + (int)Math::RandNegative();
+						bool c = true;
+						for (UINT i = 0; i < mPassageList.size(); ++i)
+						{
+							if (Figure::IntersectRectToRect(&mPassageList[i], &mTileList[nextIndexY][nextIndexX]->GetRect()))
+							{
+								c = false;
+								break;
+							}
+						}
+						if (c)
+							mTileList[nextIndexY][nextIndexX]->SetType(Tile::Type::Soil);
+
+						addPass = Math::PercentageBool(0.6f);
+					}
+					mTileList[randomIndexY][randomIndexX]->SetType(Tile::Type::Soil);
+					++tryCount;
+				}
+			}
+		}
+
+		//모든 작업 후에는 맨 끝 태두리들은 전부 돌로 채워준다. 
+		for (UINT y = 0; y < mTileList.size(); ++y)
+		{
+			mTileList[y][0]->SetType(Tile::Type::Rock);
+			mTileList[y][mTileList[0].size() - 1]->SetType(Tile::Type::Rock);
+		}
+		for (UINT x = 0; x < mTileList[0].size(); ++x)
+		{
+			mTileList[0][x]->SetType(Tile::Type::Rock);
+			mTileList[mTileList.size() - 1][x]->SetType(Tile::Type::Rock);
+		}
+	}
+	/*************************************************************************
+	## Pass 10 ##
+	지금까지의 절차로 생성된 타일들에 랜덤한 디폴트 타일을 입혀준다.
+	*************************************************************************/
+	else if (mPass == 10)
+	{
+		Tile* endTile = mTileList[mTileList.size() - 1][mTileList[0].size() - 1];
+		mBackGround = new BackGround("BackGround2", Vector2(endTile->GetRect().right, endTile->GetRect().bottom));
+		cout << mTileList.size() - 1 << " " << mTileList[0].size() - 1 << endl;
+		for(int y = 0; y < CastingInt(mTileList.size()); ++y)
+		{
+			for (int x = 0; x < CastingInt(mTileList[y].size()); ++x)
+			{
+				TileMapGenerator::SetImageAuto(&mTileList, x, y, Stage::Stage2);
+				TileMapGenerator::SetDecoAuto(&mTileList, x, y,Stage::Stage2);
+			}
+		}
+	}
+	/*************************************************************************
+	## Pass 11 ##
+	사각형 그룹 타일을 적절한 위치에 심어준다.
+	*************************************************************************/
+	else if (mPass == 11)
+	{
+		vector<vector<bool>> checkList;
+		checkList.assign(mTileList.size(), vector<bool>());
+		for (UINT i = 0; i < checkList.size(); ++i)
+			checkList[i].assign(mTileList[0].size(), false);
+
+		for (UINT y = 0; y < mTileList.size(); ++y)
+		{
+			for (UINT x = 0; x < mTileList[y].size(); ++x)
+			{
+				if (mTileList[y][x]->GetType() == Tile::Type::Empty)
+					checkList[y][x] = true;
+			}
+		}
+
+		int tryCount = 0;
+		while (tryCount < 500)
+		{
+			int randomStartX = Math::Random(1, mTileList[0].size() - 3);
+			int randomStartY = Math::Random(1, mTileList.size() - 3);
+			
+			if (checkList[randomStartY][randomStartX] == false && checkList[randomStartY][randomStartX + 1] == false &&
+				checkList[randomStartY + 1][randomStartX] == false && checkList[randomStartY + 1][randomStartX + 1] == false)
+			{
+				TileMapGenerator::SetGroup4TileAuto(&mTileList, randomStartX, randomStartY, Stage::Stage2);
+				checkList[randomStartY][randomStartX] = checkList[randomStartY][randomStartX + 1] =
+					checkList[randomStartY + 1][randomStartX] = checkList[randomStartY + 1][randomStartX + 1] = true;
+			}
+
+			++tryCount;
+		}
+	}
 }
 
 void DelaunayScene::Reset()
@@ -511,14 +695,15 @@ void DelaunayScene::Reset()
 	mRoomList.clear();
 	for (UINT i = 0; i < mVertexList.size(); ++i)
 		SafeDelete(mVertexList[i]);
-	TileMapGenerator generator;
-	generator.DeleteTile(&mTileList);
+	TileMapGenerator::DeleteTile(&mTileList);
+	SafeDelete(mBackGround);
 
 	mVertexList.clear();
 	mTempVertexList.clear();
 	mTriangleList.clear();
 	mLineList.clear();
 	mFinalLineList.clear();
+	mPassageList.clear();
 
 	Vector2 center(_WinSizeX / 2, _WinSizeY / 2);
 	float tileSize = Tile::GetTileSize();

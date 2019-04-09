@@ -15,6 +15,8 @@ int∑Œ static_cast
 float¿∏∑Œ static_cast
 *********************************************************************************/
 #define CastingFloat(n) static_cast<float>(n)
+
+#define CastingByType(type,value) ((type)value)
 /*********************************************************************************
 ## Safe - Relase,Delete,DeleteArray ##
 *********************************************************************************/

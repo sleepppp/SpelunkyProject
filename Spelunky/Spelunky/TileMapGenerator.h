@@ -1,15 +1,43 @@
 #pragma once
-class TileMapGenerator
+#include "Tile.h"
+class TileMapGenerator final
 {
+	BlockAssign(TileMapGenerator)
+	TileMapGenerator() = delete;
 public:
-	void CreateByCellularAutomata(vector<vector<class Tile*>>* const pOutput,const UINT& tileX, 
-		const UINT& tileY, const float& wallRatio = 0.4f, const int& secondPropess = 1,const int& trimPass = 3);
-	void BuildByCellularAutomata(vector<vector<class Tile*>>* const pOutput,
-		const float& wallRatio = 0.4f, const int& secondPropess = 1, const int& trimPass = 3);
-
-	void CreateTile(vector<vector<class Tile*>>*const pOutput, const UINT& tileX, const UINT& tileY);
-	void DeleteTile(vector<vector<class Tile*>>*const pOutput);
+	static void BuildDataTable();
 private:
-	void TrimTile(vector<vector<class Tile*>>* pOutput, const int& trimPass);
+	struct TagTileRoom
+	{
+		int countX;
+		int countY;
+		vector<vector<ImageInfo>> tileSet;
+		TagTileRoom(const int& countX, const int& countY):countX(countX),countY(countY)
+		{
+			for (int y = 0; y < countY; ++y)
+			{
+				tileSet.push_back(vector<ImageInfo>());
+				for (int x = 0; x < countX; ++x)
+				{
+					tileSet[y].push_back(ImageInfo());
+				}
+			}
+		}
+	};
+private:
+	typedef map<Direction::Enum, vector<ImageInfo>> DecoTable;
+	typedef map<Stage::Enum, DecoTable> StageTable;
+private:
+	static map<Stage::Enum, map<Direction::Enum, vector<ImageInfo>>> _decoDataTable;
+	static map<Stage::Enum, vector<TagTileRoom>> _tileDataTable;
+public:
+	static void CreateTile(vector<vector<class Tile*>>*const pOutput, const UINT& tileX, const UINT& tileY);
+	static void DeleteTile(vector<vector<class Tile*>>*const pOutput);
+
+	static void SetImageAuto(vector<vector<class Tile*>>*const pTileList, const int& indexX, const int& indexY, const Stage::Enum& stage);
+	static void SetGroup4TileAuto(vector<vector<class Tile*>>* pTileList, const int& indexX, const int& indexY, const Stage::Enum& stage);
+	static void SetDecoAuto(vector<vector<class Tile*>>*const pTileList, const int& indexX, const int& indexY,const Stage::Enum& stage);
+	static vector<vector<class Tile*>> FindArea(vector<vector<class Tile*>>* pTileList,const int& minimumWidth, const int& minimumHeight,
+		const Tile::Type& type);
 };
 

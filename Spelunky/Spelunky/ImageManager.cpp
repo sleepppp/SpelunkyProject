@@ -186,9 +186,7 @@ void ImageManager::LoadFolder(const string path, const string filter)
 ********************************************************************************/
 void ImageManager::LoadAllResource()
 {
-	this->LoadFolder("../Resources/Background 01/", "*.png");
-	this->LoadFolder("../Resources/Element 01/", "*.png");
-	this->LoadFolder("../Resources/Items/", "*.png");
-	this->LoadFolder("../Resources/Soil 01/", "*.png");
-	this->LoadFolder("../Resources/Wood 01/", "*.png");
+	this->AddFrameImage("Tile02", PathResources(L"./Tile/Tile02.png"), 8, 8);
+
+	this->LoadFolder("../Resources/Tile/", "*.png");
 }

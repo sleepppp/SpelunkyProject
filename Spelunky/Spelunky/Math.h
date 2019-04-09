@@ -21,6 +21,9 @@ public:
 	static float Random(const float& r1, const float& r2);		//float 랜덤값
 		   
 	static float RandF();							//float 랜덤값
+	static float RandNegative();					//랜덤 -1,1값 
+	static bool RandomBool();
+	static bool PercentageBool(const float& percentage);
 		   
 	static float Lerp(const float& val1, const float& val2, const float& amount);	//선형 보간법
 	static float Clampf(float value, const float& min, const float& max);		//value가 min,max범위를 넘어설려하면 min,max를 반환

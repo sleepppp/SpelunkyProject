@@ -106,12 +106,6 @@
     <Filter Include="InGameObject\Tile">
       <UniqueIdentifier>{89147711-0561-48da-bf82-10a1d3645d53}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainEntry\MapToolScene">
-      <UniqueIdentifier>{0960c492-a87a-450f-ae24-71e353aa36cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainEntry\MapToolScene\MapTool">
-      <UniqueIdentifier>{e9d5672e-e4e5-4cce-8f6b-0a7b3f75df4d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainEntry\Delaunay">
       <UniqueIdentifier>{93ac3b38-222f-4fb9-a0a7-e1f618725d93}</UniqueIdentifier>
     </Filter>
@@ -147,6 +141,9 @@
     </Filter>
     <Filter Include="Util\UI\Canvas">
       <UniqueIdentifier>{a6f983ee-2247-4f0f-9719-0957cb41554e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\BackGround">
+      <UniqueIdentifier>{017900db-78d1-4851-89c1-3bbac6d13831}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -306,9 +303,6 @@
     <ClInclude Include="Tile.h">
       <Filter>InGameObject\Tile</Filter>
     </ClInclude>
-    <ClInclude Include="MapToolScene.h">
-      <Filter>MainEntry\MapToolScene</Filter>
-    </ClInclude>
     <ClInclude Include="ImageButton.h">
       <Filter>Util\UI\Button</Filter>
     </ClInclude>
@@ -324,15 +318,6 @@
     <ClInclude Include="UIBase.h">
       <Filter>Util\UI</Filter>
     </ClInclude>
-    <ClInclude Include="MapPallete.h">
-      <Filter>MainEntry\MapToolScene\MapTool</Filter>
-    </ClInclude>
-    <ClInclude Include="MapPalletePannel.h">
-      <Filter>MainEntry\MapToolScene\MapTool</Filter>
-    </ClInclude>
-    <ClInclude Include="MapTool.h">
-      <Filter>MainEntry\MapToolScene\MapTool</Filter>
-    </ClInclude>
     <ClInclude Include="TileMapGenerator.h">
       <Filter>InGameObject\Tile</Filter>
     </ClInclude>
@@ -344,6 +329,9 @@
     </ClInclude>
     <ClInclude Include="Macro.h">
       <Filter>MainHeaderCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGround.h">
+      <Filter>InGameObject\BackGround</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -482,9 +470,6 @@
     <ClCompile Include="Tile.cpp">
       <Filter>InGameObject\Tile</Filter>
     </ClCompile>
-    <ClCompile Include="MapToolScene.cpp">
-      <Filter>MainEntry\MapToolScene</Filter>
-    </ClCompile>
     <ClCompile Include="ImageButton.cpp">
       <Filter>Util\UI\Button</Filter>
     </ClCompile>
@@ -500,15 +485,6 @@
     <ClCompile Include="UIBase.cpp">
       <Filter>Util\UI</Filter>
     </ClCompile>
-    <ClCompile Include="MapPallete.cpp">
-      <Filter>MainEntry\MapToolScene\MapTool</Filter>
-    </ClCompile>
-    <ClCompile Include="MapPalletePannel.cpp">
-      <Filter>MainEntry\MapToolScene\MapTool</Filter>
-    </ClCompile>
-    <ClCompile Include="MapTool.cpp">
-      <Filter>MainEntry\MapToolScene\MapTool</Filter>
-    </ClCompile>
     <ClCompile Include="TileMapGenerator.cpp">
       <Filter>InGameObject\Tile</Filter>
     </ClCompile>
@@ -517,6 +493,9 @@
     </ClCompile>
     <ClCompile Include="DelaunayScene.cpp">
       <Filter>MainEntry\Delaunay</Filter>
+    </ClCompile>
+    <ClCompile Include="BackGround.cpp">
+      <Filter>InGameObject\BackGround</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -28,5 +28,7 @@ void DebugSystem::Render()
 		ImGui::EndMainMenuBar();
 
 		_TimeManager->Render();
+		if (mIsOpenCameraGui)
+			_Camera->OnGui();
 	}
 }

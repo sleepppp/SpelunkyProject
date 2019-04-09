@@ -20,6 +20,8 @@ namespace Figure
 		explicit FloatRect(const RECT& rc);
 
 		const RECT GetRect();
+		float GetWidth();
+		float GetHeight();
 		Vector2 GetCenter();
 		void Update(const Vector2& pos, const Vector2& size, const Pivot::Enum& pivot);
 		void Move(const Vector2& moveValue);

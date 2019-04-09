@@ -49,6 +49,7 @@ public:
 	void Render(const Vector2& position,const Pivot::Enum& pivot = Pivot::Center,const bool& isRelativePos = false);
 	void FrameRender(const Vector2& position,const int& frameX,const int& frameY,const Pivot::Enum& pivot = Pivot::Center,
 		const bool& isRelativePos = false);
+	void LoopRender(const Vector2& leftTop, const Vector2& rightBottom);
 
 	void ResetRenderOption();
 

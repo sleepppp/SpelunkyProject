@@ -22,14 +22,16 @@ private:
 			:prev(nullptr),isLink(false) {}
 	};
 private:
-	int mPass; 
+	int mPass;
 	vector<TileRoom*> mRoomList;
+	vector<Figure::FloatRect> mPassageList;
 	vector<Vertex*> mVertexList;
 	vector<Vector2> mTempVertexList;
 	vector<Figure::FloatTriangle> mTriangleList;
 	vector<Figure::FloatLine> mLineList;
 	vector<Figure::FloatLine> mFinalLineList;
 	vector<vector<class Tile*>> mTileList;
+	class BackGround* mBackGround;
 public:
 	DelaunayScene();
 	virtual ~DelaunayScene();

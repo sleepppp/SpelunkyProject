@@ -20,6 +20,7 @@ Image::Image(ID2D1Bitmap * const bitmap, const TagLoadedImageInfo & loadinfo)
 	rc.width = mSize.x;
 	rc.height = mSize.y;
 	this->mFrameInfo.push_back(rc);
+	this->ResetRenderOption();
 
 }
 /********************************************************************************
@@ -52,6 +53,8 @@ Image::Image( ID2D1Bitmap * bitmap, const TagLoadedImageInfo & loadinfo, const i
 			this->mFrameInfo.push_back(rc);
 		}
 	}
+
+	this->ResetRenderOption();
 }
 /********************************************************************************
 ## ~Image ##
@@ -196,6 +199,27 @@ void Image::FrameRender(const Vector2& position,const int& frameX,const int& fra
 		D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &dxSrc);
 
 	this->ResetRenderOption();
+}
+/********************************************************************************
+## LoopRender ##
+@@ Vector2 LeftTop : 시작점
+@@ Vector2 RightTop : 끝점 
+*********************************************************************************/
+void Image::LoopRender(const Vector2 & leftTop, const Vector2 & rightBottom)
+{
+	Vector2 size = mSize;
+	float scale = mScale; 
+	Vector2 finalSize = size * scale; 
+
+	for (float y = leftTop.y; y < rightBottom.y; y += finalSize.y)
+	{
+		for (float x = leftTop.x; x < rightBottom.x; x += finalSize.x)
+		{
+			this->SetScale(scale);
+			this->SetSize(size);
+			this->Render(Vector2(x,y), Pivot::LeftTop, true);
+		}
+	}
 }
 /********************************************************************************
 ## ResetRenderOption ##

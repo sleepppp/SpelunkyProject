@@ -5,8 +5,7 @@
 TileManager::TileManager(const UINT & tileX, const UINT & tileY)
 	:GameObject("TileManager",Vector2(),Vector2(),Pivot::LeftTop,RenderPool::Layer::Tile)
 {
-	TileMapGenerator generator;
-	generator.CreateByCellularAutomata(&mTileList, tileX, tileY ,0.33f,3,5);
+
 }
 
 
@@ -35,27 +34,6 @@ void TileManager::Release()
 
 void TileManager::Render()
 {
-	if (_isDebug)
-	{
-		ImGui::Begin("TileManager");
-		{
-			static float wallRatio = 0.3f;
-			static int secondPass = 3;
-			static int trimPass = 5;
-
-			ImGui::SliderFloat("WallRatio", &wallRatio, 0.1f, 0.8f);
-			ImGui::SliderInt("SecondPass", &secondPass, 1, 10);
-			ImGui::SliderInt("TrimPass", &trimPass, 1, 10);
-
-			if (ImGui::Button("ReGenerate"))
-			{
-				static TileMapGenerator generator;
-				generator.BuildByCellularAutomata(&mTileList, wallRatio, secondPass, trimPass);
-			}
-		}
-		ImGui::End();
-	}
-
 	float tileSize = Tile::GetTileSize();
 	Figure::FloatRect cameraRc = _Camera->GetRect();
 	float zoomFactor = _Camera->GetZoom();

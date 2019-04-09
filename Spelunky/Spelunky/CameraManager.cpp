@@ -16,6 +16,7 @@ CameraManager::CameraManager()
 	:mZoomFactor(1.f),mState(CameraManager::MoveState::FreeCamera)
 {
 	mSaveMouse = _Input->GetMousePosition();
+	this->UpdateRenderRect();
 }
 
 CameraManager::~CameraManager() {}
@@ -31,6 +32,13 @@ void CameraManager::Update()
 		this->UpdateFreeCameraMode();
 		break;
 	}
+}
+
+void CameraManager::OnGui()
+{
+	ImGui::Begin("Camera");
+	ImGui::Text("Zoom : %f", mZoomFactor);
+	ImGui::End();
 }
 
 Figure::FloatRect CameraManager::GetRelativeRect(const Figure::FloatRect & rc)
@@ -86,6 +94,15 @@ Vector2 CameraManager::GetWorldMouse()
 	return result;
 }
 
+void CameraManager::AddZoom(float factor)
+{
+	this->mZoomFactor += factor;
+	this->mZoomFactor = Math::Clampf(mZoomFactor, _zoomMin, _zoomMax);
+
+	this->mRect.Update(mPosition, Vector2(_WinSizeX / mZoomFactor, _WinSizeY / mZoomFactor), Pivot::Center);
+	this->mSaveMouse = _Input->GetMousePosition();
+}
+
 
 void CameraManager::CameraProc(WPARAM wParam)
 {
@@ -95,13 +112,11 @@ void CameraManager::CameraProc(WPARAM wParam)
 		{
 			if ((SHORT)HIWORD(wParam) > 0)
 			{
-				this->mZoomFactor += 0.1f;
-				this->mZoomFactor = Math::Clampf(mZoomFactor, _zoomMin, _zoomMax);
+				this->AddZoom(0.1f);
 			}
 			else
 			{
-				this->mZoomFactor -= 0.1f;
-				this->mZoomFactor = Math::Clampf(mZoomFactor, _zoomMin, _zoomMax);
+				this->AddZoom(-0.1f);
 			}
 		}
 	}
@@ -109,7 +124,7 @@ void CameraManager::CameraProc(WPARAM wParam)
 
 void CameraManager::UpdateRenderRect()
 {
-	mRect.Update(mPosition, Vector2(_WinSizeX, _WinSizeY), Pivot::Center);
+	mRect.Update(mPosition, Vector2(CastingFloat(_WinSizeX) / mZoomFactor, CastingFloat(_WinSizeY) / mZoomFactor), Pivot::Center);
 }
 
 void CameraManager::UpdateFreeCameraMode()
@@ -135,21 +150,21 @@ void CameraManager::AmendCamera()
 	if (mRect.left < 0.f)
 	{
 		mPosition.x -= mPosition.x;
-		mRect.Update(mPosition, Vector2(_WinSizeX, _WinSizeY), Pivot::Center);
+		this->UpdateRenderRect();
 	}
 	else if (mRect.right > mMapSize.x)
 	{
 		mPosition.x -= ((float)mRect.right) - mMapSize.x;
-		mRect.Update(mPosition, Vector2(_WinSizeX, _WinSizeY), Pivot::Center);
+		this->UpdateRenderRect();
 	}
 	if (mRect.top < 0.f)
 	{
 		mPosition.y -= mPosition.y;
-		mRect.Update(mPosition, Vector2(_WinSizeX, _WinSizeY), Pivot::Center);
+		this->UpdateRenderRect();
 	}
 	else if (mRect.bottom > mMapSize.y)
 	{
 		mPosition.y -= (float(mRect.bottom)) - mMapSize.y;
-		mRect.Update(mPosition, Vector2(_WinSizeX, _WinSizeY), Pivot::Center);
+		this->UpdateRenderRect();
 	}
 }

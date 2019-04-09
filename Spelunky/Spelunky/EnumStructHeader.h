@@ -36,3 +36,23 @@ namespace Direction
 		Left,Top,Right,Bottom,End
 	};
 }
+
+struct ImageInfo
+{
+	class Image* image; 
+	int frameX;
+	int frameY;
+
+	ImageInfo()
+		:image(nullptr), frameX(0), frameY(0) {}
+	ImageInfo(class Image* image, const int& frameX, const int& frameY)
+		:image(image), frameX(frameX), frameY(frameY) {}
+};
+
+namespace Stage
+{
+	enum Enum : int
+	{
+		Stage1,Stage2,Stage3,End
+	};
+}

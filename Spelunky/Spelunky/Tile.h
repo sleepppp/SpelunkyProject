@@ -12,7 +12,18 @@ public:
 		Soil = 0 ,Wood,Rock,Box, Rope,Ladder,Entry,Exit,Empty
 	};
 private:
+	struct TagDeco
+	{
+		Vector2 renderPos;
+		ImageInfo imageInfo; 
+		TagDeco() {}
+	};
+private:
 	class Image* mImage;
+	int mFrameX;
+	int mFrameY;
+	vector<TagDeco> mDecoList;
+
 	Figure::FloatRect mRect; 
 	Type mType; 
 private:
@@ -29,10 +40,15 @@ public:
 public:
 	const Figure::FloatRect& GetRect()const { return mRect; }
 	const Type& GetType()const { return mType; }
+	class Image* GetImage()const { return mImage; }
+	Vector2 GetPosition() { return mRect.GetCenter(); }
+
 	void SetType(const Type& type) { mType = type; }
 	void SetImage(class Image*const pImage);
 	void SetImage(const string& key);
-	class Image* GetImage()const { return mImage; }
-	Vector2 GetPosition() { return mRect.GetCenter(); }
+	void SetFrameX(const int& x) { mFrameX = x; }
+	void SetFrameY(const int& y) { mFrameY = y; }
+	void SetImageInfo(class Image*const pImage, const int& x, const int& y) 
+	{ mImage = pImage; mFrameX = x; mFrameY = y; }
+	void SetDecoInfo(const Direction::Enum& direction,  class Image* pImage, const int& x, const int& y);
 };
-

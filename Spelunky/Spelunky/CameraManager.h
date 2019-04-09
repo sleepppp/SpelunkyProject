@@ -31,6 +31,7 @@ private:
 	virtual ~CameraManager();
 public:
 	void Update();
+	void OnGui();
 
 	Vector2 GetPosition()const { return mPosition; }
 	Vector2 GetMapSize()const { return mMapSize; }
@@ -44,6 +45,8 @@ public:
 	void GetRelativeVector2(Vector2*const pOutput);
 	void GetWorldVector2(Vector2*const pOutput);
 	Vector2 GetWorldMouse();
+
+	void AddZoom(float factor);
 private:
 	void UpdateRenderRect();
 	void UpdateFreeCameraMode();
