@@ -40,7 +40,7 @@ bool Physics::IntersectPhysics(Figure::FloatRect * const rc1, Figure::FloatRect 
 	if (interW > interH)
 	{
 		float factSpeed = interH / totalH * speed;
-		//factSpeed = speed;
+		factSpeed = speed;
 		//À§
 		if (Math::FloatEqual(rcInter.top,rc2->top))
 		{

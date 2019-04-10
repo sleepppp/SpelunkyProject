@@ -9,7 +9,7 @@ public:
 public:
 	enum class Type : int
 	{
-		Soil = 0 ,Wood,Rock,Box, Rope,Ladder,Entry,Exit,Empty
+		Soil = 0 ,Wood,Rock,Gold,Entry,Exit,Trap,Empty
 	};
 private:
 	struct TagDeco
@@ -26,10 +26,7 @@ private:
 
 	Figure::FloatRect mRect; 
 	Type mType; 
-private:
-	friend class TileManager;
-	friend class MapTool;
-	friend class TileMapGenerator;
+public:
 	Tile() = delete;
 	explicit Tile(const float& x, const float& y);
 	explicit Tile(const Vector2& pos);

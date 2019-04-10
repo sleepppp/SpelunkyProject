@@ -23,6 +23,7 @@ namespace Figure
 		float GetWidth();
 		float GetHeight();
 		Vector2 GetCenter();
+		Vector2 GetBottom();
 		void Update(const Vector2& pos, const Vector2& size, const Pivot::Enum& pivot);
 		void Move(const Vector2& moveValue);
 

@@ -145,6 +145,12 @@
     <Filter Include="InGameObject\BackGround">
       <UniqueIdentifier>{017900db-78d1-4851-89c1-3bbac6d13831}</UniqueIdentifier>
     </Filter>
+    <Filter Include="InGameObject\TrapObject">
+      <UniqueIdentifier>{ac52afc0-5b0b-4727-893f-4751950ef29d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\SoilRoot">
+      <UniqueIdentifier>{188c4962-feda-41c4-b368-0dcd0e8008c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -333,6 +339,12 @@
     <ClInclude Include="BackGround.h">
       <Filter>InGameObject\BackGround</Filter>
     </ClInclude>
+    <ClInclude Include="TrapObject.h">
+      <Filter>InGameObject\TrapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SoilRoot.h">
+      <Filter>InGameObject\SoilRoot</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Spelunky.cpp">
@@ -496,6 +508,12 @@
     </ClCompile>
     <ClCompile Include="BackGround.cpp">
       <Filter>InGameObject\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="TrapObject.cpp">
+      <Filter>InGameObject\TrapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SoilRoot.cpp">
+      <Filter>InGameObject\SoilRoot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -8,8 +8,9 @@ BackGround::BackGround(const string & key, const Vector2 mMapSize)
 	this->mImage = _ImageManager->FindImage(key);
 	this->mGridSize = mImage->GetSize().x;
 
-	this->mGridCountX = mMapSize.x / mGridSize + 1;
-	this->mGridCountY = mMapSize.y / mGridSize + 1;
+	this->mGridCountX =(int)( mMapSize.x / mGridSize + 1.f);
+	this->mGridCountY = (int)(mMapSize.y / mGridSize + 1.f);
+	this->mLayer = RenderPool::Layer::Background;
 }
 
 BackGround::~BackGround()
@@ -18,10 +19,12 @@ BackGround::~BackGround()
 
 void BackGround::Init()
 {
+	_World->GetRenderPool()->RequestRender(mLayer, this);
 }
 
 void BackGround::Release()
 {
+	_World->GetRenderPool()->RemoveRender(mLayer, this);
 }
 
 void BackGround::Update()

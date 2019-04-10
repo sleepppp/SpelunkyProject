@@ -194,6 +194,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderBuffer.h" />
+    <ClInclude Include="SoilRoot.h" />
     <ClInclude Include="Spelunky.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StringHelper.h" />
@@ -206,6 +207,7 @@
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="SingletonBase.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="TrapObject.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="UpdatePool.h" />
@@ -252,6 +254,7 @@
     <ClCompile Include="SceneBase.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="SoilRoot.cpp" />
     <ClCompile Include="Spelunky.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -267,6 +270,7 @@
     <ClCompile Include="TileMapGenerator.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="TrapObject.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="UpdatePool.cpp" />

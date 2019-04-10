@@ -80,12 +80,8 @@ void Tile::Render()
 			case Tile::Type::Rock:
 				brush = D2DRenderer::DefaultBrush::Red;
 				break;
-			case Tile::Type::Box:
-				break;
-			case Tile::Type::Rope:
-				break;
-			case Tile::Type::Ladder:
-				break;
+			case Tile::Type::Gold:
+				brush = D2DRenderer::DefaultBrush::Yellow;
 			case Tile::Type::Entry:
 				break;
 			case Tile::Type::Exit:

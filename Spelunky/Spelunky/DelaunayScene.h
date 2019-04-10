@@ -31,6 +31,7 @@ private:
 	vector<Figure::FloatLine> mLineList;
 	vector<Figure::FloatLine> mFinalLineList;
 	vector<vector<class Tile*>> mTileList;
+	vector<class GameObject*> mObjectList;
 	class BackGround* mBackGround;
 public:
 	DelaunayScene();

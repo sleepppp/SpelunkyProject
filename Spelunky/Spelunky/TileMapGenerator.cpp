@@ -32,9 +32,6 @@ void TileMapGenerator::BuildDataTable()
 	TagTileRoom dataDefault3(1, 1);
 	dataDefault3.tileSet[0][0] = ImageInfo(_ImageManager->FindImage("Tile02"), 1, 2);
 	_tileDataTable[Stage::Stage2].push_back(dataDefault3);
-	TagTileRoom dataDefault4(1, 1);
-	dataDefault4.tileSet[0][0] = ImageInfo(_ImageManager->FindImage("Tile02"), 3, 2);
-	_tileDataTable[Stage::Stage2].push_back(dataDefault4);
 
 	TagTileRoom dataBig0(2, 2);
 	dataBig0.tileSet[0][0] = ImageInfo(_ImageManager->FindImage("Tile02"), 0, 4);
@@ -132,7 +129,8 @@ void TileMapGenerator::SetImageAuto(vector<vector<class Tile*>>* const pTileList
 		return;
 	if (indexX < 0 || indexX >= (int)pTileList->at(0).size())
 		return;
-	if (pTileList->at(indexY).at(indexX)->GetType() == Tile::Type::Empty)
+	if (pTileList->at(indexY).at(indexX)->GetType() == Tile::Type::Empty ||
+		pTileList->at(indexY).at(indexX)->GetType() == Tile::Type::Gold)
 		return;
 	if (pTileList->at(indexY).at(indexX)->GetType() == Tile::Type::Rock)
 	{
@@ -140,7 +138,7 @@ void TileMapGenerator::SetImageAuto(vector<vector<class Tile*>>* const pTileList
 		return;
 	}
 	
-	int randomDefaultTileIndex = Math::Random(0, 4);
+	int randomDefaultTileIndex = Math::Random(0, 3);
 	ImageInfo info = _tileDataTable[stage][randomDefaultTileIndex].tileSet[0][0];
 	pTileList->at(indexY).at(indexX)->SetImageInfo(info.image, info.frameX, info.frameY);
 }
@@ -163,7 +161,7 @@ void TileMapGenerator::SetGroup4TileAuto(vector<vector<class Tile*>>* pTileList,
 	if (pTileList->at(indexY+1).at(indexX)->GetType() != Tile::Type::Soil)return;
 	if (pTileList->at(indexY+1).at(indexX+1)->GetType() != Tile::Type::Soil)return;
 
-	int randomGroupIndex = Math::Random(5, 8);
+	int randomGroupIndex = Math::Random(4, 7);
 	ImageInfo tempInfo = _tileDataTable[Stage::Stage2][randomGroupIndex].tileSet[0][0];
 	pTileList->at(indexY).at(indexX)->SetImageInfo(tempInfo.image, tempInfo.frameX, tempInfo.frameY);
 	tempInfo = _tileDataTable[Stage::Stage2][randomGroupIndex].tileSet[0][1];
@@ -187,7 +185,8 @@ void TileMapGenerator::SetDecoAuto(vector<vector<class Tile*>>* const pTileList,
 	if (indexX <= 0 || indexX >= (int)pTileList->at(0).size() - 1)
 		return;
 
-	if (pTileList->at(indexY).at(indexX)->GetType() == Tile::Type::Empty)
+	if (pTileList->at(indexY).at(indexX)->GetType() == Tile::Type::Empty ||
+		pTileList->at(indexY).at(indexX)->GetType() == Tile::Type::Gold)
 		return;
 
 	int leftIndex = Math::Clamp(indexX - 1, 0, pTileList->at(0).size() - 1);
@@ -197,13 +196,17 @@ void TileMapGenerator::SetDecoAuto(vector<vector<class Tile*>>* const pTileList,
 
 	enum DirectionIndex { Left = 0, Top = 1, Right = 2, Bottom = 3 };
 	bool isEmpty[4] = { true,true,true,true };	//left,top,right,bottom
-	if (pTileList->at(indexY).at(leftIndex)->GetType() != Tile::Type::Empty)
+	if (pTileList->at(indexY).at(leftIndex)->GetType() != Tile::Type::Empty &&
+		pTileList->at(indexY).at(leftIndex)->GetType() != Tile::Type::Gold)
 		isEmpty[Left] = false;
-	if (pTileList->at(topIndex).at(indexX)->GetType() != Tile::Type::Empty)
+	if (pTileList->at(topIndex).at(indexX)->GetType() != Tile::Type::Empty&&
+		pTileList->at(topIndex).at(indexX)->GetType() != Tile::Type::Gold)
 		isEmpty[Top] = false;
-	if (pTileList->at(indexY).at(rightIndex)->GetType() != Tile::Type::Empty)
+	if (pTileList->at(indexY).at(rightIndex)->GetType() != Tile::Type::Empty&&
+		pTileList->at(indexY).at(rightIndex)->GetType() != Tile::Type::Gold)
 		isEmpty[Right] = false;
-	if (pTileList->at(bottomIndex).at(indexX)->GetType() != Tile::Type::Empty)
+	if (pTileList->at(bottomIndex).at(indexX)->GetType() != Tile::Type::Empty&&
+		pTileList->at(bottomIndex).at(indexX)->GetType() != Tile::Type::Gold)
 		isEmpty[Bottom] = false;
 
 	if (leftIndex == indexX)
@@ -268,7 +271,7 @@ vector<vector<class Tile*>> TileMapGenerator::FindArea(vector<vector<class Tile*
 				for (tempY = y; tempY < pTileList->size(); ++tempY)
 				{
 					bool isBreak = false;
-					for (tempX = x; tempX < clampEndX; ++tempX)
+					for (tempX = x; tempX < (UINT)clampEndX; ++tempX)
 					{
 						//해당 타입이 아닌 타일을 찾을 때 까지 
 						if (pTileList->at(tempY).at(tempX)->GetType() != type)
@@ -281,7 +284,7 @@ vector<vector<class Tile*>> TileMapGenerator::FindArea(vector<vector<class Tile*
 						break;
 				}
 				// 길이가 minimum보다 큰지 비교 둘다 크다면 이 영역이 찾은 영역 
-				if (tempY - y >= minimumHeight && tempX - x >= minimumWidth)
+				if (tempY - y >= (UINT)minimumHeight && tempX - x >= (UINT)minimumWidth)
 				{
 					vector<vector<Tile*>> result;
 					result.assign(tempY - y, vector<Tile*>());
@@ -300,4 +303,45 @@ vector<vector<class Tile*>> TileMapGenerator::FindArea(vector<vector<class Tile*
 	}
 
 	return vector<vector<class Tile*>>();
+}
+
+/*************************************************************************************
+## FindOnGroundTile ##
+*************************************************************************************/
+Tile * TileMapGenerator::FindOnGroundTile(vector<vector<class Tile*>>* pTileList)
+{
+	Tile* result = nullptr;
+	while (result == nullptr)
+	{
+		int randomIndexY = Math::Random(1, pTileList->size() - 2);
+		int randomIndexX = Math::Random(1, pTileList->at(0).size() - 2);
+		if (pTileList->at(randomIndexY).at(randomIndexX)->GetType() == Tile::Type::Empty)
+		{
+			if (pTileList->at(randomIndexY + 1).at(randomIndexX)->GetType() == Tile::Type::Soil)
+			{
+				if(pTileList->at(randomIndexY -1).at(randomIndexX)->GetType() == Tile::Type::Empty)
+					result = pTileList->at(randomIndexY).at(randomIndexX);
+			}
+		}
+	}
+	return result;
+}
+
+Tile * TileMapGenerator::FindUnderGroundTile(vector<vector<class Tile*>>* pTileList)
+{
+	Tile* result = nullptr;
+	while (result == nullptr)
+	{
+		int randomIndexY = Math::Random(2, pTileList->size() - 3);
+		int randomIndexX = Math::Random(2, pTileList->at(0).size() - 3);
+		if (pTileList->at(randomIndexY).at(randomIndexX)->GetType() == Tile::Type::Empty)
+		{
+			if (pTileList->at(randomIndexY + 1).at(randomIndexX)->GetType() == Tile::Type::Empty)
+			{
+				if (pTileList->at(randomIndexY - 1).at(randomIndexX)->GetType() == Tile::Type::Soil)
+					result = pTileList->at(randomIndexY).at(randomIndexX);
+			}
+		}
+	}
+	return result;
 }

@@ -39,5 +39,7 @@ public:
 	static void SetDecoAuto(vector<vector<class Tile*>>*const pTileList, const int& indexX, const int& indexY,const Stage::Enum& stage);
 	static vector<vector<class Tile*>> FindArea(vector<vector<class Tile*>>* pTileList,const int& minimumWidth, const int& minimumHeight,
 		const Tile::Type& type);
+	static class Tile* FindOnGroundTile(vector<vector<class Tile*>>* pTileList);
+	static class Tile* FindUnderGroundTile(vector<vector<class Tile*>>* pTileList);
 };
 

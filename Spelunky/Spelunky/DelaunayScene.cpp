@@ -4,6 +4,11 @@
 #include "TileMapGenerator.h"
 #include "Tile.h"
 #include "BackGround.h"
+#include "TrapObject.h"
+#include "SoilRoot.h"
+#include "RenderPool.h"
+#include "LightingManager.h"
+
 #include <algorithm>
 DelaunayScene::DelaunayScene()
 {
@@ -12,15 +17,7 @@ DelaunayScene::DelaunayScene()
 
 DelaunayScene::~DelaunayScene()
 {
-	for (UINT i = 0; i < mVertexList.size(); ++i)
-		SafeDelete(mVertexList[i]);
-	for (UINT i = 0; i < mRoomList.size(); ++i)
-	{
-		SafeDelete(mRoomList[i]);
-	}
-	mRoomList.clear();
-
-	TileMapGenerator::DeleteTile(&mTileList);
+	
 }
 
 void DelaunayScene::Init()
@@ -32,9 +29,9 @@ void DelaunayScene::Init()
 	for (UINT i = 0; i < 150; ++i)
 	{
 		float randomX = Math::Random(center.x - 800.f, center.x + 800.f);
-		float randomY = Math::Random(center.y - 200.f, center.y + 200.f);
-		int randomWidthX = Math::Random(1, 10);
-		int randomHeightY = Math::Random(1, 10);
+		float randomY = Math::Random(center.y - 400.f, center.y + 400.f);
+		int randomWidthX = Math::Random(4, 10);
+		int randomHeightY = Math::Random(4, 10);
 		float width = CastingFloat(randomWidthX) * tileSize;
 		float height = CastingFloat(randomHeightY) * tileSize;
 		TileRoom* node = new TileRoom;
@@ -56,6 +53,20 @@ void DelaunayScene::Release()
 		SafeDelete(mRoomList[i]);
 	}
 	mRoomList.clear();
+	for (UINT i = 0; i < mObjectList.size(); ++i)
+	{
+		mObjectList[i]->Release();
+		SafeDelete(mObjectList[i]);
+	}
+	mObjectList.clear();
+	for (UINT y = 0; y < mTileList.size(); ++y)
+	{
+		for (UINT x = 0; x < mTileList[y].size(); ++x)
+		{
+			SafeDelete(mTileList.at(y).at(x));
+		}
+	}
+	mTileList.clear();
 }
 
 void DelaunayScene::Update()
@@ -120,6 +131,11 @@ void DelaunayScene::Render()
 			mBackGround->Render();
 		}
 
+		for (UINT i = 0; i < mObjectList.size(); ++i)
+		{
+			mObjectList[i]->Render();
+		}
+
 		float tileSize = Tile::GetTileSize();
 		Figure::FloatRect cameraRc = _Camera->GetRect();
 		float zoomFactor = _Camera->GetZoom();
@@ -156,7 +172,13 @@ void DelaunayScene::Render()
 			this->Reset();
 
 		ImGui::End();
+
+		//mRenderPool->GetLightManager()->OnGui();
 	}
+
+	//this->mRenderPool->GetLightManager()->BeginLighting();
+	//this->mRenderPool->GetLightManager()->Lighting();
+	//this->mRenderPool->GetLightManager()->EndLighting();
 }
 
 void DelaunayScene::NextPass()
@@ -188,6 +210,7 @@ void DelaunayScene::NextPass()
 			mRoomList[randomIndex]->isSelect = true;
 			++addCount;
 		}
+		
 	}
 	/*************************************************************************
 	## Pass 3 ##
@@ -340,6 +363,7 @@ void DelaunayScene::NextPass()
 				}
 			}
 			//여기까지 왔다면 거리순으로 정렬이 끝났다는 뜻
+			//제일 적은 루트 탐색 
 			for (UINT i = 0; i < tempVertex->link.size(); ++i)
 			{
 				Figure::FloatLine line(tempVertex->pos, tempVertex->link[i]->pos);
@@ -357,11 +381,30 @@ void DelaunayScene::NextPass()
 					mFinalLineList.push_back(line);
 					tempVertex = tempVertex->link[i];
 					tempVertex->isLink = true;
-					break;
+				}
+			}
+			//제일 긴 루트 탐색 
+			for (int i = (int)(tempVertex->link.size() - 1); i >= 0; --i)
+			{
+				Figure::FloatLine line(tempVertex->pos, tempVertex->link[i]->pos);
+				bool addPass = true;
+				for (UINT j = 0; j < mFinalLineList.size(); ++j)
+				{
+					if (line == mFinalLineList[j])
+					{
+						addPass = false;
+						break;
+					}
+				}
+				if (addPass == true)
+				{
+					mFinalLineList.push_back(line);
+					tempVertex = tempVertex->link[i];
+					tempVertex->isLink = true;
 				}
 			}
 			++count;
-			if (count >= 15)
+			if (count >= 20)
 				break;
 		}/*end while*/
 
@@ -401,7 +444,7 @@ void DelaunayScene::NextPass()
 	}
 	/*************************************************************************
 	## Pass 5 ##
-	4번째 Pass에서 나온 최소 경로들을 가로 선분,세로선분으로 분리해서 선을 재 구축한다. 
+	4번째 Pass에서 나온 최소 경로들을 가로 선분,세로선분으로 분리해서 선을 재 구축한다. 크큭...  이세계를 재 구축한다. 크큭..
 	*************************************************************************/
 	else if (mPass == 5)
 	{
@@ -420,6 +463,8 @@ void DelaunayScene::NextPass()
 		{
 			MakeRoot(mFinalLineList[i]);
 		}
+
+		mFinalLineList.push_back(Figure::FloatLine(mFinalLineList[0].start, mFinalLineList[mFinalLineList.size() - 1].end));
 	}
 	/*************************************************************************
 	## Pass 6 ##
@@ -438,9 +483,9 @@ void DelaunayScene::NextPass()
 				}
 			}
 		}
-		float tileSize = Tile::GetTileSize() / 2.f;
 		for (UINT i = 0; i < mLineList.size(); ++i)
 		{
+			float tileSize = Tile::GetTileSize() * Math::Random(0.5f,2.f);
 			TileRoom* room = new TileRoom;
 			room->isSelect = true;
 			//가로 
@@ -542,7 +587,7 @@ void DelaunayScene::NextPass()
 	}	
 	/*************************************************************************
 	## Pass 8 ##
-	너무 넓게 흙으로 차 있는 공간은 비밀 방들을 생성한다.
+	흙타일들 랜덤으로 바위로 바꿔준다. 
 	*************************************************************************/
 	else if (mPass == 8)
 	{
@@ -569,7 +614,7 @@ void DelaunayScene::NextPass()
 	{
 		//통로를 막지 않는 기준에서 난수로 지형 생성
 		int tryCount = 0;
-		for (; tryCount < 100;)
+		for (; tryCount < 130;)
 		{
 			int randomIndexX = Math::Random(1, mTileList[0].size() - 2);
 			int randomIndexY = Math::Random(1, mTileList.size() - 2);
@@ -635,7 +680,7 @@ void DelaunayScene::NextPass()
 	지금까지의 절차로 생성된 타일들에 랜덤한 디폴트 타일을 입혀준다.
 	*************************************************************************/
 	else if (mPass == 10)
-	{
+	{		
 		Tile* endTile = mTileList[mTileList.size() - 1][mTileList[0].size() - 1];
 		mBackGround = new BackGround("BackGround2", Vector2(endTile->GetRect().right, endTile->GetRect().bottom));
 		cout << mTileList.size() - 1 << " " << mTileList[0].size() - 1 << endl;
@@ -685,6 +730,63 @@ void DelaunayScene::NextPass()
 			++tryCount;
 		}
 	}
+	/*************************************************************************
+	## Pass 12 ##
+	여러 오브젝트 타일을 심어준다. 
+	*************************************************************************/
+	else if (mPass == 12)
+	{
+		vector<ImageInfo> trapList;
+		trapList.push_back(ImageInfo(_ImageManager->FindImage("Tile02"), 4, 6));
+		trapList.push_back(ImageInfo(_ImageManager->FindImage("Tile02"), 5, 6));
+		trapList.push_back(ImageInfo(_ImageManager->FindImage("Tile02"), 6, 6));
+
+		//장애물 수
+		for (UINT i = 0; i < 30; ++i)
+		{
+			if (Tile* tile = TileMapGenerator::FindOnGroundTile(&mTileList))
+			{
+				int randomIndex = Math::Random(0, trapList.size() - 1);
+				tile->SetImageInfo(trapList[randomIndex].image, trapList[randomIndex].frameX, trapList[randomIndex].frameY);
+			}
+		}
+
+		//묘비 심어준다. 
+		vector<ImageInfo> rockList;
+		rockList.push_back(ImageInfo(_ImageManager->FindImage("Tile02"), 4, 5));
+		rockList.push_back(ImageInfo(_ImageManager->FindImage("Tile02"), 5, 5));
+		rockList.push_back(ImageInfo(_ImageManager->FindImage("Tile02"), 6, 5));
+
+		int index = 0;
+		while (true)
+		{
+			if (Tile* tile = TileMapGenerator::FindOnGroundTile(&mTileList))
+			{
+				tile->SetImageInfo(rockList[index].image, rockList[index].frameX, rockList[index].frameY);
+				if (++index >= 3)
+					break;
+			}
+		}
+
+		for (UINT i = 0; i < 30; ++i)
+		{
+			if (Tile* tile = TileMapGenerator::FindOnGroundTile(&mTileList))
+			{
+				TrapObject* object = new TrapObject(Vector2(tile->GetRect().left + Tile::GetTileSize() / 2.f, tile->GetRect().bottom));
+				object->Init();
+				mObjectList.push_back(object);
+			}
+		}
+		for (UINT i = 0; i < 40; ++i)
+		{
+			if (Tile* tile = TileMapGenerator::FindUnderGroundTile(&mTileList))
+			{
+				SoilRoot* root = new SoilRoot(Vector2(tile->GetRect().left + Tile::GetTileSize() / 2.f, tile->GetRect().top));
+				root->Init();
+				mObjectList.push_back(root);
+			}
+		}
+	}
 }
 
 void DelaunayScene::Reset()
@@ -697,6 +799,12 @@ void DelaunayScene::Reset()
 		SafeDelete(mVertexList[i]);
 	TileMapGenerator::DeleteTile(&mTileList);
 	SafeDelete(mBackGround);
+	for (UINT i = 0; i < mObjectList.size(); ++i)
+	{
+		mObjectList[i]->Release();
+		SafeDelete(mObjectList[i]);
+	}
+	mObjectList.clear();
 
 	mVertexList.clear();
 	mTempVertexList.clear();
@@ -731,5 +839,6 @@ DelaunayScene::Vertex * DelaunayScene::FindVertex(const Vector2 & pos)
 		if (mVertexList[i]->pos == pos)
 			return mVertexList[i];
 	}
+
 	return nullptr;
 }

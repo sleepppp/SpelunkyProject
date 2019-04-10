@@ -53,6 +53,6 @@ namespace Stage
 {
 	enum Enum : int
 	{
-		Stage1,Stage2,Stage3,End
+		Stage1,Stage2,Stage3,Stage4,End
 	};
 }

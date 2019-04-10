@@ -119,6 +119,11 @@ void Transform::ReleaseChild()
 ## SetWorldPosition ##
 @@ Vector2 position : 월드 좌표 세팅
 **************************************************************************************/
+void Transform::SetPivot(const Pivot::Enum & pivot)
+{
+	this->mPivot = pivot;
+	this->UpdateTransform();
+}
 void Transform::SetWorldPosition(const Vector2 & position)
 {
 	//만약 부모가 있다면

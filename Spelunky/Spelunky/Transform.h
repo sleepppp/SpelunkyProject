@@ -31,6 +31,7 @@ public:
 	void ReleaseParent();
 	void ReleaseChild();
 
+	void SetPivot(const Pivot::Enum& pivot);
 	void SetWorldPosition(const Vector2& position);
 	void SetLocalPosition(const Vector2& position);
 	void SetWorldX(const float& x);

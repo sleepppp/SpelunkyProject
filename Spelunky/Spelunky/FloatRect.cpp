@@ -46,6 +46,10 @@ Vector2 Figure::FloatRect::GetCenter()
 {
 	return Vector2(left + (right - left)/2.f , top + (bottom - top)/2.f);
 }
+Vector2 Figure::FloatRect::GetBottom()
+{
+	return Vector2(left + (right - left) / 2.f , bottom);
+}
 /**************************************************************************************************
 ## FloatRect::Update ##
 @@ Vector2 pos : ÁÂÇ¥
