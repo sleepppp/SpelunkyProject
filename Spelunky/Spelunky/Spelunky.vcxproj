@@ -177,7 +177,9 @@
     <ClInclude Include="Line.h" />
     <ClInclude Include="Loading.h" />
     <ClInclude Include="LoadingScene.h" />
+    <ClInclude Include="Looper.h" />
     <ClInclude Include="Macro.h" />
+    <ClInclude Include="MapToolScene.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="MessageComponent.h" />
     <ClInclude Include="MessageManager.h" />
@@ -185,6 +187,7 @@
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="Path.h" />
     <ClInclude Include="Physics.h" />
+    <ClInclude Include="ProcedureGeneration.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="RenderPool.h" />
     <ClInclude Include="RenderTargetBuffer.h" />
@@ -194,7 +197,6 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderBuffer.h" />
-    <ClInclude Include="SoilRoot.h" />
     <ClInclude Include="Spelunky.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StringHelper.h" />
@@ -206,8 +208,8 @@
     <ClInclude Include="TileMapGenerator.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="SingletonBase.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="Transform.h" />
-    <ClInclude Include="TrapObject.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="UpdatePool.h" />
@@ -241,12 +243,15 @@
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="Loading.cpp" />
     <ClCompile Include="LoadingScene.cpp" />
+    <ClCompile Include="Looper.cpp" />
+    <ClCompile Include="MapToolScene.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="MessageComponent.cpp" />
     <ClCompile Include="MessageManager.cpp" />
     <ClCompile Include="ObjectPool.cpp" />
     <ClCompile Include="Path.cpp" />
     <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="ProcedureGeneration.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="RenderPool.cpp" />
     <ClCompile Include="RenderTargetBuffer.cpp" />
@@ -254,7 +259,6 @@
     <ClCompile Include="SceneBase.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="SoilRoot.cpp" />
     <ClCompile Include="Spelunky.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -267,10 +271,11 @@
     <ClCompile Include="TextFile.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileManager.cpp" />
+    <ClCompile Include="TileMapGeneration + Create.cpp" />
     <ClCompile Include="TileMapGenerator.cpp" />
     <ClCompile Include="TimeManager.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Transform.cpp" />
-    <ClCompile Include="TrapObject.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="UpdatePool.cpp" />

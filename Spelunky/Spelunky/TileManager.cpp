@@ -2,12 +2,13 @@
 #include "TileManager.h"
 
 #include "TileMapGenerator.h"
-TileManager::TileManager(const UINT & tileX, const UINT & tileY)
-	:GameObject("TileManager",Vector2(),Vector2(),Pivot::LeftTop,RenderPool::Layer::Tile)
+
+
+TileManager::TileManager(const wstring& file)
+	:GameObject("TileManager", Vector2(), Vector2(), Pivot::LeftTop, RenderPool::Layer::Tile)
 {
-
+	TileMapGenerator::LoadTile(file, &mTileList);
 }
-
 
 TileManager::~TileManager()
 {

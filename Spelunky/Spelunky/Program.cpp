@@ -4,11 +4,14 @@
 #include "TestScene.h"
 #include "LoadingScene.h"
 #include "DelaunayScene.h"
+#include "MapToolScene.h"
+
 #include "TileMapGenerator.h"
+
 Program::Program()
 {
-	TestScene* scene = new TestScene;
-	_SceneManager->AddScene("TestScene",scene);
+	MapToolScene* scene = new MapToolScene;
+	_SceneManager->AddScene("MapToolScene",scene);
 
 	DelaunayScene* delaunayScene = new DelaunayScene;
 	_SceneManager->AddScene("DelaunayScene", delaunayScene);
@@ -19,7 +22,7 @@ Program::Program()
 
 	load->AddThreadFunc([]() {_ImageManager->LoadAllResource(); });
 	load->AddThreadFunc([]() {TileMapGenerator::BuildDataTable(); });
-	_SceneManager->LoadSceneByLoading("LoadingScene","DelaunayScene");
+	_SceneManager->LoadSceneByLoading("LoadingScene","MapToolScene");
 	_SceneManager->InitFirstScene();
 }
 

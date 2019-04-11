@@ -148,8 +148,14 @@
     <Filter Include="InGameObject\TrapObject">
       <UniqueIdentifier>{ac52afc0-5b0b-4727-893f-4751950ef29d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="InGameObject\SoilRoot">
-      <UniqueIdentifier>{188c4962-feda-41c4-b368-0dcd0e8008c3}</UniqueIdentifier>
+    <Filter Include="MainEntry\MapToolScene">
+      <UniqueIdentifier>{b06f1e82-9270-47c7-8ac8-b34ea2e34891}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Timer">
+      <UniqueIdentifier>{66a08abe-d6cc-4c4e-984a-314cdbc39975}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\LoopHelper">
+      <UniqueIdentifier>{34b525d8-1564-4853-84f5-c9592a7bd7cc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -339,11 +345,17 @@
     <ClInclude Include="BackGround.h">
       <Filter>InGameObject\BackGround</Filter>
     </ClInclude>
-    <ClInclude Include="TrapObject.h">
-      <Filter>InGameObject\TrapObject</Filter>
+    <ClInclude Include="MapToolScene.h">
+      <Filter>MainEntry\MapToolScene</Filter>
     </ClInclude>
-    <ClInclude Include="SoilRoot.h">
-      <Filter>InGameObject\SoilRoot</Filter>
+    <ClInclude Include="ProcedureGeneration.h">
+      <Filter>MainEntry\MapToolScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Util\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Looper.h">
+      <Filter>Util\LoopHelper</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -509,11 +521,20 @@
     <ClCompile Include="BackGround.cpp">
       <Filter>InGameObject\BackGround</Filter>
     </ClCompile>
-    <ClCompile Include="TrapObject.cpp">
-      <Filter>InGameObject\TrapObject</Filter>
+    <ClCompile Include="TileMapGeneration + Create.cpp">
+      <Filter>InGameObject\Tile</Filter>
     </ClCompile>
-    <ClCompile Include="SoilRoot.cpp">
-      <Filter>InGameObject\SoilRoot</Filter>
+    <ClCompile Include="MapToolScene.cpp">
+      <Filter>MainEntry\MapToolScene</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcedureGeneration.cpp">
+      <Filter>MainEntry\MapToolScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Util\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Looper.cpp">
+      <Filter>Util\LoopHelper</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

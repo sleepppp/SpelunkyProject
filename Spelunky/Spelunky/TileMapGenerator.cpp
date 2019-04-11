@@ -86,7 +86,7 @@ void TileMapGenerator::CreateTile(vector<vector<class Tile*>>* const pOutput, co
 		pOutput->at(y).assign(tileX, nullptr);
 		for (UINT x = 0; x < tileX; ++x)
 		{
-			pOutput->at(y).at(x) = new Tile(tileSize / 2.f + tileSize * CastingFloat(x), tileSize / 2.f + tileSize * CastingFloat(y));
+			pOutput->at(y).at(x) = new Tile(tileSize / 2.f + tileSize * CastingFloat(x), tileSize / 2.f + tileSize * CastingFloat(y),x,y);
 		}
 	}
 }
@@ -345,3 +345,4 @@ Tile * TileMapGenerator::FindUnderGroundTile(vector<vector<class Tile*>>* pTileL
 	}
 	return result;
 }
+

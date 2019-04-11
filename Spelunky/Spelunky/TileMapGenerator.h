@@ -41,5 +41,8 @@ public:
 		const Tile::Type& type);
 	static class Tile* FindOnGroundTile(vector<vector<class Tile*>>* pTileList);
 	static class Tile* FindUnderGroundTile(vector<vector<class Tile*>>* pTileList);
+
+	static void SaveTile(const wstring& file ,vector<vector<class Tile*>>* pTileList);
+	static void LoadTile(const wstring& file, vector<vector<class Tile*>>* pTileList);
 };
 

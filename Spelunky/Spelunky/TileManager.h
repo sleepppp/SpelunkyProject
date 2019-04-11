@@ -7,8 +7,7 @@ class TileManager : public GameObject
 private:
 	vector<vector<Tile*>> mTileList;
 public:
-	TileManager() = delete; 
-	explicit TileManager(const UINT& tileX,const UINT& tileY);
+	TileManager(const wstring& file);
 	virtual ~TileManager();
 
 	void Init()override;

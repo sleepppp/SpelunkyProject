@@ -4,12 +4,12 @@
 #include "TileMapGenerator.h"
 #include "Tile.h"
 #include "BackGround.h"
-#include "TrapObject.h"
-#include "SoilRoot.h"
 #include "RenderPool.h"
 #include "LightingManager.h"
-
+#include "Path.h"
+#include "BinaryFile.h"
 #include <algorithm>
+
 DelaunayScene::DelaunayScene()
 {
 }
@@ -171,6 +171,13 @@ void DelaunayScene::Render()
 		if (ImGui::Button("Reset"))
 			this->Reset();
 
+		if (ImGui::Button("Save"))
+			this->SaveData();
+		ImGui::SameLine();
+		if (ImGui::Button("Load"))
+			this->LoadData();
+		
+
 		ImGui::End();
 
 		//mRenderPool->GetLightManager()->OnGui();
@@ -201,7 +208,18 @@ void DelaunayScene::NextPass()
 			for (UINT i = 0; i < selectList.size(); ++i)
 			{
 				if (selectList[i] == mRoomList[randomIndex])
+				{
 					isContinue = true;
+					break;
+				}
+				if (selectList[i]->isSelect == true)
+				{
+					if (Figure::IntersectRectToRect(&selectList[i]->rc, &mRoomList[randomIndex]->rc))
+					{
+						isContinue = true;
+						break;
+					}
+				}
 			}
 			if (isContinue)
 				continue;
@@ -683,7 +701,6 @@ void DelaunayScene::NextPass()
 	{		
 		Tile* endTile = mTileList[mTileList.size() - 1][mTileList[0].size() - 1];
 		mBackGround = new BackGround("BackGround2", Vector2(endTile->GetRect().right, endTile->GetRect().bottom));
-		cout << mTileList.size() - 1 << " " << mTileList[0].size() - 1 << endl;
 		for(int y = 0; y < CastingInt(mTileList.size()); ++y)
 		{
 			for (int x = 0; x < CastingInt(mTileList[y].size()); ++x)
@@ -772,18 +789,41 @@ void DelaunayScene::NextPass()
 		{
 			if (Tile* tile = TileMapGenerator::FindOnGroundTile(&mTileList))
 			{
-				TrapObject* object = new TrapObject(Vector2(tile->GetRect().left + Tile::GetTileSize() / 2.f, tile->GetRect().bottom));
-				object->Init();
-				mObjectList.push_back(object);
+				//7,6
+				tile->SetType(Tile::Type::Trap);
+				tile->SetImageInfo(_ImageManager->FindImage("Tile02"), 7, 7);
+				Tile* upTile = mTileList[tile->GetIndexY() - 1][tile->GetIndexX()];
+				upTile->SetType(Tile::Type::Trap);
+				upTile->SetImageInfo(_ImageManager->FindImage("Tile02"), 7, 6);
 			}
 		}
 		for (UINT i = 0; i < 40; ++i)
 		{
 			if (Tile* tile = TileMapGenerator::FindUnderGroundTile(&mTileList))
 			{
-				SoilRoot* root = new SoilRoot(Vector2(tile->GetRect().left + Tile::GetTileSize() / 2.f, tile->GetRect().top));
-				root->Init();
-				mObjectList.push_back(root);
+				//4,3
+				tile->SetType(Tile::Type::Thorn);
+				tile->SetImageInfo(_ImageManager->FindImage("Tile02"), 4, 3);
+				Tile* downTile = mTileList[tile->GetIndexY() + 1][tile->GetIndexX()];
+				downTile->SetType(Tile::Type::Thorn);
+				downTile->SetImageInfo(_ImageManager->FindImage("Tile02"), 4, 4);
+			}
+		}
+	}
+	/*************************************************************************
+	## Pass 13 ##
+	·£´ý ¾ÆÀÌÅÛ »Ñ¸°´Ù. 
+	*************************************************************************/
+	else if (mPass == 13)
+	{
+		Image* image = _ImageManager->FindImage("Items");
+		for (UINT i = 0; i < 200; ++i)
+		{
+			int randomIndexY = Math::Random(1, mTileList.size() - 2);
+			int randomIndexX = Math::Random(1, mTileList[0].size() - 1);
+			if (mTileList[randomIndexY][randomIndexX]->GetType() == Tile::Type::Soil)
+			{
+				mTileList[randomIndexY][randomIndexX]->SetItemInfo(image, Math::Random(2,7), 0);
 			}
 		}
 	}
@@ -841,4 +881,32 @@ DelaunayScene::Vertex * DelaunayScene::FindVertex(const Vector2 & pos)
 	}
 
 	return nullptr;
+}
+
+void DelaunayScene::SaveData(wstring file)
+{
+	if (file.length() > 0)
+	{
+		TileMapGenerator::SaveTile(file,&mTileList);
+	}
+	else
+	{
+		function<void(wstring)> func = std::bind(&DelaunayScene::SaveData, this, placeholders::_1);
+		Path::OpenFileDialog(L"", nullptr, L"../GameData/", func);
+	}
+}
+
+void DelaunayScene::LoadData(wstring file)
+{
+	if (file.length() > 0)
+	{
+		this->Reset();
+		TileMapGenerator::LoadTile(file,&mTileList);
+		mPass = 15;
+	}
+	else
+	{
+		function<void(wstring)> func = std::bind(&DelaunayScene::LoadData, this, placeholders::_1);
+		Path::OpenFileDialog(L"", nullptr, L"../GameData/", func);
+	}
 }

@@ -21,7 +21,6 @@ Image::Image(ID2D1Bitmap * const bitmap, const TagLoadedImageInfo & loadinfo)
 	rc.height = mSize.y;
 	this->mFrameInfo.push_back(rc);
 	this->ResetRenderOption();
-
 }
 /********************************************************************************
 ## Image ##

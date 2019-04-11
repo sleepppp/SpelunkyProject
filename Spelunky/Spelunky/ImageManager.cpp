@@ -187,9 +187,7 @@ void ImageManager::LoadFolder(const string path, const string filter)
 void ImageManager::LoadAllResource()
 {
 	this->AddFrameImage("Tile02", PathResources(L"./Tile/Tile02.png"), 8, 8);
-	this->AddFrameImage("Tile04", PathResources(L"./Tile/Tile04.png"), 8, 8);
-	this->AddFrameImage("Tile05", PathResources(L"./Tile/Tile05.png"), 8, 8);
-
+	this->AddFrameImage("Items", PathResources(L"./Item/items.png"),25,12);
 	this->LoadFolder("../Resources/Tile/", "*.png");
 	this->LoadFolder("../Resources/Object/", "*.png");
 }

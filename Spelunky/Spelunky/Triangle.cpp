@@ -30,9 +30,9 @@ void Figure::FloatTriangle::Move(const Vector2 & moveValue)
 
 void Figure::FloatTriangle::Render(const D2D1::ColorF::Enum& color)
 {
-	_D2DRenderer->DrawLine(vertex0, vertex1, color,1.f, true);
-	_D2DRenderer->DrawLine(vertex1, vertex2, color,1.f, true);
-	_D2DRenderer->DrawLine(vertex2, vertex0, color,1.f, true);
+	_D2DRenderer->DrawLine(vertex0, vertex1, color,2.f, true);
+	_D2DRenderer->DrawLine(vertex1, vertex2, color,2.f, true);
+	_D2DRenderer->DrawLine(vertex2, vertex0, color,2.f, true);
 }
 
 Vector2 Figure::FloatTriangle::GetExternalCenter()

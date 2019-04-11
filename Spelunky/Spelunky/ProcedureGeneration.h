@@ -1,12 +1,10 @@
 #pragma once
-#include "SceneBase.h"
-#include <set>
-class DelaunayScene : public SceneBase
+class ProcedureGeneration
 {
 private:
 	struct TileRoom
 	{
-		int tileCountX; 
+		int tileCountX;
 		int tileCountY;
 		Figure::FloatRect rc;
 		bool isSelect;
@@ -19,10 +17,11 @@ private:
 		bool isLink;
 		typedef vector<Vertex*>::iterator LinkIter;
 		Vertex()
-			:prev(nullptr),isLink(false) {}
+			:prev(nullptr), isLink(false) {}
 	};
 private:
 	int mPass;
+	bool mIsStart;
 	vector<TileRoom*> mRoomList;
 	vector<Figure::FloatRect> mPassageList;
 	vector<Vertex*> mVertexList;
@@ -31,23 +30,17 @@ private:
 	vector<Figure::FloatLine> mLineList;
 	vector<Figure::FloatLine> mFinalLineList;
 	vector<vector<class Tile*>> mTileList;
-	vector<class GameObject*> mObjectList;
-	class BackGround* mBackGround;
+	vector<TileRoom*> mSelectList;
+	class Looper* mLooper;
 public:
-	DelaunayScene();
-	virtual ~DelaunayScene();
+	ProcedureGeneration();
+	~ProcedureGeneration();
 
-	void Init()override;
-	void Release()override; 
-	void Update()override;
-	void Render()override; 
-private:
-	void NextPass();
-	void Reset();
+	void Update(); 
+	void Render();
+	void OnGui();
+public:
+	void AddPass();
 	Vertex* FindVertex(const Vector2& pos);
-
-	void SaveData(wstring file = L"");
-	void LoadData(wstring file = L"");
-	
 };
 
