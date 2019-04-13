@@ -229,7 +229,12 @@ void D3DRenderer::BeginRender()
 *******************************************************************************************/
 void D3DRenderer::EndRender()
 {
+#ifdef _DEBUG
+	HRESULT hr = mD3DSwapChain->Present(0, 0);
+	assert(SUCCEEDED(hr));
+#else 
 	mD3DSwapChain->Present(0, 0);
+#endif
 }
 
 

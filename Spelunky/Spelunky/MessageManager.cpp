@@ -56,22 +56,33 @@ MessageManager::~MessageManager()
 	mSleepData.clear();
 }
 /******************************************************************************
+## Release ##
+데이터 전부 다시 가져온다.
+******************************************************************************/
+void MessageManager::Release()
+{
+	for (UINT i = 0; i < mReserveMessageList.size(); ++i)
+	{
+		this->ReturnData(mReserveMessageList[i].second.data);
+	}
+	mReserveMessageList.clear();
+}
+/******************************************************************************
 ## Update ##
 ******************************************************************************/
 void MessageManager::Update()
 {
-	////TODO Time클래스 생성하면 변경
-	//float deltaTime = _Time->DeltaTime();
-	//MessageIter iter = this->mReserveMessageList.begin();
-	//for (; iter != mReserveMessageList.end(); ++iter)
-	//{
-	//	iter->second.delayTime -= deltaTime;
-	//	if (iter->second.delayTime <= 0.0f)
-	//	{
-	//		iter->first->SendCallbackMessage(iter->second);
-	//		mReserveMessageList.erase(iter--);
-	//	}
-	//}
+	float deltaTime = _TimeManager->DeltaTime();
+	MessageIter iter = this->mReserveMessageList.begin();
+	for (; iter != mReserveMessageList.end(); ++iter)
+	{
+		iter->second.delayTime -= deltaTime;
+		if (iter->second.delayTime <= 0.0f)
+		{
+			iter->first->SendCallbackMessage(iter->second);
+			mReserveMessageList.erase(iter--);
+		}
+	}
 }
 
 /******************************************************************************

@@ -72,21 +72,16 @@ namespace Figure
 	*****************************************************************************************************/
 	inline bool IntersectRectToRect(FloatRect*const result, const FloatRect*const rc1, const FloatRect* const rc2)
 	{
-		if (rc1->left < rc2->right && rc1->right > rc2->left)
+		if (IntersectRectToRect(rc1, rc2) == false)
+			return false;
+		if (result)
 		{
-			if (rc1->top < rc2->bottom && rc1->bottom > rc2->top)
-			{
-				if (result)
-				{
-					result->left = Math::Max(rc1->left, rc2->left);
-					result->right = Math::Min(rc1->right, rc2->right);
-					result->top = Math::Max(rc1->top, rc2->top);
-					result->bottom = Math::Min(rc1->bottom, rc2->bottom);
-				}
-				return true; 
-			}
+			result->left = Math::Max(rc1->left, rc2->left);
+			result->right = Math::Min(rc1->right, rc2->right);
+			result->top = Math::Max(rc1->top, rc2->top);
+			result->bottom = Math::Min(rc1->bottom, rc2->bottom);
 		}
-		return false; 
+		return true; 
 	}
 
 	/****************************************************************************************************
@@ -102,40 +97,74 @@ namespace Figure
 		float interW = rcInter.right - rcInter.left;
 		float interH = rcInter.bottom - rcInter.top;
 
-		if (interW > interH)
+		if (Math::FloatEqual(interW, interH))
 		{
-			//위
-			if (Math::FloatEqual(rcInter.top,rcHold->top))
-			{
-				rcMove->top -= interH;
-				rcMove->bottom -= interH;
-				if (pOutDirection)
-					*pOutDirection = Direction::Bottom;
-			}
-			//아래
-			else if (Math::FloatEqual(rcInter.bottom ,rcHold->bottom))
-			{
-				rcMove->top += interH;
-				rcMove->bottom += interH;
-				if (pOutDirection)
-					*pOutDirection = Direction::Top;
-			}
-		}
-		else
-		{
-			if (Math::FloatEqual(rcInter.left ,rcHold->left))
+			if (Math::FloatEqual(rcInter.left, rcHold->left))
 			{
 				rcMove->left -= interW;
 				rcMove->right -= interW;
 				if (pOutDirection)
-					*pOutDirection = Direction::Right;
+					*pOutDirection = (Direction::Enum)((*pOutDirection) | Direction::Right);
 			}
-			else if (Math::FloatEqual(rcInter.right ,rcHold->right))
+			else if (Math::FloatEqual(rcInter.right, rcHold->right))
 			{
 				rcMove->left += interW;
 				rcMove->right += interW;
 				if (pOutDirection)
-					*pOutDirection = Direction::Left;
+					*pOutDirection = (Direction::Enum)((*pOutDirection) | Direction::Left);
+			}
+			//위
+			if (Math::FloatEqual(rcInter.top, rcHold->top))
+			{
+				rcMove->top -= interH;
+				rcMove->bottom -= interH;
+				if (pOutDirection)
+					*pOutDirection = (Direction::Enum)((*pOutDirection) | Direction::Bottom);
+			}
+			//아래
+			else if (Math::FloatEqual(rcInter.bottom, rcHold->bottom))
+			{
+				rcMove->top += interH;
+				rcMove->bottom += interH;
+				if (pOutDirection)
+					*pOutDirection = (Direction::Enum)((*pOutDirection) | Direction::Top);
+			}
+		}
+		else if (interW < interH)
+		{
+			if (Math::FloatEqual(rcInter.left, rcHold->left))
+			{
+				rcMove->left -= interW;
+				rcMove->right -= interW;
+				if (pOutDirection)
+					*pOutDirection = (Direction::Enum)((*pOutDirection) | Direction::Right);
+			}
+			else if (Math::FloatEqual(rcInter.right, rcHold->right))
+			{
+				rcMove->left += interW;
+				rcMove->right += interW;
+				if (pOutDirection)
+					*pOutDirection = (Direction::Enum)((*pOutDirection) | Direction::Left);
+			}
+			
+		}
+		else
+		{
+			//위
+			if (Math::FloatEqual(rcInter.top, rcHold->top))
+			{
+				rcMove->top -= interH;
+				rcMove->bottom -= interH;
+				if (pOutDirection)
+					*pOutDirection = (Direction::Enum)((*pOutDirection) | Direction::Bottom);
+			}
+			//아래
+			else if (Math::FloatEqual(rcInter.bottom, rcHold->bottom))
+			{
+				rcMove->top += interH;
+				rcMove->bottom += interH;
+				if (pOutDirection)
+					*pOutDirection = (Direction::Enum)((*pOutDirection) | Direction::Top);
 			}
 		}
 

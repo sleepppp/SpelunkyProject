@@ -2,7 +2,7 @@
 #include "Tile.h"
 #include "BinaryFile.h"
 
-float Tile::_tileSize(50.f);
+float Tile::_tileSize = 50.f;
 
 Tile::Tile(const float & x, const float & y,const int& indexX,const int& indexY)
 	:mRect(Vector2(x,y),Vector2(_tileSize, _tileSize),Pivot::Center), mType(Type::Empty),mImage(nullptr),
@@ -10,10 +10,11 @@ Tile::Tile(const float & x, const float & y,const int& indexX,const int& indexY)
 {
 	mDecoList.assign(4, TagDeco());
 	Vector2 center = mRect.GetCenter();
-	mDecoList[Direction::Left].renderPos = Vector2(mRect.left, center.y);
-	mDecoList[Direction::Top].renderPos = Vector2(center.x, mRect.top);
-	mDecoList[Direction::Right].renderPos = Vector2(mRect.right, center.y);
-	mDecoList[Direction::Bottom].renderPos = Vector2(center.x, mRect.bottom);
+	mDecoList[(int)Tile::TileDirection::Left].renderPos = Vector2(mRect.left, center.y);
+	mDecoList[(int)Tile::TileDirection::Top].renderPos = Vector2(center.x, mRect.top);
+	mDecoList[(int)Tile::TileDirection::Right].renderPos = Vector2(mRect.right, center.y);
+	mDecoList[(int)Tile::TileDirection::Bottom].renderPos = Vector2(center.x, mRect.bottom);
+	mName = "Tile";
 }
 
 Tile::Tile(const Vector2 & pos, const int& indexX, const int& indexY)
@@ -22,15 +23,29 @@ Tile::Tile(const Vector2 & pos, const int& indexX, const int& indexY)
 {
 	mDecoList.assign(4, TagDeco());
 	Vector2 center = mRect.GetCenter();
-	mDecoList[Direction::Left].renderPos = Vector2(mRect.left, center.y);
-	mDecoList[Direction::Top].renderPos = Vector2(center.x, mRect.top);
-	mDecoList[Direction::Right].renderPos = Vector2(mRect.right, center.y);
-	mDecoList[Direction::Bottom].renderPos = Vector2(center.x, mRect.bottom);
+	mDecoList[(int)Tile::TileDirection::Left].renderPos = Vector2(mRect.left, center.y);
+	mDecoList[(int)Tile::TileDirection::Top].renderPos = Vector2(center.x, mRect.top);
+	mDecoList[(int)Tile::TileDirection::Right].renderPos = Vector2(mRect.right, center.y);
+	mDecoList[(int)Tile::TileDirection::Bottom].renderPos = Vector2(center.x, mRect.bottom);
+	mName = "Tile";
 }
 
 Tile::~Tile()
 {
 	mDecoList.clear();
+}
+
+void Tile::Init()
+{
+	if (mType == Tile::Type::Trap)
+	{
+		_World->GetUpdatePool()->RequestUpdate(this);
+	}
+}
+
+void Tile::Release()
+{
+	
 }
 
 void Tile::Update()
@@ -44,36 +59,36 @@ void Tile::Render()
 		mImage->SetSize(Vector2(_tileSize, _tileSize));
 		mImage->FrameRender(Vector2(mRect.left, mRect.top),mFrameX,mFrameY, Pivot::LeftTop, true);
 
-		if (mDecoList[Direction::Left].imageInfo.image)
+		if (mDecoList[(int)Tile::TileDirection::Left].imageInfo.image)
 		{
-			mDecoList[Direction::Left].imageInfo.image->SetSize(Vector2(_tileSize, _tileSize));
-			mDecoList[Direction::Left].imageInfo.image->FrameRender(mDecoList[Direction::Left].renderPos,
-				mDecoList[Direction::Left].imageInfo.frameX, mDecoList[Direction::Left].imageInfo.frameY, Pivot::Center, true);
+			mDecoList[(int)Tile::TileDirection::Left].imageInfo.image->SetSize(Vector2(_tileSize, _tileSize));
+			mDecoList[(int)Tile::TileDirection::Left].imageInfo.image->FrameRender(mDecoList[(int)Tile::TileDirection::Left].renderPos,
+				mDecoList[(int)Tile::TileDirection::Left].imageInfo.frameX, mDecoList[(int)Tile::TileDirection::Left].imageInfo.frameY, Pivot::Center, true);
 		}
-		if (mDecoList[Direction::Right].imageInfo.image)
+		if (mDecoList[(int)Tile::TileDirection::Right].imageInfo.image)
 		{
-			mDecoList[Direction::Right].imageInfo.image->SetSize(Vector2(_tileSize, _tileSize));
-			mDecoList[Direction::Right].imageInfo.image->FrameRender(mDecoList[Direction::Right].renderPos,
-				mDecoList[Direction::Right].imageInfo.frameX, mDecoList[Direction::Right].imageInfo.frameY, Pivot::Center, true);
+			mDecoList[(int)Tile::TileDirection::Right].imageInfo.image->SetSize(Vector2(_tileSize, _tileSize));
+			mDecoList[(int)Tile::TileDirection::Right].imageInfo.image->FrameRender(mDecoList[(int)Tile::TileDirection::Right].renderPos,
+				mDecoList[(int)Tile::TileDirection::Right].imageInfo.frameX, mDecoList[(int)Tile::TileDirection::Right].imageInfo.frameY, Pivot::Center, true);
 		}
-		if (mDecoList[Direction::Top].imageInfo.image)
+		if (mDecoList[(int)Tile::TileDirection::Top].imageInfo.image)
 		{
-			mDecoList[Direction::Top].imageInfo.image->SetSize(Vector2(_tileSize, _tileSize));
-			mDecoList[Direction::Top].imageInfo.image->FrameRender(mDecoList[Direction::Top].renderPos,
-				mDecoList[Direction::Top].imageInfo.frameX, mDecoList[Direction::Top].imageInfo.frameY, Pivot::Center, true);
+			mDecoList[(int)Tile::TileDirection::Top].imageInfo.image->SetSize(Vector2(_tileSize, _tileSize));
+			mDecoList[(int)Tile::TileDirection::Top].imageInfo.image->FrameRender(mDecoList[(int)Tile::TileDirection::Top].renderPos,
+				mDecoList[(int)Tile::TileDirection::Top].imageInfo.frameX, mDecoList[(int)Tile::TileDirection::Top].imageInfo.frameY, Pivot::Center, true);
 		}
-		if (mDecoList[Direction::Bottom].imageInfo.image)
+		if (mDecoList[(int)Tile::TileDirection::Bottom].imageInfo.image)
 		{
-			mDecoList[Direction::Bottom].imageInfo.image->SetSize(Vector2(_tileSize, _tileSize));
-			mDecoList[Direction::Bottom].imageInfo.image->FrameRender(mDecoList[Direction::Bottom].renderPos,
-				mDecoList[Direction::Bottom].imageInfo.frameX, mDecoList[Direction::Bottom].imageInfo.frameY, Pivot::Center, true);
+			mDecoList[(int)Tile::TileDirection::Bottom].imageInfo.image->SetSize(Vector2(_tileSize, _tileSize));
+			mDecoList[(int)Tile::TileDirection::Bottom].imageInfo.image->FrameRender(mDecoList[(int)Tile::TileDirection::Bottom].renderPos,
+				mDecoList[(int)Tile::TileDirection::Bottom].imageInfo.frameX, mDecoList[(int)Tile::TileDirection::Bottom].imageInfo.frameY, Pivot::Center, true);
 		}
 
 		if (mItemImage)
 		{
 			Vector2 size = mItemImage->GetFrameSize();
 			mItemImage->SetSize(size * 0.7f);
-			mItemImage->FrameRender(mRect.GetCenter() + Vector2(10.f,0.f), mItemFrameX, mItemFrameY, Pivot::Center, true);
+			mItemImage->FrameRender(mRect.GetCenter() + Vector2(5.f,0.f), mItemFrameX, mItemFrameY, Pivot::Center, true);
 		}
 	}
 	else
@@ -94,6 +109,16 @@ void Tile::Reset()
 	this->mImage = nullptr;
 }
 
+void Tile::SetType(const Type & type)
+{
+	if (type == Tile::Type::Trap)
+		_World->GetUpdatePool()->RequestUpdate(this);
+	else if (mType == Tile::Type::Trap)
+		_World->GetUpdatePool()->RemoveUpdate(this);
+
+	mType = type;
+}
+
 void Tile::SetImage(Image * const pImage)
 {
 	mImage = pImage;
@@ -108,11 +133,11 @@ void Tile::SetImage(const string & key)
 		mType = Type::Empty;
 }
 
-void Tile::SetDecoInfo(const Direction::Enum & direction,  Image * pImage, const int & x, const int & y)
+void Tile::SetDecoInfo(const Tile::TileDirection & direction,  Image * pImage, const int & x, const int & y)
 {
-	mDecoList[direction].imageInfo.image = pImage;
-	mDecoList[direction].imageInfo.frameX = x;
-	mDecoList[direction].imageInfo.frameY = y;
+	mDecoList[(int)direction].imageInfo.image = pImage;
+	mDecoList[(int)direction].imageInfo.frameX = x;
+	mDecoList[(int)direction].imageInfo.frameY = y;
 }
 
 void Tile::SaveData(BinaryWriter * pWriter)

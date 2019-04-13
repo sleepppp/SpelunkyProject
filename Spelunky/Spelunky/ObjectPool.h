@@ -15,7 +15,7 @@ public:
 	void AddObject(class GameObject*const pObject);
 	void DeleteObject(class GameObject*const pObject);
 	
-	class GameObject*const FindObject(const string& name);
+	class GameObject* FindObject(const string& name);
 	vector<class GameObject*> FindObjects(const string& name);
 	const vector<class GameObject*>*const GetObjectList();
 };

@@ -14,6 +14,7 @@ private:
 public:
 	MessageManager();
 	~MessageManager();
+	void Release();
 	void Update();
 public:
 	void RemoveAllMessage();

@@ -33,8 +33,17 @@ namespace Direction
 {
 	enum Enum : int
 	{
-		Left,Top,Right,Bottom,End
+		Left = 1,
+		Top = 2,
+		Right = 4,
+		Bottom = 8,
+		LeftTop = Left | Top,
+		LeftBottom = Left | Bottom,
+		RightTop = Right | Top,
+		RightBottom = Right | Bottom,
+		End = 0
 	};
+
 }
 
 struct ImageInfo
@@ -56,3 +65,14 @@ namespace Stage
 		Stage1,Stage2,Stage3,Stage4,End
 	};
 }
+
+struct CollideInfo
+{
+	class GameObject* collisionObject;
+	Direction::Enum direction;
+
+	CollideInfo() :collisionObject(nullptr) {}
+	CollideInfo(class GameObject* pObject,const Direction::Enum& direction = Direction::End)
+		:collisionObject(pObject),direction(direction) {}
+};
+

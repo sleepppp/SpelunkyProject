@@ -23,7 +23,7 @@ public:
 	const string& GetName()const { return this->mName; }
 	const bool& GetActive()const { return this->mIsActive; }
 	const RenderPool::Layer& GetLayer()const { return this->mLayer; }
-
+	virtual Figure::FloatRect GetCollisionRect();
 	void SetActive(const bool& b);
 	void SetName(const string& name) { this->mName = name;  }
 private:

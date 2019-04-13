@@ -802,10 +802,10 @@ void DelaunayScene::NextPass()
 			if (Tile* tile = TileMapGenerator::FindUnderGroundTile(&mTileList))
 			{
 				//4,3
-				tile->SetType(Tile::Type::Thorn);
+				tile->SetType(Tile::Type::Decoration);
 				tile->SetImageInfo(_ImageManager->FindImage("Tile02"), 4, 3);
 				Tile* downTile = mTileList[tile->GetIndexY() + 1][tile->GetIndexX()];
-				downTile->SetType(Tile::Type::Thorn);
+				downTile->SetType(Tile::Type::Decoration);
 				downTile->SetImageInfo(_ImageManager->FindImage("Tile02"), 4, 4);
 			}
 		}

@@ -9,6 +9,7 @@ private:
 	virtual ~DebugSystem();
 private:
 	bool mIsOpenCameraGui;
+	bool mIsOpenLightGui;
 public:
 	void Render();
 };

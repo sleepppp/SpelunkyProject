@@ -229,26 +229,48 @@ void Transform::Translate(const Vector2 & moveValue)
 /*************************************************************************************
 ## ResetByRect ##
 **************************************************************************************/
-void Transform::ResetByRect()
+void Transform::UpdateTransformByRect()
 {
 	Vector2 pos;
 	switch (mPivot)
 	{
 	case Pivot::LeftTop:
+		mSize.x = mRect.right - mRect.left;
+		mSize.y = mRect.bottom - mRect.top;
 		pos.x = mRect.left;
 		pos.y = mRect.top;
 		break;
 	case Pivot::Center:
+		mSize.x = mRect.right - mRect.left;
+		mSize.y = mRect.bottom - mRect.top;
 		pos.x = mRect.left + mSize.x / 2.f;
 		pos.y = mRect.top + mSize.y / 2.f;
 		break;
 	case Pivot::Bottom:
+		mSize.x = mRect.right - mRect.left;
+		mSize.y = mRect.bottom - mRect.top;
 		pos.x = mRect.left + mSize.x / 2.f;
 		pos.y = mRect.bottom;
-		this->SetWorldPosition(pos);
 		break;
 	default:
 		break;
+	}
+
+	//만약 부모가 있다면
+	if (this->mParent != nullptr)
+	{
+		this->mWorldPosition = pos;
+		this->mLocalPosition = this->mWorldPosition - this->mParent->mWorldPosition;
+	}
+	else
+		this->mLocalPosition = this->mWorldPosition = pos;
+
+	Transform* tempChild = this->mFirstChild;
+	//자식들도 모두 갱신해주자 
+	while (tempChild != nullptr)
+	{
+		tempChild->UpdateTransform();
+		tempChild = tempChild->mNextSibling;
 	}
 }
 /**************************************************************************************
@@ -298,7 +320,7 @@ Vector2 Transform::GetCenterPos()
 		break;
 	case Pivot::Bottom:
 		result.x = mRect.left + mSize.x / 2.f;
-		result.y = mRect.bottom;
+		result.y = mRect.top + mSize.y / 2.f;
 		break;
 	default:
 		break;

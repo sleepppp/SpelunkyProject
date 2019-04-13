@@ -25,6 +25,7 @@ private:
 	Vector2 mMapSize; 
 	Vector2 mSaveMouse;
 	float mZoomFactor; 
+	class Transform* mTarget;
 private:
 	friend class SingletonBase<CameraManager>;
 	CameraManager();
@@ -37,6 +38,7 @@ public:
 	Vector2 GetMapSize()const { return mMapSize; }
 	float GetZoom()const { return mZoomFactor; }
 	Figure::FloatRect GetRect()const { return mRect; }
+	void SetMapSize(const Vector2& v) { mMapSize = v; }
 
 	Figure::FloatRect GetRelativeRect(const Figure::FloatRect& rc);
 	Vector2 GetRelativeVector2(const Vector2& v);
@@ -46,7 +48,16 @@ public:
 	void GetWorldVector2(Vector2*const pOutput);
 	Vector2 GetWorldMouse();
 
-	void AddZoom(float factor);
+	void AddZoom(const float& factor);
+	void SetZoom(const float& zoom) { mZoomFactor = zoom; }
+	void Move(const Vector2& moveValue);
+	bool IsInCamera(const Figure::FloatRect& rc);
+
+	void SetTarget(class Transform* pTransform)
+	{
+		mTarget = pTransform;
+		mState = CameraManager::MoveState::MoveToTarget;
+	}
 private:
 	void UpdateRenderRect();
 	void UpdateFreeCameraMode();

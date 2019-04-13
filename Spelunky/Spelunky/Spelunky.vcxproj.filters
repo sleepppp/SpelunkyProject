@@ -58,12 +58,6 @@
     <Filter Include="Shader\HLSL">
       <UniqueIdentifier>{90d93320-48d0-4d74-8450-771d15b5cdd0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="System\MessageModule">
-      <UniqueIdentifier>{7e40924f-152a-41ef-b251-87f8cf4772f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="System\Interface">
-      <UniqueIdentifier>{8882a2fb-300f-408d-8984-8591f02a7726}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System\GameEngine\SceneManager">
       <UniqueIdentifier>{4a2c5da9-f0ea-4b3b-b005-f5dc69316cc8}</UniqueIdentifier>
     </Filter>
@@ -127,9 +121,6 @@
     <Filter Include="Util\File">
       <UniqueIdentifier>{9dad287f-9d50-4188-9f5e-35cda007b18f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Util\Collision">
-      <UniqueIdentifier>{8b8401ae-3061-4d1f-ba20-13234146e0b7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Util\Figure">
       <UniqueIdentifier>{8b6f8296-0ae8-4b36-aa2b-43b665048919}</UniqueIdentifier>
     </Filter>
@@ -145,17 +136,35 @@
     <Filter Include="InGameObject\BackGround">
       <UniqueIdentifier>{017900db-78d1-4851-89c1-3bbac6d13831}</UniqueIdentifier>
     </Filter>
-    <Filter Include="InGameObject\TrapObject">
-      <UniqueIdentifier>{ac52afc0-5b0b-4727-893f-4751950ef29d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainEntry\MapToolScene">
       <UniqueIdentifier>{b06f1e82-9270-47c7-8ac8-b34ea2e34891}</UniqueIdentifier>
     </Filter>
     <Filter Include="Util\Timer">
       <UniqueIdentifier>{66a08abe-d6cc-4c4e-984a-314cdbc39975}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Util\LoopHelper">
-      <UniqueIdentifier>{34b525d8-1564-4853-84f5-c9592a7bd7cc}</UniqueIdentifier>
+    <Filter Include="InGameObject\Unit">
+      <UniqueIdentifier>{299a3e9c-cb5b-43c2-9a8c-e4189ed29bf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\GameEngine\MessageModule">
+      <UniqueIdentifier>{7e40924f-152a-41ef-b251-87f8cf4772f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Rigidbody">
+      <UniqueIdentifier>{8b8401ae-3061-4d1f-ba20-13234146e0b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Animation">
+      <UniqueIdentifier>{3320f036-b573-45d9-83a3-0d8cbfcf455c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Interface">
+      <UniqueIdentifier>{8882a2fb-300f-408d-8984-8591f02a7726}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\Unit\UnitState">
+      <UniqueIdentifier>{711fd95e-3c70-48d7-ae7e-27d74268d352}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\Player">
+      <UniqueIdentifier>{986a432f-731b-40ce-9eac-db6dd3c53281}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\Light">
+      <UniqueIdentifier>{3db9fe08-211a-4ab7-af04-d8f7e42238fc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -247,13 +256,13 @@
       <Filter>Util\Transform</Filter>
     </ClInclude>
     <ClInclude Include="DataContext.h">
-      <Filter>System\MessageModule</Filter>
+      <Filter>System\GameEngine\MessageModule</Filter>
     </ClInclude>
     <ClInclude Include="MessageComponent.h">
-      <Filter>System\MessageModule</Filter>
+      <Filter>System\GameEngine\MessageModule</Filter>
     </ClInclude>
     <ClInclude Include="MessageManager.h">
-      <Filter>System\MessageModule</Filter>
+      <Filter>System\GameEngine\MessageModule</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>System\GameObjectBase</Filter>
@@ -294,14 +303,11 @@
     <ClInclude Include="Physics.h">
       <Filter>System\GameEngine\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionInterface.h">
-      <Filter>System\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="TestScene.h">
       <Filter>MainEntry\TestScene</Filter>
     </ClInclude>
     <ClInclude Include="Rigidbody.h">
-      <Filter>Util\Collision</Filter>
+      <Filter>Util\Rigidbody</Filter>
     </ClInclude>
     <ClInclude Include="LoadingScene.h">
       <Filter>System\GameEngine\SceneManager\LoadingScene</Filter>
@@ -354,8 +360,38 @@
     <ClInclude Include="Timer.h">
       <Filter>Util\Timer</Filter>
     </ClInclude>
+    <ClInclude Include="Unit.h">
+      <Filter>InGameObject\Unit</Filter>
+    </ClInclude>
     <ClInclude Include="Looper.h">
-      <Filter>Util\LoopHelper</Filter>
+      <Filter>Util\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Util\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="InterfaceCollision.h">
+      <Filter>System\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitStateManager.h">
+      <Filter>InGameObject\Unit\UnitState</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitStateBase.h">
+      <Filter>InGameObject\Unit\UnitState</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>InGameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Animations.h">
+      <Filter>Util\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerState.h">
+      <Filter>InGameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerKey.h">
+      <Filter>InGameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PointLight.h">
+      <Filter>InGameObject\Light</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -429,13 +465,13 @@
       <Filter>System\GameObjectBase</Filter>
     </ClCompile>
     <ClCompile Include="DataContext.cpp">
-      <Filter>System\MessageModule</Filter>
+      <Filter>System\GameEngine\MessageModule</Filter>
     </ClCompile>
     <ClCompile Include="MessageComponent.cpp">
-      <Filter>System\MessageModule</Filter>
+      <Filter>System\GameEngine\MessageModule</Filter>
     </ClCompile>
     <ClCompile Include="MessageManager.cpp">
-      <Filter>System\MessageModule</Filter>
+      <Filter>System\GameEngine\MessageModule</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>System\GameEngine\SceneManager</Filter>
@@ -473,14 +509,11 @@
     <ClCompile Include="Physics.cpp">
       <Filter>System\GameEngine\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionInterface.cpp">
-      <Filter>System\Interface</Filter>
-    </ClCompile>
     <ClCompile Include="TestScene.cpp">
       <Filter>MainEntry\TestScene</Filter>
     </ClCompile>
     <ClCompile Include="Rigidbody.cpp">
-      <Filter>Util\Collision</Filter>
+      <Filter>Util\Rigidbody</Filter>
     </ClCompile>
     <ClCompile Include="LoadingScene.cpp">
       <Filter>System\GameEngine\SceneManager\LoadingScene</Filter>
@@ -533,8 +566,38 @@
     <ClCompile Include="Timer.cpp">
       <Filter>Util\Timer</Filter>
     </ClCompile>
+    <ClCompile Include="Unit.cpp">
+      <Filter>InGameObject\Unit</Filter>
+    </ClCompile>
     <ClCompile Include="Looper.cpp">
-      <Filter>Util\LoopHelper</Filter>
+      <Filter>Util\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Util\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="InterfaceCollision.cpp">
+      <Filter>System\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitStateManager.cpp">
+      <Filter>InGameObject\Unit\UnitState</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitStateBase.cpp">
+      <Filter>InGameObject\Unit\UnitState</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>InGameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Animations.cpp">
+      <Filter>Util\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerState.cpp">
+      <Filter>InGameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerKey.cpp">
+      <Filter>InGameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PointLight.cpp">
+      <Filter>InGameObject\Light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -18,4 +18,5 @@
 #include "UpdatePool.h"
 #include "RenderPool.h"
 #include "Physics.h"
+#include "MessageManager.h"
 #include "DebugSystem.h"

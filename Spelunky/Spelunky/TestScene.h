@@ -4,19 +4,7 @@ class TestScene :
 	public SceneBase
 {
 private:
-	struct TileRoom
-	{
-		int tileCountX;
-		int tileCountY;
-		Figure::FloatRect rc;
-	};
-
-	struct Node
-	{
-		Vector2 pos;
-		vector<Node*> linkList;
-		
-	};
+	Figure::FloatRect mRect;
 public:
 	explicit TestScene() {}
 	virtual ~TestScene() {}

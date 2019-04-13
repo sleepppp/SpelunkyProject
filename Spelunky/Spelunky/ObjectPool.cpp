@@ -48,7 +48,7 @@ void ObjectPool::DeleteObject(GameObject * const pObject)
 	}
 }
 
-GameObject * const ObjectPool::FindObject(const string & name)
+GameObject *  ObjectPool::FindObject(const string & name)
 {
 	for (UINT i = 0; i < mObjectList.size(); ++i)
 	{

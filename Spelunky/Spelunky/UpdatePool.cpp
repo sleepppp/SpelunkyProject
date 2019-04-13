@@ -28,6 +28,11 @@ void UpdatePool::Release()
 
 void UpdatePool::RequestUpdate(GameObject *const pUpdate)
 {
+	for (UINT i = 0; i < mUpdateList.size(); ++i)
+	{
+		if (mUpdateList[i] == pUpdate)
+			return;
+	}
 	this->mUpdateList.push_back(pUpdate);
 }
 

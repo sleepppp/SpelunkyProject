@@ -18,6 +18,11 @@ GameObject::~GameObject()
 	SafeDelete(mTransform);
 }
 
+Figure::FloatRect GameObject::GetCollisionRect()
+{
+	return mTransform->GetRect();
+}
+
 void GameObject::SetActive(const bool & b)
 {
 	this->mIsActive = b;

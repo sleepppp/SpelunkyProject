@@ -149,6 +149,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="Animations.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="BinaryFile.h" />
     <ClInclude Include="Buffer.h" />
@@ -156,7 +158,6 @@
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="Canvas.h" />
     <ClInclude Include="ClassicButton.h" />
-    <ClInclude Include="CollisionInterface.h" />
     <ClInclude Include="D2DRenderer.h" />
     <ClInclude Include="D3DRenderer.h" />
     <ClInclude Include="DataContext.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="ImageButton.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="InterfaceCollision.h" />
     <ClInclude Include="LibraryHeader.h" />
     <ClInclude Include="LightingManager.h" />
     <ClInclude Include="Line.h" />
@@ -187,6 +189,10 @@
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="Path.h" />
     <ClInclude Include="Physics.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerKey.h" />
+    <ClInclude Include="PlayerState.h" />
+    <ClInclude Include="PointLight.h" />
     <ClInclude Include="ProcedureGeneration.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="RenderPool.h" />
@@ -212,11 +218,16 @@
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="UIBase.h" />
+    <ClInclude Include="Unit.h" />
+    <ClInclude Include="UnitStateBase.h" />
+    <ClInclude Include="UnitStateManager.h" />
     <ClInclude Include="UpdatePool.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="Animations.cpp" />
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="BinaryFile.cpp" />
     <ClCompile Include="Buffer.cpp" />
@@ -224,7 +235,6 @@
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="Canvas.cpp" />
     <ClCompile Include="ClassicButton.cpp" />
-    <ClCompile Include="CollisionInterface.cpp" />
     <ClCompile Include="D2DRenderer + DrawFunc.cpp" />
     <ClCompile Include="D2DRenderer.cpp" />
     <ClCompile Include="D3DRenderer.cpp" />
@@ -239,6 +249,7 @@
     <ClCompile Include="ImageButton.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="InterfaceCollision.cpp" />
     <ClCompile Include="LightingManager.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="Loading.cpp" />
@@ -251,6 +262,10 @@
     <ClCompile Include="ObjectPool.cpp" />
     <ClCompile Include="Path.cpp" />
     <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerKey.cpp" />
+    <ClCompile Include="PlayerState.cpp" />
+    <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="ProcedureGeneration.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="RenderPool.cpp" />
@@ -278,6 +293,9 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="UIBase.cpp" />
+    <ClCompile Include="Unit.cpp" />
+    <ClCompile Include="UnitStateBase.cpp" />
+    <ClCompile Include="UnitStateManager.cpp" />
     <ClCompile Include="UpdatePool.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Window.cpp" />

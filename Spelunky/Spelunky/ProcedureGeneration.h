@@ -30,8 +30,11 @@ private:
 	vector<Figure::FloatLine> mLineList;
 	vector<Figure::FloatLine> mFinalLineList;
 	vector<vector<class Tile*>> mTileList;
+	vector<vector<bool>> mCheckList;
 	vector<TileRoom*> mSelectList;
 	class Looper* mLooper;
+	class BackGround* mBackGround;
+
 public:
 	ProcedureGeneration();
 	~ProcedureGeneration();

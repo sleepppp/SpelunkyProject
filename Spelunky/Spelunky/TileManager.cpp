@@ -25,12 +25,22 @@ TileManager::~TileManager()
 
 void TileManager::Init()
 {
+	for (UINT y = 0; y < mTileList.size(); ++y)
+	{
+		for (UINT x = 0; x < mTileList[y].size(); ++x)
+			mTileList[y][x]->Init();
+	}
+
 	_World->GetRenderPool()->RequestRender(mLayer, this);
 }
 
 void TileManager::Release()
 {
 	_World->GetRenderPool()->RemoveRender(mLayer, this);
+}
+
+void TileManager::Update()
+{
 }
 
 void TileManager::Render()
@@ -57,11 +67,24 @@ void TileManager::Render()
 
 Tile * const TileManager::GetTile(int indexX, int indexY)
 {
+	if (mTileList.empty())
+		return nullptr;
 	if (indexY < 0 || indexY >= (int)mTileList.size())
 		return nullptr;
 	if (indexX < 0 || indexX >= (int)mTileList[0].size())
 		return nullptr;
 	return mTileList[indexY][indexX];
+}
+
+Vector2 TileManager::GetMapSize()
+{
+	if (mTileList.empty())
+		return Vector2();
+	float tileSize = Tile::GetTileSize();
+	Vector2 result;
+	result.x = tileSize * (float)mTileList[0].size();
+	result.y = tileSize * (float)mTileList.size();
+	return result;
 }
 
 

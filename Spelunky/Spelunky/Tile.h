@@ -1,5 +1,6 @@
 #pragma once
-class Tile
+#include "GameObject.h"
+class Tile : public GameObject
 {
 	BlockAssign(Tile)
 private:
@@ -20,6 +21,11 @@ public:
 		Thorn ,
 		Exit 
 	};
+
+	enum class TileDirection : int
+	{
+		Left = 0,Top,Right,Bottom
+	};
 private:
 	struct TagDeco
 	{
@@ -27,6 +33,7 @@ private:
 		ImageInfo imageInfo; 
 		TagDeco() {}
 	};
+
 private:
 	int mIndexX;
 	int mIndexY;
@@ -45,25 +52,27 @@ public:
 	explicit Tile(const Vector2& pos,const int& indexX,const int& indexY);
 	~Tile();
 public:
-	void Update();
-	void Render();
+	void Init()override;
+	void Release()override; 
+	void Update()override;
+	void Render()override;
 	void Reset();
 public:
-	const Figure::FloatRect& GetRect()const { return mRect; }
+	Figure::FloatRect& GetRect() { return mRect; }
 	const Type& GetType()const { return mType; }
 	class Image* GetImage()const { return mImage; }
 	Vector2 GetPosition() { return mRect.GetCenter(); }
 	const int& GetIndexX()const { return mIndexX; }
 	const int& GetIndexY()const { return mIndexY; }
 
-	void SetType(const Type& type) { mType = type; }
+	void SetType(const Type& type);
 	void SetImage(class Image*const pImage);
 	void SetImage(const string& key);
 	void SetFrameX(const int& x) { mFrameX = x; }
 	void SetFrameY(const int& y) { mFrameY = y; }
 	void SetImageInfo(class Image*const pImage, const int& x, const int& y) { mImage = pImage; mFrameX = x; mFrameY = y; }
 	void SetItemInfo(class Image*const pImage, const int& x, const int& y) { mItemImage = pImage; mItemFrameX = x; mItemFrameY = y; }
-	void SetDecoInfo(const Direction::Enum& direction,  class Image* pImage, const int& x, const int& y);
+	void SetDecoInfo(const TileDirection& direction,  class Image* pImage, const int& x, const int& y);
 
 	void SaveData(class BinaryWriter* pWriter);
 	void LoadData(class BinaryReader* pReader);

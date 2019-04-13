@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "DebugSystem.h"
 
-
+#include "LightingManager.h"
 DebugSystem::DebugSystem()
-	:mIsOpenCameraGui(false)
+	:mIsOpenCameraGui(false), mIsOpenLightGui(false)
 {
 }
 
@@ -22,6 +22,8 @@ void DebugSystem::Render()
 			{
 				if (ImGui::MenuItem("Camera"))
 					this->mIsOpenCameraGui = !mIsOpenCameraGui;
+				if (ImGui::MenuItem("Light"))
+					mIsOpenLightGui = !mIsOpenLightGui;
 				ImGui::EndMenu();
 			}
 		}
@@ -30,5 +32,7 @@ void DebugSystem::Render()
 		_TimeManager->Render();
 		if (mIsOpenCameraGui)
 			_Camera->OnGui();
+		if (mIsOpenLightGui)
+			_World->GetLightManager()->OnGui();
 	}
 }

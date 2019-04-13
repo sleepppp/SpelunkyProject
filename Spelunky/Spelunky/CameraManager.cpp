@@ -23,10 +23,16 @@ CameraManager::~CameraManager() {}
 
 void CameraManager::Update()
 {
+	Vector2 dir;
+	Vector2 centerPos;
 	switch (mState)
 	{
 	case CameraManager::None:
 	case CameraManager::MoveToTarget:
+
+		this->mPosition = mTarget->GetCenterPos();
+		this->UpdateRenderRect();
+		this->AmendCamera();
 		break;
 	case CameraManager::FreeCamera:
 		this->UpdateFreeCameraMode();
@@ -89,18 +95,29 @@ void CameraManager::GetWorldVector2(Vector2 * const pOutput)
 
 Vector2 CameraManager::GetWorldMouse()
 {
-	Vector2 result; 
+	Vector2 result = _Input->GetMousePosition(); 
 	this->GetWorldVector2(&result);
 	return result;
 }
 
-void CameraManager::AddZoom(float factor)
+void CameraManager::AddZoom(const float& factor)
 {
 	this->mZoomFactor += factor;
 	this->mZoomFactor = Math::Clampf(mZoomFactor, _zoomMin, _zoomMax);
 
 	this->mRect.Update(mPosition, Vector2(_WinSizeX / mZoomFactor, _WinSizeY / mZoomFactor), Pivot::Center);
 	this->mSaveMouse = _Input->GetMousePosition();
+}
+
+void CameraManager::Move(const Vector2 & moveValue)
+{
+	this->mPosition += moveValue;
+	this->UpdateRenderRect();
+}
+
+bool CameraManager::IsInCamera(const Figure::FloatRect & rc)
+{
+	return Figure::IntersectRectToRect(&rc, &mRect);
 }
 
 
@@ -149,7 +166,7 @@ void CameraManager::AmendCamera()
 {
 	if (mRect.left < 0.f)
 	{
-		mPosition.x -= mPosition.x;
+		mPosition.x -= mRect.left;
 		this->UpdateRenderRect();
 	}
 	else if (mRect.right > mMapSize.x)
@@ -159,7 +176,7 @@ void CameraManager::AmendCamera()
 	}
 	if (mRect.top < 0.f)
 	{
-		mPosition.y -= mPosition.y;
+		mPosition.y -= mRect.top;
 		this->UpdateRenderRect();
 	}
 	else if (mRect.bottom > mMapSize.y)

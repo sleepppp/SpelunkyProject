@@ -2,7 +2,8 @@
 #include "SceneBase.h"
 
 SceneBase::SceneBase()
-	:mObjectPool(new ObjectPool), mUpdatePool(new UpdatePool), mRenderPool(new RenderPool), mPhysics(new Physics){}
+	:mObjectPool(new ObjectPool), mUpdatePool(new UpdatePool), mRenderPool(new RenderPool), 
+	mPhysics(new Physics),mMessagePool(new MessageManager){}
 
 SceneBase::~SceneBase()
 {
@@ -11,6 +12,7 @@ SceneBase::~SceneBase()
 	mUpdatePool->Release();
 	mObjectPool->Release();
 
+	SafeDelete(mMessagePool);
 	SafeDelete(mPhysics);
 	SafeDelete(mRenderPool);
 	SafeDelete(mUpdatePool);
@@ -24,6 +26,7 @@ void SceneBase::PostInit()
 
 void SceneBase::Release()
 {
+	mMessagePool->Release();
 	mPhysics->Release();
 	mRenderPool->Release();
 	mUpdatePool->Release();
@@ -33,7 +36,7 @@ void SceneBase::Release()
 void SceneBase::Update()
 {
 	mUpdatePool->Update();
-	mPhysics->Update();
+	mMessagePool->Update();
 }
 
 void SceneBase::Render()

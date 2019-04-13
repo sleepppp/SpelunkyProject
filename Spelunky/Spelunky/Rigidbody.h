@@ -3,11 +3,16 @@ class Rigidbody final
 {
 	BlockAssign(Rigidbody)
 private:
+	static const float _defaultJumpPower;
+public:
+	static float GetDefaultJumpPower();
+private:
 	enum class CollisionState
 	{
 		None,Enter,Stay,Exit
 	};
 private:
+	class TileManager* mTileManager;
 	class GameObject* mObject; 
 	class Transform* mTransform; 
 
@@ -28,7 +33,7 @@ public:
 	void Init();
 	void Update();
 
-	void Jump(const float& jumpPower);
+	void Jump(const float& jumpPower = _defaultJumpPower);
 	void Move(Vector2 moveValue,const float& speed);
 	void Force(const Vector2& direction,const float& power,const float& recuperativePower);
 
@@ -38,5 +43,6 @@ public:
 	const bool& GetActiveCollision()const { return mActiveCollision; }
 	const int& GetMass()const { return mMass; }
 	void SetMass(const int& mass) { mMass = mass; }
+private:
 };
 

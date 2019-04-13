@@ -32,7 +32,7 @@ public:
 
 	LRESULT InputProc(UINT message, WPARAM wParam, LPARAM lParam);
 public:
-	inline const Vector2& GetMousePosition()const { return this->mMousePosition; }
+	inline Vector2 GetMousePosition()const { return this->mMousePosition; }
 	POINT GetMousePositionPoint();
 };
 

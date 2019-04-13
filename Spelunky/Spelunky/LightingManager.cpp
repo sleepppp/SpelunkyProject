@@ -4,8 +4,8 @@
 #include "RenderTargetBuffer.h"
 #include "Shader.h"
 #include "OrthoWindow.h"
-//#include "PointLight.h"
-
+#include "PointLight.h"
+#include "Transform.h"
 
 /*********************************************************************************************
 ## LightingManager ##
@@ -54,10 +54,10 @@ void LightingManager::BeginLighting()
 	pointLightBuffer->data.lightSize = this->pointLightList.size();
 	for (UINT i = 0; i < pointLightList.size(); ++i)
 	{
-		//pointLightBuffer->data.lightList[i].lightColor = pointLightList[i]->GetColor();
-		//pointLightBuffer->data.lightList[i].origin = _Camera->GetReltativeVector2(pointLightList[i]->GetOrigin());
-		//pointLightBuffer->data.lightList[i].originRange = pointLightList[i]->GetOriginRange() * _Camera->GetZoom();
-		//pointLightBuffer->data.lightList[i].intensity = pointLightList[i]->GetIntensity();
+		pointLightBuffer->data.lightList[i].lightColor = pointLightList[i]->GetColor();
+		pointLightBuffer->data.lightList[i].origin = _Camera->GetRelativeVector2(pointLightList[i]->GetTransform()->GetWorldPosition());
+		pointLightBuffer->data.lightList[i].originRange = pointLightList[i]->GetOriginRange() * _Camera->GetZoom();
+		pointLightBuffer->data.lightList[i].intensity = pointLightList[i]->GetIntensity();
 	}
 
 	//D2D렌더링 및 스왑체인 렌더타겟 바인딩 해제

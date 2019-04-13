@@ -43,8 +43,6 @@ public:
 	void SetSizeY(const float& y);
 	void Translate(const Vector2& moveValue);
 
-	void ResetByRect();
-
 	void Render(const D2DRenderer::DefaultBrush& brush,const bool& bRelativeCamera = false);
 	void RenderHierarchy(const bool& bRelativeCamera = false);
 
@@ -59,7 +57,8 @@ public:
 
 	Transform*const GetParent()const { return this->mParent; }
 	Transform*const GetFirstChild()const { return this->mFirstChild; }
-private:
+
 	void UpdateTransform(); 
+	void UpdateTransformByRect();
 };
 

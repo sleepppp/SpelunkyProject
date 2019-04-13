@@ -22,15 +22,15 @@ void MessageComponent::SendCallbackMessage(TagMessage message)
 {
 	if (message.delayTime > 0.0f)
 	{
-		//_MessageEvent->AddReserveMesseage(this, message);
+		_World->GetMessagePool()->AddReserveMesseage(this, message);
 	}
 	else
 	{
 		MessageIter iter = this->mMessageList.find(message.name);
 		if (iter != this->mMessageList.end())
 			iter->second(message);
-		//if (message.data != nullptr)
-			//_MessageEvent->ReturnData(message.data);
+		if (message.data != nullptr)
+			_World->GetMessagePool()->ReturnData(message.data);
 	}
 }
 /*********************************************************************
@@ -45,7 +45,7 @@ void MessageComponent::SendCallbackMessage(const string& name,const float& delay
 {
 	if (delayTime > 0.0f)
 	{
-		//_MessageEvent->AddReserveMesseage(this, TagMessage(name, delayTime, data));
+		_World->GetMessagePool()->AddReserveMesseage(this, TagMessage(name, delayTime, data));
 	}
 	else
 	{
@@ -54,8 +54,8 @@ void MessageComponent::SendCallbackMessage(const string& name,const float& delay
 		{
 			iter->second(TagMessage(name, delayTime, data));
 		}
-		//if (data != nullptr)
-			//_MessageEvent->ReturnData(data);
+		if (data != nullptr)
+			_World->GetMessagePool()->ReturnData(data);
 	}
 }
 /*********************************************************************

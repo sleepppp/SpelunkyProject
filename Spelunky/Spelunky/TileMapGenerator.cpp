@@ -98,7 +98,7 @@ void TileMapGenerator::DeleteTile(vector<vector<class Tile*>>* const pOutput)
 {
 	for (UINT y = 0; y < pOutput->size(); ++y)
 	{
-		for (UINT x = 0; x < pOutput->size(); ++x)
+		for (UINT x = 0; x < pOutput->at(y).size(); ++x)
 		{
 			SafeDelete(pOutput->at(y).at(x));
 		}
@@ -223,28 +223,28 @@ void TileMapGenerator::SetDecoAuto(vector<vector<class Tile*>>* const pTileList,
 	{
 		int randomIndex = Math::Random(0, _decoDataTable[stage][Direction::Left].size() - 1);
 		ImageInfo info = _decoDataTable[stage][Direction::Left][randomIndex];
-		pTileList->at(indexY).at(indexX)->SetDecoInfo(Direction::Left, info.image, info.frameX, info.frameY);
+		pTileList->at(indexY).at(indexX)->SetDecoInfo(Tile::TileDirection::Left, info.image, info.frameX, info.frameY);
 	}
 	//위가 비었다면
 	if (isEmpty[Top])
 	{
 		int randomIndex = Math::Random(0, _decoDataTable[stage][Direction::Top].size() - 1);
 		ImageInfo info = _decoDataTable[stage][Direction::Top][randomIndex];
-		pTileList->at(indexY).at(indexX)->SetDecoInfo(Direction::Top, info.image, info.frameX, info.frameY);
+		pTileList->at(indexY).at(indexX)->SetDecoInfo(Tile::TileDirection::Top, info.image, info.frameX, info.frameY);
 	}
 	//위가 비었다면
 	if (isEmpty[Bottom])
 	{
 		int randomIndex = Math::Random(0, _decoDataTable[stage][Direction::Bottom].size() - 1);
 		ImageInfo info = _decoDataTable[stage][Direction::Bottom][randomIndex];
-		pTileList->at(indexY).at(indexX)->SetDecoInfo(Direction::Bottom, info.image, info.frameX, info.frameY);
+		pTileList->at(indexY).at(indexX)->SetDecoInfo(Tile::TileDirection::Bottom, info.image, info.frameX, info.frameY);
 	}
 	//위가 비었다면
 	if (isEmpty[Right])
 	{
 		int randomIndex = Math::Random(0, _decoDataTable[stage][Direction::Right].size() - 1);
 		ImageInfo info = _decoDataTable[stage][Direction::Right][randomIndex];
-		pTileList->at(indexY).at(indexX)->SetDecoInfo(Direction::Right, info.image, info.frameX, info.frameY);
+		pTileList->at(indexY).at(indexX)->SetDecoInfo(Tile::TileDirection::Right, info.image, info.frameX, info.frameY);
 	}
 }
 /********************************************************************************************************************

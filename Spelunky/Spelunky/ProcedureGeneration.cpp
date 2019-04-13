@@ -5,6 +5,7 @@
 #include "TileMapGenerator.h"
 #include "Timer.h"
 #include "Looper.h"
+#include "BackGround.h"
 #include <algorithm>
 
 ProcedureGeneration::ProcedureGeneration()
@@ -491,11 +492,305 @@ void ProcedureGeneration::Update()
 			this->AddPass();
 		}
 	}
+	/***************************************************************
+	## Pass 9 ##
+	선택된 방들 이외에는 전부 삭제
+	***************************************************************/
+	else if (mPass == 9)
+	{
+		Looper::ReturnType type = mLooper->Update();
+		static int i = 0;
+		if (type == Looper::ReturnType::Timer)
+		//for (UINT i = 0; i < mRoomList.size(); ++i)
+		{
+			if (mRoomList[i]->isSelect == false)
+			{
+				SafeDelete(mRoomList[i]);
+				mRoomList.erase(mRoomList.begin() + i--);
+			}
+			++i;
+		}
+		else if (type == Looper::ReturnType::Loop)
+		{
+			Vector2 startMap;
+			Vector2 mapSize;
+			sort(mRoomList.begin(), mRoomList.end(), [](TileRoom* node0, TileRoom* node1)
+			{
+				if (node0->rc.left < node1->rc.left)
+					return true;
+				return false;
+			});
+			startMap.x = mRoomList[0]->rc.left;
+			mapSize.x = mRoomList[mRoomList.size() - 1]->rc.right - mRoomList[0]->rc.left;
+
+			sort(mRoomList.begin(), mRoomList.end(), [](TileRoom* node0, TileRoom* node1)
+			{
+				if (node0->rc.top < node1->rc.top)
+					return true;
+				return false;
+			});
+			startMap.y = mRoomList[0]->rc.top;
+			mapSize.y = mRoomList[mRoomList.size() - 1]->rc.bottom - mRoomList[0]->rc.top;
+
+			UINT tileX = (UINT)(mapSize.x / Tile::GetTileSize()) + 1;
+			UINT tileY = (UINT)(mapSize.y / Tile::GetTileSize()) + 1;
+
+			TileMapGenerator::CreateTile(&mTileList, tileX, tileY);
+
+			for (UINT y = 0; y < mTileList.size(); ++y)
+			{
+				for (UINT x = 0; x < mTileList[y].size(); ++x)
+				{
+					mTileList[y][x]->SetType(Tile::Type::Soil);
+				}
+			}
+			for (UINT i = 0; i < mPassageList.size(); ++i)
+			{
+				mPassageList[i].Move(Vector2(-startMap.x, -startMap.y));
+			}
+			float tileSize = Tile::GetTileSize();
+			for (UINT i = 0; i < mRoomList.size(); ++i)
+			{
+				mRoomList[i]->rc.Move(Vector2(-startMap.x, -startMap.y));
+
+				int startIndexX = Math::Clamp(CastingInt(mRoomList[i]->rc.left / tileSize), 0, (int)mTileList[0].size() - 1);
+				int startIndexY = Math::Clamp(CastingInt(mRoomList[i]->rc.top / tileSize), 0, (int)mTileList.size() - 1);
+				int endIndexX = Math::Clamp(CastingInt(mRoomList[i]->rc.right / tileSize), 0, (int)mTileList[0].size() - 1);
+				int endIndexY = Math::Clamp(CastingInt(mRoomList[i]->rc.bottom / tileSize), 0, (int)mTileList.size() - 1);
+
+				if (startIndexX > endIndexX)
+					std::swap(startIndexX, endIndexX);
+				if (startIndexY > endIndexY)
+					std::swap(startIndexY, endIndexY);
+
+				for (int y = startIndexY; y <= endIndexY; ++y)
+				{
+					for (int x = startIndexX; x <= endIndexX; ++x)
+					{
+						mTileList[y][x]->SetType(Tile::Type::Empty);
+					}
+				}
+			}
+			_Camera->Move(Vector2(-startMap.x, -startMap.y));
+			this->AddPass();
+		}
+	}
+	/***************************************************************
+	## Pass 10 ##
+	통로를 막지 않는 기준에서 난수로 지형 생성
+	***************************************************************/
+	else if (mPass == 10)
+	{
+		//통로를 막지 않는 기준에서 난수로 지형 생성
+		Looper::ReturnType type = mLooper->Update();
+		if(type == Looper::ReturnType::Timer)
+		{
+			int randomIndexX = Math::Random(1, mTileList[0].size() - 2);
+			int randomIndexY = Math::Random(1, mTileList.size() - 2);
+			if (mTileList[randomIndexY][randomIndexX]->GetType() == Tile::Type::Empty)
+			{
+				bool isChange = true;
+				for (UINT i = 0; i < mPassageList.size(); ++i)
+				{
+					if (Figure::IntersectRectToRect(&mPassageList[i],
+						&mTileList[randomIndexY][randomIndexX]->GetRect()))
+					{
+						isChange = false;
+						break;
+					}
+				}
+				if (isChange)
+				{
+					bool addPass = true;
+					while (addPass)
+					{
+						bool isVertical = (bool)Math::Random(0, 1);
+						int nextIndexX = randomIndexX;
+						int nextIndexY = randomIndexY;
+
+						if (isVertical)
+							nextIndexX = randomIndexX + (int)Math::RandNegative();
+						else
+							nextIndexY = randomIndexY + (int)Math::RandNegative();
+						bool c = true;
+						for (UINT i = 0; i < mPassageList.size(); ++i)
+						{
+							if (Figure::IntersectRectToRect(&mPassageList[i], &mTileList[nextIndexY][nextIndexX]->GetRect()))
+							{
+								c = false;
+								break;
+							}
+						}
+						if (c)
+							mTileList[nextIndexY][nextIndexX]->SetType(Tile::Type::Soil);
+
+						addPass = Math::PercentageBool(0.7f);
+					}
+					mTileList[randomIndexY][randomIndexX]->SetType(Tile::Type::Soil);
+				}
+			}
+		}
+		else if (type == Looper::ReturnType::Loop)
+		{
+			//모든 작업 후에는 맨 끝 태두리들은 전부 돌로 채워준다. 
+			for (UINT y = 0; y < mTileList.size(); ++y)
+			{
+				mTileList[y][0]->SetType(Tile::Type::Rock);
+				mTileList[y][mTileList[0].size() - 1]->SetType(Tile::Type::Rock);
+			}
+			for (UINT x = 0; x < mTileList[0].size(); ++x)
+			{
+				mTileList[0][x]->SetType(Tile::Type::Rock);
+				mTileList[mTileList.size() - 1][x]->SetType(Tile::Type::Rock);
+			}
+			Tile* endTile = mTileList[mTileList.size() - 1][mTileList[0].size() - 1];
+			mBackGround = new BackGround("BackGround2", Vector2(endTile->GetRect().right, endTile->GetRect().bottom));
+			for (int y = 0; y < CastingInt(mTileList.size()); ++y)
+			{
+				for (int x = 0; x < CastingInt(mTileList[y].size()); ++x)
+				{
+					TileMapGenerator::SetImageAuto(&mTileList, x, y, Stage::Stage2);
+					TileMapGenerator::SetDecoAuto(&mTileList, x, y, Stage::Stage2);
+				}
+			}
+			mCheckList.assign(mTileList.size(), vector<bool>());
+			for (UINT i = 0; i < mCheckList.size(); ++i)
+				mCheckList[i].assign(mTileList[0].size(), false);
+
+			for (UINT y = 0; y < mTileList.size(); ++y)
+			{
+				for (UINT x = 0; x < mTileList[y].size(); ++x)
+				{
+					if (mTileList[y][x]->GetType() == Tile::Type::Empty)
+						mCheckList[y][x] = true;
+				}
+			}
+
+			_isDebug = false;
+			this->AddPass();
+		}
+	}
+	/***************************************************************
+	## Pass 11 ##
+	사각형 타일그룹들 심어준다. 
+	***************************************************************/
+	else if (mPass == 11)
+	{
+		Looper::ReturnType type = mLooper->Update();
+		if (type == Looper::ReturnType::Timer)
+		{
+			int randomStartX = Math::Random(1, mTileList[0].size() - 3);
+			int randomStartY = Math::Random(1, mTileList.size() - 3);
+
+			if (mCheckList[randomStartY][randomStartX] == false && mCheckList[randomStartY][randomStartX + 1] == false &&
+				mCheckList[randomStartY + 1][randomStartX] == false && mCheckList[randomStartY + 1][randomStartX + 1] == false)
+			{
+				TileMapGenerator::SetGroup4TileAuto(&mTileList, randomStartX, randomStartY, Stage::Stage2);
+				mCheckList[randomStartY][randomStartX] = mCheckList[randomStartY][randomStartX + 1] =
+					mCheckList[randomStartY + 1][randomStartX] = mCheckList[randomStartY + 1][randomStartX + 1] = true;
+			}
+		}
+		else if (type == Looper::ReturnType::Loop)
+		{
+			this->AddPass();
+		}
+	}
+	/***************************************************************
+	## Pass 12 ##
+	장애물 심어준다. 
+	***************************************************************/
+	else if (mPass == 12)
+	{
+		Looper::ReturnType type = mLooper->Update();
+		if (type == Looper::ReturnType::Timer)
+		{
+			if (Tile* tile = TileMapGenerator::FindUnderGroundTile(&mTileList))
+			{
+				//4,3
+				tile->SetType(Tile::Type::Thorn);
+				tile->SetImageInfo(_ImageManager->FindImage("Tile02"), 4, 3);
+				Tile* downTile = mTileList[tile->GetIndexY() + 1][tile->GetIndexX()];
+				downTile->SetType(Tile::Type::Thorn);
+				downTile->SetImageInfo(_ImageManager->FindImage("Tile02"), 4, 4);
+			}
+		}
+		else if (type == Looper::ReturnType::Loop)
+		{
+			this->AddPass();
+		}
+	}
+	/***************************************************************
+	## Pass 13 ##
+	장애물 심어준다.
+	***************************************************************/
+	else if (mPass == 13)
+	{
+		Looper::ReturnType type = mLooper->Update();
+		if (type == Looper::ReturnType::Timer)
+		{
+			if (Tile* tile = TileMapGenerator::FindOnGroundTile(&mTileList))
+			{
+				tile->SetImageInfo(_ImageManager->FindImage("Tile02"), Math::Random(4,6), 6);
+			}
+		}
+		else if (type == Looper::ReturnType::Loop)
+		{
+			this->AddPass();
+		}
+	}
+	/***************************************************************
+	## Pass 14 ##
+	장애물 심어준다.
+	***************************************************************/
+	else if (mPass == 14)
+	{
+		Looper::ReturnType type = mLooper->Update();
+		if (type == Looper::ReturnType::Timer)
+		{
+			if (Tile* tile = TileMapGenerator::FindOnGroundTile(&mTileList))
+			{
+				//7,6
+				tile->SetType(Tile::Type::Trap);
+				tile->SetImageInfo(_ImageManager->FindImage("Tile02"), 7, 7);
+				Tile* upTile = mTileList[tile->GetIndexY() - 1][tile->GetIndexX()];
+				upTile->SetType(Tile::Type::Trap);
+				upTile->SetImageInfo(_ImageManager->FindImage("Tile02"), 7, 6);
+			}
+		}
+		else if (type == Looper::ReturnType::Loop)
+		{
+			this->AddPass();
+		}
+	}
+	/***************************************************************
+	## Pass 15 ##
+	랜덤 아이템을 심는다. 
+	***************************************************************/
+	else if (mPass == 15)
+	{
+		Image* image = _ImageManager->FindImage("Items");
+		Looper::ReturnType type = mLooper->Update();
+		if (type == Looper::ReturnType::Timer)
+		{
+			int randomIndexY = Math::Random(1, mTileList.size() - 2);
+			int randomIndexX = Math::Random(1, mTileList[0].size() - 1);
+			if (mTileList[randomIndexY][randomIndexX]->GetType() == Tile::Type::Soil)
+			{
+				mTileList[randomIndexY][randomIndexX]->SetItemInfo(image, Math::Random(2, 7), 0);
+			}
+		}
+		else if (type == Looper::ReturnType::Loop)
+		{
+			this->AddPass();
+		}
+	}
 }
 
 void ProcedureGeneration::Render()
 {
-	if (mPass <= 10)
+	if (mBackGround)
+		mBackGround->Render();
+	if (mPass < 10)
 	{
 		for (UINT i = 0; i < mRoomList.size(); ++i)
 		{
@@ -526,7 +821,7 @@ void ProcedureGeneration::Render()
 				D2DRenderer::DefaultBrush::Green, true, 2.f);
 		}
 	}
-	if (mPass >= 7)
+	if (mPass == 7 )
 	{
 		for (UINT i = 0; i < mLineList.size(); ++i)
 		{
@@ -534,7 +829,7 @@ void ProcedureGeneration::Render()
 				D2DRenderer::DefaultBrush::Green, true, 2.f);
 		}
 	}
-	if (mPass >= 8)
+	if (mPass == 8)
 	{
 		if (_isDebug)
 		{
@@ -543,28 +838,27 @@ void ProcedureGeneration::Render()
 		}
 	}
 
-	//if (mPass >= 7)
-	//{
-	//
-	//	float tileSize = Tile::GetTileSize();
-	//	Figure::FloatRect cameraRc = _Camera->GetRect();
-	//	float zoomFactor = _Camera->GetZoom();
-	//	float cameraRight = cameraRc.left + CastingFloat(_WinSizeX) / zoomFactor;
-	//	float cmearaBottom = cameraRc.top + CastingFloat(_WinSizeY) / zoomFactor;
-	//
-	//	int left = Math::Clamp((int)(cameraRc.left / tileSize) - 1, 0, (int)mTileList[0].size() - 1);
-	//	int top = Math::Clamp((int)(cameraRc.top / tileSize) - 1, 0, (int)mTileList.size() - 1);
-	//	int right = Math::Clamp((int)(cameraRight / tileSize) + 1, 0, (int)mTileList[0].size() - 1);
-	//	int bottom = Math::Clamp((int)(cmearaBottom / tileSize) + 1, 0, (int)mTileList.size() - 1);
-	//
-	//	for (int y = top; y <= bottom; ++y)
-	//	{
-	//		for (int x = left; x <= right; ++x)
-	//		{
-	//			mTileList[y][x]->Render();
-	//		}
-	//	}
-	//}
+	if (mPass >= 10)
+	{
+		float tileSize = Tile::GetTileSize();
+		Figure::FloatRect cameraRc = _Camera->GetRect();
+		float zoomFactor = _Camera->GetZoom();
+		float cameraRight = cameraRc.left + CastingFloat(_WinSizeX) / zoomFactor;
+		float cmearaBottom = cameraRc.top + CastingFloat(_WinSizeY) / zoomFactor;
+	
+		int left = Math::Clamp((int)(cameraRc.left / tileSize) - 1, 0, (int)mTileList[0].size() - 1);
+		int top = Math::Clamp((int)(cameraRc.top / tileSize) - 1, 0, (int)mTileList.size() - 1);
+		int right = Math::Clamp((int)(cameraRight / tileSize) + 1, 0, (int)mTileList[0].size() - 1);
+		int bottom = Math::Clamp((int)(cmearaBottom / tileSize) + 1, 0, (int)mTileList.size() - 1);
+	
+		for (int y = top; y <= bottom; ++y)
+		{
+			for (int x = left; x <= right; ++x)
+			{
+				mTileList[y][x]->Render();
+			}
+		}
+	}
 }
 
 void ProcedureGeneration::OnGui()
@@ -619,7 +913,7 @@ void ProcedureGeneration::AddPass()
 	{
 		mLooper->Stop();
 		mLooper->SetLoopEnd(mTriangleList.size() + 1);
-		mLooper->SetLoopTime(0.05f);
+		mLooper->SetLoopTime(0.025f);
 		mLooper->Play();
 	}
 	else if (mPass == 5)
@@ -633,23 +927,73 @@ void ProcedureGeneration::AddPass()
 	{
 		mLooper->Stop();
 		mLooper->SetLoopEnd(mVertexList.size() + 1);
-		mLooper->SetLoopTime(0.2f);
+		mLooper->SetLoopTime(0.1f);
 		mLooper->Play();
 	}
 	else if (mPass == 7)
 	{
 		mLooper->Stop();
 		mLooper->SetLoopEnd(mFinalLineList.size() + 1);
-		mLooper->SetLoopTime(0.2f);
+		mLooper->SetLoopTime(0.1f);
 		mLooper->Play();
 	}
 	else if (mPass == 8)
 	{
 		mLooper->Stop();
 		mLooper->SetLoopEnd(mLineList.size() + 1);
-		mLooper->SetLoopTime(0.2f);
+		mLooper->SetLoopTime(0.1f);
 		mLooper->Play();
 	}
+	else if (mPass == 9)
+	{
+		mLooper->Stop();
+		mLooper->SetLoopEnd(mRoomList.size() + 1);
+		mLooper->SetLoopTime(0.01f);
+		mLooper->Play();
+	}
+	else if (mPass == 10)
+	{
+		mLooper->Stop();
+		mLooper->SetLoopEnd(200);
+		mLooper->SetLoopTime(0.03f);
+		mLooper->Play();
+	}
+	else if (mPass == 11)
+	{
+		mLooper->Stop();
+		mLooper->SetLoopEnd(500);
+		mLooper->SetLoopTime(0.001f);
+		mLooper->Play();
+	}
+	else if (mPass == 12)
+	{
+		mLooper->Stop();
+		mLooper->SetLoopEnd(40);
+		mLooper->SetLoopTime(0.05f);
+		mLooper->Play();
+	}
+	else if (mPass == 13)
+	{
+		mLooper->Stop();
+		mLooper->SetLoopEnd(30);
+		mLooper->SetLoopTime(0.05f);
+		mLooper->Play();
+	}
+	else if (mPass == 14)
+	{
+		mLooper->Stop();
+		mLooper->SetLoopEnd(30);
+		mLooper->SetLoopTime(0.05f);
+		mLooper->Play();
+	}
+	else if (mPass == 15)
+	{
+		mLooper->Stop();
+		mLooper->SetLoopEnd(200);
+		mLooper->SetLoopTime(0.005f);
+		mLooper->Play();
+	}
+	
 }
 
 

@@ -188,6 +188,8 @@ void ImageManager::LoadAllResource()
 {
 	this->AddFrameImage("Tile02", PathResources(L"./Tile/Tile02.png"), 8, 8);
 	this->AddFrameImage("Items", PathResources(L"./Item/items.png"),25,12);
+	this->AddFrameImage("Character0", PathResources(L"./Character/Character0.png"), 13, 13);
+	
 	this->LoadFolder("../Resources/Tile/", "*.png");
 	this->LoadFolder("../Resources/Object/", "*.png");
 }

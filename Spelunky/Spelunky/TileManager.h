@@ -12,9 +12,12 @@ public:
 
 	void Init()override;
 	void Release()override;
+	void Update()override; 
 	void Render()override; 
 
 	class Tile*const GetTile(int indexX, int indexY);
-	UINT GetMapTileSize() { return mTileList.size() * mTileList[0].size(); }
+	vector<vector<Tile*>>* GetTilePtr() { return &mTileList; }
+	Vector2 GetMapSize();
+	
 };
 
