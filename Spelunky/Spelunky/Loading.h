@@ -8,8 +8,8 @@ class Loading
 {
 	BlockAssign(Loading)
 private:
-	thread* mLoadingThread;				//로딩해줄 쓰레드 
-	bool mIsLoadingEnd;						//로딩이 끝났는가 
+	thread* mLoadingThread;							//로딩해줄 쓰레드 
+	bool mIsLoadingEnd;								//로딩이 끝났는가 
 	vector<function<void()>> mLoadingFuncList;		//로딩해야 할 함수
 public: 
 	Loading();

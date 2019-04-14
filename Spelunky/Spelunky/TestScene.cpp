@@ -23,12 +23,15 @@ void TestScene::Init()
 	{
 		Player* player = new Player(Vector2(tile->GetRect().GetCenter().x,tile->GetRect().bottom - 3));
 		this->mObjectPool->AddObject(player);
+
+		PointLight* light = new PointLight(player->GetTransform()->GetWorldPosition());
+		this->mObjectPool->AddObject(light);
+
+		player->GetTransform()->AddChild(light->GetTransform());
+
 		_Camera->SetTarget(player->GetTransform());
 		_Camera->SetMapSize(mapSize);
 		_Camera->SetZoom(1.5f);
-
-		PointLight* light = new PointLight(player->GetTransform()->GetWorldPosition());
-		mObjectPool->AddObject(light);
 	}
 
 	mRect.Update(Vector2(_WinSizeX / 2, _WinSizeY / 2), Vector2(50, 50), Pivot::Center);

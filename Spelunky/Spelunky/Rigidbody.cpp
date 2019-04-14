@@ -14,7 +14,7 @@ float Rigidbody::GetDefaultJumpPower()
 }
 
 Rigidbody::Rigidbody(GameObject * pObject)
-	:mIsOnGround(false),mObject(pObject), mJumpPower(0.f), mActiveCollision(true)
+	:mIsOnGround(false),mObject(pObject), mJumpPower(0.f), mIsActiveGravity(true)
 {
 	mTransform = mObject->GetTransform();
 }
@@ -35,7 +35,7 @@ void Rigidbody::Update()
 	//뭔가에 충돌을 했다면
 	Direction::Enum cDirection(Direction::End);
 	
-	if (mIsOnGround == false)
+	if (mIsOnGround == false && mIsActiveGravity == true)
 	{
 		mJumpPower += Physics::GetGravity() * _TimeManager->DeltaTime();
 		if (mJumpPower > 900.f)
@@ -51,10 +51,8 @@ void Rigidbody::Update()
 	float tileSize = Tile::GetTileSize();
 	int indexX = CastingInt(centerPos.x / tileSize);
 	int indexY = CastingInt(centerPos.y / tileSize);
-
+	//해당 오브젝트가 충돌 인터페이스를 상속받았는지 검사
 	ICollision* iCollision = dynamic_cast<ICollision*>(mObject);
-
-	Tile* tempTile = mTileManager->GetTile(indexX + 1, indexY);
 
 	for (int y = indexY - 1; y <= indexY + 1; ++y)
 	{
@@ -88,7 +86,8 @@ void Rigidbody::Update()
 		}
 		else if (cDirection & Direction::Top)
 		{
-			mJumpPower = 0.f;
+			if(cDirection != Direction::RightTop && cDirection != Direction::LeftTop)
+				mJumpPower = 0.f;
 		}
 	}
 	else

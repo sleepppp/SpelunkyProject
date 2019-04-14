@@ -29,7 +29,6 @@ void CameraManager::Update()
 	{
 	case CameraManager::None:
 	case CameraManager::MoveToTarget:
-
 		this->mPosition = mTarget->GetCenterPos();
 		this->UpdateRenderRect();
 		this->AmendCamera();
@@ -107,6 +106,7 @@ void CameraManager::AddZoom(const float& factor)
 
 	this->mRect.Update(mPosition, Vector2(_WinSizeX / mZoomFactor, _WinSizeY / mZoomFactor), Pivot::Center);
 	this->mSaveMouse = _Input->GetMousePosition();
+	this->AmendCamera();
 }
 
 void CameraManager::Move(const Vector2 & moveValue)
@@ -128,13 +128,9 @@ void CameraManager::CameraProc(WPARAM wParam)
 		if (IsMouseOnGui == false)
 		{
 			if ((SHORT)HIWORD(wParam) > 0)
-			{
 				this->AddZoom(0.1f);
-			}
 			else
-			{
 				this->AddZoom(-0.1f);
-			}
 		}
 	}
 }

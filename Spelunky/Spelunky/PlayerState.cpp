@@ -87,7 +87,7 @@ void PlayerMove::Execute()
 	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Jump))
 	{
 		if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Shift))
-			mPlayer->GetRigidbody()->Jump(Rigidbody::GetDefaultJumpPower() * 1.5f);
+			mPlayer->GetRigidbody()->Jump(Rigidbody::GetDefaultJumpPower() * 1.3f);
 		else
 			mPlayer->GetRigidbody()->Jump();
 

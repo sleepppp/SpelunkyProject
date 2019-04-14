@@ -1,6 +1,5 @@
 #pragma once
 #include "Animation.h"
-#include <map>
 
 template<typename T>
 class Animations
@@ -26,13 +25,13 @@ public:
 			mCurrentAnimation->UpdateFrame();
 	}
 
-	void AddAnimation(const T& enumClass, class Animation* animation)
+	void AddAnimation(const T& key, class Animation* animation)
 	{
-		this->mAnimationList.insert(make_pair(enumClass, animation));
+		this->mAnimationList.insert(make_pair(key, animation));
 	}
-	void ChangeAnimation(const T& enumClass)
+	void ChangeAnimation(const T& key)
 	{
-		typename map<T, Animation*>::iterator iter = mAnimationList.find(enumClass);
+		typename map<T, Animation*>::iterator iter = mAnimationList.find(key);
 		if (iter != mAnimationList.end())
 		{
 			if (mCurrentAnimation)
@@ -70,6 +69,16 @@ public:
 		if (mCurrentAnimation)
 			return mCurrentAnimation->GetNowFrameY();
 		return 0;
+	}
+
+	class Animation* FindAnimation(const T& key)
+	{
+		typename map<T, Animation*>::iterator iter = mAnimationList.find(key);
+		if (iter != mAnimationList.end())
+		{
+			return iter->second; 
+		}
+		return nullptr; 
 	}
 };
 

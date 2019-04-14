@@ -17,20 +17,13 @@ PointLight::~PointLight()
 
 void PointLight::Init()
 {
-	GameObject* player = _World->GetObjectPool()->FindObject("Player");
-	player->GetTransform()->AddChild(this->mTransform);
-
 	_World->GetUpdatePool()->RequestUpdate(this);
-	_World->GetRenderPool()->RequestRender(mLayer, this);
 }
 
 void PointLight::Update()
 {
 	_World->GetLightManager()->RequestLighting(this);
-}
 
-void PointLight::Render()
-{
 	if (_isDebug)
 	{
 		ImGui::Begin("PointLight");
@@ -42,4 +35,9 @@ void PointLight::Render()
 		}
 		ImGui::End();
 	}
+}
+
+void PointLight::Render()
+{
+
 }

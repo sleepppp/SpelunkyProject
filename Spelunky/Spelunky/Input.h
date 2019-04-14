@@ -22,13 +22,13 @@ private:
 public:
 	void Update();
 	//한번 눌렸다면
-	bool GetKeyDown(int key);
+	bool GetKeyDown(const int& key);
 	//키에서 손을 땠다면
-	bool GetKeyUp(int key);
+	bool GetKeyUp(const int& key);
 	//키를 누르고 있다면
-	bool GetKey(int key);
+	bool GetKey(const int& key);
 	//토글 키
-	bool ToggleKey(int key);
+	bool ToggleKey(const int& key);
 
 	LRESULT InputProc(UINT message, WPARAM wParam, LPARAM lParam);
 public:

@@ -24,7 +24,7 @@ void Input::Update()
 }
 
 
-bool Input::GetKeyDown(int key)
+bool Input::GetKeyDown(const int& key)
 {
 	//해당 키를 누른 상태
 	if (GetAsyncKeyState(key) & 0x8000)
@@ -43,7 +43,7 @@ bool Input::GetKeyDown(int key)
 	return false;
 }
 
-bool Input::GetKeyUp(int key)
+bool Input::GetKeyUp(const int& key)
 {
 	//해당 키를 누른 상태					현재키를 눌린 상태로 바꿈
 	if (GetAsyncKeyState(key) & 0x8000) mKeyCurrent.set(key, true);
@@ -62,14 +62,14 @@ bool Input::GetKeyUp(int key)
 	return false;
 }
 
-bool Input::GetKey(int key)
+bool Input::GetKey(const int& key)
 {
 	if (GetAsyncKeyState(key) & 0x8000) return true;
 
 	return false;
 }
 
-bool Input::ToggleKey(int key)
+bool Input::ToggleKey(const int& key)
 {
 	if (GetKeyState(key) & 0x0001) return true;
 

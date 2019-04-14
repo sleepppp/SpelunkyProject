@@ -23,8 +23,7 @@ private:
 	float mRecuperativePower; 
 
 	bool mIsOnGround;
-	bool mActiveCollision;
-	int mMass;
+	bool mIsActiveGravity;
 public:
 	Rigidbody() = delete;
 	explicit Rigidbody(class GameObject* pObject);
@@ -36,13 +35,11 @@ public:
 	void Jump(const float& jumpPower = _defaultJumpPower);
 	void Move(Vector2 moveValue,const float& speed);
 	void Force(const Vector2& direction,const float& power,const float& recuperativePower);
+	void ActiveGravity() { mIsActiveGravity = true; }
+	void DisActiveGravity() { mIsActiveGravity = false; }
 
 	class GameObject*const GetGameObject()const { return this->mObject; }
 	class Transform*const GetTransform()const { return this->mTransform; }
 	Figure::FloatRect*const GetLPRect()const;
-	const bool& GetActiveCollision()const { return mActiveCollision; }
-	const int& GetMass()const { return mMass; }
-	void SetMass(const int& mass) { mMass = mass; }
-private:
 };
 

@@ -29,6 +29,10 @@ public:
 	void OnGui();
 
 	void RequestLighting(class PointLight*const light);
+
+	//void SetSunColor(const GameColor& gameColor) { sunBuffer->data.sunColor = gameColor; }
+	//void SetSunIntensity(const float& intensity) { sunBuffer->data.sunIntensity = intensity; }
+	//void SetWorldAmbient(const float& ambient) { sunBuffer->data.worldAmbient = ambient; }
 };
 
 /*********************************************************
