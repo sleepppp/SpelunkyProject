@@ -103,5 +103,31 @@ void Unit::CreateAnimation()
 	grab->SetIsLoop(false);
 	grab->SetFrameUpdateTime(defaultUpdateTime * 0.5f);
 	this->mAnimations->AddAnimation(UnitAnimation::Grab, grab);
+
+	Animation* downFacing = new Animation;
+	downFacing->SetStartEndFrame(0, 1, 1, 1, false);
+	downFacing->SetIsLoop(false);
+	downFacing->SetFrameUpdateTime(defaultUpdateTime * 0.5f);
+	downFacing->SetCallbackFunc([this]() {this->ChangeState("DownIdle"); });
+	this->mAnimations->AddAnimation(UnitAnimation::DownFacing, downFacing);
+
+	Animation* downIdle = new Animation;
+	downIdle->SetVectorFrame({ {2,1} });
+	downIdle->SetIsLoop(false);
+	downIdle->SetFrameUpdateTime(defaultUpdateTime * 0.5f);
+	this->mAnimations->AddAnimation(UnitAnimation::DownIdle, downIdle);
+
+	Animation* downMove = new Animation;
+	downMove->SetStartEndFrame(5, 1, 11, 1, false);
+	downMove->SetIsLoop(true);
+	downMove->SetFrameUpdateTime(defaultUpdateTime);
+	this->mAnimations->AddAnimation(UnitAnimation::DownMove, downMove);
+
+	Animation* upFacing = new Animation;
+	upFacing->SetStartEndFrame(3, 1, 4, 1, false);
+	upFacing->SetIsLoop(false);
+	upFacing->SetFrameUpdateTime(defaultUpdateTime * 0.5f); 
+	upFacing->SetCallbackFunc([this]() {this->ChangeState("Idle"); });
+	this->mAnimations->AddAnimation(UnitAnimation::UpFacing, upFacing);
 	
 }

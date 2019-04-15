@@ -65,3 +65,43 @@ public:
 
 	void OnCollision(const CollideInfo& info);
 };
+
+class PlayerDownFacing final : public PlayerState
+{
+public:
+	PlayerDownFacing(class Player* pPlayer);
+
+	void Enter()override; 
+	void Execute()override; 
+	void Exit()override; 
+};
+
+class PlayerDownIdle final :public PlayerState
+{
+public:
+	PlayerDownIdle(class Player* pPlayer);
+
+	void Enter()override; 
+	void Execute()override; 
+	void Exit()override; 
+};
+
+class PlayerDownMove final : public PlayerState
+{
+public:
+	PlayerDownMove(class Player* pPlayer);
+
+	void Enter()override; 
+	void Execute()override; 
+	void Exit()override;
+};
+
+class PlayerUpFacing final : public PlayerState
+{
+public:
+	PlayerUpFacing(class Player* pPlayer);
+
+	void Enter()override; 
+	void Execute()override; 
+	void Exit()override; 
+};

@@ -105,7 +105,8 @@ bool PlayerKey::GetKeyDown(const Key & key)
 
 bool PlayerKey::GetKey(const Key & key)
 {
-	if (mPlayerKeyState[(int)key] == KeyState::Stay)
+	if (mPlayerKeyState[(int)key] == KeyState::Stay ||
+		mPlayerKeyState[(int)key] == KeyState::Down)
 		return true;
 	return false;
 }

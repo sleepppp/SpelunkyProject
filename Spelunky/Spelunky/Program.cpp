@@ -26,7 +26,6 @@ Program::Program()
 	load->AddThreadFunc([]() {TileMapGenerator::BuildDataTable(); });
 	_SceneManager->LoadSceneByLoading("LoadingScene","TestScene");
 	_SceneManager->InitFirstScene();
-
 }
 
 Program::~Program() 

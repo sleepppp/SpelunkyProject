@@ -9,7 +9,7 @@ Figure::FloatRect::FloatRect()
 	:left(0.f), top(0.f), right(0.f), bottom(0.f) {}
 
 Figure::FloatRect::FloatRect(const float & left, const float & top, const float & right, const float & bottom)
-	: left(left), top(0.f), right(0.f), bottom(0.f) {}
+	: left(left), top(top), right(right), bottom(bottom) {}
 
 Figure::FloatRect::FloatRect(const int & left, const int & top, const int & right, const int & bottom)
 	: left((float)left), top((float)top), right((float)right), bottom((float)bottom) {}

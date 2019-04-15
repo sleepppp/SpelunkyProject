@@ -80,4 +80,16 @@ void Player::CreateState()
 
 	PlayerGrab* grab = new PlayerGrab(this);
 	this->mStateManager->AddState("Grab", grab);
+
+	PlayerDownFacing* downFacing = new PlayerDownFacing(this);
+	this->mStateManager->AddState("DownFacing", downFacing);
+
+	PlayerDownIdle* downIdle = new PlayerDownIdle(this);
+	this->mStateManager->AddState("DownIdle", downIdle);
+
+	PlayerDownMove* downMove = new PlayerDownMove(this);
+	this->mStateManager->AddState("DownMove", downMove);
+
+	PlayerUpFacing* upFacing = new PlayerUpFacing(this);
+	this->mStateManager->AddState("UpFacing", upFacing);
 }
