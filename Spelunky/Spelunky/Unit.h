@@ -5,15 +5,15 @@ class Unit : public GameObject
 {
 	BlockAssign(Unit)
 public:
-	enum class UnitAnimaion : int
+	enum class UnitAnimation : int
 	{
-		Idle,Move,DownFace,DownMove,UpFace,JumpUp,JumpDown
+		Idle,Move,DownFace,DownMove,UpFace,JumpUp,JumpDown,Grab
 	};
 protected:
 	class Image* mUnitImage;
 	class Rigidbody* mRigidbody;
 	class UnitStateManager* mStateManager;
-	Animations<Unit::UnitAnimaion>* mAnimations;
+	Animations<Unit::UnitAnimation>* mAnimations;
 	bool mIsLeft;
 public:
 	Unit(const Vector2& pos);
@@ -26,7 +26,7 @@ public:
 
 	class Rigidbody* GetRigidbody()const { return mRigidbody; }
 	class UnitStateManager* GetStateManager()const { return mStateManager; }
-	void ChangeAnimation(const Unit::UnitAnimaion& anim);
+	void ChangeAnimation(const Unit::UnitAnimation& anim);
 	void ChangeState(const string& key);
 	void SetIsLeft(const bool& isLeft) { mIsLeft = isLeft; }
 private:

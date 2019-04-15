@@ -64,6 +64,7 @@ public:
 	Vector2 GetPosition() { return mRect.GetCenter(); }
 	const int& GetIndexX()const { return mIndexX; }
 	const int& GetIndexY()const { return mIndexY; }
+	Figure::FloatRect GetCollisionRect()override { return mRect; }
 
 	void SetType(const Type& type);
 	void SetImage(class Image*const pImage);

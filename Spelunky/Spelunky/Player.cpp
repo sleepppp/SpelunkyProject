@@ -6,6 +6,8 @@
 #include "PlayerState.h"
 #include "UnitStateManager.h"
 #include "Tile.h"
+#include "PlayerKey.h"
+
 Player::Player(const Vector2& pos,const string& imageKey)
 	:Unit(pos), mSpeed(300.f)
 {
@@ -37,6 +39,7 @@ void Player::Release()
 
 void Player::Update()
 {
+	this->mPlayerKey.Update();
 	Unit::Update();
 }
 
@@ -68,4 +71,13 @@ void Player::CreateState()
 
 	PlayerMove* move = new PlayerMove(this);
 	this->mStateManager->AddState("Move", move);
+
+	PlayerJumpUp* jumpUp = new PlayerJumpUp(this);
+	this->mStateManager->AddState("JumpUp", jumpUp);
+
+	PlayerJumpDown* jumpDown = new PlayerJumpDown(this);
+	this->mStateManager->AddState("JumpDown", jumpDown);
+
+	PlayerGrab* grab = new PlayerGrab(this);
+	this->mStateManager->AddState("Grab", grab);
 }

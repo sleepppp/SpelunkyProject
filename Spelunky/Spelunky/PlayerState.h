@@ -40,3 +40,28 @@ public:
 
 	void OnCollision(const CollideInfo& info);
 };
+
+
+class PlayerJumpDown final : public PlayerState
+{
+public:
+	PlayerJumpDown(class Player* pPlayer);
+
+	void Enter()override;
+	void Execute()override;
+	void Exit()override;
+
+	void OnCollision(const CollideInfo& info);
+};
+
+class PlayerGrab final : public PlayerState
+{
+public:
+	PlayerGrab(class Player* pPlayer);
+
+	void Enter()override; 
+	void Execute()override; 
+	void Exit()override; 
+
+	void OnCollision(const CollideInfo& info);
+};

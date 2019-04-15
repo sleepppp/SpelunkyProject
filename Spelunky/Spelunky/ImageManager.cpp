@@ -192,4 +192,5 @@ void ImageManager::LoadAllResource()
 	
 	this->LoadFolder("../Resources/Tile/", "*.png");
 	this->LoadFolder("../Resources/Object/", "*.png");
+	this->LoadFolder("../Resources/UI/", "*.png");
 }

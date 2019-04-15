@@ -8,7 +8,7 @@
 #include "Player.h"
 #include "PointLight.h"
 #include "Transform.h"
-#include <algorithm>
+#include "Aim.h"
 
 void TestScene::Init()
 {
@@ -27,6 +27,9 @@ void TestScene::Init()
 		PointLight* light = new PointLight(player->GetTransform()->GetWorldPosition());
 		this->mObjectPool->AddObject(light);
 
+		Aim* aim = new Aim();
+		this->mObjectPool->AddObject(aim);
+
 		player->GetTransform()->AddChild(light->GetTransform());
 
 		_Camera->SetTarget(player->GetTransform());
@@ -34,7 +37,6 @@ void TestScene::Init()
 		_Camera->SetZoom(1.5f);
 	}
 
-	mRect.Update(Vector2(_WinSizeX / 2, _WinSizeY / 2), Vector2(50, 50), Pivot::Center);
 }
 
 void TestScene::Release()

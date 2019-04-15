@@ -3,8 +3,6 @@
 class TestScene :
 	public SceneBase
 {
-private:
-	Figure::FloatRect mRect;
 public:
 	explicit TestScene() {}
 	virtual ~TestScene() {}

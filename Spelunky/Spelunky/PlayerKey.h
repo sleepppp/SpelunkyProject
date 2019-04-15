@@ -1,5 +1,4 @@
 #pragma once
-#include <deque>
 class PlayerKey final
 {
 	BlockAssign(PlayerKey)
@@ -9,11 +8,20 @@ public:
 		Left = 0, Right, Jump, Down, Attack, Reload, Shift, End
 	};
 private:
+	enum class KeyState : int
+	{
+		None = 0,Down,Stay,Up,End
+	};
+private:
 	int mPlayerKey[(int)Key::End];
-	deque<Key> mInputQueue;
+	KeyState mPlayerKeyState[(int)Key::End];
 public:
 	PlayerKey();
 	~PlayerKey();
+
+	void Update();
+
+	void CheckPreKeyState();
 
 	void SetupKey(const PlayerKey::Key& key, const int& keyboard);
 	const int& GetPlayerKey(PlayerKey::Key key);
@@ -21,5 +29,8 @@ public:
 	bool GetKeyDown(const Key& key);
 	bool GetKey(const Key& key);
 	bool GetKeyUp(const Key& key);
+
+	void PushKey(const Key& key);
+	void PopKey(const Key& key);
 };
 

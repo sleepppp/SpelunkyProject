@@ -41,5 +41,6 @@ public:
 	class GameObject*const GetGameObject()const { return this->mObject; }
 	class Transform*const GetTransform()const { return this->mTransform; }
 	Figure::FloatRect*const GetLPRect()const;
+	float GetJumpPower()const { return mJumpPower; }
 };
 

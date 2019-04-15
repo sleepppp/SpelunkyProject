@@ -103,6 +103,30 @@
     <Filter Include="MainEntry\Delaunay">
       <UniqueIdentifier>{93ac3b38-222f-4fb9-a0a7-e1f618725d93}</UniqueIdentifier>
     </Filter>
+    <Filter Include="InGameObject\BackGround">
+      <UniqueIdentifier>{017900db-78d1-4851-89c1-3bbac6d13831}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainEntry\MapToolScene">
+      <UniqueIdentifier>{b06f1e82-9270-47c7-8ac8-b34ea2e34891}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\Unit">
+      <UniqueIdentifier>{299a3e9c-cb5b-43c2-9a8c-e4189ed29bf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\GameEngine\MessageModule">
+      <UniqueIdentifier>{7e40924f-152a-41ef-b251-87f8cf4772f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Interface">
+      <UniqueIdentifier>{8882a2fb-300f-408d-8984-8591f02a7726}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\Unit\UnitState">
+      <UniqueIdentifier>{711fd95e-3c70-48d7-ae7e-27d74268d352}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\Player">
+      <UniqueIdentifier>{986a432f-731b-40ce-9eac-db6dd3c53281}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\Light">
+      <UniqueIdentifier>{3db9fe08-211a-4ab7-af04-d8f7e42238fc}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Util">
       <UniqueIdentifier>{c276c53d-0ad7-4acc-9e61-b7f084f40036}</UniqueIdentifier>
     </Filter>
@@ -133,20 +157,8 @@
     <Filter Include="Util\UI\Canvas">
       <UniqueIdentifier>{a6f983ee-2247-4f0f-9719-0957cb41554e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="InGameObject\BackGround">
-      <UniqueIdentifier>{017900db-78d1-4851-89c1-3bbac6d13831}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainEntry\MapToolScene">
-      <UniqueIdentifier>{b06f1e82-9270-47c7-8ac8-b34ea2e34891}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Util\Timer">
       <UniqueIdentifier>{66a08abe-d6cc-4c4e-984a-314cdbc39975}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="InGameObject\Unit">
-      <UniqueIdentifier>{299a3e9c-cb5b-43c2-9a8c-e4189ed29bf1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="System\GameEngine\MessageModule">
-      <UniqueIdentifier>{7e40924f-152a-41ef-b251-87f8cf4772f6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Util\Rigidbody">
       <UniqueIdentifier>{8b8401ae-3061-4d1f-ba20-13234146e0b7}</UniqueIdentifier>
@@ -154,17 +166,8 @@
     <Filter Include="Util\Animation">
       <UniqueIdentifier>{3320f036-b573-45d9-83a3-0d8cbfcf455c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="System\Interface">
-      <UniqueIdentifier>{8882a2fb-300f-408d-8984-8591f02a7726}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="InGameObject\Unit\UnitState">
-      <UniqueIdentifier>{711fd95e-3c70-48d7-ae7e-27d74268d352}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="InGameObject\Player">
-      <UniqueIdentifier>{986a432f-731b-40ce-9eac-db6dd3c53281}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="InGameObject\Light">
-      <UniqueIdentifier>{3db9fe08-211a-4ab7-af04-d8f7e42238fc}</UniqueIdentifier>
+    <Filter Include="InGameObject\Aim">
+      <UniqueIdentifier>{2910a3e9-cfe9-4dcd-a8f1-21e9c317f233}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -393,6 +396,9 @@
     <ClInclude Include="PointLight.h">
       <Filter>InGameObject\Light</Filter>
     </ClInclude>
+    <ClInclude Include="Aim.h">
+      <Filter>InGameObject\Aim</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Spelunky.cpp">
@@ -598,6 +604,9 @@
     </ClCompile>
     <ClCompile Include="PointLight.cpp">
       <Filter>InGameObject\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Aim.cpp">
+      <Filter>InGameObject\Aim</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -2,8 +2,9 @@
 #include "Unit.h"
 #include "PlayerKey.h"
 #include "InterfaceCollision.h"
-class Player : public Unit , ICollision
+class Player : public Unit ,public ICollision
 {
+	BlockAssign(Player)
 private:
 	float mSpeed;
 	PlayerKey mPlayerKey;

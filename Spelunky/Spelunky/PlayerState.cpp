@@ -29,7 +29,7 @@ void PlayerIdle::Enter()
 	}
 	else
 	{
-		mUnit->ChangeAnimation(Unit::UnitAnimaion::Idle);
+		mUnit->ChangeAnimation(Unit::UnitAnimation::Idle);
 	}
 }
 
@@ -47,7 +47,7 @@ void PlayerIdle::Execute()
 	}
 
 	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Jump))
-		mPlayer->GetRigidbody()->Jump();
+		mPlayer->ChangeState("JumpUp");
 }
 
 void PlayerIdle::Exit() {}
@@ -58,15 +58,16 @@ PlayerMove::PlayerMove(Player * pPlayer)
 
 void PlayerMove::Enter()
 {
-	mPlayer->ChangeAnimation(Unit::UnitAnimaion::Move);
+	mPlayer->ChangeAnimation(Unit::UnitAnimation::Move);
 }
 
 void PlayerMove::Execute()
 {
 	float speed = mPlayer->GetSpeed();
 	if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Shift))
+	{
 		speed *= 2.f;
-
+	}
 	if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Right))
 	{
 		mPlayer->GetRigidbody()->Move(Vector2(1.f, 0.f), speed);
@@ -85,13 +86,7 @@ void PlayerMove::Execute()
 	}
 
 	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Jump))
-	{
-		if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Shift))
-			mPlayer->GetRigidbody()->Jump(Rigidbody::GetDefaultJumpPower() * 1.3f);
-		else
-			mPlayer->GetRigidbody()->Jump();
-
-	}
+		mPlayer->ChangeState("JumpUp");
 }
 
 void PlayerMove::Exit()
@@ -106,16 +101,138 @@ PlayerJumpUp::PlayerJumpUp(Player * pPlayer)
 
 void PlayerJumpUp::Enter()
 {
+	mPlayer->ChangeAnimation(Unit::UnitAnimation::JumpUp);
+
+	if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Shift))
+		mPlayer->GetRigidbody()->Jump(Rigidbody::GetDefaultJumpPower() * 1.3f);
+	else
+		mPlayer->GetRigidbody()->Jump();
+
 }
 
 void PlayerJumpUp::Execute()
 {
+	float speed = mPlayer->GetSpeed();
+	if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Shift))
+		speed *= 2.f;
+
+	if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Right))
+	{
+		mPlayer->GetRigidbody()->Move(Vector2(1.f, 0.f), speed);
+		mPlayer->SetIsLeft(false);
+	}
+	else if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Left))
+	{
+		mPlayer->GetRigidbody()->Move(Vector2(-1.f, 0.f), speed);
+		mPlayer->SetIsLeft(true);
+	}
+
+	if (mPlayer->GetRigidbody()->GetJumpPower() >= 0.f)
+	{
+		mPlayer->ChangeState("JumpDown");
+	}
 }
 
 void PlayerJumpUp::Exit()
 {
+	
 }
+
 void PlayerJumpUp::OnCollision(const CollideInfo & info)
 {
+	if(info.direction & Direction::Top)
+		mPlayer->ChangeState("JumpDown");
 }
 /***********************************************************************/
+
+PlayerJumpDown::PlayerJumpDown(Player * pPlayer)
+	:PlayerState(pPlayer) {}
+
+void PlayerJumpDown::Enter()
+{
+	mPlayer->ChangeAnimation(Unit::UnitAnimation::JumpDown);
+}
+
+void PlayerJumpDown::Execute()
+{
+	float speed = mPlayer->GetSpeed();
+	if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Shift))
+		speed *= 2.f;
+
+	if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Right))
+	{
+		mPlayer->GetRigidbody()->Move(Vector2(1.f, 0.f), speed);
+		mPlayer->SetIsLeft(false);
+	}
+	else if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Left))
+	{
+		mPlayer->GetRigidbody()->Move(Vector2(-1.f, 0.f), speed);
+		mPlayer->SetIsLeft(true);
+	}
+}
+
+void PlayerJumpDown::Exit()
+{
+}
+
+void PlayerJumpDown::OnCollision(const CollideInfo & info)
+{
+	if (info.direction & Direction::Bottom)
+	{
+		if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Right) ||
+			mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Left))
+			mPlayer->ChangeState("Move");
+		else
+			mPlayer->ChangeState("Idle");
+	}
+	else if (info.direction & (Direction::Right))
+	{
+		if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Right))
+		{
+			Figure::FloatRect collideRect = info.collisionObject->GetCollisionRect();
+			if (Math::Abs(collideRect.top - mPlayer->GetCollisionRect().top) < 5.f)
+			{
+				mPlayer->ChangeState("Grab");
+			}
+		}
+	}
+	else if (info.direction & Direction::Left)
+	{
+		if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Left))
+		{
+			Figure::FloatRect collideRect = info.collisionObject->GetCollisionRect();
+			if (Math::Abs(collideRect.top - mPlayer->GetCollisionRect().top) < 5.f)
+			{
+				mPlayer->ChangeState("Grab");
+			}
+		}
+	}
+}
+
+/***********************************************************************/
+
+PlayerGrab::PlayerGrab(Player * pPlayer)
+	:PlayerState(pPlayer) {}
+
+void PlayerGrab::Enter()
+{
+	mPlayer->ChangeAnimation(Unit::UnitAnimation::Grab);
+	mPlayer->GetRigidbody()->DisActiveGravity();
+}
+
+void PlayerGrab::Execute()
+{
+	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Jump))
+	{
+		mPlayer->ChangeState("JumpUp");
+	}
+}
+
+void PlayerGrab::Exit()
+{
+	mPlayer->GetRigidbody()->ActiveGravity();
+}
+
+void PlayerGrab::OnCollision(const CollideInfo & info)
+{
+}
