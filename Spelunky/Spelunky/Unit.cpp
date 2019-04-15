@@ -49,8 +49,9 @@ void Unit::Render()
 {
 	if (mUnitImage)
 	{
+		float tileSize = Tile::GetTileSize();
 		mUnitImage->SetReverseX(mIsLeft);
-		mUnitImage->SetSize(Vector2(Tile::GetTileSize() * 1.2f,Tile::GetTileSize() * 1.2f));
+		mUnitImage->SetSize(Vector2(tileSize * 1.2f, tileSize * 1.2f));
 		mUnitImage->FrameRender(mTransform->GetWorldPosition() - Vector2(0.f, - 3.f),
 			mAnimations->GetFrameX(),mAnimations->GetFrameY(), mTransform->GetPivot() ,true);
 	}

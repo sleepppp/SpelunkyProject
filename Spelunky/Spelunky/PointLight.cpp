@@ -5,10 +5,11 @@
 #include "LightingManager.h"
 
 PointLight::PointLight(Vector2 pos, float range, float intensity, GameColor color)
-	:GameObject("PointLight", pos, Vector2(), Pivot::Center), _originRange(range), _intensity(intensity), _color(color)
+	:GameObject("PointLight", pos, Vector2(), Pivot::Center), mOriginRange(range), mIntensity(intensity), mColor(color)
 {
-	_isIncrease = true;
-	_increaseCount = 0.f;
+	mIsIncrease = true;
+	mIncreaseCount = 0.f;
+
 }
 
 PointLight::~PointLight()
@@ -28,9 +29,9 @@ void PointLight::Update()
 	{
 		ImGui::Begin("PointLight");
 		{
-			ImGui::SliderFloat("OriginRange", &_originRange, 0.f, 500.0f);
-			ImGui::SliderFloat("Intensity", &_intensity, 0.f, 10.0f);
-			ImGui::ColorEdit4("Color", &_color.r,
+			ImGui::SliderFloat("OriginRange", &mOriginRange, 0.f, 500.0f);
+			ImGui::SliderFloat("Intensity", &mIntensity, 0.f, 10.0f);
+			ImGui::ColorEdit4("Color", &mColor.r,
 				ImGuiColorEditFlags_Float | ImGuiColorEditFlags_AlphaPreviewHalf);
 		}
 		ImGui::End();

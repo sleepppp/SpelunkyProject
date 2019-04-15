@@ -2,11 +2,11 @@
 class PointLight : public GameObject
 {
 protected:
-	GameColor _color;
-	float _increaseCount;
-	float _originRange;
-	float _intensity;
-	bool _isIncrease;
+	GameColor mColor;
+	float mIncreaseCount; 
+	float mOriginRange;
+	float mIntensity;
+	bool mIsIncrease;
 public:
 	PointLight(Vector2 pos, float range = 460.f, float intensity = 1.25f, GameColor color = GameColor(1.f, 1.f, 1.f, 1.f));
 	~PointLight();
@@ -15,10 +15,10 @@ public:
 	void Update()override;
 	void Render()override;
 
-	GameColor GetColor()const { return this->_color; }
-	float GetOriginRange()const { return this->_originRange; }
-	float GetIntensity()const { return this->_intensity; }
-	void SetColor(const GameColor color) { this->_color = color; }
-	void SetRange(const float range) { this->_originRange = range; }
-	void SetIntensity(const float intensity) { this->_intensity = intensity; }
+	GameColor GetColor()const { return this->mColor; }
+	float GetOriginRange()const { return this->mOriginRange; }
+	float GetIntensity()const { return this->mIntensity; }
+	void SetColor(const GameColor color) { this->mColor = color; }
+	void SetRange(const float range) { this->mOriginRange = range; }
+	void SetIntensity(const float intensity) { this->mIntensity = intensity; }
 };
