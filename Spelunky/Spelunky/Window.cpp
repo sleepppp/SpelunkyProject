@@ -192,6 +192,7 @@ void Window::CreateSingleton()
 	}
 	ImageManager::Create();
 	SceneManager::Create();
+	SoundManager::Create();
 	DebugSystem::Create();
 }
 /*************************************************
@@ -200,6 +201,7 @@ void Window::CreateSingleton()
 void Window::DeleteSingleton()
 {
 	DebugSystem::Delete();
+	SoundManager::Delete();
 	SceneManager::Delete();
 	ImageManager::Delete();
 	ImGui::Delete();
@@ -216,5 +218,6 @@ void Window::UpdateSingleton()
 {
 	Input::Get()->Update();
 	TimeManager::Get()->Update();
+	SoundManager::Get()->Update();
 	ImGui::Update();
 }

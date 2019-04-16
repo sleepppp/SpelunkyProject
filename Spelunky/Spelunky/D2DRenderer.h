@@ -80,6 +80,11 @@ public:
 		const bool& isRelative = false);
 	void FiilEllipse(const Vector2& origin, const float& radius, const DefaultBrush& brush = DefaultBrush::Black,
 		const bool& isRelativePos = false);
+
+	void DrawRotationNullRectangle(const Figure::FloatRect& rc, const D2D1::ColorF::Enum& color, const float& alpha,const float& angle,
+		const bool& isRelativePos = false, const float& strokeWidth = 1.f);
+	void DrawRotationFillRectangle(const Figure::FloatRect&  rc, const  D2D1::ColorF::Enum& color, const float& alpha,const float& angle,
+		const bool& isRelativePos = false);
 };
 
 #define _D2DRenderer D2DRenderer::Get()

@@ -25,6 +25,11 @@ void PointLight::Update()
 {
 	_World->GetLightManager()->RequestLighting(this);
 
+	this->OnGui();
+}
+
+void PointLight::OnGui()
+{
 	if (_isDebug)
 	{
 		ImGui::Begin("PointLight");
@@ -38,7 +43,3 @@ void PointLight::Update()
 	}
 }
 
-void PointLight::Render()
-{
-
-}

@@ -18,6 +18,7 @@ public:
 	virtual void Release() {}
 	virtual void Update() {}
 	virtual void Render() {}
+	virtual void OnGui() {}
 public:
 	inline class Transform* const GetTransform()const { return this->mTransform; }
 	const string& GetName()const { return this->mName; }

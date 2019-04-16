@@ -169,6 +169,36 @@
     <Filter Include="InGameObject\Aim">
       <UniqueIdentifier>{2910a3e9-cfe9-4dcd-a8f1-21e9c317f233}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System\Sound">
+      <UniqueIdentifier>{76eafa35-6d78-4629-a346-e1440415d38f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\FrameEffect">
+      <UniqueIdentifier>{db7e9967-6002-4055-a90b-40d18c062e29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\Monster">
+      <UniqueIdentifier>{91d937c2-a9d9-4d0f-ba16-f5aa0eda1574}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\ParticleSystem">
+      <UniqueIdentifier>{f27ec736-03e4-4e9b-80a0-e8639c4521ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\ParticleSystem\Particle">
+      <UniqueIdentifier>{29133f2c-2db0-4ee2-99f2-a1e418052604}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\ParticleSystem\ParticleOption">
+      <UniqueIdentifier>{1432652c-ce67-4227-aede-0dec566fcac0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\ParticleSystem\ParticleOption\Main">
+      <UniqueIdentifier>{709411e0-a8f3-4dd5-a36a-02e555356016}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\ParticleSystem\ParticleOption\Shape">
+      <UniqueIdentifier>{5cac4cd0-d3de-42ed-a2f4-5ff6ea1f4440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\ParticleSystem\ParticleOption\Render">
+      <UniqueIdentifier>{87c8fcfd-58bb-4e9c-838b-77cc56657ca3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\ParticleSystem\ParticleOption\RandomOption">
+      <UniqueIdentifier>{c46c754a-f20c-4817-bac5-bc86736910df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -399,6 +429,36 @@
     <ClInclude Include="Aim.h">
       <Filter>InGameObject\Aim</Filter>
     </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>System\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameEffect.h">
+      <Filter>InGameObject\FrameEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>InGameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameEffecter.h">
+      <Filter>InGameObject\FrameEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>InGameObject\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>InGameObject\ParticleSystem\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleMainOption.h">
+      <Filter>InGameObject\ParticleSystem\ParticleOption\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="particleShapeOption.h">
+      <Filter>InGameObject\ParticleSystem\ParticleOption\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleRenderOption.h">
+      <Filter>InGameObject\ParticleSystem\ParticleOption\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleRandomOption.h">
+      <Filter>InGameObject\ParticleSystem\ParticleOption\RandomOption</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Spelunky.cpp">
@@ -607,6 +667,36 @@
     </ClCompile>
     <ClCompile Include="Aim.cpp">
       <Filter>InGameObject\Aim</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>System\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameEffect.cpp">
+      <Filter>InGameObject\FrameEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>InGameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameEffecter.cpp">
+      <Filter>InGameObject\FrameEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>InGameObject\ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>InGameObject\ParticleSystem\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleMainOption.cpp">
+      <Filter>InGameObject\ParticleSystem\ParticleOption\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="particleShapeOption.cpp">
+      <Filter>InGameObject\ParticleSystem\ParticleOption\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleRenderOption.cpp">
+      <Filter>InGameObject\ParticleSystem\ParticleOption\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleRandomOption.cpp">
+      <Filter>InGameObject\ParticleSystem\ParticleOption\RandomOption</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

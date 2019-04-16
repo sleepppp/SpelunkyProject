@@ -52,6 +52,5 @@ void TestScene::Update()
 void TestScene::Render()
 {
 	SceneBase::Render();
-	
 }
 

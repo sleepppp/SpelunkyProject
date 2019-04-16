@@ -13,7 +13,7 @@ public:
 
 	void Init()override;
 	void Update()override;
-	void Render()override;
+	void OnGui()override; 
 
 	GameColor GetColor()const { return this->mColor; }
 	float GetOriginRange()const { return this->mOriginRange; }

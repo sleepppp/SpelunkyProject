@@ -523,3 +523,56 @@ void D2DRenderer::FiilEllipse(const Vector2 & origin, const float & radius, cons
 	mD2DRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 	mD2DRenderTarget->FillEllipse(&ellipse, mDefaultBrushList[(UINT)brush]);
 }
+
+void D2DRenderer::DrawRotationNullRectangle(const Figure::FloatRect & rc, const D2D1::ColorF::Enum & color, 
+	const float & alpha, const float & angle, const bool & isRelativePos, const float & strokeWidth)
+{
+	Figure::FloatRect rect = rc;
+	if (isRelativePos)
+	{
+		rect = _Camera->GetRelativeRect(rect);
+	}
+	//카메라에 없으면 랜더x
+	if (rect.left > (float)_WinSizeX || rect.right < 0.f ||
+		rect.top  >(float)_WinSizeY || rect.bottom < 0.f)
+	{
+		return;
+	}
+
+	D2D1_POINT_2F offset;
+	offset.x = rect.left +rect.GetWidth() / 2;
+	offset.y = rect.top + rect.GetHeight() / 2;
+
+	ID2D1SolidColorBrush* brush;
+	mD2DRenderTarget->CreateSolidColorBrush(D2D1::ColorF(color, alpha), &brush);
+
+	mD2DRenderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(angle, offset));
+
+	mD2DRenderTarget->DrawRectangle(D2D1::RectF((float)rect.left, (float)rect.top, (float)rect.right, (float)rect.bottom),
+		brush, strokeWidth);
+
+	SafeRelease(brush);
+}
+
+void D2DRenderer::DrawRotationFillRectangle(const Figure::FloatRect & rc, const D2D1::ColorF::Enum & color, const float & alpha, const float & angle, const bool & isRelativePos)
+{
+	Figure::FloatRect rect = rc;
+	if (isRelativePos)
+	{
+		rect = _Camera->GetRelativeRect(rect);
+	}
+	if (rect.left > (float)_WinSizeX || rect.right < 0.f ||
+		rect.top  >(float) _WinSizeY || rect.bottom < 0.f)
+	{
+		return;
+	}
+	D2D1_POINT_2F offset;
+	offset.x =rect.left +  rect.GetWidth() / 2;
+	offset.y = rect.top + rect.GetHeight() / 2;
+	ID2D1SolidColorBrush* brush;
+	mD2DRenderTarget->CreateSolidColorBrush(D2D1::ColorF(color, alpha), &brush);
+	mD2DRenderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(angle, offset));
+	mD2DRenderTarget->FillRectangle(D2D1::RectF((float)rect.left, (float)rect.top, (float)rect.right, (float)rect.bottom), brush);
+
+	SafeRelease(brush);
+}

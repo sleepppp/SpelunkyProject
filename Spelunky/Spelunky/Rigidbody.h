@@ -4,6 +4,7 @@ class Rigidbody final
 	BlockAssign(Rigidbody)
 private:
 	static const float _defaultJumpPower;
+	static const float _defaultRecuperativePower;
 public:
 	static float GetDefaultJumpPower();
 private:
@@ -34,7 +35,7 @@ public:
 
 	void Jump(const float& jumpPower = _defaultJumpPower);
 	void Move(Vector2 moveValue,const float& speed);
-	void Force(const Vector2& direction,const float& power,const float& recuperativePower);
+	void Force(const Vector2& direction,const float& power,const float& recuperativePower = _defaultRecuperativePower);
 	void ActiveGravity() { mIsActiveGravity = true; }
 	void DisActiveGravity() { mIsActiveGravity = false; }
 

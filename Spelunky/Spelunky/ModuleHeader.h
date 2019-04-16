@@ -19,4 +19,5 @@
 #include "RenderPool.h"
 #include "Physics.h"
 #include "MessageManager.h"
+#include "SoundManager.h"
 #include "DebugSystem.h"

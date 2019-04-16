@@ -7,6 +7,7 @@
 #include "InterfaceCollision.h"
 
 const float Rigidbody::_defaultJumpPower = 800.f;
+const float Rigidbody::_defaultRecuperativePower = 500.f;
 
 float Rigidbody::GetDefaultJumpPower()
 {
@@ -14,7 +15,8 @@ float Rigidbody::GetDefaultJumpPower()
 }
 
 Rigidbody::Rigidbody(GameObject * pObject)
-	:mIsOnGround(false),mObject(pObject), mJumpPower(0.f), mIsActiveGravity(true)
+	:mIsOnGround(false),mObject(pObject), mJumpPower(0.f), mIsActiveGravity(true), 
+	mForcePower(-1.f),mRecuperativePower(_defaultRecuperativePower)
 {
 	mTransform = mObject->GetTransform();
 }
@@ -34,13 +36,20 @@ void Rigidbody::Update()
 {
 	//뭔가에 충돌을 했다면
 	Direction::Enum cDirection(Direction::End);
-	
+	float deltaTime = _TimeManager->DeltaTime();
 	if (mIsOnGround == false && mIsActiveGravity == true)
 	{
-		mJumpPower += Physics::GetGravity() * _TimeManager->DeltaTime();
+		mJumpPower += Physics::GetGravity() * deltaTime;
 		if (mJumpPower > 900.f)
 			mJumpPower = 900.f;
-		mTransform->Translate(Vector2(0.f, mJumpPower) * _TimeManager->DeltaTime());
+		mTransform->Translate(Vector2(0.f, mJumpPower) * deltaTime);
+	}
+
+	//만약 가해진 힘이 있다면
+	if (mForcePower > 0.f)
+	{
+		this->mTransform->Translate(mForceDirection * mForcePower * _TimeManager->DeltaTime());
+		mForcePower -= mRecuperativePower * deltaTime;
 	}
 
 	bool isCollide = false;
@@ -102,18 +111,24 @@ void Rigidbody::Update()
 
 void Rigidbody::Jump(const float& jumpPower)
 {
-	mJumpPower = -jumpPower;
-	mIsOnGround = false;
+	if (mForcePower < 0.f)
+	{
+		mJumpPower = -jumpPower;
+		mIsOnGround = false;
+	}
 }
 
 void Rigidbody::Move(Vector2 moveValue,const float& speed)
 {
-	this->mTransform->Translate(moveValue * speed * _TimeManager->DeltaTime());
+	if(mForcePower < 0.f)
+		this->mTransform->Translate(moveValue * speed * _TimeManager->DeltaTime());
 }
 
 void Rigidbody::Force(const Vector2& direction,const float& power,const float& recuperativePower)
 {
-	
+	this->mForceDirection = Vector2::Normalize(&direction); 
+	this->mForcePower = power; 
+	this->mRecuperativePower = recuperativePower;
 }
 
 Figure::FloatRect * const Rigidbody::GetLPRect() const

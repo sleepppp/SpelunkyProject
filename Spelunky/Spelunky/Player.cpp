@@ -7,6 +7,7 @@
 #include "UnitStateManager.h"
 #include "Tile.h"
 #include "PlayerKey.h"
+#include "Rigidbody.h"
 
 Player::Player(const Vector2& pos,const string& imageKey)
 	:Unit(pos), mSpeed(300.f)
