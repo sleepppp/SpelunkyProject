@@ -192,6 +192,7 @@
     <ClInclude Include="Monster.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="Particle.h" />
+    <ClInclude Include="ParticleInterpolateOption.h" />
     <ClInclude Include="ParticleMainOption.h" />
     <ClInclude Include="ParticleRandomOption.h" />
     <ClInclude Include="ParticleRenderOption.h" />
@@ -276,6 +277,7 @@
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="ObjectPool.cpp" />
     <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="ParticleInterpolateOption.cpp" />
     <ClCompile Include="ParticleMainOption.cpp" />
     <ClCompile Include="ParticleRandomOption.cpp" />
     <ClCompile Include="ParticleRenderOption.cpp" />

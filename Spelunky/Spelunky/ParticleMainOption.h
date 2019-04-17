@@ -5,8 +5,10 @@ class ParticleMainOption final
 private:
 	bool mIsLoop;
 	float mDurationTime; 
-	float mDurationDelayTime; 
+	float mDurationDelayTime;
+	int mDurationCount;
 	float mCurrentTime;
+	float mCurrentDelayTime;
 	float mParticleLiveTime;
 	float mParticleSpeed;
 	Vector2 mParticleStartSize;
@@ -14,5 +16,6 @@ private:
 	ParticleMainOption();
 	~ParticleMainOption();
 
+	void OnGui();
 };
 

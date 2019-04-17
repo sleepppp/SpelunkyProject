@@ -554,7 +554,7 @@ void D2DRenderer::DrawRotationNullRectangle(const Figure::FloatRect & rc, const 
 	SafeRelease(brush);
 }
 
-void D2DRenderer::DrawRotationFillRectangle(const Figure::FloatRect & rc, const D2D1::ColorF::Enum & color, const float & alpha, const float & angle, const bool & isRelativePos)
+void D2DRenderer::DrawRotationFillRectangle(const Figure::FloatRect & rc, const D2D1::ColorF & color, const float & angle, const bool & isRelativePos)
 {
 	Figure::FloatRect rect = rc;
 	if (isRelativePos)
@@ -570,7 +570,7 @@ void D2DRenderer::DrawRotationFillRectangle(const Figure::FloatRect & rc, const 
 	offset.x =rect.left +  rect.GetWidth() / 2;
 	offset.y = rect.top + rect.GetHeight() / 2;
 	ID2D1SolidColorBrush* brush;
-	mD2DRenderTarget->CreateSolidColorBrush(D2D1::ColorF(color, alpha), &brush);
+	mD2DRenderTarget->CreateSolidColorBrush(color, &brush);
 	mD2DRenderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(angle, offset));
 	mD2DRenderTarget->FillRectangle(D2D1::RectF((float)rect.left, (float)rect.top, (float)rect.right, (float)rect.bottom), brush);
 

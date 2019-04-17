@@ -9,7 +9,7 @@ public:
 	};
 private:
 	RenderType mRenderType;
-	D2D1::ColorF::Enum mColor;
+	GameColor mColor;
 	class Image* mImage;
 	int mFrameX;
 	int mFrameY; 
@@ -21,8 +21,6 @@ private:
 
 	float mAngle;
 	float mSpeed; 
-
-	float mAlpha; 
 
 	float mSpeedAccelation; 
 	float mAngleAccelation; 
@@ -42,7 +40,7 @@ public:
 	
 	void SetTimeInfo(const float& liveTime);
 	void SetImageInfo(class Image* image, const int& frameX, const int& frameY);
-	void SetRenderType(const RenderType& renderType);
+	void SetRenderType(const RenderType& renderType,const GameColor& color);
 	void SetPhysicsInfo(const Vector2& startPos, const Vector2& startSize, const Vector2& direction,
 		const float& startSpeed, const float& startAngle,const bool& usePhysics);
 	void SetInterpolateInfo(const float& speedAccelation, const float& angleAccelation,const Vector2& sizeAccelation);

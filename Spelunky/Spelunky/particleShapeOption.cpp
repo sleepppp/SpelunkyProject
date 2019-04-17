@@ -2,13 +2,24 @@
 #include "particleShapeOption.h"
 
 
-particleShapeOption::particleShapeOption()
-	:mShape(Shape::Circle),mRadius(100.f),mDurationDirection(0.f),mDirectionOffset(90.f)
+ParticleShapeOption::ParticleShapeOption()
+	:mShape(Shape::Corn),mRadius(100.f), mDirectionOffset(Math::PI / 2.f), mParticleStartDirection(0.f)
 {
 
 }
 
 
-particleShapeOption::~particleShapeOption()
+ParticleShapeOption::~ParticleShapeOption()
 {
+}
+
+void ParticleShapeOption::OnGui()
+{
+	if (ImGui::CollapsingHeader("Shape"))
+	{
+		ImGui::SliderFloat("Radius", &mRadius, 0.f, 500.f);
+		ImGui::SliderFloat("Angle", &mParticleStartDirection, 0.0f, Math::PI * 2.f);
+		ImGui::SliderFloat("AnglerCorn", &mDirectionOffset, 0.f, Math::PI);
+		ImGui::Separator();
+	}
 }

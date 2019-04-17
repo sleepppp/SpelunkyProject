@@ -83,7 +83,7 @@ public:
 
 	void DrawRotationNullRectangle(const Figure::FloatRect& rc, const D2D1::ColorF::Enum& color, const float& alpha,const float& angle,
 		const bool& isRelativePos = false, const float& strokeWidth = 1.f);
-	void DrawRotationFillRectangle(const Figure::FloatRect&  rc, const  D2D1::ColorF::Enum& color, const float& alpha,const float& angle,
+	void DrawRotationFillRectangle(const Figure::FloatRect&  rc, const  D2D1::ColorF& color,const float& angle,
 		const bool& isRelativePos = false);
 };
 

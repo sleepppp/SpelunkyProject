@@ -27,6 +27,12 @@ public:
 		:r(0.f), g(0.f), b(0.f), a(0.f) {}
 	GameColor(const float& r,const float& g,const float& b,const float& a)
 		:r(r), g(g), b(b), a(a) {}
+
+	D2D1::ColorF GetD2DColor()
+	{
+		UINT32 colorref = RGB((BYTE)(arr[2] * 255.f), (BYTE)(arr[1] * 255.f), (BYTE)(arr[0] * 255.f));
+		return D2D1::ColorF(colorref, this->a);
+	}
 };
 
 namespace Direction

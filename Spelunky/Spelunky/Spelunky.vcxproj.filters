@@ -199,6 +199,9 @@
     <Filter Include="InGameObject\ParticleSystem\ParticleOption\RandomOption">
       <UniqueIdentifier>{c46c754a-f20c-4817-bac5-bc86736910df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="InGameObject\ParticleSystem\ParticleOption\InterpolateOption">
+      <UniqueIdentifier>{524fd3af-c69d-41d3-ad49-3656e034f484}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -459,6 +462,9 @@
     <ClInclude Include="ParticleRandomOption.h">
       <Filter>InGameObject\ParticleSystem\ParticleOption\RandomOption</Filter>
     </ClInclude>
+    <ClInclude Include="ParticleInterpolateOption.h">
+      <Filter>InGameObject\ParticleSystem\ParticleOption\InterpolateOption</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Spelunky.cpp">
@@ -697,6 +703,9 @@
     </ClCompile>
     <ClCompile Include="ParticleRandomOption.cpp">
       <Filter>InGameObject\ParticleSystem\ParticleOption\RandomOption</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleInterpolateOption.cpp">
+      <Filter>InGameObject\ParticleSystem\ParticleOption\InterpolateOption</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

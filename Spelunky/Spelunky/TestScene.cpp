@@ -9,6 +9,7 @@
 #include "PointLight.h"
 #include "Transform.h"
 #include "Aim.h"
+#include "ParticleSystem.h"
 
 void TestScene::Init()
 {
@@ -30,7 +31,14 @@ void TestScene::Init()
 		Aim* aim = new Aim();
 		this->mObjectPool->AddObject(aim);
 
+		ParticleSystem* particleSystem = new ParticleSystem(100);
+		this->mObjectPool->AddObject(particleSystem);
+		
+
+		player->GetTransform()->AddChild(particleSystem->GetTransform());
 		player->GetTransform()->AddChild(light->GetTransform());
+
+		particleSystem->GetTransform()->SetLocalPosition(Vector2(0, 0));
 
 		_Camera->SetTarget(player->GetTransform());
 		_Camera->SetMapSize(mapSize);

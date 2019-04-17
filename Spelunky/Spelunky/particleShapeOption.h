@@ -1,5 +1,5 @@
 #pragma once
-class particleShapeOption
+class ParticleShapeOption
 {
 	friend class ParticleSystem;
 private:
@@ -10,10 +10,13 @@ private:
 private:
 	Shape mShape; 
 	float mRadius; 
-	float mDurationDirection; 
 	float mDirectionOffset;
+	float mParticleStartDirection;
 
-	particleShapeOption();
-	~particleShapeOption();
+	ParticleShapeOption();
+	~ParticleShapeOption();
+
+
+	void OnGui();
 };
 
