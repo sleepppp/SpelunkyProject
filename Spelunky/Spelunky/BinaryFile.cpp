@@ -72,10 +72,10 @@ void BinaryWriter::Double(const double& data)
 	WriteFile(fileHandle, &data, sizeof(double), &size, NULL);
 }
 
-//void BinaryWriter::Vector2(const D3DXVECTOR2& data)
-//{
-//	WriteFile(fileHandle, &data, sizeof(D3DXVECTOR2), &size, NULL);
-//}
+void BinaryWriter::Vector2D(const Vector2& data)
+{
+	WriteFile(fileHandle, &data, sizeof(Vector2), &size, NULL);
+}
 
 
 void BinaryWriter::String(const string & data)
@@ -181,13 +181,12 @@ double BinaryReader::Double()
 	return temp;
 }
 
-//D3DXVECTOR2 BinaryReader::Vector2()
-//{
-//	float x = Float();
-//	float y = Float();
-//
-//	return D3DXVECTOR2(x, y);
-//}
+Vector2 BinaryReader::Vector2D()
+{
+	Vector2 temp;
+	ReadFile(fileHandle, &temp, sizeof(Vector2), &size, NULL);
+	return temp;
+}
 
 
 

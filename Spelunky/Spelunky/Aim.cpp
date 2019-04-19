@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Aim.h"
-
-
+#include "Transform.h"
 Aim::Aim()
 {
 }
@@ -24,9 +23,10 @@ void Aim::Release()
 
 void Aim::Render()
 {
+	mTransform->SetWorldPosition(_Camera->GetWorldMouse());
 	if (mImage)
 	{
-		mImage->Render(_Input->GetMousePosition(), Pivot::Center, false);
+		mImage->Render(mTransform->GetWorldPosition(), Pivot::Center, true);
 	}
 	
 }

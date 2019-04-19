@@ -125,9 +125,9 @@ LRESULT Window::WndProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
+		//case WM_DESTROY:
+		//	PostQuitMessage(0);
+		//	break;
 	}
 
 	return (DefWindowProc(handle, message, wParam, lParam));

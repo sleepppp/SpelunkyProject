@@ -40,6 +40,7 @@ public:
 	void SetTimeScale(float scale) { this->timeScale = scale; }
 	void AddTimeScale(float fValue) { this->timeScale += fValue; }
 	void MinusTimeScale(float fValue) { this->timeScale -= fValue; }
+	bool GetIsPlay()const { return isStart; }
 };
 
 #define _TimeManager TimeManager::Get()

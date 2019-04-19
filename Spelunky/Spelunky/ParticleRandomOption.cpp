@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include "ParticleRandomOption.h"
 
+#include "BinaryFile.h"
 
 ParticleRandomOption::ParticleRandomOption()
 	:mUseRandomLiveTime(false),mUseRandomSpeed(false),mUseRandomSize(false),mMinLiveTime(0.f),mMaxLiveTime(0.f),
-	mMinSpeed(0.f),mMaxSpeed(0.f),mRenderType(Particle::RenderType::Rectangle),mUseRandomAngleAccelation(false),mUseRandomSpeedAccelation(false),
+	mMinSpeed(0.f),mMaxSpeed(0.f),mUseRandomAngleAccelation(false),mUseRandomSpeedAccelation(false),
 	mMinSpeedAccelation(0.f),mMaxSpeedAccelation(500.f),mMinAngleAccelation(0.f),mMaxAngleAccelation(360.f)
 {
 
@@ -36,4 +37,50 @@ void ParticleRandomOption::OnGui()
 		ImGui::SliderFloat("MaxAngleAccel", &mMaxAngleAccelation, 0.f, 360.f);
 		ImGui::Separator();
 	}
+}
+
+void ParticleRandomOption::SaveData(BinaryWriter * w)
+{
+	w->Bool(mUseRandomLiveTime);
+	w->Float(mMinLiveTime);
+	w->Float(mMaxLiveTime);
+
+	w->Bool(mUseRandomSpeed);
+	w->Float(mMinSpeed);
+	w->Float(mMaxSpeed);
+
+	w->Bool(mUseRandomSize);
+	w->Vector2D(mMinSize);
+	w->Vector2D(mMaxSize);
+
+	w->Bool(mUseRandomSpeedAccelation);
+	w->Float(mMinSpeedAccelation);
+	w->Float(mMaxSpeedAccelation);
+
+	w->Bool(mUseRandomAngleAccelation);
+	w->Float(mMinAngleAccelation);
+	w->Float(mMaxAngleAccelation);
+}
+
+void ParticleRandomOption::LoadData(BinaryReader * r)
+{
+	mUseRandomLiveTime = r->Bool();
+	mMinLiveTime = r->Float();
+	mMaxLiveTime = r->Float();
+
+	mUseRandomSpeed = r->Bool();
+	mMinSpeed = r->Float();
+	mMaxSpeed = r->Float();
+
+	mUseRandomSize = r->Bool();
+	mMinSize = r->Vector2D();
+	mMaxSize = r->Vector2D();
+
+	mUseRandomSpeedAccelation = r->Bool();
+	mMinSpeedAccelation = r->Float();
+	mMaxSpeedAccelation = r->Float();
+
+	mUseRandomAngleAccelation = r->Bool();
+	mMinAngleAccelation = r->Float();
+	mMaxAngleAccelation = r->Float();
 }

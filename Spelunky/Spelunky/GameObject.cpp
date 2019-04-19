@@ -3,10 +3,10 @@
 
 #include "Transform.h"
 GameObject::GameObject()
-	:mTransform(new Transform), mName(""), mIsActive(true), mLayer(RenderPool::Layer::Object) {}
+	:mTransform(new Transform(Vector2(), Vector2(),Pivot::LeftTop,this)), mName(""), mIsActive(true), mLayer(RenderPool::Layer::Object) {}
 
 GameObject::GameObject(const string & name)
-	: mName(name), mTransform(new Transform), mIsActive(true), mLayer(RenderPool::Layer::Object) {}
+	: mName(name), mTransform(new Transform(Vector2(), Vector2(), Pivot::LeftTop, this)), mIsActive(true), mLayer(RenderPool::Layer::Object) {}
 
 GameObject::GameObject(const string & name, const Vector2 & pos, const Vector2 & size, 
 	const Pivot::Enum & pivot, const RenderPool::Layer& layer)
@@ -25,8 +25,7 @@ Figure::FloatRect GameObject::GetCollisionRect()
 
 void GameObject::SetActive(const bool & b)
 {
-	this->mIsActive = b;
-	if (mIsActive)
+	if (b)
 		this->Enable();
 	else
 		this->Disable();

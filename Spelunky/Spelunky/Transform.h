@@ -60,5 +60,7 @@ public:
 
 	void UpdateTransform(); 
 	void UpdateTransformByRect();
+
+	void SetActiveAllChild(const bool& b);
 };
 

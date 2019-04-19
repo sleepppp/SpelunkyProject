@@ -50,8 +50,9 @@ void Program::Render()
 			DebugSystem::Get()->Render();
 		}
 		D2DRenderer::Get()->EndRender();
+
+		ImGui::Render();
 	}
-	ImGui::Render();
 	D3DRenderer::Get()->EndRender();
 	_SceneManager->PostRender();
 }

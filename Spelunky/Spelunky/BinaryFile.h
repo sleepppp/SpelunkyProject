@@ -16,7 +16,7 @@ public:
 	void UInt(const UINT& data);
 	void Float(const float& data);
 	void Double(const double& data);
-
+	void Vector2D(const Vector2& data);
 	void String(const string& data);
 	void Byte(void* data,const UINT& dataSize);
 protected:
@@ -42,7 +42,7 @@ public:
 	UINT UInt();
 	float Float();
 	double Double();
-
+	Vector2 Vector2D();
 	string String();
 	void Byte(void** data,const UINT& dataSize);
 

@@ -3,7 +3,7 @@ class Particle final
 {
 	BlockAssign(Particle)
 public:
-	enum class RenderType
+	enum class RenderType : int
 	{
 		Rectangle,Image
 	};
@@ -21,7 +21,8 @@ private:
 
 	float mAngle;
 	float mSpeed; 
-
+	float mGravityPower;
+	float mMass;
 	float mSpeedAccelation; 
 	float mAngleAccelation; 
 	Vector2 mSizeAccelation;
@@ -31,9 +32,13 @@ private:
 
 	bool mUsePhysics;
 	bool mRelativeCamera;
+
+	class TileManager* mTileManager;
 public:
 	Particle();
 	~Particle();
+
+	void Init();
 
     bool Update(const float& deltaTime);
 	void Render(); 
@@ -42,7 +47,9 @@ public:
 	void SetImageInfo(class Image* image, const int& frameX, const int& frameY);
 	void SetRenderType(const RenderType& renderType,const GameColor& color);
 	void SetPhysicsInfo(const Vector2& startPos, const Vector2& startSize, const Vector2& direction,
-		const float& startSpeed, const float& startAngle,const bool& usePhysics);
+		const float& startSpeed, const float& startAngle);
+	void SetUseGravity(const bool& mUsePhysice, const float& mMass);
 	void SetInterpolateInfo(const float& speedAccelation, const float& angleAccelation,const Vector2& sizeAccelation);
+	void SetRelativeCamera(const bool& b) { mRelativeCamera = b; }
 };
 

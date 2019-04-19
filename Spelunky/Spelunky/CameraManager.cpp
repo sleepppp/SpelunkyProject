@@ -106,7 +106,8 @@ void CameraManager::AddZoom(const float& factor)
 
 	this->mRect.Update(mPosition, Vector2(_WinSizeX / mZoomFactor, _WinSizeY / mZoomFactor), Pivot::Center);
 	this->mSaveMouse = _Input->GetMousePosition();
-	this->AmendCamera();
+	if (mState != FreeCamera)
+		this->AmendCamera();
 }
 
 void CameraManager::Move(const Vector2 & moveValue)

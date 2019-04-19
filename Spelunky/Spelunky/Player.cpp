@@ -8,9 +8,10 @@
 #include "Tile.h"
 #include "PlayerKey.h"
 #include "Rigidbody.h"
+#include "Subject.h"
 
 Player::Player(const Vector2& pos,const string& imageKey)
-	:Unit(pos), mSpeed(300.f)
+	:Unit(pos), mSpeed(300.f), mSubject(new Subject),mHp(3),mFullHp(3)
 {
 	mName = "Player";
 	mUnitImage = _ImageManager->FindImage(imageKey);
@@ -24,7 +25,7 @@ Player::Player(const Vector2& pos,const string& imageKey)
 
 Player::~Player()
 {
-	
+	SafeDelete(mSubject);
 }
 
 void Player::Init()

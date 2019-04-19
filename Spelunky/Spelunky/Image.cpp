@@ -228,6 +228,7 @@ void Image::ResetRenderOption()
 {
 	this->mAlpha = 1.0f;
 	this->mScale = 1.0f;
+	this->mAngle = 0.f;
 	if (mFrameInfo.size() <= 1)
 	{
 		this->mSize.x = (float)mBitmap->GetPixelSize().width;

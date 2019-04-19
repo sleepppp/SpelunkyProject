@@ -23,7 +23,7 @@ Transform::~Transform()
 ## AddChild ##
 @@ Transform* pChild : 자식 포인터
 **************************************************************************************/
-void Transform::AddChild( Transform * const pChild)
+void Transform::AddChild(Transform * const pChild)
 {
 	//이미 엮여 있으면 빠져나가자
 	if (pChild->mParent == this)
@@ -270,6 +270,20 @@ void Transform::UpdateTransformByRect()
 	while (tempChild != nullptr)
 	{
 		tempChild->UpdateTransform();
+		tempChild = tempChild->mNextSibling;
+	}
+}
+void Transform::SetActiveAllChild(const bool & b)
+{
+	Transform* tempChild = this->mFirstChild;
+	while (tempChild)
+	{
+		GameObject* pObject = tempChild->GetGameObject();
+		if (pObject)
+		{
+			pObject->SetActive(b);
+		}
+		tempChild->SetActiveAllChild(b);
 		tempChild = tempChild->mNextSibling;
 	}
 }

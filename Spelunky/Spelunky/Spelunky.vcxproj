@@ -155,10 +155,7 @@
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="BinaryFile.h" />
     <ClInclude Include="Buffer.h" />
-    <ClInclude Include="Button.h" />
     <ClInclude Include="CameraManager.h" />
-    <ClInclude Include="Canvas.h" />
-    <ClInclude Include="ClassicButton.h" />
     <ClInclude Include="D2DRenderer.h" />
     <ClInclude Include="D3DRenderer.h" />
     <ClInclude Include="DataContext.h" />
@@ -172,11 +169,15 @@
     <ClInclude Include="FrameEffect.h" />
     <ClInclude Include="FrameEffecter.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameObjectHeader.h" />
+    <ClInclude Include="GameSystem.h" />
+    <ClInclude Include="GameUI.h" />
     <ClInclude Include="Image.h" />
-    <ClInclude Include="ImageButton.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InterfaceCollision.h" />
+    <ClInclude Include="Inventory.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="LibraryHeader.h" />
     <ClInclude Include="LightingManager.h" />
     <ClInclude Include="Line.h" />
@@ -192,7 +193,6 @@
     <ClInclude Include="Monster.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="Particle.h" />
-    <ClInclude Include="ParticleInterpolateOption.h" />
     <ClInclude Include="ParticleMainOption.h" />
     <ClInclude Include="ParticleRandomOption.h" />
     <ClInclude Include="ParticleRenderOption.h" />
@@ -218,8 +218,12 @@
     <ClInclude Include="Spelunky.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StringHelper.h" />
+    <ClInclude Include="Subject.h" />
+    <ClInclude Include="SystemUIController.h" />
+    <ClInclude Include="SystemMainUI.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestScene.h" />
+    <ClInclude Include="TextButton.h" />
     <ClInclude Include="TextFile.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileManager.h" />
@@ -229,7 +233,7 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Triangle.h" />
-    <ClInclude Include="UIBase.h" />
+    <ClInclude Include="UIModule.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="UnitStateBase.h" />
     <ClInclude Include="UnitStateManager.h" />
@@ -244,10 +248,7 @@
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="BinaryFile.cpp" />
     <ClCompile Include="Buffer.cpp" />
-    <ClCompile Include="Button.cpp" />
     <ClCompile Include="CameraManager.cpp" />
-    <ClCompile Include="Canvas.cpp" />
-    <ClCompile Include="ClassicButton.cpp" />
     <ClCompile Include="D2DRenderer + DrawFunc.cpp" />
     <ClCompile Include="D2DRenderer.cpp" />
     <ClCompile Include="D3DRenderer.cpp" />
@@ -260,11 +261,14 @@
     <ClCompile Include="FrameEffect.cpp" />
     <ClCompile Include="FrameEffecter.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameSystem.cpp" />
+    <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="Image.cpp" />
-    <ClCompile Include="ImageButton.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InterfaceCollision.cpp" />
+    <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="LightingManager.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="Loading.cpp" />
@@ -277,7 +281,6 @@
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="ObjectPool.cpp" />
     <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="ParticleInterpolateOption.cpp" />
     <ClCompile Include="ParticleMainOption.cpp" />
     <ClCompile Include="ParticleRandomOption.cpp" />
     <ClCompile Include="ParticleRenderOption.cpp" />
@@ -306,7 +309,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="StringHelper.cpp" />
+    <ClCompile Include="Subject.cpp" />
+    <ClCompile Include="SystemUIController.cpp" />
+    <ClCompile Include="SystemMainUI.cpp" />
     <ClCompile Include="TestScene.cpp" />
+    <ClCompile Include="TextButton.cpp" />
     <ClCompile Include="TextFile.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileManager.cpp" />
@@ -316,7 +323,7 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Triangle.cpp" />
-    <ClCompile Include="UIBase.cpp" />
+    <ClCompile Include="UIModule.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UnitStateBase.cpp" />
     <ClCompile Include="UnitStateManager.cpp" />

@@ -11,6 +11,7 @@ D2DRenderer::D2DRenderer()
 	this->CreateRenderTarget();
 	this->CreateDefaultBrush();
 	this->AddTextFormat(L"¸¼Àº°íµñ");
+	this->AddTextFormat(L"Tekton Pro");
 }
 
 /*****************************************************

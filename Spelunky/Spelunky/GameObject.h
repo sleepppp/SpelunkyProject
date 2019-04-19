@@ -1,5 +1,6 @@
 #pragma once
-class GameObject
+#include "MessageComponent.h"
+class GameObject : public MessageComponent
 {
 	BlockAssign(GameObject)
 protected:
@@ -27,8 +28,8 @@ public:
 	virtual Figure::FloatRect GetCollisionRect();
 	void SetActive(const bool& b);
 	void SetName(const string& name) { this->mName = name;  }
-private:
-	virtual void Enable() {}
-	virtual void Disable() {}
+protected:
+	virtual void Enable() { this->mIsActive = true; }
+	virtual void Disable() { this->mIsActive = false; }
 };
 

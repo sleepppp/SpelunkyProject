@@ -4,6 +4,7 @@ class ParticleMainOption final
 	friend class ParticleSystem; 
 private:
 	bool mIsLoop;
+	bool mIsRelative;
 	float mDurationTime; 
 	float mDurationDelayTime;
 	int mDurationCount;
@@ -17,5 +18,7 @@ private:
 	~ParticleMainOption();
 
 	void OnGui();
+	void SaveData(class BinaryWriter* w);
+	void LoadData(class BinaryReader* r);
 };
 

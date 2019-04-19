@@ -24,11 +24,11 @@ private:
 	float mMinAngleAccelation;
 	float mMaxAngleAccelation;
 
-	Particle::RenderType mRenderType; 
-
 	ParticleRandomOption();
 	~ParticleRandomOption();
 
 	void OnGui();
+	void SaveData(class BinaryWriter* w);
+	void LoadData(class BinaryReader* r);
 };
 

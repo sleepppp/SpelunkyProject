@@ -2,6 +2,9 @@
 #include "ParticleSystem.h"
 #include "Transform.h"
 #include "Particle.h"
+#include "BinaryFile.h"
+#include "Path.h"
+
 ParticleSystem::ParticleSystem(const UINT& capacity)
 	:GameObject("ParticleSystem"),mCapacity(capacity), mIsDuration(true)
 {
@@ -12,11 +15,10 @@ ParticleSystem::ParticleSystem(const UINT& capacity)
 }
 
 ParticleSystem::ParticleSystem(const wstring & filePath)
+	:GameObject("ParticleSystem"), mCapacity(0), mIsDuration(false)
 {
 	mLayer = RenderPool::Layer::Effect;
 	this->LoadData(filePath);
-	for (UINT i = 0; i < mCapacity; ++i)
-		mDeActiveParticles.push_back(new Particle);
 }
 
 ParticleSystem::~ParticleSystem()
@@ -33,6 +35,9 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::Init()
 {
+	ParticleIter iter = mDeActiveParticles.begin();
+	for (; iter != mDeActiveParticles.end(); ++iter)
+		(*iter)->Init();
 	_World->GetUpdatePool()->RequestUpdate(this);
 	_World->GetRenderPool()->RequestRender(mLayer, this);
 }
@@ -117,12 +122,15 @@ void ParticleSystem::Update()
 				{
 					angleAccelation = Math::Random(mRandomOption.mMinAngleAccelation, mRandomOption.mMaxAngleAccelation);
 				}
-				
+				int randomIndex = Math::Random(0, mRenderOption.mImageList[mRenderOption.mRubbleType].size() -1 );
+				ImageInfo info = mRenderOption.mImageList[mRenderOption.mRubbleType][randomIndex];
+				particle->SetImageInfo(info.image,info.frameX,info.frameY);
 				particle->SetTimeInfo(liveTime);
-				particle->SetPhysicsInfo(startPos, startSize, startDirection, speed, Math::Random(0.f,360.f), false);
+				particle->SetPhysicsInfo(startPos, startSize, startDirection, speed, Math::Random(0.f,360.f));
+				particle->SetUseGravity(mShapeOption.mUsePhysics, mShapeOption.mMass);
 				particle->SetRenderType(mRenderOption.mRenderType,mRenderOption.mColor);
 				particle->SetInterpolateInfo(speedAccelation, angleAccelation, Vector2());
-				
+				particle->SetRelativeCamera(mMainOption.mIsRelative);
 				mActiveParticles.push_back(particle);
 			}
 
@@ -155,7 +163,7 @@ void ParticleSystem::Render()
 	{
 		if(mShapeOption.mShape == ParticleShapeOption::Shape::Circle)
 			_D2DRenderer->DrawEllipse(mTransform->GetWorldPosition(), mShapeOption.mRadius, D2DRenderer::DefaultBrush::Red,
-				true, 2.f);
+				mMainOption.mIsRelative, 2.f);
 		else if (mShapeOption.mShape == ParticleShapeOption::Shape::Corn)
 		{
 			Vector2 origin = mTransform->GetWorldPosition();
@@ -168,9 +176,9 @@ void ParticleSystem::Render()
 
 			Vector2 endPoint0 = origin + Vector2(minAngle.x * mShapeOption.mRadius,minAngle.y * mShapeOption.mRadius);
 			Vector2 endPoint1 = origin + Vector2(maxAngle.x * mShapeOption.mRadius, maxAngle.y * mShapeOption.mRadius);
-			_D2DRenderer->DrawLine(origin, endPoint0, D2DRenderer::DefaultBrush::Red, true, 2.f);
-			_D2DRenderer->DrawLine(origin, endPoint1, D2DRenderer::DefaultBrush::Red, true, 2.f);
-			_D2DRenderer->DrawLine(endPoint0, endPoint1, D2DRenderer::DefaultBrush::Red, true, 2.f);
+			_D2DRenderer->DrawLine(origin, endPoint0, D2DRenderer::DefaultBrush::Red, mMainOption.mIsRelative, 2.f);
+			_D2DRenderer->DrawLine(origin, endPoint1, D2DRenderer::DefaultBrush::Red, mMainOption.mIsRelative, 2.f);
+			_D2DRenderer->DrawLine(endPoint0, endPoint1, D2DRenderer::DefaultBrush::Red, mMainOption.mIsRelative, 2.f);
 		}
 	}
 
@@ -182,7 +190,16 @@ void ParticleSystem::OnGui()
 	if (_isDebug)
 	{
 		ImGui::Begin(mName.c_str());
-		ImGui::Checkbox("Duration", &mIsDuration);
+		if (ImGui::Button("Save"))
+			this->SaveData();
+		ImGui::SameLine();
+		if (ImGui::Button("Load"))
+			this->LoadData();
+		if (ImGui::Checkbox("Duration", &mIsDuration))
+		{
+			if (mIsDuration)this->Play();
+			else this->Stop();
+		}
 		ImGui::Text("Capacity : %d", mCapacity);
 		ImGui::Text("ActiveCount : %d", (int)mActiveParticles.size());
 		ImGui::Separator();
@@ -190,7 +207,6 @@ void ParticleSystem::OnGui()
 		mShapeOption.OnGui();
 		mRandomOption.OnGui();
 		mRenderOption.OnGui();
-		mInterpolateOption.OnGui();
 		ImGui::End();
 	}
 }
@@ -208,12 +224,58 @@ void ParticleSystem::Pause()
 void ParticleSystem::Stop()
 {
 	mIsDuration = false;
+	mMainOption.mCurrentTime = mMainOption.mCurrentDelayTime = 0.f;
 }
 
 void ParticleSystem::SaveData(const wstring & filePath)
 {
+	if (filePath.length() > 0)
+	{
+		BinaryWriter* w = new BinaryWriter;
+		w->Open(filePath);
+		{
+			w->UInt(mCapacity);
+			mMainOption.SaveData(w);
+			mShapeOption.SaveData(w);
+			mRandomOption.SaveData(w);
+			mRenderOption.SaveData(w);
+		}
+		w->Close();
+		SafeDelete(w);
+	}
+	else
+	{
+		function<void(wstring)> func = bind(&ParticleSystem::SaveData, this, placeholders::_1);
+		Path::SaveFileDialog(filePath, nullptr, L"../GameData/ParticleSystem/", func);
+	}
 }
 
 void ParticleSystem::LoadData(const wstring & filePath)
 {
+	if (filePath.length() > 0)
+	{
+		BinaryReader* r = new BinaryReader;
+		r->Open(filePath);
+		{
+			mCapacity = r->UInt();
+			mMainOption.LoadData(r);
+			mShapeOption.LoadData(r);
+			mRandomOption.LoadData(r);
+			mRenderOption.LoadData(r);
+		}
+		r->Close();
+		SafeDelete(r);
+
+		if (mDeActiveParticles.size() + mActiveParticles.size() < mCapacity)
+		{
+			UINT newParticleSize = mCapacity - mDeActiveParticles.size() + mActiveParticles.size();
+			for (UINT i = 0; i < newParticleSize; ++i)
+				mDeActiveParticles.push_back(new Particle);
+		}
+	}
+	else
+	{
+		function<void(wstring)> func = bind(&ParticleSystem::LoadData, this, placeholders::_1);
+		Path::OpenFileDialog(L"", nullptr, L"../GameData/ParticleSystem/", func);
+	}
 }
