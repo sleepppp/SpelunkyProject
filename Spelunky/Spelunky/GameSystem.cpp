@@ -48,4 +48,7 @@ void GameSystem::OpenSystemUI()
 	groupWorld->GetTransform()->SetActiveAllChild(false);
 
 	mUIController->PushUI(_World->GetObjectPool()->FindObject("SystemMainUI"));
+
+	_SoundManager->Play("MenuOpen");
+	_SoundManager->Pause(_SoundManager->GetPlayingBGM());
 }

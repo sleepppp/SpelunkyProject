@@ -5,6 +5,7 @@
 #include "Spelunky.h"
 
 bool _isDebug = false;
+bool _isUseLighting = true;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -12,7 +13,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ int       nCmdShow)
 {
 	Window::Desc desc;
-	desc.appName = L"Dun";				//윈도우 이름 
+	desc.appName = L"Dunpelunky";			//윈도우 이름 
 	desc.width = 1600;						//윈도우 가로 길이
 	desc.height = 900;						//윈도우 세로 길이 
 	desc.instance = hPrevInstance;			//윈도우 hInstance 

@@ -20,6 +20,18 @@ void TestScene::Init()
 	SystemMainUI* mainUI = new SystemMainUI;
 	this->mObjectPool->AddObject(mainUI);
 
+	SystemOptionUI* optionUI = new SystemOptionUI;
+	this->mObjectPool->AddObject(optionUI);
+
+	SystemAudioUI* audioUI = new SystemAudioUI;
+	this->mObjectPool->AddObject(audioUI);
+
+	SystemVideoUI* video = new SystemVideoUI;
+	this->mObjectPool->AddObject(video);
+
+	Aim* aim = new Aim();
+	this->mObjectPool->AddObject(aim);
+
 	/*****************************************************
 	## CreateGroupObject ##
 	******************************************************/
@@ -28,13 +40,14 @@ void TestScene::Init()
 	/*****************************************************
 	## Create Tile & Background ##
 	******************************************************/
-	TileManager* tileManager = new TileManager(L"../GameData/Stage02/0.bin");
-	worldObject->GetTransform()->AddChild(tileManager->GetTransform());
+	TileManager* tileManager = new TileManager(L"../GameData/Stage02/1.bin");
 	this->mObjectPool->AddObject(tileManager);
 	Vector2 mapSize = tileManager->GetMapSize();
 	BackGround* background = new BackGround("BackGround2", mapSize);
-	worldObject->GetTransform()->AddChild(background->GetTransform());
 	this->mObjectPool->AddObject(background);
+
+	worldObject->GetTransform()->AddChild(tileManager->GetTransform());
+	worldObject->GetTransform()->AddChild(background->GetTransform());
 	_Camera->SetMapSize(mapSize);
 	/*****************************************************
 	## CreatePlayer ##
@@ -51,14 +64,12 @@ void TestScene::Init()
 		worldObject->GetTransform()->AddChild(inventory->GetTransform());
 		this->mObjectPool->AddObject(inventory);
 
-		Aim* aim = new Aim();
-		worldObject->GetTransform()->AddChild(aim->GetTransform());
-		this->mObjectPool->AddObject(aim);
-
 		_Camera->SetTarget(player->GetTransform());
 		_Camera->SetMapSize(mapSize);
 		_Camera->SetZoom(1.5f);
 	}
+
+	_SoundManager->PlayBGM("zone2");
 
 }
 

@@ -377,3 +377,25 @@ void PlayerUpFacing::Execute()
 void PlayerUpFacing::Exit()
 {
 }
+/*******************************************************************
+## PlayerDead ##
+********************************************************************/
+PlayerDead::PlayerDead(Player * pPlayer)
+	:PlayerState(pPlayer)
+{
+}
+
+void PlayerDead::Enter()
+{
+	mPlayer->ChangeAnimation(Unit::UnitAnimation::Dead);
+	mPlayer->GetTransform()->SetSize(Vector2(Tile::GetTileSize() * 0.6f, Tile::GetTileSize() * 0.8f));
+	mPlayer->GetRigidbody()->DisActiveGravity();
+}
+
+void PlayerDead::Execute()
+{
+}
+
+void PlayerDead::Exit()
+{
+}

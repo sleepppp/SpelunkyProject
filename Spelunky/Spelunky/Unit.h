@@ -7,7 +7,7 @@ class Unit : public GameObject
 public:
 	enum class UnitAnimation : int
 	{
-		Idle,Move,DownFacing,DownIdle,DownMove,UpFacing,JumpUp,JumpDown,Grab
+		Idle,Move,DownFacing,DownIdle,DownMove,UpFacing,JumpUp,JumpDown,Grab,Dead
 	};
 protected:
 	class Image* mUnitImage;

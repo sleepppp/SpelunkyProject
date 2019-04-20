@@ -459,6 +459,9 @@ void SoundManager::SetPosition(string keyName, unsigned int time)
 
 void SoundManager::LoadAllSound()
 {
+	this->AddSound("ButtonOnMouse", "../Resources/Sound/ButtonOnMouse.wav", false, false);
+	this->AddSound("MenuOpen", "../Resources/Sound/MenuOpen.wav", false, false);
+	this->AddSound("zone2", "../Resources/Sound/zone2.ogg", true, true);
 }
 
 

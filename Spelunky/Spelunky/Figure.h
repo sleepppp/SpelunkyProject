@@ -65,9 +65,9 @@ namespace Figure
 	@@ FloatRect* result : 충돌 영역 반환
 	@@ FloatRect* rc1 : 렉트 1
 	@@ FloatRect* rc2 : 렉트 2
-
+	
 	@@ return bool : 충동 여부
-
+	
 	회전값이 없는 FloatRect충돌 검사 후 결과 값 반환
 	*****************************************************************************************************/
 	inline bool IntersectRectToRect(FloatRect*const result, const FloatRect*const rc1, const FloatRect* const rc2)
@@ -81,7 +81,75 @@ namespace Figure
 			result->top = Math::Max(rc1->top, rc2->top);
 			result->bottom = Math::Min(rc1->bottom, rc2->bottom);
 		}
-		return true; 
+		return true;
+	}
+
+	inline bool IntersectRectToRect(const FloatRect* const rcHold, const FloatRect* const rcMove,Direction::Enum* pOutput)
+	{
+		FloatRect rcInter;
+
+		if (IntersectRectToRect(&rcInter, rcHold, rcMove) == false)
+			return false;
+
+		float interW = rcInter.right - rcInter.left;
+		float interH = rcInter.bottom - rcInter.top;
+
+		if (Math::FloatEqual(interW, interH))
+		{
+			if (Math::FloatEqual(rcInter.left, rcHold->left))
+			{
+				if (pOutput)
+					*pOutput = (Direction::Enum)((*pOutput) | Direction::Right);
+			}
+			else if (Math::FloatEqual(rcInter.right, rcHold->right))
+			{
+				if (pOutput)
+					*pOutput = (Direction::Enum)((*pOutput) | Direction::Left);
+			}
+			//위
+			if (Math::FloatEqual(rcInter.top, rcHold->top))
+			{
+				if (pOutput)
+					*pOutput = (Direction::Enum)((*pOutput) | Direction::Bottom);
+			}
+			//아래
+			else if (Math::FloatEqual(rcInter.bottom, rcHold->bottom))
+			{
+				if (pOutput)
+					*pOutput = (Direction::Enum)((*pOutput) | Direction::Top);
+			}
+		}
+		else if (interW < interH)
+		{
+			if (Math::FloatEqual(rcInter.left, rcHold->left))
+			{
+				if (pOutput)
+					*pOutput = (Direction::Enum)((*pOutput) | Direction::Right);
+			}
+			else if (Math::FloatEqual(rcInter.right, rcHold->right))
+			{
+				if (pOutput)
+					*pOutput = (Direction::Enum)((*pOutput) | Direction::Left);
+			}
+
+		}
+		else
+		{
+			//위
+			if (Math::FloatEqual(rcInter.top, rcHold->top))
+			{
+				if (pOutput)
+					*pOutput = (Direction::Enum)((*pOutput) | Direction::Bottom);
+			}
+			//아래
+			else if (Math::FloatEqual(rcInter.bottom, rcHold->bottom))
+			{
+				if (pOutput)
+					*pOutput = (Direction::Enum)((*pOutput) | Direction::Top);
+			}
+		}
+
+		return true;
 	}
 
 	/****************************************************************************************************

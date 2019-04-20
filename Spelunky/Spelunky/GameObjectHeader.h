@@ -16,6 +16,9 @@
 /**********************************************
 ## System Object ##
 **********************************************/
-#include "SystemMainUI.h"
 #include "SystemUIController.h"
 #include "GameSystem.h"
+#include "SystemMainUI.h"
+#include "SystemOptionUI.h"
+#include "SystemAudioUI.h"
+#include "SystemVideoUI.h"

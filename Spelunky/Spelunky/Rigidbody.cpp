@@ -72,7 +72,8 @@ void Rigidbody::Update()
 			{
 				Tile::Type type = tile->GetType();
 				if (type != Tile::Type::Empty &&
-					type != Tile::Type::Decoration)
+					type != Tile::Type::Decoration && 
+					type != Tile::Type::Thorn)
 				{
 					if (Figure::IntersectRectReaction(mTransform->GetLPRect(), &tile->GetRect(), &cDirection))
 					{
@@ -80,6 +81,15 @@ void Rigidbody::Update()
 						if (iCollision)
 							iCollision->OnCollision(CollideInfo(tile, cDirection));
 						isCollide = true;
+					}
+				}
+				else if (type == Tile::Type::Thorn)
+				{
+					Direction::Enum temp(Direction::End);
+					if (Figure::IntersectRectToRect(&tile->GetRect(),mTransform->GetLPRect(),&temp))
+					{
+						if (iCollision)
+							iCollision->OnCollision(CollideInfo(tile, temp));
 					}
 				}
 			}

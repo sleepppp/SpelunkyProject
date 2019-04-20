@@ -130,5 +130,11 @@ void Unit::CreateAnimation()
 	upFacing->SetFrameUpdateTime(defaultUpdateTime * 0.5f); 
 	upFacing->SetCallbackFunc([this]() {this->ChangeState("Idle"); });
 	this->mAnimations->AddAnimation(UnitAnimation::UpFacing, upFacing);
+
+	Animation* dead = new Animation;
+	dead->SetVectorFrame({ {9,0} });
+	dead->SetIsLoop(false);
+	dead->SetFrameUpdateTime(defaultUpdateTime * 0.5f);
+	this->mAnimations->AddAnimation(UnitAnimation::Dead, dead);
 	
 }

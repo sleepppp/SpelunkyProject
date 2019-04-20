@@ -765,6 +765,7 @@ void DelaunayScene::NextPass()
 			{
 				int randomIndex = Math::Random(0, trapList.size() - 1);
 				tile->SetImageInfo(trapList[randomIndex].image, trapList[randomIndex].frameX, trapList[randomIndex].frameY);
+				tile->SetType(Tile::Type::Thorn);
 			}
 		}
 

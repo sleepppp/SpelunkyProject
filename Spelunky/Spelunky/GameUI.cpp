@@ -8,6 +8,7 @@ GameUI::GameUI()
 	:mState(State::DeActivation)
 {
 	mLayer = RenderPool::Layer::UI;
+	mIsActive = false;
 }
 
 

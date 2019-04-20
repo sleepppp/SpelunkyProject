@@ -20,6 +20,7 @@ void TextButton::Update()
 		if (Figure::Vector2InRect(&mTransform->GetRect(), &_Input->GetMousePosition()))
 		{
 			mState = State::OnMouse;
+			_SoundManager->Play("ButtonOnMouse");
 		}
 	}
 		break;

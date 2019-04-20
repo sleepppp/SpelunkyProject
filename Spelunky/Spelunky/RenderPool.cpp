@@ -47,7 +47,8 @@ void RenderPool::Render()
 		this->ZOrder();
 
 	this->ObjectRender();
-	this->Lighting();
+	if(_isUseLighting)
+		this->Lighting();
 	this->UIRender();
 }
 

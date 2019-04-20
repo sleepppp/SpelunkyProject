@@ -192,6 +192,7 @@ void ImageManager::LoadAllResource()
 	this->AddFrameImage("Character1", PathResources(L"./Character/Character1.png"), 13, 13);
 	this->AddFrameImage("rubble", PathResources(L"./Tile/rubble.png"), 8, 8);
 	this->AddFrameImage("playerhud", PathResources(L"./UI/playerhud.png"), 1, 2);
+	this->AddFrameImage("SelectBulletUI", PathResources(L"./UI/SelectBulletUI.png"), 2, 1);
 
 	this->LoadFolder("../Resources/Tile/", "*.png");
 	this->LoadFolder("../Resources/Object/", "*.png");

@@ -63,7 +63,19 @@ const int & Player::GetPlayerKey(PlayerKey::Key key)
 
 void Player::OnCollision(const CollideInfo & info)
 {
-	mStateManager->GetCurrentState()->OnCollision(info);
+	if (Tile* tile = dynamic_cast<Tile*>(info.collisionObject))
+	{
+		if (tile->GetType() == Tile::Type::Thorn)
+		{
+			if (info.direction & Direction::Bottom)
+			{
+				//if(Vector2::Length(&(tile->GetRect().GetBottom() - mTransform->GetWorldPosition())) < 40.f)
+				//	this->ChangeState("Dead");
+			}
+		}
+		else
+			mStateManager->GetCurrentState()->OnCollision(info);
+	}
 }
 
 void Player::CreateState()
@@ -94,4 +106,7 @@ void Player::CreateState()
 
 	PlayerUpFacing* upFacing = new PlayerUpFacing(this);
 	this->mStateManager->AddState("UpFacing", upFacing);
+
+	PlayerDead* dead = new PlayerDead(this);
+	this->mStateManager->AddState("Dead", dead);
 }

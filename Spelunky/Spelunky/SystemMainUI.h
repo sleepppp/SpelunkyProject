@@ -5,6 +5,8 @@ class SystemMainUI : public GameUI
 private:
 	class Image* mImage;
 	float mScale;
+
+	vector<class UIModule*> mButtonList;
 public:
 	SystemMainUI();
 	virtual ~SystemMainUI();

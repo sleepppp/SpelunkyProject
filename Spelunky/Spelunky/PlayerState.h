@@ -105,3 +105,13 @@ public:
 	void Execute()override; 
 	void Exit()override; 
 };
+
+class PlayerDead final : public PlayerState
+{
+public:
+	PlayerDead(class Player* pPlayer);
+
+	void Enter()override;
+	void Execute()override;
+	void Exit()override; 
+};

@@ -23,6 +23,7 @@ Program::Program()
 	_SceneManager->AddLoadingScene("LoadingScene", load);
 
 	load->AddThreadFunc([]() {_ImageManager->LoadAllResource(); });
+	load->AddThreadFunc([]() {_SoundManager->LoadAllSound(); });
 	load->AddThreadFunc([]() {TileMapGenerator::BuildDataTable(); });
 	_SceneManager->LoadSceneByLoading("LoadingScene","TestScene");
 	_SceneManager->InitFirstScene();

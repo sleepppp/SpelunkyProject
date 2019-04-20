@@ -217,6 +217,15 @@
     <Filter Include="InGameObject\UI\UIHelper">
       <UniqueIdentifier>{f956adc6-7ec8-466d-bad4-457d8e8ad8e4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="InGameObject\UI\SystemUI\Option">
+      <UniqueIdentifier>{063ff2f8-1c38-4b31-b059-2051d80289b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\UI\SystemUI\Audio">
+      <UniqueIdentifier>{b17999bb-31d9-4f1a-bcff-6c090dd5d647}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\UI\SystemUI\Video">
+      <UniqueIdentifier>{2c275130-7095-4d1e-995f-92a5dba924bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -492,6 +501,21 @@
     <ClInclude Include="TextButton.h">
       <Filter>InGameObject\UI\UIHelper</Filter>
     </ClInclude>
+    <ClInclude Include="SystemOptionUI.h">
+      <Filter>InGameObject\UI\SystemUI\Option</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemAudioUI.h">
+      <Filter>InGameObject\UI\SystemUI\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletProgress.h">
+      <Filter>InGameObject\UI\UIHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckBoxButton.h">
+      <Filter>InGameObject\UI\UIHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemVideoUI.h">
+      <Filter>InGameObject\UI\SystemUI\Video</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Spelunky.cpp">
@@ -742,6 +766,21 @@
     </ClCompile>
     <ClCompile Include="TextButton.cpp">
       <Filter>InGameObject\UI\UIHelper</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemOptionUI.cpp">
+      <Filter>InGameObject\UI\SystemUI\Option</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemAudioUI.cpp">
+      <Filter>InGameObject\UI\SystemUI\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletProgress.cpp">
+      <Filter>InGameObject\UI\UIHelper</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckBoxButton.cpp">
+      <Filter>InGameObject\UI\UIHelper</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemVideoUI.cpp">
+      <Filter>InGameObject\UI\SystemUI\Video</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

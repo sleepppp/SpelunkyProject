@@ -155,7 +155,9 @@
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="BinaryFile.h" />
     <ClInclude Include="Buffer.h" />
+    <ClInclude Include="BulletProgress.h" />
     <ClInclude Include="CameraManager.h" />
+    <ClInclude Include="CheckBoxButton.h" />
     <ClInclude Include="D2DRenderer.h" />
     <ClInclude Include="D3DRenderer.h" />
     <ClInclude Include="DataContext.h" />
@@ -219,8 +221,11 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StringHelper.h" />
     <ClInclude Include="Subject.h" />
+    <ClInclude Include="SystemAudioUI.h" />
+    <ClInclude Include="SystemOptionUI.h" />
     <ClInclude Include="SystemUIController.h" />
     <ClInclude Include="SystemMainUI.h" />
+    <ClInclude Include="SystemVideoUI.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="TextButton.h" />
@@ -248,7 +253,9 @@
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="BinaryFile.cpp" />
     <ClCompile Include="Buffer.cpp" />
+    <ClCompile Include="BulletProgress.cpp" />
     <ClCompile Include="CameraManager.cpp" />
+    <ClCompile Include="CheckBoxButton.cpp" />
     <ClCompile Include="D2DRenderer + DrawFunc.cpp" />
     <ClCompile Include="D2DRenderer.cpp" />
     <ClCompile Include="D3DRenderer.cpp" />
@@ -310,8 +317,11 @@
     </ClCompile>
     <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="Subject.cpp" />
+    <ClCompile Include="SystemAudioUI.cpp" />
+    <ClCompile Include="SystemOptionUI.cpp" />
     <ClCompile Include="SystemUIController.cpp" />
     <ClCompile Include="SystemMainUI.cpp" />
+    <ClCompile Include="SystemVideoUI.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="TextButton.cpp" />
     <ClCompile Include="TextFile.cpp" />
