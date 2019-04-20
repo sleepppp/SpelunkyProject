@@ -4,7 +4,6 @@
 #include "Transform.h"
 #include "GameSystem.h"
 SystemUIController::SystemUIController()
-	:GameObject("SystemUIController")
 {
 }
 

@@ -5,7 +5,7 @@ class PlayerKey final
 public:
 	enum class Key : int
 	{
-		Left = 0, Right, Jump, Down, Attack, Reload, Shift, End
+		Left = 0, Right, Jump,Interaction ,Down, Attack, Reload, Shift, End
 	};
 private:
 	enum class KeyState : int

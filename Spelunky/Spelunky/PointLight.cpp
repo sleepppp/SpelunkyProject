@@ -7,8 +7,6 @@
 PointLight::PointLight(Vector2 pos, float range, float intensity, GameColor color)
 	:GameObject("PointLight", pos, Vector2(), Pivot::Center), mOriginRange(range), mIntensity(intensity), mColor(color)
 {
-	mIsIncrease = true;
-	mIncreaseCount = 0.f;
 
 }
 

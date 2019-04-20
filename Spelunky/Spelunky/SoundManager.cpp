@@ -462,6 +462,9 @@ void SoundManager::LoadAllSound()
 	this->AddSound("ButtonOnMouse", "../Resources/Sound/ButtonOnMouse.wav", false, false);
 	this->AddSound("MenuOpen", "../Resources/Sound/MenuOpen.wav", false, false);
 	this->AddSound("zone2", "../Resources/Sound/zone2.ogg", true, true);
+	this->AddSound("ShotGun", "../Resources/Sound/shotgun.wav", false, false);
+	this->AddSound("ShotGunPump", "../Resources/Sound/shotgunpump.wav", false, false);
+
 }
 
 

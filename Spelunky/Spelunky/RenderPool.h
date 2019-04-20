@@ -5,7 +5,7 @@ class RenderPool final
 public:
 	enum class Layer : int
 	{
-		Background = 0, Object,Character,Tile,Effect,UI,End
+		Background = 0,Character,Monster,Object,Tile,Effect,UI,End
 	};
 private:
 	typedef unordered_map<Layer, vector<class GameObject*>>::iterator RenderIter;
@@ -28,6 +28,7 @@ public:
 	void SetZOrder(const bool& b) { mIsZorder = b; }
 
 	class LightingManager*const GetLightManager()const { return mLightManager; }
+	const vector<class GameObject*>* GetObjectList(const Layer& layer);
 private:
 	void ObjectRender();
 	void Lighting();

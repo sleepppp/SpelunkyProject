@@ -1,6 +1,6 @@
 #pragma once
 #include "GameUI.h"
-class SystemUIController : public GameObject
+class SystemUIController
 {
 private:
 	deque<GameObject*> mUIStack;

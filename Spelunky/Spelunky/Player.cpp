@@ -9,23 +9,25 @@
 #include "PlayerKey.h"
 #include "Rigidbody.h"
 #include "Subject.h"
+#include "Item.h"
 
 Player::Player(const Vector2& pos,const string& imageKey)
-	:Unit(pos), mSpeed(300.f), mSubject(new Subject),mHp(3),mFullHp(3)
+	:Unit(pos), mSpeed(300.f),mHp(3),mFullHp(3)
 {
 	mName = "Player";
 	mUnitImage = _ImageManager->FindImage(imageKey);
 #ifdef _DEBUG
 	if (mUnitImage == nullptr)assert(SUCCEEDED(E_FAIL));
 #endif
-
+	mInventory.SetPlayer(this);
 	this->CreateState();
+	
 }
 
 
 Player::~Player()
 {
-	SafeDelete(mSubject);
+	
 }
 
 void Player::Init()
@@ -42,6 +44,10 @@ void Player::Release()
 void Player::Update()
 {
 	this->mPlayerKey.Update();
+	this->CalculationAim();
+	if (mPlayerKey.GetKeyDown(PlayerKey::Key::Interaction))
+		this->TryInstalling();
+	
 	Unit::Update();
 }
 
@@ -69,12 +75,46 @@ void Player::OnCollision(const CollideInfo & info)
 		{
 			if (info.direction & Direction::Bottom)
 			{
+				//TODO 가시 구현 
 				//if(Vector2::Length(&(tile->GetRect().GetBottom() - mTransform->GetWorldPosition())) < 40.f)
 				//	this->ChangeState("Dead");
 			}
 		}
 		else
 			mStateManager->GetCurrentState()->OnCollision(info);
+	}
+}
+
+void Player::TryInstalling()
+{
+	bool succeeded = false;
+	const vector<class GameObject*>* objectList = _World->GetRenderPool()->GetObjectList(RenderPool::Layer::Object);
+	if (objectList)
+	{
+		for (UINT i = 0; i < objectList->size(); ++i)
+		{
+			GameObject* object = objectList->at(i);
+			if (object->GetActive() == true)
+			{
+				if (Item* item = dynamic_cast<Item*>(object))
+				{
+					if (item != mInventory.GetMainWeapon())
+					{
+						if (Vector2::Length(&(item->GetTransform()->GetWorldPosition() - mTransform->GetWorldPosition())) < 20.f)
+						{
+							mInventory.InstallationWeapon(item);
+							succeeded = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	if (succeeded == false)
+	{
+		mInventory.InstallationWeapon(nullptr);
 	}
 }
 
@@ -109,4 +149,14 @@ void Player::CreateState()
 
 	PlayerDead* dead = new PlayerDead(this);
 	this->mStateManager->AddState("Dead", dead);
+}
+
+void Player::CalculationAim()
+{
+	Vector2 playerPos = mTransform->GetCenterPos();
+	Vector2 worldMouse = _Camera->GetWorldMouse();
+	Vector2 direction = Vector2::Normalize(&(worldMouse - playerPos));
+
+	direction.y = -direction.y;
+	mAimAngle = Math::ToDegree(Vector2::ToRadian(&direction));
 }

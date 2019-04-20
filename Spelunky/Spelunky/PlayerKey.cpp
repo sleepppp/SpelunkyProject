@@ -9,8 +9,9 @@ PlayerKey::PlayerKey()
 	mPlayerKey[(int)PlayerKey::Key::Down] = 'S';
 	mPlayerKey[(int)PlayerKey::Key::Jump] = 'W';
 	mPlayerKey[(int)PlayerKey::Key::Reload] = 'R';
-	mPlayerKey[(int)PlayerKey::Key::Attack] = VK_LEFT;
+	mPlayerKey[(int)PlayerKey::Key::Attack] = VK_LBUTTON;
 	mPlayerKey[(int)PlayerKey::Key::Shift] = VK_LSHIFT;
+	mPlayerKey[(int)PlayerKey::Key::Interaction] = 'E';
 	
 	for (int i = 0; i < (int)Key::End; ++i)
 		mPlayerKeyState[i] = PlayerKey::KeyState::None;
@@ -50,6 +51,9 @@ void PlayerKey::Update()
 	if (_Input->GetKeyDown(mPlayerKey[(int)PlayerKey::Key::Shift]))
 		mPlayerKeyState[(int)PlayerKey::Key::Shift] = KeyState::Down;
 
+	if (_Input->GetKeyDown(mPlayerKey[(int)PlayerKey::Key::Interaction]))
+		mPlayerKeyState[(int)PlayerKey::Key::Interaction] = KeyState::Down;
+
 	/*********************************************************************
 	## KeyUp ##
 	**********************************************************************/
@@ -73,6 +77,9 @@ void PlayerKey::Update()
 
 	if (_Input->GetKeyUp(mPlayerKey[(int)PlayerKey::Key::Shift]))
 		mPlayerKeyState[(int)PlayerKey::Key::Shift] = KeyState::Up;
+
+	if (_Input->GetKeyUp(mPlayerKey[(int)PlayerKey::Key::Interaction]))
+		mPlayerKeyState[(int)PlayerKey::Key::Interaction] = KeyState::Up;
 }
 
 void PlayerKey::CheckPreKeyState()

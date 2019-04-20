@@ -11,9 +11,6 @@ void TestScene::Init()
 	GameSystem* system = new GameSystem;
 	this->mObjectPool->AddObject(system);
 
-	SystemUIController* uiController = new SystemUIController;
-	this->mObjectPool->AddObject(uiController);
-
 	/*****************************************************
 	## Create System UI ##
 	******************************************************/
@@ -60,7 +57,11 @@ void TestScene::Init()
 		worldObject->GetTransform()->AddChild(player->GetTransform());
 		this->mObjectPool->AddObject(player);
 
-		Inventory* inventory = new Inventory();
+		ShotGun* gun = new ShotGun(player->GetTransform()->GetCenterPos(),false);
+		mObjectPool->AddObject(gun);
+		worldObject->GetTransform()->AddChild(gun->GetTransform());
+
+		InventoryUI* inventory = new InventoryUI();
 		worldObject->GetTransform()->AddChild(inventory->GetTransform());
 		this->mObjectPool->AddObject(inventory);
 

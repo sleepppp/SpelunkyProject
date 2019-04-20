@@ -2,6 +2,7 @@
 #include "Unit.h"
 #include "PlayerKey.h"
 #include "InterfaceCollision.h"
+#include "Inventory.h"
 class Player : public Unit ,public ICollision
 {
 	BlockAssign(Player)
@@ -10,7 +11,7 @@ private:
 	PlayerKey mPlayerKey;
 	int mFullHp;
 	int mHp;
-	class Subject* mSubject;
+	Inventory mInventory;
 public:
 	Player(const Vector2& pos,const string& imageKey = "Character0");
 	virtual ~Player();
@@ -24,13 +25,16 @@ public:
 	const int& GetPlayerKey(PlayerKey::Key key);
 	const float& GetSpeed()const { return mSpeed; }
 	PlayerKey* GetPlayerKey() { return &mPlayerKey; }
-	class Subject* GetSubject()const { return mSubject; }
 	void OnCollision(const CollideInfo& info)override;
 	int GetFullHp()const { return mFullHp; }
 	int GetHp()const { return mHp; }
 	void SetFullHp(const int& fhp) { mFullHp = fhp; }
 	void SetHp(const int& hp) { mHp = hp; }
+	Inventory* GetInventory(){return &mInventory;}
+
+	void TryInstalling();
 private:
 	void CreateState();
+	void CalculationAim();
 };
 

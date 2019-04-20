@@ -104,13 +104,15 @@ void Image::Render(const Vector2& position,const Pivot::Enum& pivot,const bool& 
 	if (mIsReverseAxisX)
 	{
 		scale = D2D1::Matrix3x2F::Scale(-mScale, mScale);
-		offset.x = mSize.x;
+		if(Math::FloatEqual(mAngle,0.f))
+			offset.x = mSize.x;
 	}
 	//세로로 뒤집을 것인가
 	if (mIsReverseAxisY)
 	{
 		scale = D2D1::Matrix3x2F::Scale(mScale,-mScale);
-		offset.y = mSize.y;
+		if (Math::FloatEqual(mAngle, 0.f))
+			offset.y = mSize.y;
 	}
 	//angle정보를 기준으로 회전 행렬 구축 
 	D2D1::Matrix3x2F rotation = D2D1::Matrix3x2F::Rotation(mAngle, D2D1::Point2F(mSize.x / 2.f, mSize.y / 2.f));

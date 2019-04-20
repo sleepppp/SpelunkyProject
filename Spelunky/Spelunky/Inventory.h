@@ -1,21 +1,18 @@
 #pragma once
 #include "GameObject.h"
-class Inventory : public GameObject
+class Inventory
 {
 private:
-	int mBombCount;
-	int mGold;
-	vector<class Item*> mItemList;
+	Synthesize(int, mBombCount,BombCount)
+	Synthesize(int, mGold,Gold)
+	Synthesize(class Player*, mPlayer,Player)
 
-	class Image* mInventoryImage;
-	class Image* mGoldImage;
-	class Player* mPlayer;
+	vector<class Item*> mItemList;
+	class Item* mMainWeapon;
 public:
 	Inventory();
 	virtual ~Inventory();
 
-	void Init()override; 
-	void Release()override;
-	void Render()override; 
+	void InstallationWeapon(class Item* pItem);
+	class Item* GetMainWeapon() { return mMainWeapon; }
 };
-

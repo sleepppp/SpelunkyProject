@@ -86,6 +86,11 @@ void RenderPool::RemoveRender(const GameObject * const pRender)
 	}
 }
 
+const vector<class GameObject*>* RenderPool::GetObjectList(const Layer & layer)
+{
+	return &mRenderList[layer];
+}
+
 void RenderPool::ObjectRender()
 {
 	RenderIter iter = mRenderList.begin();

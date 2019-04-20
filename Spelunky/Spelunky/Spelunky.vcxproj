@@ -179,6 +179,7 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="InterfaceCollision.h" />
     <ClInclude Include="Inventory.h" />
+    <ClInclude Include="InventoryUI.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="LibraryHeader.h" />
     <ClInclude Include="LightingManager.h" />
@@ -216,6 +217,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderBuffer.h" />
+    <ClInclude Include="ShotGun.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Spelunky.h" />
     <ClInclude Include="stdafx.h" />
@@ -275,6 +277,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InterfaceCollision.cpp" />
     <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="InventoryUI.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="LightingManager.cpp" />
     <ClCompile Include="Line.cpp" />
@@ -307,6 +310,7 @@
     <ClCompile Include="SceneBase.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShotGun.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Spelunky.cpp" />
     <ClCompile Include="stdafx.cpp">

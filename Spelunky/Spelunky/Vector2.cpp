@@ -129,8 +129,12 @@ float Vector2::ToRadian(const Vector2 * const pVector2)
 	int sign = 1;
 	Vector2 dir = *pVector2;
 	dir = Vector2::Normalize(&dir);
-	(dir.y > 0.f) ? sign = -1 : sign = 1;
-	return ((float)sign) * (acos(dir.x));
+	float result = (acos(dir.x));
+	if (dir.y > 0.f)
+	{
+		result = Math::PI * 2.f - result;
+	}
+	return result;
 }
 /****************************************************************************************************
 ## static Length ##

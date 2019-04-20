@@ -13,11 +13,11 @@ SystemAudioUI::SystemAudioUI()
 	mTransform->SetWorldPosition(Vector2(_WinSizeX / 2, _WinSizeY / 2));
 	mTransform->SetSize(Vector2(_WinSizeX, _WinSizeY));
 
-	BulletProgress* bgmVolume = new BulletProgress(L"¹è°æÀ½ º¼·ý", Vector2(_WinSizeX / 2, _WinSizeY / 2 - 100), Vector2(600, 50));
+	BulletProgress* bgmVolume = new BulletProgress(L"¹è°æÀ½ º¼·ý", Vector2(_WinSizeX / 2, _WinSizeY / 2 - 100), Vector2(700, 75));
 	bgmVolume->SetRatio(_SoundManager->GetMusicVolume());
 	bgmVolume->SetFunction([this](float volume) {_SoundManager->SetMusicVolume(volume); });
 	mButtonList.push_back(bgmVolume);
-	BulletProgress* effectVolume = new BulletProgress(L"»ç¿îµå º¼·ý", Vector2(_WinSizeX / 2, _WinSizeY / 2 + 100), Vector2(600, 60));
+	BulletProgress* effectVolume = new BulletProgress(L"»ç¿îµå º¼·ý", Vector2(_WinSizeX / 2, _WinSizeY / 2 + 100), Vector2(700, 75));
 	effectVolume->SetRatio(_SoundManager->GetSoundVolume());
 	effectVolume->SetFunction([this](float volume) {_SoundManager->SetSoundVolume(volume); });
 	mButtonList.push_back(effectVolume);

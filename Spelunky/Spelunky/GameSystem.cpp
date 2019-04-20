@@ -7,18 +7,17 @@
 GameSystem::GameSystem()
 	:GameObject("GameSystem")
 {
-
+	mUIController = new SystemUIController;
 }
 
 
 GameSystem::~GameSystem()
 {
+	SafeDelete(mUIController);
 }
 
 void GameSystem::Init()
 {
-	mUIController = dynamic_cast<SystemUIController*>(_World->GetObjectPool()->FindObject("SystemUIController"));
-	if (mUIController == nullptr)assert(SUCCEEDED(E_FAIL));
 
 	_World->GetUpdatePool()->RequestUpdate(this);
 }

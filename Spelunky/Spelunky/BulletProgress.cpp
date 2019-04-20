@@ -11,7 +11,7 @@ BulletProgress::BulletProgress(const wstring& text,const Vector2 & pos, const Ve
 	for (int i = 0; i < mTotalCount; ++i)
 	{
 		Figure::FloatRect rc = mTransform->GetRect();
-		mBullets[i].Update(Vector2(rc.left + 20 + 15 + 28 * i, rc.GetCenter().y),
+		mBullets[i].Update(Vector2(rc.left + 70 + 28 * i, rc.GetCenter().y),
 			Vector2(25, 40), Pivot::Center);
 	}
 }
@@ -31,7 +31,7 @@ void BulletProgress::Update()
 			{
 				if (mCurrentCount != i)
 				{
-					mCurrentCount = Math::Clamp(i,1,mTotalCount - 1);
+					mCurrentCount = Math::Clamp(i + 1,0,mTotalCount);
 					_SoundManager->Play("ButtonOnMouse");
 					if (mFunc)
 					{
@@ -51,8 +51,8 @@ void BulletProgress::Render()
 	_D2DRenderer->RenderTextField(CastingInt(rc.left), CastingInt(rc.top) - 50, mText, 30, CastingInt(rc.GetWidth()), CastingInt(rc.GetHeight()),
 		D2DRenderer::DefaultBrush::Gray, DWRITE_TEXT_ALIGNMENT_CENTER, false, L"Tekton Pro");
 
-	mBackgroundImage->SetSize(mTransform->GetSize());
-	mBackgroundImage->Render(mTransform->GetWorldPosition(), Pivot::Center, false);
+	//mBackgroundImage->SetSize(mTransform->GetSize());
+	//mBackgroundImage->Render(mTransform->GetWorldPosition(), Pivot::Center, false);
 
 	for (int i = 0; i < mTotalCount; ++i)
 	{

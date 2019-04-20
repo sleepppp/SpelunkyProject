@@ -7,6 +7,7 @@
 TileManager::TileManager(const wstring& file)
 	:GameObject("TileManager", Vector2(), Vector2(), Pivot::LeftTop, RenderPool::Layer::Tile)
 {
+
 	TileMapGenerator::LoadTile(file, &mTileList);
 }
 

@@ -3,6 +3,7 @@
 
 #include "Transform.h"
 #include "SystemUIController.h"
+#include "GameSystem.h"
 
 GameUI::GameUI()
 	:mState(State::DeActivation)
@@ -18,7 +19,8 @@ GameUI::~GameUI()
 
 void GameUI::Init()
 {
-	mController = dynamic_cast<SystemUIController*>(_World->GetObjectPool()->FindObject("SystemUIController"));
+	GameSystem* system = dynamic_cast<GameSystem*>(_World->GetObjectPool()->FindObject("GameSystem"));
+	mController = system->GetUIController();
 	if (mController == nullptr)assert(SUCCEEDED(E_FAIL));
 
 	_World->GetUpdatePool()->RequestUpdate(this);

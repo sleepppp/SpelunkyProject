@@ -3,10 +3,8 @@ class PointLight : public GameObject
 {
 protected:
 	GameColor mColor;
-	float mIncreaseCount; 
 	float mOriginRange;
 	float mIntensity;
-	bool mIsIncrease;
 public:
 	PointLight(Vector2 pos, float range = 460.f, float intensity = 1.25f, GameColor color = GameColor(1.f, 1.f, 1.f, 1.f));
 	~PointLight();

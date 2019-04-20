@@ -211,9 +211,6 @@
     <Filter Include="InGameObject\UI\GameUIBase">
       <UniqueIdentifier>{8c525a0f-385a-4752-a612-ed85f9c18d6b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="InGameObject\UI\UIController">
-      <UniqueIdentifier>{80a770d7-9112-4a85-ac10-e2a13b5cdf9c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="InGameObject\UI\UIHelper">
       <UniqueIdentifier>{f956adc6-7ec8-466d-bad4-457d8e8ad8e4}</UniqueIdentifier>
     </Filter>
@@ -225,6 +222,15 @@
     </Filter>
     <Filter Include="InGameObject\UI\SystemUI\Video">
       <UniqueIdentifier>{2c275130-7095-4d1e-995f-92a5dba924bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\GameSystem\UIController">
+      <UniqueIdentifier>{80a770d7-9112-4a85-ac10-e2a13b5cdf9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\UI\InventoryUI">
+      <UniqueIdentifier>{7be96c26-01e4-4e9b-9f14-adabe796a9fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\Item\ShotGun">
+      <UniqueIdentifier>{5f008f18-ca4a-4c9d-927c-f07a6c34bb97}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -493,7 +499,7 @@
       <Filter>InGameObject\UI\GameUIBase</Filter>
     </ClInclude>
     <ClInclude Include="SystemUIController.h">
-      <Filter>InGameObject\UI\UIController</Filter>
+      <Filter>InGameObject\GameSystem\UIController</Filter>
     </ClInclude>
     <ClInclude Include="UIModule.h">
       <Filter>InGameObject\UI\UIHelper</Filter>
@@ -515,6 +521,12 @@
     </ClInclude>
     <ClInclude Include="SystemVideoUI.h">
       <Filter>InGameObject\UI\SystemUI\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryUI.h">
+      <Filter>InGameObject\UI\InventoryUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ShotGun.h">
+      <Filter>InGameObject\Item\ShotGun</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -759,7 +771,7 @@
       <Filter>InGameObject\UI\GameUIBase</Filter>
     </ClCompile>
     <ClCompile Include="SystemUIController.cpp">
-      <Filter>InGameObject\UI\UIController</Filter>
+      <Filter>InGameObject\GameSystem\UIController</Filter>
     </ClCompile>
     <ClCompile Include="UIModule.cpp">
       <Filter>InGameObject\UI\UIHelper</Filter>
@@ -781,6 +793,12 @@
     </ClCompile>
     <ClCompile Include="SystemVideoUI.cpp">
       <Filter>InGameObject\UI\SystemUI\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryUI.cpp">
+      <Filter>InGameObject\UI\InventoryUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ShotGun.cpp">
+      <Filter>InGameObject\Item\ShotGun</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

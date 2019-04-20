@@ -11,7 +11,7 @@
 #include "Transform.h"
 #include "Aim.h"
 #include "ParticleSystem.h"
-#include "Inventory.h"
+#include "InventoryUI.h"
 
 /**********************************************
 ## System Object ##
@@ -22,3 +22,8 @@
 #include "SystemOptionUI.h"
 #include "SystemAudioUI.h"
 #include "SystemVideoUI.h"
+
+/**********************************************
+## Item ##
+**********************************************/
+#include "ShotGun.h"

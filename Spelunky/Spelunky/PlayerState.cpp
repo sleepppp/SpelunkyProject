@@ -7,6 +7,7 @@
 #include "Rigidbody.h"
 #include "Transform.h"
 #include "Tile.h"
+#include "Item.h"
 
 PlayerState::PlayerState(Player * pPlayer)
 	:mPlayer(pPlayer), UnitStateBase(pPlayer) {}
@@ -54,6 +55,12 @@ void PlayerIdle::Execute()
 	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Down))
 		mPlayer->ChangeState("DownFacing");
 
+	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Attack))
+	{
+		if(Item* item = mPlayer->GetInventory()->GetMainWeapon())
+			item->Execute();
+	}
+
 }
 
 void PlayerIdle::Exit() {}
@@ -98,6 +105,12 @@ void PlayerMove::Execute()
 
 	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Down))
 		mPlayer->ChangeState("DownFacing");
+
+	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Attack))
+	{
+		if (Item* item = mPlayer->GetInventory()->GetMainWeapon())
+			item->Execute();
+	}
 }
 
 void PlayerMove::Exit()
@@ -144,6 +157,12 @@ void PlayerJumpUp::Execute()
 	{
 		mPlayer->ChangeState("JumpDown");
 	}
+
+	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Attack))
+	{
+		if (Item* item = mPlayer->GetInventory()->GetMainWeapon())
+			item->Execute();
+	}
 }
 
 void PlayerJumpUp::Exit()
@@ -183,6 +202,12 @@ void PlayerJumpDown::Execute()
 	{
 		mPlayer->GetRigidbody()->Move(Vector2(-1.f, 0.f), speed);
 		mPlayer->SetIsLeft(true);
+	}
+
+	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Attack))
+	{
+		if (Item* item = mPlayer->GetInventory()->GetMainWeapon())
+			item->Execute();
 	}
 }
 
@@ -242,6 +267,12 @@ void PlayerGrab::Execute()
 	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Jump))
 	{
 		mPlayer->ChangeState("JumpUp");
+	}
+
+	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Attack))
+	{
+		if (Item* item = mPlayer->GetInventory()->GetMainWeapon())
+			item->Execute();
 	}
 }
 

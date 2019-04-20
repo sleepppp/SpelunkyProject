@@ -19,5 +19,7 @@ public:
 
 	void PlayGame();
 	void OpenSystemUI();
+
+	class SystemUIController* GetUIController()const { return mUIController; }
 };
 
