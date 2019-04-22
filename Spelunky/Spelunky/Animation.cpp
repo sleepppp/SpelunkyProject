@@ -6,7 +6,7 @@
 ******************************************************************************/
 Animation::Animation()
 	:isPlay(false), isLoop(true), currentFrameIndex(0),
-	currentFrameTime(0.f), frameUpdateTime(0.3f), func(nullptr)
+	currentFrameTime(0.f), frameUpdateTime(0.3f), func(nullptr), totalCurrentTime(0.f)
 {
 
 }
@@ -29,7 +29,9 @@ bool Animation::UpdateFrame()
 	if (this->isPlay)
 	{
 		//프레임 감는 시간은 델타 타임만큼 증가 
-		this->currentFrameTime += _TimeManager->DeltaTime();
+		float deltaTime = _TimeManager->DeltaTime();
+		this->currentFrameTime += deltaTime;
+		this->totalCurrentTime += deltaTime;
 		//만약 프레임감는 시간이 프레임 업데이트 되는 시간보다 커졌다면 
 		if (this->currentFrameTime >= this->frameUpdateTime)
 		{
@@ -79,7 +81,7 @@ void Animation::Stop()
 {
 	this->isPlay = false;
 	this->currentFrameIndex = 0;
-	this->currentFrameTime = 0.f;
+	this->currentFrameTime = totalCurrentTime = 0.f;
 }
 /*****************************************************************************
 ## Pause ##
@@ -163,6 +165,11 @@ void Animation::SetStartEndFrame(int startX, int startY, int endX, int endY,
 void Animation::SetCallbackFunc(function<void()> func)
 {
 	this->func = func;
+}
+
+float Animation::GetTotalFrameTime()
+{
+	return frameUpdateTime * (float)frameList.size();
 }
 
 /*****************************************************************************

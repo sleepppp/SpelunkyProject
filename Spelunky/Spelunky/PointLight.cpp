@@ -19,6 +19,11 @@ void PointLight::Init()
 	_World->GetUpdatePool()->RequestUpdate(this);
 }
 
+void PointLight::Release()
+{
+	_World->GetUpdatePool()->RemoveUpdate(this);
+}
+
 void PointLight::Update()
 {
 	_World->GetLightManager()->RequestLighting(this);

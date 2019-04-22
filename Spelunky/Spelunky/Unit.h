@@ -15,7 +15,9 @@ protected:
 	class UnitStateManager* mStateManager;
 	Animations<Unit::UnitAnimation>* mAnimations;
 	bool mIsLeft;
-	float mAimAngle;
+	int mFullHp;
+	int mHp;
+	Vector2 mAimDirection;
 public:
 	Unit(const Vector2& pos);
 	virtual ~Unit();
@@ -30,7 +32,12 @@ public:
 	void ChangeAnimation(const Unit::UnitAnimation& anim);
 	void ChangeState(const string& key);
 	void SetIsLeft(const bool& isLeft) { mIsLeft = isLeft; }
-	float GetAimAngle()const{return mAimAngle;}
+	Vector2 GetAimDirection()const{return mAimDirection;}
+
+	int GetFullHp()const { return mFullHp; }
+	int GetHp()const { return mHp; }
+	void SetFullHp(const int& fhp) { mFullHp = fhp; }
+	void SetHp(const int& hp) { mHp = hp; }
 private:
 	void CreateAnimation();
 };

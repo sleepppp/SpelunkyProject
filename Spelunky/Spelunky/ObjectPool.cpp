@@ -12,6 +12,14 @@ ObjectPool::~ObjectPool()
 		SafeDelete(mObjectList[i]);
 	}
 	mObjectList.clear();
+
+	for (UINT i = 0; i < mDeleteList.size(); ++i)
+	{
+		mDeleteList[i]->Release();
+		SafeDelete(mDeleteList[i]);
+	}
+	if (mDeleteList.empty() == false)
+		mDeleteList.clear();
 }
 
 void ObjectPool::Init()
@@ -22,12 +30,31 @@ void ObjectPool::Init()
 
 void ObjectPool::Release()
 {
+	for (UINT i = 0; i < mDeleteList.size(); ++i)
+	{
+		mDeleteList[i]->Release();
+		SafeDelete(mDeleteList[i]);
+	}
+	mDeleteList.clear();
+
 	for (UINT i = 0; i < mObjectList.size(); ++i)
 	{
 		mObjectList[i]->Release();
 		SafeDelete(mObjectList[i]);
 	}
 	mObjectList.clear();
+
+}
+
+void ObjectPool::Update()
+{
+	for (UINT i = 0; i < mDeleteList.size(); ++i)
+	{
+		mDeleteList[i]->Release();
+		SafeDelete(mDeleteList[i]);
+	}
+	if(mDeleteList.empty() == false)
+		mDeleteList.clear();
 }
 
 void ObjectPool::AddObject(GameObject * const pObject)
@@ -41,8 +68,8 @@ void ObjectPool::DeleteObject(GameObject * const pObject)
 	{
 		if (pObject == mObjectList[i])
 		{
-			mObjectList[i]->Release();
-			SafeDelete(mObjectList[i]);
+			mDeleteList.push_back(mObjectList[i]);
+			mObjectList.erase(mObjectList.begin() + i);
 			break;
 		}
 	}

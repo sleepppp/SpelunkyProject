@@ -388,6 +388,22 @@ namespace Figure
 		return false;
 	}
 
+	inline bool IntersectTriangleToRect(const Figure::FloatTriangle* triangle, const Figure::FloatRect* rc)
+	{
+		Figure::FloatLine line;
+		line.Update(triangle->vertex0, triangle->vertex1);
+		if (Figure::IntersectLineToRect(nullptr, line, *rc))
+			return true;
+		line.Update(triangle->vertex1, triangle->vertex2);
+		if (Figure::IntersectLineToRect(nullptr, line, *rc))
+			return true;
+		line.Update(triangle->vertex2, triangle->vertex0);
+		if(Figure::IntersectLineToRect(nullptr,line,*rc))
+			return true;
+
+		return false;
+	}
+
 	/****************************************************************************************************
 	## RectMake ##
 	*****************************************************************************************************/

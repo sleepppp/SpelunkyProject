@@ -38,6 +38,7 @@ public:
 	void Force(const Vector2& direction,const float& power,const float& recuperativePower = _defaultRecuperativePower);
 	void ActiveGravity() { mIsActiveGravity = true; }
 	void DisActiveGravity() { mIsActiveGravity = false; }
+	void ZeroForce();
 
 	class GameObject*const GetGameObject()const { return this->mObject; }
 	class Transform*const GetTransform()const { return this->mTransform; }

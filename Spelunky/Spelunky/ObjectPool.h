@@ -5,12 +5,14 @@ class ObjectPool final
 	BlockAssign(ObjectPool)
 private:
 	vector<class GameObject*> mObjectList;
+	vector<class GameObject*> mDeleteList;
 private:
 	friend class SceneBase;
 	ObjectPool();
 	virtual ~ObjectPool();
 	void Init();
 	void Release();
+	void Update();
 public:
 	void AddObject(class GameObject*const pObject);
 	void DeleteObject(class GameObject*const pObject);

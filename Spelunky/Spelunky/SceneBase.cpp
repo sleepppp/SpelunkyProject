@@ -37,6 +37,7 @@ void SceneBase::Update()
 {
 	mUpdatePool->Update();
 	mMessagePool->Update();
+	mObjectPool->Update();
 }
 
 void SceneBase::Render()

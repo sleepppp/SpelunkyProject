@@ -10,10 +10,13 @@
 #include "Rigidbody.h"
 #include "Subject.h"
 #include "Item.h"
+#include "Bomb.h"
+#include "BombPool.h"
 
 Player::Player(const Vector2& pos,const string& imageKey)
-	:Unit(pos), mSpeed(300.f),mHp(3),mFullHp(3)
+	:Unit(pos), mSpeed(300.f)
 {
+	mHp = mFullHp = 3;
 	mName = "Player";
 	mUnitImage = _ImageManager->FindImage(imageKey);
 #ifdef _DEBUG
@@ -21,7 +24,6 @@ Player::Player(const Vector2& pos,const string& imageKey)
 #endif
 	mInventory.SetPlayer(this);
 	this->CreateState();
-	
 }
 
 
@@ -33,6 +35,7 @@ Player::~Player()
 void Player::Init()
 {
 	Unit::Init();
+	this->mInventory.Init();
 	this->mStateManager->ChangeState("Idle");
 }
 
@@ -118,6 +121,22 @@ void Player::TryInstalling()
 	}
 }
 
+void Player::ThrowBomb()
+{
+	int bombCount = mInventory.GetBombCount();
+	if (bombCount > 0)
+	{
+		BombPool* bombPool = dynamic_cast<BombPool*>(_World->GetObjectPool()->FindObject("BombPool"));
+		Bomb* bomb = bombPool->ActivationBomb(mTransform->GetWorldPosition());
+		if (bomb)
+		{
+			bomb->GetRigidbody()->Force(mAimDirection, 1200.f, 1600.f);
+		}
+		
+		mInventory.SetBombCount(mInventory.GetBombCount() - 1);
+	}
+}
+
 void Player::CreateState()
 {
 	PlayerIdle* idle = new PlayerIdle(this);
@@ -155,8 +174,5 @@ void Player::CalculationAim()
 {
 	Vector2 playerPos = mTransform->GetCenterPos();
 	Vector2 worldMouse = _Camera->GetWorldMouse();
-	Vector2 direction = Vector2::Normalize(&(worldMouse - playerPos));
-
-	direction.y = -direction.y;
-	mAimAngle = Math::ToDegree(Vector2::ToRadian(&direction));
+	mAimDirection = Vector2::Normalize(&(worldMouse - playerPos));
 }

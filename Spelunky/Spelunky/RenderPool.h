@@ -29,6 +29,7 @@ public:
 
 	class LightingManager*const GetLightManager()const { return mLightManager; }
 	const vector<class GameObject*>* GetObjectList(const Layer& layer);
+	class GameObject* FindObjectInLayer(const Layer& layer, const string& name);
 private:
 	void ObjectRender();
 	void Lighting();

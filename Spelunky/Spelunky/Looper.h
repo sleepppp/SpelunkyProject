@@ -12,7 +12,7 @@ private:
 	int mLoopEnd;
 	bool mIsStart;
 public:
-	Looper(const int& mLoopEnd,const float& loopTime);
+	Looper(const int& mLoopEnd = 0.f,const float& loopTime = 0.f);
 	~Looper();
 
 	ReturnType Update();

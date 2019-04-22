@@ -96,7 +96,6 @@ bool Particle::Update(const float& deltaTime)
 	}
 
 	mRect.Update(mPosition, mSize, Pivot::Center);
-
 	return false;
 }
 

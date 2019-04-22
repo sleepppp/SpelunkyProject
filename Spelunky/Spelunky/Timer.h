@@ -6,7 +6,7 @@ private:
 	float mCurrentTime; 
 	float mEndTime; 
 public:
-	Timer(const float& endTime);
+	Timer(const float& endTime = 0.f);
 	~Timer();
 
 	bool Update();

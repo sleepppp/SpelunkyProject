@@ -6,7 +6,6 @@
 #include "Player.h"
 
 const Vector2 Item::_itemSize = Vector2(20, 20);
-const float Item::_installationRange = 7.f;
 
 Item::Item(const Vector2 & worldPos, const bool & mIsInstallation)
 	:GameObject("Item"), mRigidbody(new Rigidbody(this)), mUnit(nullptr), mAngle(0.f), mIsInstallation(false)
@@ -57,10 +56,11 @@ void Item::Update()
 		Vector2 playerPos = mUnit->GetTransform()->GetCenterPos();
 		Vector2 localPos;
 		localPos.y -= mUnit->GetTransform()->GetSize().y * 0.3f;
-		
-		mTransform->SetLocalPosition(localPos);
 
-		mAngle = mUnit->GetAimAngle();
+		mTransform->SetLocalPosition(localPos);
+		Vector2 direction = mUnit->GetAimDirection();
+		direction.y = -direction.y;
+		mAngle = Math::ToDegree(Vector2::ToRadian(&direction));
 	}
 }
 
@@ -97,7 +97,7 @@ void Item::Installing(class Unit* pUnit)
 		mTransform->AttachTo(pUnit->GetTransform());
 		mTransform->SetPivot(Pivot::Center);
 		mRigidbody->DisActiveGravity();
-		this->Enter();
+		this->EnterInstallation();
 	}
 }
 
@@ -112,6 +112,6 @@ void Item::UnInstallation()
 		_World->GetObjectPool()->FindObject("World")->GetTransform()->AddChild(this->mTransform);
 		mTransform->SetPivot(Pivot::Bottom);
 		mRigidbody->ActiveGravity();
-		this->Exit();
+		this->ExitInstallation();
 	}
 }

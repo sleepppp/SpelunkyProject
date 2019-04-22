@@ -12,7 +12,8 @@ private:
 public:
 	Inventory();
 	virtual ~Inventory();
-
+	
+	void Init();
 	void InstallationWeapon(class Item* pItem);
 	class Item* GetMainWeapon() { return mMainWeapon; }
 };

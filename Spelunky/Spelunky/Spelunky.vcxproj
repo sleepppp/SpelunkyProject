@@ -154,7 +154,12 @@
     <ClInclude Include="Animations.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="BinaryFile.h" />
+    <ClInclude Include="Bomb.h" />
+    <ClInclude Include="BombPointLight.h" />
+    <ClInclude Include="BombPool.h" />
     <ClInclude Include="Buffer.h" />
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletPattern.h" />
     <ClInclude Include="BulletProgress.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="CheckBoxButton.h" />
@@ -164,6 +169,7 @@
     <ClInclude Include="DebugSystem.h" />
     <ClInclude Include="DefineHeader.h" />
     <ClInclude Include="DelaunayScene.h" />
+    <ClInclude Include="EffectOption.h" />
     <ClInclude Include="EnumStructHeader.h" />
     <ClInclude Include="Figure.h" />
     <ClInclude Include="FloatEllipse.h" />
@@ -201,6 +207,7 @@
     <ClInclude Include="ParticleRenderOption.h" />
     <ClInclude Include="particleShapeOption.h" />
     <ClInclude Include="ParticleSystem.h" />
+    <ClInclude Include="ParticleSystemPool.h" />
     <ClInclude Include="Path.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Player.h" />
@@ -254,7 +261,12 @@
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="BinaryFile.cpp" />
+    <ClCompile Include="Bomb.cpp" />
+    <ClCompile Include="BombPointLight.cpp" />
+    <ClCompile Include="BombPool.cpp" />
     <ClCompile Include="Buffer.cpp" />
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletPattern.cpp" />
     <ClCompile Include="BulletProgress.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="CheckBoxButton.cpp" />
@@ -264,6 +276,7 @@
     <ClCompile Include="DataContext.cpp" />
     <ClCompile Include="DebugSystem.cpp" />
     <ClCompile Include="DelaunayScene.cpp" />
+    <ClCompile Include="EffectOption.cpp" />
     <ClCompile Include="Figure.cpp" />
     <ClCompile Include="FloatEllipse.cpp" />
     <ClCompile Include="FloatRect.cpp" />
@@ -296,6 +309,7 @@
     <ClCompile Include="ParticleRenderOption.cpp" />
     <ClCompile Include="particleShapeOption.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
+    <ClCompile Include="ParticleSystemPool.cpp" />
     <ClCompile Include="Path.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Player.cpp" />

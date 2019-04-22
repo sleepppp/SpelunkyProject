@@ -46,10 +46,12 @@ void Rigidbody::Update()
 	}
 
 	//만약 가해진 힘이 있다면
-	if (mForcePower > 0.f)
+	if (mForcePower > 0.f + Math::Epsilon)
 	{
-		this->mTransform->Translate(mForceDirection * mForcePower * _TimeManager->DeltaTime());
+		this->mTransform->Translate(mForceDirection * mForcePower * deltaTime);
 		mForcePower -= mRecuperativePower * deltaTime;
+		if (mForcePower <= 0.f)
+			mForcePower = -0.1f;
 	}
 
 	bool isCollide = false;
@@ -108,6 +110,7 @@ void Rigidbody::Update()
 			if(cDirection != Direction::RightTop && cDirection != Direction::LeftTop)
 				mJumpPower = 0.f;
 		}
+		mForcePower = mForcePower * 0.99f;
 	}
 	else
 	{
@@ -137,8 +140,14 @@ void Rigidbody::Move(Vector2 moveValue,const float& speed)
 void Rigidbody::Force(const Vector2& direction,const float& power,const float& recuperativePower)
 {
 	this->mForceDirection = Vector2::Normalize(&direction); 
-	this->mForcePower = power; 
+	this->mForcePower += power; 
 	this->mRecuperativePower = recuperativePower;
+}
+
+void Rigidbody::ZeroForce()
+{
+	mForcePower = -1.f;
+	mJumpPower = 0.f;
 }
 
 Figure::FloatRect * const Rigidbody::GetLPRect() const

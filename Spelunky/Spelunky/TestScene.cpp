@@ -12,6 +12,12 @@ void TestScene::Init()
 	this->mObjectPool->AddObject(system);
 
 	/*****************************************************
+	## CreateGroupObject ##
+	******************************************************/
+	GameObject* worldObject = new GameObject("World");
+	this->mObjectPool->AddObject(worldObject);
+
+	/*****************************************************
 	## Create System UI ##
 	******************************************************/
 	SystemMainUI* mainUI = new SystemMainUI;
@@ -26,14 +32,28 @@ void TestScene::Init()
 	SystemVideoUI* video = new SystemVideoUI;
 	this->mObjectPool->AddObject(video);
 
-	Aim* aim = new Aim();
+	Aim* aim = new Aim();	
 	this->mObjectPool->AddObject(aim);
 
 	/*****************************************************
-	## CreateGroupObject ##
+	## CreateObjectPooling ##
 	******************************************************/
-	GameObject* worldObject = new GameObject("World");
-	this->mObjectPool->AddObject(worldObject);
+	BombPool* pool = new BombPool;
+	this->mObjectPool->AddObject(pool);
+	/*****************************************************
+	## CreateEffectObject ##
+	******************************************************/
+	FrameEffecter* effecter = new FrameEffecter;
+	worldObject->GetTransform()->AddChild(effecter->GetTransform());
+	this->mObjectPool->AddObject(effecter);
+
+	ParticleSystemPool* particlePool = new ParticleSystemPool;
+	mObjectPool->AddObject(particlePool);
+
+	//ParticleSystem* particle = new ParticleSystem(50);
+	//aim->GetTransform()->AddChild(particle->GetTransform());
+	//this->mObjectPool->AddObject(particle);
+
 	/*****************************************************
 	## Create Tile & Background ##
 	******************************************************/
@@ -81,6 +101,12 @@ void TestScene::Release()
 
 void TestScene::Update()
 {
+	if (_Input->GetKeyDown(VK_RBUTTON))
+	{
+		BombPool* pool = (BombPool*)_World->GetObjectPool()->FindObject("BombPool");
+		Bomb* bomb = pool->ActivationBomb(_Camera->GetWorldMouse());
+	}
+
 	SceneBase::Update();
 }
 

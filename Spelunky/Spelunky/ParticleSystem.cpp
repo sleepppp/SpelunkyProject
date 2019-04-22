@@ -4,7 +4,7 @@
 #include "Particle.h"
 #include "BinaryFile.h"
 #include "Path.h"
-
+#include "StringHelper.h"
 ParticleSystem::ParticleSystem(const UINT& capacity)
 	:GameObject("ParticleSystem"),mCapacity(capacity), mIsDuration(true)
 {
@@ -12,13 +12,16 @@ ParticleSystem::ParticleSystem(const UINT& capacity)
 	mIsActive = true;
 	for (UINT i = 0; i < mCapacity; ++i)
 		mDeActiveParticles.push_back(new Particle);
+	mMainOption.mCurrentTime = mMainOption.mCurrentDelayTime = 0.f;
 }
 
 ParticleSystem::ParticleSystem(const wstring & filePath)
-	:GameObject("ParticleSystem"), mCapacity(0), mIsDuration(false)
+	:GameObject(StringHelper::WStringToString(filePath)), mCapacity(0), mIsDuration(false)
 {
+
 	mLayer = RenderPool::Layer::Effect;
 	this->LoadData(filePath);
+	mMainOption.mCurrentTime = mMainOption.mCurrentDelayTime = 0.f;
 }
 
 ParticleSystem::~ParticleSystem()
@@ -40,6 +43,10 @@ void ParticleSystem::Init()
 		(*iter)->Init();
 	_World->GetUpdatePool()->RequestUpdate(this);
 	_World->GetRenderPool()->RequestRender(mLayer, this);
+
+	GameObject* world = _World->GetObjectPool()->FindObject("World");
+	if(world)
+		world->GetTransform()->AddChild(mTransform);
 }
 
 void ParticleSystem::Update()
@@ -159,30 +166,29 @@ void ParticleSystem::Render()
 	for (; iter != mActiveParticles.end(); ++iter)
 		(*iter)->Render();
 
-	if (_isDebug)
-	{
-		if(mShapeOption.mShape == ParticleShapeOption::Shape::Circle)
-			_D2DRenderer->DrawEllipse(mTransform->GetWorldPosition(), mShapeOption.mRadius, D2DRenderer::DefaultBrush::Red,
-				mMainOption.mIsRelative, 2.f);
-		else if (mShapeOption.mShape == ParticleShapeOption::Shape::Corn)
-		{
-			Vector2 origin = mTransform->GetWorldPosition();
-			float angle = mShapeOption.mParticleStartDirection;
-			Vector2 minAngle, maxAngle;
-			minAngle.x = cosf(angle - mShapeOption.mDirectionOffset);
-			minAngle.y = -sinf(angle - mShapeOption.mDirectionOffset);
-			maxAngle.x = cosf(angle + mShapeOption.mDirectionOffset);
-			maxAngle.y = -sinf(angle + mShapeOption.mDirectionOffset);
-
-			Vector2 endPoint0 = origin + Vector2(minAngle.x * mShapeOption.mRadius,minAngle.y * mShapeOption.mRadius);
-			Vector2 endPoint1 = origin + Vector2(maxAngle.x * mShapeOption.mRadius, maxAngle.y * mShapeOption.mRadius);
-			_D2DRenderer->DrawLine(origin, endPoint0, D2DRenderer::DefaultBrush::Red, mMainOption.mIsRelative, 2.f);
-			_D2DRenderer->DrawLine(origin, endPoint1, D2DRenderer::DefaultBrush::Red, mMainOption.mIsRelative, 2.f);
-			_D2DRenderer->DrawLine(endPoint0, endPoint1, D2DRenderer::DefaultBrush::Red, mMainOption.mIsRelative, 2.f);
-		}
-	}
-
-	this->OnGui();
+	//if (_isDebug)
+	//{
+	//	if(mShapeOption.mShape == ParticleShapeOption::Shape::Circle)
+	//		_D2DRenderer->DrawEllipse(mTransform->GetWorldPosition(), mShapeOption.mRadius, D2DRenderer::DefaultBrush::Red,
+	//			mMainOption.mIsRelative, 2.f);
+	//	else if (mShapeOption.mShape == ParticleShapeOption::Shape::Corn)
+	//	{
+	//		Vector2 origin = mTransform->GetWorldPosition();
+	//		float angle = mShapeOption.mParticleStartDirection;
+	//		Vector2 minAngle, maxAngle;
+	//		minAngle.x = cosf(angle - mShapeOption.mDirectionOffset);
+	//		minAngle.y = -sinf(angle - mShapeOption.mDirectionOffset);
+	//		maxAngle.x = cosf(angle + mShapeOption.mDirectionOffset);
+	//		maxAngle.y = -sinf(angle + mShapeOption.mDirectionOffset);
+	//
+	//		Vector2 endPoint0 = origin + Vector2(minAngle.x * mShapeOption.mRadius,minAngle.y * mShapeOption.mRadius);
+	//		Vector2 endPoint1 = origin + Vector2(maxAngle.x * mShapeOption.mRadius, maxAngle.y * mShapeOption.mRadius);
+	//		_D2DRenderer->DrawLine(origin, endPoint0, D2DRenderer::DefaultBrush::Red, mMainOption.mIsRelative, 2.f);
+	//		_D2DRenderer->DrawLine(origin, endPoint1, D2DRenderer::DefaultBrush::Red, mMainOption.mIsRelative, 2.f);
+	//		_D2DRenderer->DrawLine(endPoint0, endPoint1, D2DRenderer::DefaultBrush::Red, mMainOption.mIsRelative, 2.f);
+	//	}
+	//	this->OnGui();
+	//}
 }
 
 void ParticleSystem::OnGui()
@@ -214,6 +220,7 @@ void ParticleSystem::OnGui()
 void ParticleSystem::Play()
 {
 	mIsDuration = true;
+	mIsActive = true; 
 }
 
 void ParticleSystem::Pause()
@@ -225,6 +232,13 @@ void ParticleSystem::Stop()
 {
 	mIsDuration = false;
 	mMainOption.mCurrentTime = mMainOption.mCurrentDelayTime = 0.f;
+}
+
+bool ParticleSystem::IsTimeToSleep()
+{
+	if (mIsDuration == false && mActiveParticles.size() == 0)
+		return true;
+	return false;
 }
 
 void ParticleSystem::SaveData(const wstring & filePath)

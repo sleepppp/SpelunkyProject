@@ -1,8 +1,11 @@
 #pragma once
-class Monster
+#include "GameObject.h"
+class Monster : public GameObject
 {
+private:
+	
 public:
 	Monster();
-	~Monster();
+	virtual ~Monster();
 };
 

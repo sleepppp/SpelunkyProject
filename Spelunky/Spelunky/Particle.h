@@ -1,4 +1,5 @@
 #pragma once
+#include "Animation.h"
 class Particle final
 {
 	BlockAssign(Particle)

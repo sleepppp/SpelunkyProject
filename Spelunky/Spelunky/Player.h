@@ -9,8 +9,6 @@ class Player : public Unit ,public ICollision
 private:
 	float mSpeed;
 	PlayerKey mPlayerKey;
-	int mFullHp;
-	int mHp;
 	Inventory mInventory;
 public:
 	Player(const Vector2& pos,const string& imageKey = "Character0");
@@ -26,13 +24,10 @@ public:
 	const float& GetSpeed()const { return mSpeed; }
 	PlayerKey* GetPlayerKey() { return &mPlayerKey; }
 	void OnCollision(const CollideInfo& info)override;
-	int GetFullHp()const { return mFullHp; }
-	int GetHp()const { return mHp; }
-	void SetFullHp(const int& fhp) { mFullHp = fhp; }
-	void SetHp(const int& hp) { mHp = hp; }
 	Inventory* GetInventory(){return &mInventory;}
 
 	void TryInstalling();
+	void ThrowBomb();
 private:
 	void CreateState();
 	void CalculationAim();

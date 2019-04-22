@@ -5,16 +5,27 @@
 #include "Rigidbody.h"
 #include "UnitStateManager.h"
 #include "Tile.h"
+
+#include "DataContext.h"
+
 Unit::Unit(const Vector2& pos)
 	:GameObject("Unit"),
 	mRigidbody(new Rigidbody(this)), mStateManager(new UnitStateManager), 
-	mAnimations(new Animations<Unit::UnitAnimation>()),mIsLeft(false)
+	mAnimations(new Animations<Unit::UnitAnimation>()),mIsLeft(false),mHp(3),mFullHp(3)
 {
-	this->mTransform->SetWorldPosition(pos);
-	this->mTransform->SetPivot(Pivot::Bottom);
+	mTransform->SetWorldPosition(pos);
+	mTransform->SetPivot(Pivot::Bottom);
 	mTransform->SetSize(Vector2(Tile::GetTileSize() * 0.6f, Tile::GetTileSize() * 0.8f));
-	this->mLayer = RenderPool::Layer::Character;
+	mLayer = RenderPool::Layer::Character;
 	this->CreateAnimation();
+
+	this->AddCallbackMessage("Explosion", [this](TagMessage message) 
+	{
+		Vector2 explosionPos = message.data->GetVector2();
+		Vector2 direction = this->GetTransform()->GetCenterPos() - explosionPos;
+		this->GetRigidbody()->Force(direction, 1700.f, 2000.f);
+		//TODO Damage °è»ê
+	});
 }
 
 

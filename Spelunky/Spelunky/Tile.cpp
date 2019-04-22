@@ -2,6 +2,9 @@
 #include "Tile.h"
 #include "BinaryFile.h"
 
+#include "ParticleSystemPool.h"
+#include "ParticleSystem.h"
+
 float Tile::_tileSize = 50.f;
 
 Tile::Tile(const float & x, const float & y,const int& indexX,const int& indexY)
@@ -40,6 +43,10 @@ void Tile::Init()
 	if (mType == Tile::Type::Trap)
 	{
 		_World->GetUpdatePool()->RequestUpdate(this);
+	}
+	if (mType == Tile::Type::Soil)
+	{
+		mParticlePool = dynamic_cast<ParticleSystemPool*>(_World->GetObjectPool()->FindObject("ParticleSystemPool"));
 	}
 }
 
@@ -107,6 +114,19 @@ void Tile::Reset()
 {
 	this->mType = Type::Empty;
 	this->mImage = nullptr;
+}
+
+void Tile::Explosion()
+{
+	if (mType != Type::Rock)
+	{
+		if (mType == Type::Soil)
+		{
+			mParticlePool->PlayParticle("Stage2RockExplosion", mRect.GetCenter());
+		}
+		mImage = nullptr;
+		mType = Type::Empty;
+	}
 }
 
 void Tile::SetType(const Type & type)

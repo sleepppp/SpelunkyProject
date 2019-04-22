@@ -60,7 +60,7 @@ void RenderPool::RequestRender(const Layer & layer, GameObject * const pRender)
 void RenderPool::RemoveRender(const Layer & layer, GameObject * const pRender)
 {
 	RenderIter iter = mRenderList.find(layer);
-	for (UINT i = 0; i < iter->second.size(); ++iter)
+	for (UINT i = 0; i < iter->second.size(); ++i)
 	{
 		if (iter->second[i] == pRender)
 		{
@@ -89,6 +89,19 @@ void RenderPool::RemoveRender(const GameObject * const pRender)
 const vector<class GameObject*>* RenderPool::GetObjectList(const Layer & layer)
 {
 	return &mRenderList[layer];
+}
+
+GameObject * RenderPool::FindObjectInLayer(const Layer & layer, const string & name)
+{
+	RenderIter iter = mRenderList.find(layer);
+	for (UINT i = 0; i < iter->second.size(); ++i)
+	{
+		if (iter->second[i]->GetName() == name)
+		{
+			return iter->second[i];
+		}
+	}
+	return nullptr;
 }
 
 void RenderPool::ObjectRender()

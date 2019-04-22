@@ -10,7 +10,6 @@
 #include "PointLight.h"
 #include "Transform.h"
 #include "Aim.h"
-#include "ParticleSystem.h"
 #include "InventoryUI.h"
 
 /**********************************************
@@ -27,3 +26,11 @@
 ## Item ##
 **********************************************/
 #include "ShotGun.h"
+#include "Bomb.h"
+#include "BombPool.h"
+/**********************************************
+## Effect Object ##
+**********************************************/
+#include "ParticleSystemPool.h"
+#include "ParticleSystem.h"
+#include "FrameEffecter.h"

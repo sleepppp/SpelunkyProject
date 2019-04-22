@@ -2,9 +2,8 @@
 #include "GameObject.h"
 class Item : public GameObject
 {
-private:
+protected:
 	static const Vector2 _itemSize;
-	static const float _installationRange;
 protected:
 	ImageInfo mImageInfo;
 	bool mIsInstallation;
@@ -20,9 +19,9 @@ public:
 	virtual void Update()override;
 	virtual void Render()override;
 
-	virtual void Enter() = 0;
+	virtual void EnterInstallation() = 0;
 	virtual void Execute() = 0;
-	virtual void Exit() = 0;
+	virtual void ExitInstallation() = 0;
 
 	void Installing(class Unit* pUnit);
 	void UnInstallation();

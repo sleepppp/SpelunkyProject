@@ -4,14 +4,22 @@
 #include "Item.h"
 #include "Transform.h"
 #include "Player.h"
+#include "Rigidbody.h"
+#include "BombPool.h"
+
 Inventory::Inventory()
-	:mBombCount(0),mGold(1000), mMainWeapon(nullptr)
+	:mBombCount(1000),mGold(1000), mMainWeapon(nullptr)
 {
 	
 }
 
 Inventory::~Inventory()
 {
+}
+
+void Inventory::Init()
+{
+	
 }
 
 void Inventory::InstallationWeapon(Item * pItem)
@@ -21,6 +29,7 @@ void Inventory::InstallationWeapon(Item * pItem)
 
 	if (mMainWeapon)
 	{
+		mMainWeapon->GetRigidBody()->Force(mPlayer->GetAimDirection(), 800.f, 1600.f);
 		mMainWeapon->UnInstallation();
 	}
 	mMainWeapon = pItem; 

@@ -58,6 +58,8 @@ public:
 		mTarget = pTransform;
 		mState = CameraManager::MoveState::MoveToTarget;
 	}
+
+	float GetDistanceFactor(const Vector2& point);
 private:
 	void UpdateRenderRect();
 	void UpdateFreeCameraMode();

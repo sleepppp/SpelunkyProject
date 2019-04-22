@@ -66,7 +66,7 @@ public:
 	const UINT& GetWidth() const{ return mBitmap->GetPixelSize().width; }
 	const UINT& GetHeight()const{ return mBitmap->GetPixelSize().height; }
 	const Vector2& GetSize()const { return this->mSize; }
-	const Vector2 GetFrameSize(const int& frame = 0) const { return Vector2(mFrameInfo[frame].width, mFrameInfo[frame].height); }
+	Vector2 GetFrameSize(const int& frame = 0) const { return Vector2(mFrameInfo[frame].width, mFrameInfo[frame].height); }
 	const TagLoadedImageInfo& GetLoadInfo() const { return mLoadInfo; }
 private:
 	const Vector2 GetPivotPosition(const float& x,const float& y, Pivot::Enum pivot);

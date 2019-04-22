@@ -464,7 +464,8 @@ void SoundManager::LoadAllSound()
 	this->AddSound("zone2", "../Resources/Sound/zone2.ogg", true, true);
 	this->AddSound("ShotGun", "../Resources/Sound/shotgun.wav", false, false);
 	this->AddSound("ShotGunPump", "../Resources/Sound/shotgunpump.wav", false, false);
-
+	this->AddSound("bomb_timer", "../Resources/Sound/bomb_timer.wav", false, false);
+	this->AddSound("kaboom", "../Resources/Sound/kaboom.wav", false, false);
 }
 
 

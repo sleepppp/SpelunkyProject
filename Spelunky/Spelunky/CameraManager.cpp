@@ -136,6 +136,14 @@ void CameraManager::CameraProc(WPARAM wParam)
 	}
 }
 
+float CameraManager::GetDistanceFactor(const Vector2 & point)
+{
+	//가까울수록 큰 값 반환
+	static const float maxDistance = sqrtf(CastingFloat(_WinSizeX * _WinSizeX + _WinSizeY * _WinSizeY));
+	float length = Vector2::Length(&(mPosition - point)) + Math::Epsilon;
+	return Math::Clampf(1.f - length / maxDistance,0.f,1.f);
+}
+
 void CameraManager::UpdateRenderRect()
 {
 	mRect.Update(mPosition, Vector2(CastingFloat(_WinSizeX) / mZoomFactor, CastingFloat(_WinSizeY) / mZoomFactor), Pivot::Center);

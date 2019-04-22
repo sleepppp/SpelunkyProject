@@ -10,7 +10,7 @@
 #include "Item.h"
 
 PlayerState::PlayerState(Player * pPlayer)
-	:mPlayer(pPlayer), UnitStateBase(pPlayer) {}
+	:mPlayer(pPlayer), UnitStateBase(pPlayer) {mPlayerKey = mPlayer->GetPlayerKey();}
 
 /*******************************************************************
 ## PlayerIdle ##
@@ -20,12 +20,12 @@ PlayerIdle::PlayerIdle(Player * pUnit)
 
 void PlayerIdle::Enter()
 {
-	if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Left))
+	if (mPlayerKey->GetKey(PlayerKey::Key::Left))
 	{
 		mPlayer->ChangeState("Move");
 		mPlayer->SetIsLeft(true);
 	}
-	else if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Right))
+	else if (mPlayerKey->GetKey(PlayerKey::Key::Right))
 	{
 		mPlayer->ChangeState("Move");
 		mPlayer->SetIsLeft(false);
@@ -38,28 +38,30 @@ void PlayerIdle::Enter()
 
 void PlayerIdle::Execute()
 {
-	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Left))
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Left))
 	{
 		mPlayer->ChangeState("Move");
 		mPlayer->SetIsLeft(true);
 	}
-	else if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Right))
+	else if (mPlayerKey->GetKeyDown(PlayerKey::Key::Right))
 	{
 		mPlayer->ChangeState("Move");
 		mPlayer->SetIsLeft(false);
 	}
 
-	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Jump))
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Jump))
 		mPlayer->ChangeState("JumpUp");
 
-	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Down))
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Down))
 		mPlayer->ChangeState("DownFacing");
 
-	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Attack))
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Attack))
 	{
 		if(Item* item = mPlayer->GetInventory()->GetMainWeapon())
 			item->Execute();
 	}
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Bomb))
+		mPlayer->ThrowBomb();
 
 }
 
@@ -79,38 +81,40 @@ void PlayerMove::Enter()
 void PlayerMove::Execute()
 {
 	float speed = mPlayer->GetSpeed();
-	if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Shift))
+	if (mPlayerKey->GetKey(PlayerKey::Key::Shift))
 	{
 		speed *= 1.5f;
 	}
-	if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Right))
+	if (mPlayerKey->GetKey(PlayerKey::Key::Right))
 	{
 		mPlayer->GetRigidbody()->Move(Vector2(1.f, 0.f), speed);
 		mPlayer->SetIsLeft(false);
 	}
-	else if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Left))
+	else if (mPlayerKey->GetKey(PlayerKey::Key::Left))
 	{
 		mPlayer->GetRigidbody()->Move(Vector2(-1.f, 0.f), speed);
 		mPlayer->SetIsLeft(true);
 	}
 
-	if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Left) == false &&
-		mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Right) == false)
+	if (mPlayerKey->GetKey(PlayerKey::Key::Left) == false &&
+		mPlayerKey->GetKey(PlayerKey::Key::Right) == false)
 	{
 		mPlayer->ChangeState("Idle");
 	}
 
-	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Jump))
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Jump))
 		mPlayer->ChangeState("JumpUp");
 
-	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Down))
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Down))
 		mPlayer->ChangeState("DownFacing");
 
-	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Attack))
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Attack))
 	{
 		if (Item* item = mPlayer->GetInventory()->GetMainWeapon())
 			item->Execute();
 	}
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Bomb))
+		mPlayer->ThrowBomb();
 }
 
 void PlayerMove::Exit()
@@ -129,7 +133,7 @@ void PlayerJumpUp::Enter()
 {
 	mPlayer->ChangeAnimation(Unit::UnitAnimation::JumpUp);
 
-	if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Shift))
+	if (mPlayerKey->GetKey(PlayerKey::Key::Shift))
 		mPlayer->GetRigidbody()->Jump(Rigidbody::GetDefaultJumpPower() * 1.2f);
 	else
 		mPlayer->GetRigidbody()->Jump();
@@ -139,15 +143,15 @@ void PlayerJumpUp::Enter()
 void PlayerJumpUp::Execute()
 {
 	float speed = mPlayer->GetSpeed();
-	if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Shift))
+	if (mPlayerKey->GetKey(PlayerKey::Key::Shift))
 		speed *= 1.5f;
 
-	if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Right))
+	if (mPlayerKey->GetKey(PlayerKey::Key::Right))
 	{
 		mPlayer->GetRigidbody()->Move(Vector2(1.f, 0.f), speed);
 		mPlayer->SetIsLeft(false);
 	}
-	else if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Left))
+	else if (mPlayerKey->GetKey(PlayerKey::Key::Left))
 	{
 		mPlayer->GetRigidbody()->Move(Vector2(-1.f, 0.f), speed);
 		mPlayer->SetIsLeft(true);
@@ -158,11 +162,13 @@ void PlayerJumpUp::Execute()
 		mPlayer->ChangeState("JumpDown");
 	}
 
-	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Attack))
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Attack))
 	{
 		if (Item* item = mPlayer->GetInventory()->GetMainWeapon())
 			item->Execute();
 	}
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Bomb))
+		mPlayer->ThrowBomb();
 }
 
 void PlayerJumpUp::Exit()
@@ -190,25 +196,27 @@ void PlayerJumpDown::Enter()
 void PlayerJumpDown::Execute()
 {
 	float speed = mPlayer->GetSpeed();
-	if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Shift))
+	if (mPlayerKey->GetKey(PlayerKey::Key::Shift))
 		speed *= 1.5f;
 
-	if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Right))
+	if (mPlayerKey->GetKey(PlayerKey::Key::Right))
 	{
 		mPlayer->GetRigidbody()->Move(Vector2(1.f, 0.f), speed);
 		mPlayer->SetIsLeft(false);
 	}
-	else if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Left))
+	else if (mPlayerKey->GetKey(PlayerKey::Key::Left))
 	{
 		mPlayer->GetRigidbody()->Move(Vector2(-1.f, 0.f), speed);
 		mPlayer->SetIsLeft(true);
 	}
 
-	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Attack))
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Attack))
 	{
 		if (Item* item = mPlayer->GetInventory()->GetMainWeapon())
 			item->Execute();
 	}
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Bomb))
+		mPlayer->ThrowBomb();
 }
 
 void PlayerJumpDown::Exit()
@@ -219,15 +227,15 @@ void PlayerJumpDown::OnCollision(const CollideInfo & info)
 {
 	if (info.direction & Direction::Bottom)
 	{
-		if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Right) ||
-			mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Left))
+		if (mPlayerKey->GetKey(PlayerKey::Key::Right) ||
+			mPlayerKey->GetKey(PlayerKey::Key::Left))
 			mPlayer->ChangeState("Move");
 		else
 			mPlayer->ChangeState("Idle");
 	}
 	else if (info.direction & (Direction::Right))
 	{
-		if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Right))
+		if (mPlayerKey->GetKey(PlayerKey::Key::Right))
 		{
 			Figure::FloatRect collideRect = info.collisionObject->GetCollisionRect();
 			if (Math::Abs(collideRect.top - mPlayer->GetCollisionRect().top) < 5.f)
@@ -238,7 +246,7 @@ void PlayerJumpDown::OnCollision(const CollideInfo & info)
 	}
 	else if (info.direction & Direction::Left)
 	{
-		if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Left))
+		if (mPlayerKey->GetKey(PlayerKey::Key::Left))
 		{
 			Figure::FloatRect collideRect = info.collisionObject->GetCollisionRect();
 			if (Math::Abs(collideRect.top - mPlayer->GetCollisionRect().top) < 5.f)
@@ -260,20 +268,17 @@ void PlayerGrab::Enter()
 {
 	mPlayer->ChangeAnimation(Unit::UnitAnimation::Grab);
 	mPlayer->GetRigidbody()->DisActiveGravity();
+	mPlayer->GetRigidbody()->ZeroForce();
 }
 
 void PlayerGrab::Execute()
 {
-	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Jump))
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Jump))
 	{
 		mPlayer->ChangeState("JumpUp");
 	}
-
-	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Attack))
-	{
-		if (Item* item = mPlayer->GetInventory()->GetMainWeapon())
-			item->Execute();
-	}
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Bomb))
+		mPlayer->ThrowBomb();
 }
 
 void PlayerGrab::Exit()
@@ -298,6 +303,7 @@ void PlayerDownFacing::Enter()
 
 void PlayerDownFacing::Execute()
 {
+
 }
 
 void PlayerDownFacing::Exit()
@@ -311,8 +317,8 @@ PlayerDownIdle::PlayerDownIdle(Player * pPlayer)
 
 void PlayerDownIdle::Enter()
 {
-	if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Right) ||
-		mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Left))
+	if (mPlayerKey->GetKey(PlayerKey::Key::Right) ||
+		mPlayerKey->GetKey(PlayerKey::Key::Left))
 	{
 		mPlayer->ChangeState("DownMove");
 	}
@@ -322,21 +328,23 @@ void PlayerDownIdle::Enter()
 
 void PlayerDownIdle::Execute()
 {
-	if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Right))
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Right))
 	{
 		mPlayer->ChangeState("DownMove");
 		mPlayer->SetIsLeft(false);
 	}
-	else if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Left))
+	else if (mPlayerKey->GetKeyDown(PlayerKey::Key::Left))
 	{
 		mPlayer->ChangeState("DownMove");
 		mPlayer->SetIsLeft(true);
 	}
 
-	if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Down) == false)
+	if (mPlayerKey->GetKey(PlayerKey::Key::Down) == false)
 	{
 		mPlayer->ChangeState("UpFacing");
 	}
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Bomb))
+		mPlayer->ThrowBomb();
 }
 
 void PlayerDownIdle::Exit()
@@ -350,11 +358,11 @@ PlayerDownMove::PlayerDownMove(Player * pPlayer)
 
 void PlayerDownMove::Enter()
 {
-	if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Right))
+	if (mPlayerKey->GetKey(PlayerKey::Key::Right))
 	{
 		mPlayer->SetIsLeft(false);
 	}
-	else if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Left))
+	else if (mPlayerKey->GetKey(PlayerKey::Key::Left))
 	{
 		mPlayer->SetIsLeft(true);
 	}
@@ -364,25 +372,26 @@ void PlayerDownMove::Enter()
 
 void PlayerDownMove::Execute()
 {
-	if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Right))
+	if (mPlayerKey->GetKey(PlayerKey::Key::Right))
 	{
 		mPlayer->GetRigidbody()->Move(Vector2(1.f, 0.f), mPlayer->GetSpeed() * 0.5f);
 		mPlayer->SetIsLeft(false);
 	}
-	else if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Left))
+	else if (mPlayerKey->GetKey(PlayerKey::Key::Left))
 	{
 		mPlayer->GetRigidbody()->Move(Vector2(-1.f, 0.f), mPlayer->GetSpeed() * 0.5f);
 		mPlayer->SetIsLeft(true);
 	}
 
-	if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Down) == false)
+	if (mPlayerKey->GetKey(PlayerKey::Key::Down) == false)
 		mPlayer->ChangeState("UpFacing");
-	else if (mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Right) == false &&
-		mPlayer->GetPlayerKey()->GetKey(PlayerKey::Key::Left) == false)
+	else if (mPlayerKey->GetKey(PlayerKey::Key::Right) == false &&
+		mPlayerKey->GetKey(PlayerKey::Key::Left) == false)
 	{
 		mPlayer->ChangeState("DownIdle");
 	}
-
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Bomb))
+		mPlayer->ThrowBomb();
 }
 
 void PlayerDownMove::Exit()

@@ -46,6 +46,7 @@ private:
 	class Image* mItemImage; 
 	int mItemFrameX;
 	int mItemFrameY;
+	class ParticleSystemPool* mParticlePool;
 public:
 	Tile() = delete;
 	explicit Tile(const float& x, const float& y ,const int& indexX,const int& indexY);
@@ -57,6 +58,7 @@ public:
 	void Update()override;
 	void Render()override;
 	void Reset();
+	void Explosion();
 public:
 	Figure::FloatRect& GetRect() { return mRect; }
 	const Type& GetType()const { return mType; }

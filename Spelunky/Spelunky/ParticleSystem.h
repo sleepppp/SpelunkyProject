@@ -36,6 +36,8 @@ public:
 	void Stop();
 
 	UINT GetCapacity()const { return mCapacity; }
+
+	bool IsTimeToSleep();
 private:
 	void SaveData(const wstring& filePath = L"");
 	void LoadData(const wstring& filePath = L"");
