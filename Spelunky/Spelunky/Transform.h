@@ -47,7 +47,7 @@ public:
 	void RenderHierarchy(const bool& bRelativeCamera = false);
 
 	Vector2 GetCenterPos();
-	Vector2 GetWorldPosition()const { return this->mWorldPosition; }
+	inline Vector2 GetWorldPosition()const { return this->mWorldPosition; }
 	const Vector2& GetLocalPosition()const { return this->mLocalPosition; }
 	const Vector2& GetSize()const { return this->mSize; }
 	const Pivot::Enum& GetPivot()const { return this->mPivot; }

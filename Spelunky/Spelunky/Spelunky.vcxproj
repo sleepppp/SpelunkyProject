@@ -153,6 +153,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Animations.h" />
     <ClInclude Include="BackGround.h" />
+    <ClInclude Include="Bat.h" />
     <ClInclude Include="BinaryFile.h" />
     <ClInclude Include="Bomb.h" />
     <ClInclude Include="BombPointLight.h" />
@@ -200,6 +201,7 @@
     <ClInclude Include="MessageManager.h" />
     <ClInclude Include="ModuleHeader.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="MonsterState.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleMainOption.h" />
@@ -260,6 +262,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="BackGround.cpp" />
+    <ClCompile Include="Bat.cpp" />
     <ClCompile Include="BinaryFile.cpp" />
     <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="BombPointLight.cpp" />
@@ -302,6 +305,7 @@
     <ClCompile Include="MessageComponent.cpp" />
     <ClCompile Include="MessageManager.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="MonsterState.cpp" />
     <ClCompile Include="ObjectPool.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleMainOption.cpp" />

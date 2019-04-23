@@ -1,9 +1,12 @@
 #pragma once
 #include "GameObject.h"
 #include "Animations.h"
+#include "Looper.h"
 class Unit : public GameObject
 {
 	BlockAssign(Unit)
+protected:
+	static const float _invincibilityTime;
 public:
 	enum class UnitAnimation : int
 	{
@@ -17,6 +20,9 @@ protected:
 	bool mIsLeft;
 	int mFullHp;
 	int mHp;
+	float mAlpha;
+	bool mIsDamage;
+	Looper mLooper;
 	Vector2 mAimDirection;
 public:
 	Unit(const Vector2& pos);
@@ -38,6 +44,8 @@ public:
 	int GetHp()const { return mHp; }
 	void SetFullHp(const int& fhp) { mFullHp = fhp; }
 	void SetHp(const int& hp) { mHp = hp; }
+
+	void Damage(const int& damage, const Vector2& forceDirection, const float& forcePower = 300.f, const float& recuPower = 500.f);
 private:
 	void CreateAnimation();
 };

@@ -134,6 +134,7 @@ void Player::ThrowBomb()
 		}
 		
 		mInventory.SetBombCount(mInventory.GetBombCount() - 1);
+		_SoundManager->Play("ThrowItem");
 	}
 }
 

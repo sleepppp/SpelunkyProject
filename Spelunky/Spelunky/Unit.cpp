@@ -8,10 +8,12 @@
 
 #include "DataContext.h"
 
+const float Unit::_invincibilityTime = 1.f;
+
 Unit::Unit(const Vector2& pos)
 	:GameObject("Unit"),
 	mRigidbody(new Rigidbody(this)), mStateManager(new UnitStateManager), 
-	mAnimations(new Animations<Unit::UnitAnimation>()),mIsLeft(false),mHp(3),mFullHp(3)
+	mAnimations(new Animations<Unit::UnitAnimation>()),mIsLeft(false),mHp(3),mFullHp(3), mIsDamage(false), mAlpha(1.f)
 {
 	mTransform->SetWorldPosition(pos);
 	mTransform->SetPivot(Pivot::Bottom);
@@ -26,6 +28,9 @@ Unit::Unit(const Vector2& pos)
 		this->GetRigidbody()->Force(direction, 1700.f, 2000.f);
 		//TODO Damage °è»ê
 	});
+
+	mLooper.SetLoopTime(0.2f);
+	mLooper.SetLoopEnd(6);
 }
 
 
@@ -54,6 +59,22 @@ void Unit::Update()
 	mStateManager->Update();
 	mAnimations->Update();
 	mRigidbody->Update();
+	if (mIsDamage == true)
+	{
+		Looper::ReturnType result = mLooper.Update();
+		if (result == Looper::ReturnType::Timer)
+		{
+			if (mAlpha > 0.6f)
+				mAlpha = 0.5f;
+			else mAlpha = 1.f;
+		}
+		else if (result == Looper::ReturnType::Loop)
+		{
+			mAlpha = 1.f;
+			mIsDamage = false;
+			mLooper.Stop();
+		}
+	}
 }
 
 void Unit::Render()
@@ -62,6 +83,7 @@ void Unit::Render()
 	{
 		float tileSize = Tile::GetTileSize();
 		mUnitImage->SetReverseX(mIsLeft);
+		mUnitImage->SetAlpha(mAlpha);
 		mUnitImage->SetSize(Vector2(tileSize * 1.2f, tileSize * 1.2f));
 		mUnitImage->FrameRender(mTransform->GetWorldPosition() - Vector2(0.f, - 3.f),
 			mAnimations->GetFrameX(),mAnimations->GetFrameY(), mTransform->GetPivot() ,true);
@@ -81,6 +103,29 @@ void Unit::ChangeState(const string & key)
 {
 	this->mStateManager->ChangeState(key);
 }
+
+void Unit::Damage(const int & damage, const Vector2 & forceDirection, const float & forcePower, const float & recuPower)
+{
+	if (mIsDamage == false)
+	{
+		if (mHp > 0)
+		{
+			mHp -= damage;
+			if (mHp > 0)
+			{
+				mIsDamage = true;
+				mRigidbody->Jump(700.f);
+				mRigidbody->Force(forceDirection, forcePower, recuPower);
+				mLooper.Play();
+			}
+			else
+			{
+				
+			}
+		}
+	}
+}
+
 
 void Unit::CreateAnimation()
 {

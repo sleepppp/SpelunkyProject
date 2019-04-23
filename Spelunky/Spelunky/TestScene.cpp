@@ -43,16 +43,16 @@ void TestScene::Init()
 	/*****************************************************
 	## CreateEffectObject ##
 	******************************************************/
-	FrameEffecter* effecter = new FrameEffecter;
-	worldObject->GetTransform()->AddChild(effecter->GetTransform());
-	this->mObjectPool->AddObject(effecter);
-
 	ParticleSystemPool* particlePool = new ParticleSystemPool;
 	mObjectPool->AddObject(particlePool);
 
 	//ParticleSystem* particle = new ParticleSystem(50);
 	//aim->GetTransform()->AddChild(particle->GetTransform());
 	//this->mObjectPool->AddObject(particle);
+
+	FrameEffecter* effecter = new FrameEffecter;
+	worldObject->GetTransform()->AddChild(effecter->GetTransform());
+	this->mObjectPool->AddObject(effecter);
 
 	/*****************************************************
 	## Create Tile & Background ##
@@ -89,6 +89,20 @@ void TestScene::Init()
 		_Camera->SetMapSize(mapSize);
 		_Camera->SetZoom(1.5f);
 	}
+	/*****************************************************
+	## CreateMonster ##
+	******************************************************/
+	for (int i = 0; i < 30; ++i)
+	{
+		Tile* tile = TileMapGenerator::FindUnderGroundTile(tileManager->GetTilePtr());
+		if (tile)
+		{
+			Bat* bat = new Bat(tile);
+			worldObject->GetTransform()->AddChild(bat->GetTransform());
+			mObjectPool->AddObject(bat);
+		}
+	}
+
 
 	_SoundManager->PlayBGM("zone2");
 

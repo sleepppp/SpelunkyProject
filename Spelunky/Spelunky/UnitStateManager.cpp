@@ -23,7 +23,7 @@ void UnitStateManager::OnGui()
 {
 }
 
-void UnitStateManager::AddState(const string& key, class UnitStateBase* pState)
+void UnitStateManager::AddState(const string& key, UnitStateBase* pState)
 {
 	StateIter iter = mStateList.find(key);
 	if (iter != mStateList.end())

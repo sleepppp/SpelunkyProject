@@ -466,6 +466,11 @@ void SoundManager::LoadAllSound()
 	this->AddSound("ShotGunPump", "../Resources/Sound/shotgunpump.wav", false, false);
 	this->AddSound("bomb_timer", "../Resources/Sound/bomb_timer.wav", false, false);
 	this->AddSound("kaboom", "../Resources/Sound/kaboom.wav", false, false);
+	this->AddSound("ThrowItem", "../Resources/Sound/throw_item.wav", false, false);
+	this->AddSound("BatFlap", "../Resources/Sound/batoneflap.wav", false, false);
+	this->AddSound("bone_shatter", "../Resources/Sound/bone_shatter.wav", false, false);
+	this->AddSound("batAttack", "../Resources/Sound/batAttack.ogg", false, false);
+	this->AddSound("batDeath", "../Resources/Sound/batDeath.ogg", false, false);
 }
 
 

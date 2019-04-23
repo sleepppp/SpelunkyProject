@@ -34,3 +34,8 @@
 #include "ParticleSystemPool.h"
 #include "ParticleSystem.h"
 #include "FrameEffecter.h"
+/**********************************************
+## Monster Object ##
+**********************************************/
+#include "Monster.h"
+#include "Bat.h"

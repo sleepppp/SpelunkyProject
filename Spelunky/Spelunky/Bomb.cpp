@@ -9,6 +9,8 @@
 #include "Tile.h"
 #include "TileManager.h"
 #include "DataContext.h"
+#include "Monster.h"
+#include "Unit.h"
 
 Bomb::Bomb(class BombPool* pPool)
 	:GameObject("Bomb"),mFrameX(0),mImage(nullptr), mRigidbody(new Rigidbody(this)),mBombPool(pPool)
@@ -95,19 +97,30 @@ void Bomb::Explosion()
 		}
 	}
 
-	const vector<GameObject*>* list = _World->GetRenderPool()->GetObjectList(RenderPool::Layer::Character);
+	const vector<GameObject*>* list = _World->GetRenderPool()->GetObjectList(RenderPool::Layer::Monster);
 	for (UINT i = 0; i < list->size(); ++i)
 	{
 		GameObject* target = list->at(i);
 		if (target->GetActive() == true)
 		{
-			float distance = Vector2::Length(&(target->GetTransform()->GetWorldPosition() - pos));
+			Vector2 direction = target->GetTransform()->GetWorldPosition() - pos;
+			float distance = Vector2::Length(&direction);
 			if (distance < tileSize * 3.f)
 			{
-				DataContextValue* value = _World->GetMessagePool()->GetSleepData<Vector2>();
-				value->SetVector2(pos);
-				target->SendCallbackMessage(TagMessage("Explosion", 0.f, value));
+				if (Monster* monster = dynamic_cast<Monster*>(target))
+					monster->Damage(5, direction, 1000, 1500.f);
 			}
+		}
+	}
+	GameObject* player = _World->GetRenderPool()->FindObjectInLayer(RenderPool::Layer::Character, "Player");
+	Vector2 direction = player->GetTransform()->GetWorldPosition() - pos;
+	float distance = Vector2::Length(&(player->GetTransform()->GetWorldPosition() - pos));
+	if (distance < tileSize * 3.f)
+	{
+		if (Unit* unit = dynamic_cast<Unit*>(player))
+		{
+			unit->Damage(5, direction, 1700.f, 2000.f);
+			//unit->GetRigidbody()->Force(direction, 1700.f, 2000.f);
 		}
 	}
 	

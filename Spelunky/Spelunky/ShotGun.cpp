@@ -5,6 +5,7 @@
 #include "Transform.h"
 #include "FrameEffecter.h"
 #include "Unit.h"
+#include "Monster.h"
 #include "Rigidbody.h"
 
 const float ShotGun::_shotGunDelay = 0.5f;
@@ -12,7 +13,7 @@ const float ShotGun::_startGunFireRange = 300.f;
 const float ShotGun::_endGunFireRange = 50.f;
 const float ShotGun::_startGunFireIntensity = 5.0f;
 const float ShotGun::_endGunFireIntensity = 0.1f;
-const float ShotGun::_shotGunRange = 200.f;
+const float ShotGun::_shotGunRange = 100.f;
 const float ShotGun::_shotGunAngleRange = 3.14f * 0.125f;
 
 ShotGun::ShotGun(const Vector2 & worldPos, const bool & mIsInstallation)
@@ -95,13 +96,17 @@ void ShotGun::Execute()
 		direction = Vector2::Normalize(&direction);
 		Vector2 result = origin + direction * 50.f;
 
-
-		const vector<GameObject*>* list = _World->GetRenderPool()->GetObjectList(RenderPool::Layer::Character);
+		const vector<GameObject*>* list = _World->GetRenderPool()->GetObjectList(RenderPool::Layer::Monster);
 		if (list)
 		{
 			for (UINT i = 0; i < list->size(); ++i)
 			{
-				//TODO µ¥¹ÌÁö
+				if (Figure::IntersectTriangleToRect(&mTriangle, &list->at(i)->GetTransform()->GetRect()))
+				{
+					if(Monster* monster = dynamic_cast<Monster*>(list->at(i)))
+						monster->Damage(3.f, mUnit->GetAimDirection(),600.f,800.f);
+					
+				}
 			}
 		}
 
