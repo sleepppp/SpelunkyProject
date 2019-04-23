@@ -13,7 +13,7 @@ Bat::Bat(class Tile* pTile)
 	mName = "Bat";
 	mPerceptionRange = 300.f;
 	mSpeed = 200.f;
-	mImage = _ImageManager->FindImage("Monsters3");
+	mImage = _ImageManager->FindImage("monsters3");
 	mRigidbody->DisActiveGravity();
 	mTransform->SetPivot(Pivot::Center);
 	mTransform->SetSize(mImage->GetFrameSize() * 0.5f);

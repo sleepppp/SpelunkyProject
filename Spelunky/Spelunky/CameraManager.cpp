@@ -4,16 +4,12 @@
 #include "GameObject.h"
 #include "Transform.h"
 
-const float CameraManager::_moveStartDistance = 30.f;
-const float CameraManager::_maxSpeed = 400.f;
-const float CameraManager::_minSpeed = 100.f;
-const float CameraManager::_maxDistance = 250.f; 
-const float CameraManager::_minDistance = 30.f;
 const float CameraManager::_zoomMax = 2.5f;
 const float CameraManager::_zoomMin = 0.1f; 
 
 CameraManager::CameraManager()
-	:mZoomFactor(1.f),mState(CameraManager::MoveState::FreeCamera)
+	:mZoomFactor(1.f),mState(CameraManager::MoveState::FreeCamera),mIsShake(false),mShakeStrength(0.f),mShakeTime(0.f),
+	mShakeChangeDirDelay(0.f),mShakeCurrentTime(0.f),mShakeChangeDirCurrentTime(0.f), mShakeDir(1.f,0.f)
 {
 	mSaveMouse = _Input->GetMousePosition();
 	this->UpdateRenderRect();
@@ -29,9 +25,7 @@ void CameraManager::Update()
 	{
 	case CameraManager::None:
 	case CameraManager::MoveToTarget:
-		this->mPosition = mTarget->GetCenterPos();
-		this->UpdateRenderRect();
-		this->AmendCamera();
+		this->UpdateTargetCameraMode();
 		break;
 	case CameraManager::FreeCamera:
 		this->UpdateFreeCameraMode();
@@ -144,9 +138,18 @@ float CameraManager::GetDistanceFactor(const Vector2 & point)
 	return Math::Clampf(1.f - length / maxDistance,0.f,1.f);
 }
 
+void CameraManager::Shake(const float & shakeTime, const float & changeDirTime, const float & shakeStrength)
+{
+	mShakeChangeDirCurrentTime = 0.f;
+	mShakeCurrentTime = mShakeTime = shakeTime;
+	mShakeStrength = shakeStrength;
+	mShakeChangeDirDelay = changeDirTime;
+	mIsShake = true;
+}
+
 void CameraManager::UpdateRenderRect()
 {
-	mRect.Update(mPosition, Vector2(CastingFloat(_WinSizeX) / mZoomFactor, CastingFloat(_WinSizeY) / mZoomFactor), Pivot::Center);
+	mRect.Update(mPosition + mShakePosition, Vector2(CastingFloat(_WinSizeX) / mZoomFactor, CastingFloat(_WinSizeY) / mZoomFactor), Pivot::Center);
 }
 
 void CameraManager::UpdateFreeCameraMode()
@@ -164,6 +167,48 @@ void CameraManager::UpdateFreeCameraMode()
 			}
 		}
 		mSaveMouse = currentMouse;
+	}
+}
+
+void CameraManager::UpdateTargetCameraMode()
+{
+	Vector2 newPos = mTarget->GetCenterPos();
+	if (newPos != mPosition)
+	{
+		this->mPosition = mTarget->GetCenterPos();
+		this->UpdateRenderRect();
+		this->AmendCamera();
+	}
+	if (mIsShake)
+	{
+		const float deltaTime = _TimeManager->DeltaTime();
+		mShakeCurrentTime -= deltaTime;
+		if (mShakeCurrentTime < 0.f)
+		{
+			mIsShake = false;
+			mShakePosition = Vector2(0.f, 0.f);
+			this->UpdateRenderRect();
+			this->AmendCamera();
+		}
+		else
+		{
+			mShakeChangeDirCurrentTime += deltaTime;
+			if (mShakeChangeDirCurrentTime >= mShakeChangeDirDelay)
+			{
+				mShakeDir = mShakeDir * -1.f;
+				while (mShakeChangeDirCurrentTime >= mShakeChangeDirDelay)
+					mShakeChangeDirCurrentTime -= mShakeChangeDirDelay;
+			}
+			float factor = mShakeCurrentTime / mShakeTime;
+			float strengh = mShakeStrength * factor;
+			strengh = strengh * mShakeDir.x;
+			mShakePosition += Vector2(strengh, 0.f);
+			if (mShakeCurrentTime >= mShakeTime * 0.5f)
+				mShakePosition.x = mShakePosition.x * 0.5f;
+			mRect.Update(mPosition + mShakePosition,
+				Vector2(CastingFloat(_WinSizeX) / mZoomFactor, CastingFloat(_WinSizeY) / mZoomFactor), Pivot::Center);
+			this->AmendCamera();
+		}
 	}
 }
 

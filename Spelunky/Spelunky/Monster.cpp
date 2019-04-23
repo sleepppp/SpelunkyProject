@@ -7,7 +7,7 @@
 
 Monster::Monster(const Vector2& pos)
 	:GameObject("Monster"),mImage(nullptr),mFullHp(5.f),mHp(5.f),mIsLeft(false), mRigidbody(new Rigidbody(this)),mSpeed(300.f)
-	, mPlayer(nullptr), mDamage(1)
+	, mPlayer(nullptr), mDamage(1), mPerceptionRange(300.f)
 {
 	mLayer = RenderPool::Layer::Monster;
 	mTransform->SetWorldPosition(pos);
@@ -79,7 +79,7 @@ void Monster::Damage(const float & damage, const Vector2 & forceDirection, const
 		if (mHp <= 0.f)
 		{
 			this->ExecuteDie();
-			this->SetActive(false);
+			this->mIsActive = false;
 		}
 		else
 		{
@@ -87,4 +87,18 @@ void Monster::Damage(const float & damage, const Vector2 & forceDirection, const
 			mRigidbody->Force(forceDirection, forcePower, recuPower);
 		}
 	}
+}
+
+void Monster::Enable()
+{
+	if (mHp <= 0)
+		return;
+	mIsActive = true;
+}
+
+void Monster::Disable()
+{
+	if (mHp <= 0)
+		return;
+	mIsActive = false;
 }

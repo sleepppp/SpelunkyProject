@@ -471,6 +471,7 @@ void SoundManager::LoadAllSound()
 	this->AddSound("bone_shatter", "../Resources/Sound/bone_shatter.wav", false, false);
 	this->AddSound("batAttack", "../Resources/Sound/batAttack.ogg", false, false);
 	this->AddSound("batDeath", "../Resources/Sound/batDeath.ogg", false, false);
+	this->AddSound("splat", "../Resources/Sound/splat.wav", false, false);
 }
 
 

@@ -4,6 +4,8 @@
 #include "Player.h"
 #include "Monster.h"
 #include "Transform.h"
+#include "Tile.h"
+#include "TileManager.h"
 #include "Rigidbody.h"
 
 MonsterStateBase::MonsterStateBase(Monster * pMonster)
@@ -111,7 +113,7 @@ void MonsterFlyingToPlayer::Execute()
 	moveValue.x = cosf(angle) * mMonster->GetSpeed() * deltaTime;
 	moveValue.y = -sinf(angle) * mMonster->GetSpeed() *deltaTime;
 	mMonster->GetTransform()->Translate(moveValue);
-	if (mAttackDeley > 1.f)
+	//if (mAttackDeley > 1.f)
 	{
 		if (Figure::IntersectRectToRect(&mPlayer->GetTransform()->GetRect(), &mMonster->GetTransform()->GetRect()))
 		{
@@ -122,5 +124,55 @@ void MonsterFlyingToPlayer::Execute()
 }
 
 void MonsterFlyingToPlayer::Exit()
+{
+}
+
+
+/****************************************************************************
+## MonsterShuttling ##
+******************************************************************************/
+
+void MonsterShuttling::Enter()
+{
+	mTileManager = dynamic_cast<TileManager*>(_World->GetObjectPool()->FindObject("TileManager"));
+	mMonster->ChangeAnimation("Shuttling");
+}
+
+void MonsterShuttling::Execute()
+{
+	Vector2 moveValue(1.f,0.f);
+	if (mMonster->GetIsLeft() == true)
+		moveValue.x = -1.f;
+
+	Vector2 worldPos = mMonster->GetTransform()->GetWorldPosition();
+	int indexX = CastingInt(worldPos.x / Tile::GetTileSize());
+	int indexY = CastingInt((worldPos.y - 10.f) / Tile::GetTileSize());
+	if (mMonster->GetIsLeft() == true)
+	{
+		Tile* tile = mTileManager->GetTile(indexX - 1, indexY);
+		if (tile->GetType() == Tile::Type::Soil ||
+			tile->GetType() == Tile::Type::Rock ||
+			tile->GetType() == Tile::Type::Trap)
+		{
+			if (Figure::IntersectRectToRect(&mMonster->GetTransform()->GetRect(), &tile->GetRect()))
+				mMonster->SetIsLeft(!mMonster->GetIsLeft());
+		}
+	}
+	else
+	{
+		Tile* tile = mTileManager->GetTile(indexX + 1, indexY);
+		if (tile->GetType() == Tile::Type::Soil ||
+			tile->GetType() == Tile::Type::Rock ||
+			tile->GetType() == Tile::Type::Trap)
+		{
+			if (Figure::IntersectRectToRect(&mMonster->GetTransform()->GetRect(), &tile->GetRect()))
+				mMonster->SetIsLeft(!mMonster->GetIsLeft());
+		}
+	}
+
+	mMonster->GetTransform()->Translate(moveValue * mMonster->GetSpeed() *_TimeManager->DeltaTime());
+}
+
+void MonsterShuttling::Exit()
 {
 }

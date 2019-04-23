@@ -9,11 +9,6 @@ class CameraManager final : public SingletonBase<CameraManager>
 {
 	BlockAssign(CameraManager)
 private:
-	static const float _moveStartDistance;
-	static const float _maxSpeed;
-	static const float _minSpeed;
-	static const float _maxDistance;
-	static const float _minDistance; 
 	static const float _zoomMax; 
 	static const float _zoomMin; 
 public:
@@ -26,6 +21,15 @@ private:
 	Vector2 mSaveMouse;
 	float mZoomFactor; 
 	class Transform* mTarget;
+
+	bool mIsShake;
+	Vector2 mShakePosition;
+	Vector2 mShakeDir;
+	float mShakeStrength;
+	float mShakeTime; 
+	float mShakeChangeDirDelay;
+	float mShakeCurrentTime;
+	float mShakeChangeDirCurrentTime;
 private:
 	friend class SingletonBase<CameraManager>;
 	CameraManager();
@@ -60,9 +64,12 @@ public:
 	}
 
 	float GetDistanceFactor(const Vector2& point);
+
+	void Shake(const float& shakeTime, const float& changeDirTime, const float& shakeStrength);
 private:
 	void UpdateRenderRect();
 	void UpdateFreeCameraMode();
+	void UpdateTargetCameraMode();
 	void AmendCamera();
 private:
 	friend class Window;

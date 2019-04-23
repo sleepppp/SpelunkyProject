@@ -62,3 +62,16 @@ public:
 	void Execute()override; 
 	void Exit()override; 
 };
+
+class MonsterShuttling : public MonsterStateBase
+{
+private:
+	class TileManager* mTileManager;
+public:
+	MonsterShuttling(class Monster* pMonster)
+		:MonsterStateBase(pMonster) {}
+
+	void Enter()override;
+	void Execute()override;
+	void Exit()override;
+};

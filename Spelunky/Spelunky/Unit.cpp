@@ -110,9 +110,10 @@ void Unit::Damage(const int & damage, const Vector2 & forceDirection, const floa
 	{
 		if (mHp > 0)
 		{
-			mHp -= damage;
+			//mHp -= damage;
 			if (mHp > 0)
 			{
+				mStateManager->ChangeState("Idle");
 				mIsDamage = true;
 				mRigidbody->Jump(700.f);
 				mRigidbody->Force(forceDirection, forcePower, recuPower);

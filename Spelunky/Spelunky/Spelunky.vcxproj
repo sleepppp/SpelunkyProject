@@ -227,6 +227,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderBuffer.h" />
     <ClInclude Include="ShotGun.h" />
+    <ClInclude Include="Snake.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Spelunky.h" />
     <ClInclude Include="stdafx.h" />
@@ -329,6 +330,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShotGun.cpp" />
+    <ClCompile Include="Snake.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Spelunky.cpp" />
     <ClCompile Include="stdafx.cpp">

@@ -241,11 +241,14 @@
     <Filter Include="InGameObject\Bullet">
       <UniqueIdentifier>{b02c4953-b018-4ef2-b644-f786c2695be7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="InGameObject\Monster\MonsterState">
-      <UniqueIdentifier>{5079e828-fffd-4263-a83b-d78c1a93db91}</UniqueIdentifier>
-    </Filter>
     <Filter Include="InGameObject\Monster\Bat">
       <UniqueIdentifier>{16e25eeb-fa58-4875-9793-3eaf756ed0de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\Monster\Snake">
+      <UniqueIdentifier>{41489ba2-239e-4160-8d73-9658d3efd9c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\MonsterState">
+      <UniqueIdentifier>{5079e828-fffd-4263-a83b-d78c1a93db91}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -565,10 +568,13 @@
       <Filter>InGameObject\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="MonsterState.h">
-      <Filter>InGameObject\Monster\MonsterState</Filter>
+      <Filter>InGameObject\MonsterState</Filter>
     </ClInclude>
     <ClInclude Include="Bat.h">
       <Filter>InGameObject\Monster\Bat</Filter>
+    </ClInclude>
+    <ClInclude Include="Snake.h">
+      <Filter>InGameObject\Monster\Snake</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -864,10 +870,13 @@
       <Filter>InGameObject\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="MonsterState.cpp">
-      <Filter>InGameObject\Monster\MonsterState</Filter>
+      <Filter>InGameObject\MonsterState</Filter>
     </ClCompile>
     <ClCompile Include="Bat.cpp">
       <Filter>InGameObject\Monster\Bat</Filter>
+    </ClCompile>
+    <ClCompile Include="Snake.cpp">
+      <Filter>InGameObject\Monster\Snake</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

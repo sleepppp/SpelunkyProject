@@ -120,7 +120,6 @@ void Bomb::Explosion()
 		if (Unit* unit = dynamic_cast<Unit*>(player))
 		{
 			unit->Damage(5, direction, 1700.f, 2000.f);
-			//unit->GetRigidbody()->Force(direction, 1700.f, 2000.f);
 		}
 	}
 	
@@ -131,5 +130,12 @@ void Bomb::Explosion()
 	mBombPool->DeActivationBomb(this);
 	_World->GetRenderPool()->RemoveRender(mLayer, this);
 	_World->GetUpdatePool()->RemoveUpdate(this);
-	_SoundManager->Play("kaboom", _Camera->GetDistanceFactor(pos));
+	
+	float factor = _Camera->GetDistanceFactor(pos);
+
+	float shakeTime = 1.f * factor;
+	float shakeChangeDirTime = 0.03f * factor;
+	float shakePower = 10.4f * factor;
+	_Camera->Shake(shakeTime, shakeChangeDirTime, shakePower);
+	_SoundManager->Play("kaboom", factor);
 }

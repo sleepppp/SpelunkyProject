@@ -104,6 +104,17 @@ void TestScene::Init()
 	}
 
 
+	for (int i = 0; i < 10; ++i)
+	{
+		if (Tile* tile = TileMapGenerator::FindOnGroundTile(tileManager->GetTilePtr()))
+		{
+			Snake* snake = new Snake(tile);
+			worldObject->GetTransform()->AddChild(snake->GetTransform());
+			mObjectPool->AddObject(snake);
+		}
+		
+	}
+
 	_SoundManager->PlayBGM("zone2");
 
 }
@@ -115,12 +126,6 @@ void TestScene::Release()
 
 void TestScene::Update()
 {
-	if (_Input->GetKeyDown(VK_RBUTTON))
-	{
-		BombPool* pool = (BombPool*)_World->GetObjectPool()->FindObject("BombPool");
-		Bomb* bomb = pool->ActivationBomb(_Camera->GetWorldMouse());
-	}
-
 	SceneBase::Update();
 }
 

@@ -13,7 +13,7 @@ const float ShotGun::_startGunFireRange = 300.f;
 const float ShotGun::_endGunFireRange = 50.f;
 const float ShotGun::_startGunFireIntensity = 5.0f;
 const float ShotGun::_endGunFireIntensity = 0.1f;
-const float ShotGun::_shotGunRange = 100.f;
+const float ShotGun::_shotGunRange = 150.f;
 const float ShotGun::_shotGunAngleRange = 3.14f * 0.125f;
 
 ShotGun::ShotGun(const Vector2 & worldPos, const bool & mIsInstallation)
@@ -92,7 +92,7 @@ void ShotGun::Execute()
 	if (mIsFire == false)
 	{
 		Vector2 origin = mTransform->GetWorldPosition();
-		Vector2 direction = _Camera->GetWorldMouse() - origin;
+		Vector2 direction = mUnit->GetAimDirection();
 		direction = Vector2::Normalize(&direction);
 		Vector2 result = origin + direction * 50.f;
 
@@ -101,7 +101,9 @@ void ShotGun::Execute()
 		{
 			for (UINT i = 0; i < list->size(); ++i)
 			{
-				if (Figure::IntersectTriangleToRect(&mTriangle, &list->at(i)->GetTransform()->GetRect()))
+				Figure::FloatRect rc = list->at(i)->GetTransform()->GetRect();
+				if (Figure::IntersectTriangleToRect(&mTriangle, &rc) ||
+					Figure::IntersectLineToRect(nullptr,Figure::FloatLine(origin,origin + direction * _shotGunRange),rc))
 				{
 					if(Monster* monster = dynamic_cast<Monster*>(list->at(i)))
 						monster->Damage(3.f, mUnit->GetAimDirection(),600.f,800.f);
