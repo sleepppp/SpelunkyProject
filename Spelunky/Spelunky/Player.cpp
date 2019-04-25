@@ -23,7 +23,6 @@ Player::Player(const Vector2& pos,const string& imageKey)
 	if (mUnitImage == nullptr)assert(SUCCEEDED(E_FAIL));
 #endif
 	mInventory.SetPlayer(this);
-	this->CreateState();
 }
 
 
@@ -34,6 +33,7 @@ Player::~Player()
 
 void Player::Init()
 {
+	this->CreateState();
 	Unit::Init();
 	this->mInventory.Init();
 	this->mStateManager->ChangeState("Idle");

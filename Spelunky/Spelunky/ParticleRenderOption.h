@@ -5,7 +5,7 @@ class ParticleRenderOption
 	friend class ParticleSystem;
 	enum class RubbleType : int
 	{
-		Stage1Rock,Stage2Rock,Stage3Rock,Leaf,
+		Stage1Rock,Stage2Rock,Stage3Rock,Leaf,RedRubble
 	};
 private:
 	map<RubbleType,vector<ImageInfo>> mImageList;

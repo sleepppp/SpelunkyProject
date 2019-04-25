@@ -84,7 +84,7 @@ void ShotGun::Render()
 
 void ShotGun::EnterInstallation()
 {
-	_SoundManager->Play("ShotGunPump",_Camera->GetDistanceFactor(mTransform->GetWorldPosition()));
+	_SoundManager->Play("ShotGunPump", _Camera->GetDistanceFactor(mTransform->GetWorldPosition()));
 }
 
 void ShotGun::Execute()
@@ -102,6 +102,7 @@ void ShotGun::Execute()
 			for (UINT i = 0; i < list->size(); ++i)
 			{
 				Figure::FloatRect rc = list->at(i)->GetTransform()->GetRect();
+				if (Vector2::Length(&(rc.GetCenter() - result)) > _shotGunRange)continue;
 				if (Figure::IntersectTriangleToRect(&mTriangle, &rc) ||
 					Figure::IntersectLineToRect(nullptr,Figure::FloatLine(origin,origin + direction * _shotGunRange),rc))
 				{
@@ -119,10 +120,11 @@ void ShotGun::Execute()
 		mPointLight->SetIntensity(_startGunFireIntensity);
 
 		mPointLight->GetTransform()->SetWorldPosition(result);
-		mEffecter->RequestPlayEffect("Smoke0", 0.07f, result, 1.5f,FrameEffecter::Option::ScaleAlphablending);
+		mEffecter->RequestPlayEffect("Smoke0", 0.07f, result, 1.25f,FrameEffecter::Option::ScaleAlphablending);
 
 		mUnit->GetRigidbody()->Force(direction * -1.f, 800.f, 1600.f);
 		_SoundManager->Play("ShotGun",_Camera->GetDistanceFactor(result));
+		_Camera->Shake(0.25f, 0.01f, 3.f);
 	}
 }
 

@@ -10,6 +10,7 @@ protected:
 	Animations<string> mAnimations;
 	MonsterStateManager mStateManager;
 	class Rigidbody* mRigidbody;
+	class ParticleSystemPool* mParticlePool;
 	bool mIsLeft;
 	float mFullHp;
 	float mHp;
@@ -28,18 +29,22 @@ public:
 	void ChangeAnimation(const string& key);
 	void ChangeState(const string& key); 
 	class Rigidbody* GetRigidbody()const { return mRigidbody; }
+	class ParticleSystemPool* GetParticlePool()const { return mParticlePool; }
+	Animations<string>* GetAnimations() { return &mAnimations; }
 	float GetPerceptionRange()const { return mPerceptionRange; }
 	float GetSpeed()const { return mSpeed;  }
 	int GetDamage()const { return mDamage; }
 	bool GetIsLeft()const { return mIsLeft; }
 	void SetIsLeft(const bool& b) { mIsLeft = b; }
-	void Damage(const float& damage, const Vector2& forceDirection, const float& forcePower = 300.f, const float& recuPower = 500.f);
-protected:
+	void SetHP(const float& hp) { mHp = hp; }
+	virtual void Damage(const float& damage, const Vector2& forceDirection, 
+		const float& forcePower = 300.f, const float& recuPower = 500.f);
+public:
 	virtual void CreateState() = 0;
 	virtual void CreateAnimation() = 0;
 	virtual void ExecuteDamage() {}
 	virtual void ExecuteDie() {}
-
+protected:
 	virtual void Enable();
 	virtual void Disable();
 };

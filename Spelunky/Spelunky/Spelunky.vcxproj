@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Aim.h" />
+    <ClInclude Include="AK_47.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Animations.h" />
     <ClInclude Include="BackGround.h" />
@@ -160,8 +161,8 @@
     <ClInclude Include="BombPool.h" />
     <ClInclude Include="Buffer.h" />
     <ClInclude Include="Bullet.h" />
-    <ClInclude Include="BulletPattern.h" />
     <ClInclude Include="BulletProgress.h" />
+    <ClInclude Include="Bullets.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="CheckBoxButton.h" />
     <ClInclude Include="D2DRenderer.h" />
@@ -177,6 +178,7 @@
     <ClInclude Include="FloatRect.h" />
     <ClInclude Include="FrameEffect.h" />
     <ClInclude Include="FrameEffecter.h" />
+    <ClInclude Include="Frog.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectHeader.h" />
     <ClInclude Include="GameSystem.h" />
@@ -218,9 +220,11 @@
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="ProcedureGeneration.h" />
     <ClInclude Include="Program.h" />
+    <ClInclude Include="RedFrog.h" />
     <ClInclude Include="RenderPool.h" />
     <ClInclude Include="RenderTargetBuffer.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Revolver.h" />
     <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="SceneBase.h" />
     <ClInclude Include="SceneManager.h" />
@@ -260,6 +264,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Aim.cpp" />
+    <ClCompile Include="AK_47.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="BackGround.cpp" />
@@ -270,8 +275,8 @@
     <ClCompile Include="BombPool.cpp" />
     <ClCompile Include="Buffer.cpp" />
     <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="BulletPattern.cpp" />
     <ClCompile Include="BulletProgress.cpp" />
+    <ClCompile Include="Bullets.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="CheckBoxButton.cpp" />
     <ClCompile Include="D2DRenderer + DrawFunc.cpp" />
@@ -286,6 +291,7 @@
     <ClCompile Include="FloatRect.cpp" />
     <ClCompile Include="FrameEffect.cpp" />
     <ClCompile Include="FrameEffecter.cpp" />
+    <ClCompile Include="Frog.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameSystem.cpp" />
     <ClCompile Include="GameUI.cpp" />
@@ -323,8 +329,10 @@
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="ProcedureGeneration.cpp" />
     <ClCompile Include="Program.cpp" />
+    <ClCompile Include="RedFrog.cpp" />
     <ClCompile Include="RenderPool.cpp" />
     <ClCompile Include="RenderTargetBuffer.cpp" />
+    <ClCompile Include="Revolver.cpp" />
     <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="SceneBase.cpp" />
     <ClCompile Include="SceneManager.cpp" />

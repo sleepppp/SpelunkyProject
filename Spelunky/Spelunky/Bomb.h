@@ -12,6 +12,8 @@ private:
 	class TileManager* mTileManager;
 	int mFrameX; 
 	Looper mLooper;
+	Vector2 mSize;
+	bool mIsSizeWidthUp;
 public:
 	Bomb(class BombPool* pPool);
 	virtual ~Bomb();

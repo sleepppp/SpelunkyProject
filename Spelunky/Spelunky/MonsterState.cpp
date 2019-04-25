@@ -16,7 +16,6 @@ MonsterStateBase::MonsterStateBase(Monster * pMonster)
 }
 
 
-
 MonsterStateManager::MonsterStateManager()
 	:mCurrentState(nullptr) {}
 
@@ -140,37 +139,50 @@ void MonsterShuttling::Enter()
 
 void MonsterShuttling::Execute()
 {
+	Transform* monsterTransform = mMonster->GetTransform();
 	Vector2 moveValue(1.f,0.f);
 	if (mMonster->GetIsLeft() == true)
 		moveValue.x = -1.f;
 
-	Vector2 worldPos = mMonster->GetTransform()->GetWorldPosition();
+	Vector2 worldPos = monsterTransform->GetWorldPosition();
 	int indexX = CastingInt(worldPos.x / Tile::GetTileSize());
 	int indexY = CastingInt((worldPos.y - 10.f) / Tile::GetTileSize());
 	if (mMonster->GetIsLeft() == true)
+		indexX -= 1;
+	else 
+		indexX += 1;
+	
+	Tile* tile = mTileManager->GetTile(indexX, indexY);
+	bool isSecondChecking = true;
+
+	if (tile->GetType() == Tile::Type::Soil ||
+		tile->GetType() == Tile::Type::Rock ||
+		tile->GetType() == Tile::Type::Trap)
 	{
-		Tile* tile = mTileManager->GetTile(indexX - 1, indexY);
-		if (tile->GetType() == Tile::Type::Soil ||
-			tile->GetType() == Tile::Type::Rock ||
-			tile->GetType() == Tile::Type::Trap)
+		if (Figure::IntersectRectToRect(&monsterTransform->GetRect(), &tile->GetRect()))
 		{
-			if (Figure::IntersectRectToRect(&mMonster->GetTransform()->GetRect(), &tile->GetRect()))
+			mMonster->SetIsLeft(!mMonster->GetIsLeft());
+			isSecondChecking = true;
+		}
+	}
+	if (isSecondChecking == true)
+	{
+		Tile* underTile = mTileManager->GetTile(indexX, indexY + 1);
+		if (underTile->GetType() == Tile::Type::Empty ||
+			underTile->GetType() == Tile::Type::Thorn)
+		{
+			if (Vector2::Length(&(monsterTransform->GetCenterPos() - tile->GetRect().GetCenter()))
+				<= monsterTransform->GetSize().x * 0.8f)
 				mMonster->SetIsLeft(!mMonster->GetIsLeft());
 		}
 	}
-	else
+	
+	if (Vector2::Length(&(mMonster->GetTransform()->GetCenterPos() - mPlayer->GetTransform()->GetCenterPos())) <= 50.f)
 	{
-		Tile* tile = mTileManager->GetTile(indexX + 1, indexY);
-		if (tile->GetType() == Tile::Type::Soil ||
-			tile->GetType() == Tile::Type::Rock ||
-			tile->GetType() == Tile::Type::Trap)
-		{
-			if (Figure::IntersectRectToRect(&mMonster->GetTransform()->GetRect(), &tile->GetRect()))
-				mMonster->SetIsLeft(!mMonster->GetIsLeft());
-		}
+		mMonster->ChangeState("Attack");
 	}
 
-	mMonster->GetTransform()->Translate(moveValue * mMonster->GetSpeed() *_TimeManager->DeltaTime());
+	monsterTransform->Translate(moveValue * mMonster->GetSpeed() *_TimeManager->DeltaTime());
 }
 
 void MonsterShuttling::Exit()

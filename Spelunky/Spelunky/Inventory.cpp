@@ -7,6 +7,8 @@
 #include "Rigidbody.h"
 #include "BombPool.h"
 
+const UINT Inventory::_maxItemCount = 5;
+
 Inventory::Inventory()
 	:mBombCount(1000),mGold(1000), mMainWeapon(nullptr)
 {
@@ -27,6 +29,9 @@ void Inventory::InstallationWeapon(Item * pItem)
 	if (pItem == mMainWeapon)
 		return;
 
+	if (mMainWeapon == nullptr && pItem != nullptr)
+		_SoundManager->Play("yeah");
+
 	if (mMainWeapon)
 	{
 		mMainWeapon->GetRigidBody()->Force(mPlayer->GetAimDirection(), 800.f, 1600.f);
@@ -34,7 +39,9 @@ void Inventory::InstallationWeapon(Item * pItem)
 	}
 	mMainWeapon = pItem; 
 	
-	if(mMainWeapon)
+	if (mMainWeapon)
+	{
 		mMainWeapon->Installing(mPlayer);
+	}
 }
 

@@ -43,12 +43,12 @@ void TestScene::Init()
 	/*****************************************************
 	## CreateEffectObject ##
 	******************************************************/
-	ParticleSystemPool* particlePool = new ParticleSystemPool;
-	mObjectPool->AddObject(particlePool);
-
 	//ParticleSystem* particle = new ParticleSystem(50);
 	//aim->GetTransform()->AddChild(particle->GetTransform());
 	//this->mObjectPool->AddObject(particle);
+
+	ParticleSystemPool* particlePool = new ParticleSystemPool;
+	mObjectPool->AddObject(particlePool);
 
 	FrameEffecter* effecter = new FrameEffecter;
 	worldObject->GetTransform()->AddChild(effecter->GetTransform());
@@ -77,9 +77,16 @@ void TestScene::Init()
 		worldObject->GetTransform()->AddChild(player->GetTransform());
 		this->mObjectPool->AddObject(player);
 
-		ShotGun* gun = new ShotGun(player->GetTransform()->GetCenterPos(),false);
+		ShotGun* gun = new ShotGun(player->GetTransform()->GetCenterPos() + Vector2(50,50),false);
 		mObjectPool->AddObject(gun);
 		worldObject->GetTransform()->AddChild(gun->GetTransform());
+
+		//Revolver* revolver = new Revolver(player->GetTransform()->GetCenterPos(), false);
+		//mObjectPool->AddObject(revolver);
+		//worldObject->GetTransform()->AddChild(revolver->GetTransform());
+		AK_47* revolver = new AK_47(player->GetTransform()->GetCenterPos(), false);
+		mObjectPool->AddObject(revolver);
+		worldObject->GetTransform()->AddChild(revolver->GetTransform());
 
 		InventoryUI* inventory = new InventoryUI();
 		worldObject->GetTransform()->AddChild(inventory->GetTransform());
@@ -103,7 +110,25 @@ void TestScene::Init()
 		}
 	}
 
-
+	for (int i = 0; i < 20; ++i)
+	{
+		if (Tile* tile = TileMapGenerator::FindOnGroundTile(tileManager->GetTilePtr()))
+		{
+			Frog* frog = new Frog(tile);
+			worldObject->GetTransform()->AddChild(frog->GetTransform());
+			mObjectPool->AddObject(frog);
+		}
+		if (i < 10)
+		{
+			if (Tile* tile = TileMapGenerator::FindOnGroundTile(tileManager->GetTilePtr()))
+			{
+				RedFrog* frog = new RedFrog(tile);
+				worldObject->GetTransform()->AddChild(frog->GetTransform());
+				mObjectPool->AddObject(frog);
+			}
+		}
+	}
+	
 	for (int i = 0; i < 10; ++i)
 	{
 		if (Tile* tile = TileMapGenerator::FindOnGroundTile(tileManager->GetTilePtr()))
@@ -112,7 +137,6 @@ void TestScene::Init()
 			worldObject->GetTransform()->AddChild(snake->GetTransform());
 			mObjectPool->AddObject(snake);
 		}
-		
 	}
 
 	_SoundManager->PlayBGM("zone2");

@@ -5,7 +5,7 @@ class RenderPool final
 public:
 	enum class Layer : int
 	{
-		Background = 0,Character,Monster,Object,Tile,Effect,UI,End
+		Background = 0,Character,Monster,Object,Tile,Bullet,Effect,UI,End
 	};
 private:
 	typedef unordered_map<Layer, vector<class GameObject*>>::iterator RenderIter;

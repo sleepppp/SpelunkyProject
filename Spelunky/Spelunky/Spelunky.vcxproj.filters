@@ -250,6 +250,15 @@
     <Filter Include="InGameObject\MonsterState">
       <UniqueIdentifier>{5079e828-fffd-4263-a83b-d78c1a93db91}</UniqueIdentifier>
     </Filter>
+    <Filter Include="InGameObject\Item\Revolver">
+      <UniqueIdentifier>{6884572c-9a5b-4f0f-bd83-187d8bddf6d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\Item\AK_47">
+      <UniqueIdentifier>{ceeb26de-7bd0-4bdc-abcd-a7a3aed28a5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\Monster\Frog">
+      <UniqueIdentifier>{a7e95a71-38cb-4e64-a541-1e6e785dc2e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -564,9 +573,6 @@
     <ClInclude Include="Bullet.h">
       <Filter>InGameObject\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="BulletPattern.h">
-      <Filter>InGameObject\Bullet</Filter>
-    </ClInclude>
     <ClInclude Include="MonsterState.h">
       <Filter>InGameObject\MonsterState</Filter>
     </ClInclude>
@@ -575,6 +581,21 @@
     </ClInclude>
     <ClInclude Include="Snake.h">
       <Filter>InGameObject\Monster\Snake</Filter>
+    </ClInclude>
+    <ClInclude Include="Revolver.h">
+      <Filter>InGameObject\Item\Revolver</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullets.h">
+      <Filter>InGameObject\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="AK_47.h">
+      <Filter>InGameObject\Item\AK_47</Filter>
+    </ClInclude>
+    <ClInclude Include="Frog.h">
+      <Filter>InGameObject\Monster\Frog</Filter>
+    </ClInclude>
+    <ClInclude Include="RedFrog.h">
+      <Filter>InGameObject\Monster\Frog</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -866,9 +887,6 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>InGameObject\Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="BulletPattern.cpp">
-      <Filter>InGameObject\Bullet</Filter>
-    </ClCompile>
     <ClCompile Include="MonsterState.cpp">
       <Filter>InGameObject\MonsterState</Filter>
     </ClCompile>
@@ -877,6 +895,21 @@
     </ClCompile>
     <ClCompile Include="Snake.cpp">
       <Filter>InGameObject\Monster\Snake</Filter>
+    </ClCompile>
+    <ClCompile Include="Revolver.cpp">
+      <Filter>InGameObject\Item\Revolver</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullets.cpp">
+      <Filter>InGameObject\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="AK_47.cpp">
+      <Filter>InGameObject\Item\AK_47</Filter>
+    </ClCompile>
+    <ClCompile Include="Frog.cpp">
+      <Filter>InGameObject\Monster\Frog</Filter>
+    </ClCompile>
+    <ClCompile Include="RedFrog.cpp">
+      <Filter>InGameObject\Monster\Frog</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

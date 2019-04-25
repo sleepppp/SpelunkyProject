@@ -38,10 +38,10 @@ public:
 	void Update();
 	void OnGui();
 
-	Vector2 GetPosition()const { return mPosition; }
-	Vector2 GetMapSize()const { return mMapSize; }
-	float GetZoom()const { return mZoomFactor; }
-	Figure::FloatRect GetRect()const { return mRect; }
+	inline Vector2 GetPosition()const { return mPosition; }
+	inline Vector2 GetMapSize()const { return mMapSize; }
+	inline float GetZoom()const { return mZoomFactor; }
+	inline Figure::FloatRect GetRect()const { return mRect; }
 	void SetMapSize(const Vector2& v) { mMapSize = v; }
 
 	Figure::FloatRect GetRelativeRect(const Figure::FloatRect& rc);

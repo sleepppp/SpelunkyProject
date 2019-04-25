@@ -7,6 +7,7 @@
 #include "Rigidbody.h"
 #include "Transform.h"
 #include "Tile.h"
+#include "FrameEffecter.h"
 #include "Item.h"
 
 PlayerState::PlayerState(Player * pPlayer)
@@ -55,7 +56,7 @@ void PlayerIdle::Execute()
 	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Down))
 		mPlayer->ChangeState("DownFacing");
 
-	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Attack))
+	if (mPlayerKey->GetKey(PlayerKey::Key::Attack))
 	{
 		if(Item* item = mPlayer->GetInventory()->GetMainWeapon())
 			item->Execute();
@@ -108,7 +109,7 @@ void PlayerMove::Execute()
 	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Down))
 		mPlayer->ChangeState("DownFacing");
 
-	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Attack))
+	if (mPlayerKey->GetKey(PlayerKey::Key::Attack))
 	{
 		if (Item* item = mPlayer->GetInventory()->GetMainWeapon())
 			item->Execute();
@@ -162,7 +163,7 @@ void PlayerJumpUp::Execute()
 		mPlayer->ChangeState("JumpDown");
 	}
 
-	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Attack))
+	if (mPlayerKey->GetKey(PlayerKey::Key::Attack))
 	{
 		if (Item* item = mPlayer->GetInventory()->GetMainWeapon())
 			item->Execute();
@@ -186,7 +187,10 @@ void PlayerJumpUp::OnCollision(const CollideInfo & info)
 ********************************************************************/
 
 PlayerJumpDown::PlayerJumpDown(Player * pPlayer)
-	:PlayerState(pPlayer) {}
+	:PlayerState(pPlayer)
+{
+	mEffecter = (FrameEffecter*)_World->GetObjectPool()->FindObject("FrameEffecter");
+}
 
 void PlayerJumpDown::Enter()
 {
@@ -210,7 +214,7 @@ void PlayerJumpDown::Execute()
 		mPlayer->SetIsLeft(true);
 	}
 
-	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Attack))
+	if (mPlayerKey->GetKey(PlayerKey::Key::Attack))
 	{
 		if (Item* item = mPlayer->GetInventory()->GetMainWeapon())
 			item->Execute();
@@ -232,6 +236,10 @@ void PlayerJumpDown::OnCollision(const CollideInfo & info)
 			mPlayer->ChangeState("Move");
 		else
 			mPlayer->ChangeState("Idle");
+
+		mEffecter->RequestPlayEffect("SmokeOrange", 0.07f, mPlayer->GetTransform()->GetWorldPosition(),
+			 0.5f, FrameEffecter::Option::ScaleAlphablending);
+		_SoundManager->Play("bounce");
 	}
 	else if (info.direction & (Direction::Right))
 	{
@@ -345,6 +353,12 @@ void PlayerDownIdle::Execute()
 	}
 	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Bomb))
 		mPlayer->ThrowBomb();
+
+	if (mPlayerKey->GetKey(PlayerKey::Key::Attack))
+	{
+		if (Item* item = mPlayer->GetInventory()->GetMainWeapon())
+			item->Execute();
+	}
 }
 
 void PlayerDownIdle::Exit()
@@ -392,6 +406,12 @@ void PlayerDownMove::Execute()
 	}
 	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Bomb))
 		mPlayer->ThrowBomb();
+
+	if (mPlayerKey->GetKey(PlayerKey::Key::Attack))
+	{
+		if (Item* item = mPlayer->GetInventory()->GetMainWeapon())
+			item->Execute();
+	}
 }
 
 void PlayerDownMove::Exit()

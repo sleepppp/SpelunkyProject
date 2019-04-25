@@ -18,6 +18,7 @@ ParticleSystemPool::~ParticleSystemPool()
 void ParticleSystemPool::Init()
 {
 	this->CreateParticlePool(L"../GameData/ParticleSystem/Stage2RockExplosion.bin", "Stage2RockExplosion", 20);
+	this->CreateParticlePool(L"../GameData/ParticleSystem/BloodRubble.bin", "BloodRubble", 20);
 
 	_World->GetUpdatePool()->RequestUpdate(this);
 }

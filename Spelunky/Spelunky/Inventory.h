@@ -2,6 +2,7 @@
 #include "GameObject.h"
 class Inventory
 {
+	static const UINT _maxItemCount;
 private:
 	Synthesize(int, mBombCount,BombCount)
 	Synthesize(int, mGold,Gold)

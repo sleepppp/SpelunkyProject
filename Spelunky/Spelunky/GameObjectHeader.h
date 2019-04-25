@@ -26,6 +26,8 @@
 ## Item ##
 **********************************************/
 #include "ShotGun.h"
+#include "AK_47.h"
+#include "Revolver.h"
 #include "Bomb.h"
 #include "BombPool.h"
 /**********************************************
@@ -40,3 +42,10 @@
 #include "Monster.h"
 #include "Bat.h"
 #include "Snake.h"
+#include "Frog.h"
+#include "RedFrog.h"
+
+/**********************************************
+## Bullet Object ##
+**********************************************/
+#include "Bullets.h"

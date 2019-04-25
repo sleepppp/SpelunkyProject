@@ -118,6 +118,10 @@ void Unit::Damage(const int & damage, const Vector2 & forceDirection, const floa
 				mRigidbody->Jump(700.f);
 				mRigidbody->Force(forceDirection, forcePower, recuPower);
 				mLooper.Play();
+
+				_SoundManager->Play("hit",1.5f);
+				_SoundManager->Play("playerHurt");
+				_Camera->Shake(0.4f, 0.04f, 2.4f);
 			}
 			else
 			{

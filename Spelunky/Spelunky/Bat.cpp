@@ -62,6 +62,7 @@ void Bat::CreateAnimation()
 
 void Bat::ExecuteDamage()
 {
+	this->ChangeState("MoveToPlayer");
 	_SoundManager->Play("batAttack", _Camera->GetDistanceFactor(mTransform->GetWorldPosition()));
 }
 

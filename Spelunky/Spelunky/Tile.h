@@ -6,7 +6,7 @@ class Tile : public GameObject
 private:
 	static float _tileSize;
 public:
-	 static const float& GetTileSize() { return _tileSize; }
+	 static inline const float& GetTileSize() { return _tileSize; }
 public:
 	enum class Type : int
 	{

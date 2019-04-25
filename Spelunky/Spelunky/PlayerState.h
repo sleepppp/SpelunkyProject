@@ -45,6 +45,7 @@ public:
 
 class PlayerJumpDown final : public PlayerState
 {
+	class FrameEffecter* mEffecter;
 public:
 	PlayerJumpDown(class Player* pPlayer);
 

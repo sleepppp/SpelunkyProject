@@ -472,6 +472,19 @@ void SoundManager::LoadAllSound()
 	this->AddSound("batAttack", "../Resources/Sound/batAttack.ogg", false, false);
 	this->AddSound("batDeath", "../Resources/Sound/batDeath.ogg", false, false);
 	this->AddSound("splat", "../Resources/Sound/splat.wav", false, false);
+	this->AddSound("snakebite", "../Resources/Sound/snakebite.wav", false, false);
+	this->AddSound("hit", "../Resources/Sound/hit.wav", false, false);
+	this->AddSound("rubble", "../Resources/Sound/rubble.wav", false, false);
+	this->AddSound("zapper", "../Resources/Sound/zapper.wav", false, false);
+	this->AddSound("shootemup", "../Resources/Sound/shoot em up.wav", false, false);
+	this->AddSound("cocked", "../Resources/Sound/cocked.wav", false, false);
+	this->AddSound("playerHurt", "../Resources/Sound/playerHurt.ogg", false, false);
+	this->AddSound("frog2", "../Resources/Sound/frog2.wav", false, false);
+	this->AddSound("frogDeath", "../Resources/Sound/slimeHit.ogg", false, false);
+	this->AddSound("bounce", "../Resources/Sound/bounce.wav", false, false);
+	this->AddSound("yeah", "../Resources/Sound/yeah.ogg", false, false);
+	
+	
 }
 
 

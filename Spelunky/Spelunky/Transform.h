@@ -48,12 +48,12 @@ public:
 
 	Vector2 GetCenterPos();
 	inline Vector2 GetWorldPosition()const { return this->mWorldPosition; }
-	const Vector2& GetLocalPosition()const { return this->mLocalPosition; }
-	const Vector2& GetSize()const { return this->mSize; }
-	const Pivot::Enum& GetPivot()const { return this->mPivot; }
-	const Figure::FloatRect& GetRect()const { return this->mRect; }
-	Figure::FloatRect*const GetLPRect() { return &mRect; }
-	class GameObject*const GetGameObject()const { return this->mGameObject; }
+	inline Vector2 GetLocalPosition()const { return this->mLocalPosition; }
+	inline Vector2 GetSize()const { return this->mSize; }
+	inline Pivot::Enum GetPivot()const { return this->mPivot; }
+	inline Figure::FloatRect GetRect()const { return this->mRect; }
+	inline Figure::FloatRect*const GetLPRect() { return &mRect; }
+	inline class GameObject*const GetGameObject()const { return this->mGameObject; }
 
 	Transform*const GetParent()const { return this->mParent; }
 	Transform*const GetFirstChild()const { return this->mFirstChild; }

@@ -4,7 +4,7 @@
 #include "Rigidbody.h"
 #include "Transform.h"
 #include "Player.h"
-
+#include "ParticleSystemPool.h"
 Monster::Monster(const Vector2& pos)
 	:GameObject("Monster"),mImage(nullptr),mFullHp(5.f),mHp(5.f),mIsLeft(false), mRigidbody(new Rigidbody(this)),mSpeed(300.f)
 	, mPlayer(nullptr), mDamage(1), mPerceptionRange(300.f)
@@ -31,6 +31,7 @@ void Monster::Init()
 	this->ChangeState("Idle");
 
 	mPlayer = dynamic_cast<Player*>(_World->GetObjectPool()->FindObject("Player"));
+	mParticlePool = dynamic_cast<ParticleSystemPool*>(_World->GetObjectPool()->FindObject("ParticleSystemPool"));
 }
 
 void Monster::Release()
@@ -58,6 +59,7 @@ void Monster::Render()
 	if (_isDebug)
 	{
 		_D2DRenderer->DrawRectangle(mTransform->GetRect(), D2DRenderer::DefaultBrush::Red, true, 2.f);
+		mStateManager.GetCurrentState()->OnGui();
 	}
 }
 
@@ -80,6 +82,9 @@ void Monster::Damage(const float & damage, const Vector2 & forceDirection, const
 		{
 			this->ExecuteDie();
 			this->mIsActive = false;
+			Vector2 worldPos = mTransform->GetWorldPosition();
+			mParticlePool->PlayParticle("BloodRubble", worldPos);
+			_SoundManager->Play("rubble", _Camera->GetDistanceFactor(worldPos));
 		}
 		else
 		{

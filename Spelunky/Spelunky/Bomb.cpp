@@ -13,11 +13,14 @@
 #include "Unit.h"
 
 Bomb::Bomb(class BombPool* pPool)
-	:GameObject("Bomb"),mFrameX(0),mImage(nullptr), mRigidbody(new Rigidbody(this)),mBombPool(pPool)
+	:GameObject("Bomb"),mFrameX(0),mImage(nullptr), mRigidbody(new Rigidbody(this)),mBombPool(pPool),
+	mIsSizeWidthUp(false)
 {
 	mLayer = RenderPool::Layer::Object;
 	mImage = _ImageManager->FindImage("Bomb");
-
+	mSize = mImage->GetFrameSize();
+	mSize.x *= 0.75f;
+	mSize.y *= 1.5f;
 	mLooper.SetLoopEnd(3);
 	mLooper.SetLoopTime(0.4f);
 	
@@ -54,13 +57,29 @@ void Bomb::Update()
 	{
 		this->Explosion();
 	}
+	const float deltaTime = _TimeManager->DeltaTime();
+	if (mIsSizeWidthUp)
+	{
+		mSize.x += 200.f * deltaTime;
+		mSize.y -= 200.f * deltaTime;
+		if (mSize.x >= mImage->GetFrameSize().x * 1.5f)
+			mIsSizeWidthUp = !mIsSizeWidthUp;
+	}
+	else
+	{
+		mSize.x -= 200.f * deltaTime;
+		mSize.y += 200.f * deltaTime;
+		if (mSize.x <= mImage->GetFrameSize().x * 0.75f)
+			mIsSizeWidthUp = !mIsSizeWidthUp;
+	}
+	mTransform->SetSize(mSize * 0.4f);
 }
 
 void Bomb::Render()
 {
 	if (mImage)
 	{
-		mImage->SetSize(mImage->GetFrameSize());
+		mImage->SetSize(mSize);
 		mImage->FrameRender(mTransform->GetWorldPosition() + Vector2(0.f,20.f),mFrameX,0, Pivot::Bottom, true);
 	}
 	if (_isDebug)

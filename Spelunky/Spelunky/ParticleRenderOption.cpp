@@ -10,6 +10,7 @@ ParticleRenderOption::ParticleRenderOption()
 	mImageList[RubbleType::Stage1Rock].emplace_back(_ImageManager->FindImage("rubble"), 0,0);
 	mImageList[RubbleType::Stage2Rock].emplace_back(_ImageManager->FindImage("rubble"), 0, 1);
 	mImageList[RubbleType::Stage3Rock].emplace_back(_ImageManager->FindImage("rubble"), 6, 1);
+	mImageList[RubbleType::RedRubble].emplace_back(_ImageManager->FindImage("effects"), 0, 0);
 }
 
 
@@ -27,7 +28,7 @@ void ParticleRenderOption::OnGui()
 
 		if (ImGui::Combo("RenderType", &selectRenderType, "Rectangle\0Image"))
 			this->mRenderType = (Particle::RenderType)selectRenderType;
-		if (ImGui::Combo("RubbleType", &selectRubbleType, "Stage1Rock\0Stage2Rock\0Stage3Rock\0Leaf"))
+		if (ImGui::Combo("RubbleType", &selectRubbleType, "Stage1Rock\0Stage2Rock\0Stage3Rock\0Leaf\0RedRubble"))
 			this->mRubbleType = (RubbleType)selectRubbleType;
 		if (ImGui::ColorEdit4("FontColor", &mColor.arr[0],
 			ImGuiColorEditFlags_Float | ImGuiColorEditFlags_AlphaPreviewHalf)) {}

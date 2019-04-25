@@ -1,5 +1,6 @@
 #pragma once
 #include "Monster.h"
+
 class Snake : public Monster
 {
 private:
@@ -17,3 +18,15 @@ private:
 	void ExecuteDie()override;
 };
 
+class SnakeBiteState : public MonsterStateBase
+{
+public:
+	SnakeBiteState(Monster* pMonster)
+		: MonsterStateBase(pMonster) {}
+
+	void Enter()override;
+	void Execute()override;
+	void Exit()override;
+
+	void OnGui()override; 
+};

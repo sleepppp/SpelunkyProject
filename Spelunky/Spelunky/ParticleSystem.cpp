@@ -206,7 +206,7 @@ void ParticleSystem::OnGui()
 			if (mIsDuration)this->Play();
 			else this->Stop();
 		}
-		ImGui::Text("Capacity : %d", mCapacity);
+		ImGui::InputInt("Capacity", reinterpret_cast<int*>(&mCapacity));
 		ImGui::Text("ActiveCount : %d", (int)mActiveParticles.size());
 		ImGui::Separator();
 		mMainOption.OnGui();

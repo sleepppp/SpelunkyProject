@@ -66,16 +66,6 @@ void TileManager::Render()
 	}
 }
 
-Tile * const TileManager::GetTile(int indexX, int indexY)
-{
-	if (mTileList.empty())
-		return nullptr;
-	if (indexY < 0 || indexY >= (int)mTileList.size())
-		return nullptr;
-	if (indexX < 0 || indexX >= (int)mTileList[0].size())
-		return nullptr;
-	return mTileList[indexY][indexX];
-}
 
 Vector2 TileManager::GetMapSize()
 {

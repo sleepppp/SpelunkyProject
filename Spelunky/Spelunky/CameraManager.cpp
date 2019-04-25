@@ -149,7 +149,9 @@ void CameraManager::Shake(const float & shakeTime, const float & changeDirTime, 
 
 void CameraManager::UpdateRenderRect()
 {
-	mRect.Update(mPosition + mShakePosition, Vector2(CastingFloat(_WinSizeX) / mZoomFactor, CastingFloat(_WinSizeY) / mZoomFactor), Pivot::Center);
+	mRect.Update(mPosition + mShakePosition, 
+		Vector2(CastingFloat(_WinSizeX) / mZoomFactor, CastingFloat(_WinSizeY) / mZoomFactor),
+		Pivot::Center);
 }
 
 void CameraManager::UpdateFreeCameraMode()
@@ -202,9 +204,9 @@ void CameraManager::UpdateTargetCameraMode()
 			float factor = mShakeCurrentTime / mShakeTime;
 			float strengh = mShakeStrength * factor;
 			strengh = strengh * mShakeDir.x;
-			mShakePosition += Vector2(strengh, 0.f);
-			if (mShakeCurrentTime >= mShakeTime * 0.5f)
-				mShakePosition.x = mShakePosition.x * 0.5f;
+			mShakePosition += Vector2(0.f, strengh);
+			//if (mShakeCurrentTime >= mShakeTime * 0.5f)
+			//	mShakePosition.x = mShakePosition.x * 0.5f;
 			mRect.Update(mPosition + mShakePosition,
 				Vector2(CastingFloat(_WinSizeX) / mZoomFactor, CastingFloat(_WinSizeY) / mZoomFactor), Pivot::Center);
 			this->AmendCamera();

@@ -4,23 +4,52 @@
 class Bullet
 {
 public:
-	enum class TargetType
+	enum TargetType : int
 	{
 		None = 0,
-		Player = 1,
-		Monster = 2,
-		Tile = 4,
-		All = Player | Monster | Tile
+		CPlayer = 1,
+		CMonster = 2,
+		CTile = 4,
+		All = CPlayer | CMonster | CTile
 	};
 private:
+	class Image* mImage;
 	Transform mTransform; 
-	class BulletPattern* mPattern;
+	Vector2 mDirection;
 	TargetType mTargetType; 
+	float mSpeed; 
+	float mDamage;
+	bool mIsDeActive;
+
+	class TileManager* mTileManager; 
+	class Player* mPlayer; 
 public:
 	Bullet();
 	virtual ~Bullet();
 
-	void Update();
+	void Init();
+	bool Update();
 	void Render();
+
+	inline TargetType GetTatgetType()const { return mTargetType; }
+	inline Transform* GetTransform() { return &mTransform; }
+	inline float GetDamage()const { return mDamage; }
+	inline float GetSpeed()const { return mSpeed;  }
+	inline Vector2 GetDirection()const { return mDirection; }
+
+	void SetSpeed(const float& speed) { mSpeed = speed; }
+	void SetDamage(const float& damage) { mDamage = damage; }
+	void SetTargetType(const TargetType& type) { mTargetType = type; }
+	void SetImage(class Image* pImage);
+	void SetSize(const Vector2& size);
+	void SetDirection(const Vector2& direction) { mDirection = direction; }
+
+	void Fire(const Vector2& pos, const Vector2& direction);
+private:
+	void AutoCollisionCheck();
+
+	bool OnCollisionTile(class Tile* pTile);
+	bool OnCollisionMonster(class GameObject* pMonster);
+	bool OnCollisionPlayer();
 };
 
