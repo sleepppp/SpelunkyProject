@@ -22,6 +22,7 @@ private:
 	Vector2 mForceDirection;
 	float mForcePower; 
 	float mRecuperativePower; 
+	int mCheckRange;
 
 	bool mIsOnGround;
 	bool mIsActiveGravity;
@@ -39,6 +40,7 @@ public:
 	void ActiveGravity() { mIsActiveGravity = true; }
 	void DisActiveGravity() { mIsActiveGravity = false; }
 	void ZeroForce();
+	void SetCheckRange(const int& range) { mCheckRange = range; }
 
 	class GameObject*const GetGameObject()const { return this->mObject; }
 	class Transform*const GetTransform()const { return this->mTransform; }

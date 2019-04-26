@@ -483,7 +483,7 @@ void SoundManager::LoadAllSound()
 	this->AddSound("frogDeath", "../Resources/Sound/slimeHit.ogg", false, false);
 	this->AddSound("bounce", "../Resources/Sound/bounce.wav", false, false);
 	this->AddSound("yeah", "../Resources/Sound/yeah.ogg", false, false);
-	
+	this->AddSound("AWPShot", "../Resources/Sound/AWPShot.mp3", false, false);
 	
 }
 

@@ -7,13 +7,17 @@
 #include "FrameEffecter.h"
 #include "DataContext.h"
 #include "Player.h"
+#include "Monster.h"
+#include "Tile.h"
+#include "TileManager.h"
+#include "BombPool.h"
 
 RedFrog::RedFrog(class Tile* pTile)
 	:Frog(pTile)
 {
 	mName = "RedFrog";
 	mDamage = 2;
-	mFullHp = mHp = 7;
+	mFullHp = mHp = 6.f;
 	this->AddCallbackMessage("Death", [this](TagMessage message) 
 	{
 		this->ExecuteDie();
@@ -33,6 +37,7 @@ void RedFrog::Init()
 {
 	Frog::Init();
 	mEffecter = (FrameEffecter*)_World->GetObjectPool()->FindObject("FrameEffecter");
+	mBombPool = (BombPool*)_World->GetObjectPool()->FindObject("BombPool");
 }
 
 void RedFrog::Render()
@@ -79,6 +84,69 @@ void RedFrog::Damage(const float & damage, const Vector2 & forceDirection, const
 		mHp -= damage;
 		if (mHp <= 0.f)
 		{
+			TileManager* tileManager =reinterpret_cast<TileManager*>
+				(_World->GetRenderPool()->FindObjectInLayer(RenderPool::Layer::Tile, "TileManager"));
+			
+			float tileSize = Tile::GetTileSize();
+			Vector2 pos = mTransform->GetWorldPosition() - Vector2(0.f, tileSize / 2.f);
+			int indexX = CastingInt(pos.x / tileSize);
+			int indexY = CastingInt(pos.y / tileSize);
+
+			for (int y = indexY - 1; y <= indexY + 1; ++y)
+			{
+				for (int x = indexX - 1; x <= indexX + 1; ++x)
+				{
+					if (Tile* tile = tileManager->GetTile(x, y))
+					{
+						tile->Explosion();
+					}
+				}
+			}
+
+			const vector<GameObject*>* list = _World->GetRenderPool()->GetObjectList(RenderPool::Layer::Monster);
+			for (UINT i = 0; i < list->size(); ++i)
+			{
+				GameObject* target = list->at(i);
+				if (target->GetActive() == true)
+				{
+					Vector2 direction = target->GetTransform()->GetWorldPosition() - pos;
+					float distance = Vector2::Length(&direction);
+					if (distance < tileSize * 3.f)
+					{
+						if (Monster* monster = dynamic_cast<Monster*>(target))
+						{
+							if(monster != this)
+								monster->Damage(3, direction, 1000, 1500.f);
+						}
+					}
+				}
+			}
+			GameObject* player = _World->GetRenderPool()->FindObjectInLayer(RenderPool::Layer::Character, "Player");
+			Vector2 direction = player->GetTransform()->GetWorldPosition() - pos;
+			float distance = Vector2::Length(&(player->GetTransform()->GetWorldPosition() - pos));
+			if (distance < tileSize * 3.f)
+			{
+				if (Unit* unit = dynamic_cast<Unit*>(player))
+				{
+					unit->Damage(6, direction, 1700.f, 2000.f);
+				}
+			}
+
+			mBombPool->ActivationLight(pos);
+			mEffecter->RequestPlayEffect("Smoke0", 0.07f, pos, 1.8f, FrameEffecter::Option::ScaleAlphablending);
+			mRigidbody->ZeroForce();
+			_World->GetRenderPool()->RemoveRender(mLayer, this);
+			_World->GetUpdatePool()->RemoveUpdate(this);
+
+			float factor = _Camera->GetDistanceFactor(pos);
+
+			float shakeTime = 1.f * factor;
+			float shakeChangeDirTime = 0.03f * factor;
+			float shakePower = 10.4f * factor;
+			_Camera->Shake(shakeTime, shakeChangeDirTime, shakePower);
+			_SoundManager->Play("kaboom", factor);
+
+
 			this->ExecuteDie();
 			this->mIsActive = false;
 			Vector2 worldPos = this->GetTransform()->GetWorldPosition();
@@ -95,6 +163,7 @@ void RedFrog::Damage(const float & damage, const Vector2 & forceDirection, const
 		else
 		{
 			this->ExecuteDamage();
+			mParticlePool->PlayParticle("BloodRubble", mTransform->GetWorldPosition());
 			mRigidbody->Force(forceDirection, forcePower, recuPower);
 		}
 	}

@@ -4,6 +4,7 @@ class RedFrog : public Frog
 {
 private:
 	class FrameEffecter* mEffecter;
+	class BombPool* mBombPool;
 public:
 	RedFrog(class Tile* pTile);
 	virtual ~RedFrog();

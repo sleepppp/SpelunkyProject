@@ -127,7 +127,7 @@ void Bomb::Explosion()
 			if (distance < tileSize * 3.f)
 			{
 				if (Monster* monster = dynamic_cast<Monster*>(target))
-					monster->Damage(5, direction, 1000, 1500.f);
+					monster->Damage(6, direction, 1000, 1500.f);
 			}
 		}
 	}
@@ -138,7 +138,7 @@ void Bomb::Explosion()
 	{
 		if (Unit* unit = dynamic_cast<Unit*>(player))
 		{
-			unit->Damage(5, direction, 1700.f, 2000.f);
+			unit->Damage(6, direction, 1700.f, 2000.f);
 		}
 	}
 	

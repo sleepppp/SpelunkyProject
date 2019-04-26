@@ -8,9 +8,6 @@ private:
 	class Bullets<Bullet>* mBullets;
 	bool mIsFire;
 	float mCurrentDelay;
-	float mRebound;
-	float mRaloadDelay;
-	int mFireCount;
 public:
 	Revolver(const Vector2 & worldPos, const bool & mIsInstallation);
 	virtual ~Revolver();

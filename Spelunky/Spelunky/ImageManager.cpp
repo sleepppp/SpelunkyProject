@@ -202,10 +202,13 @@ void ImageManager::LoadAllResource()
 	this->AddFrameImage("effects", PathResources(L"Effect/effects.png"),8,8);
 	this->AddFrameImage("Bomb", PathResources(L"./Item/Bomb.png"), 3, 1);
 	this->AddFrameImage("monsters3", PathResources(L"./Monster/monsters3.png"), 13, 13);
-	this->AddFrameImage("monsters2", PathResources(L"./Monster/monsters2.png"), 13, 13);
+	this->AddFrameImage("monsters2", PathResources(L"./Monster/monsters2.png"), 12, 12);
 	this->AddFrameImage("monsters", PathResources(L"./Monster/monsters.png"), 13, 13);
+	this->AddFrameImage("monstersbig2", PathResources(L"./Monster/monstersbig2.png"), 6,6);
+	
 	this->AddFrameImage("Revolver", PathResources(L"./Item/Revolver.png"), 2, 1);
 	this->AddFrameImage("AK_47", PathResources(L"./Item/AK47.png"), 2, 1);
+	this->AddFrameImage("AWP", PathResources(L"./Item/AWP.png"), 2, 1);
 	
 	this->LoadFolder("../Resources/Tile/", "*.png");
 	this->LoadFolder("../Resources/Object/", "*.png");

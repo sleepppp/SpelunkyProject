@@ -103,7 +103,7 @@ void Player::TryInstalling()
 				{
 					if (item != mInventory.GetMainWeapon())
 					{
-						if (Vector2::Length(&(item->GetTransform()->GetWorldPosition() - mTransform->GetWorldPosition())) < 20.f)
+						if (Vector2::Length(&(item->GetTransform()->GetWorldPosition() - mTransform->GetWorldPosition())) < 30.f)
 						{
 							mInventory.InstallationWeapon(item);
 							succeeded = true;

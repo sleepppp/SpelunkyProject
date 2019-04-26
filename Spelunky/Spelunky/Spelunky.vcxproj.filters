@@ -166,9 +166,6 @@
     <Filter Include="InGameObject\FrameEffect">
       <UniqueIdentifier>{db7e9967-6002-4055-a90b-40d18c062e29}</UniqueIdentifier>
     </Filter>
-    <Filter Include="InGameObject\Monster">
-      <UniqueIdentifier>{91d937c2-a9d9-4d0f-ba16-f5aa0eda1574}</UniqueIdentifier>
-    </Filter>
     <Filter Include="InGameObject\ParticleSystem">
       <UniqueIdentifier>{f27ec736-03e4-4e9b-80a0-e8639c4521ca}</UniqueIdentifier>
     </Filter>
@@ -241,12 +238,6 @@
     <Filter Include="InGameObject\Bullet">
       <UniqueIdentifier>{b02c4953-b018-4ef2-b644-f786c2695be7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="InGameObject\Monster\Bat">
-      <UniqueIdentifier>{16e25eeb-fa58-4875-9793-3eaf756ed0de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="InGameObject\Monster\Snake">
-      <UniqueIdentifier>{41489ba2-239e-4160-8d73-9658d3efd9c2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="InGameObject\MonsterState">
       <UniqueIdentifier>{5079e828-fffd-4263-a83b-d78c1a93db91}</UniqueIdentifier>
     </Filter>
@@ -256,8 +247,20 @@
     <Filter Include="InGameObject\Item\AK_47">
       <UniqueIdentifier>{ceeb26de-7bd0-4bdc-abcd-a7a3aed28a5d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="InGameObject\Monster">
+      <UniqueIdentifier>{91d937c2-a9d9-4d0f-ba16-f5aa0eda1574}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\Monster\Bat">
+      <UniqueIdentifier>{16e25eeb-fa58-4875-9793-3eaf756ed0de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\Monster\Snake">
+      <UniqueIdentifier>{41489ba2-239e-4160-8d73-9658d3efd9c2}</UniqueIdentifier>
+    </Filter>
     <Filter Include="InGameObject\Monster\Frog">
       <UniqueIdentifier>{a7e95a71-38cb-4e64-a541-1e6e785dc2e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\Item\AWP">
+      <UniqueIdentifier>{4913d5a5-5a70-4613-bfc8-a03270b094ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -597,6 +600,12 @@
     <ClInclude Include="RedFrog.h">
       <Filter>InGameObject\Monster\Frog</Filter>
     </ClInclude>
+    <ClInclude Include="AWP.h">
+      <Filter>InGameObject\Item\AWP</Filter>
+    </ClInclude>
+    <ClInclude Include="BossFrog.h">
+      <Filter>InGameObject\Monster\Frog</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Spelunky.cpp">
@@ -909,6 +918,12 @@
       <Filter>InGameObject\Monster\Frog</Filter>
     </ClCompile>
     <ClCompile Include="RedFrog.cpp">
+      <Filter>InGameObject\Monster\Frog</Filter>
+    </ClCompile>
+    <ClCompile Include="AWP.cpp">
+      <Filter>InGameObject\Item\AWP</Filter>
+    </ClCompile>
+    <ClCompile Include="BossFrog.cpp">
       <Filter>InGameObject\Monster\Frog</Filter>
     </ClCompile>
   </ItemGroup>

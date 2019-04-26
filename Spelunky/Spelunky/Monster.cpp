@@ -89,6 +89,7 @@ void Monster::Damage(const float & damage, const Vector2 & forceDirection, const
 		else
 		{
 			this->ExecuteDamage();
+			mParticlePool->PlayParticle("BloodRubble", mTransform->GetWorldPosition());
 			mRigidbody->Force(forceDirection, forcePower, recuPower);
 		}
 	}

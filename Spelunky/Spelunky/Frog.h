@@ -11,7 +11,7 @@ public:
 	virtual void Init()override;
 	virtual void Update()override;
 
-	void OnCollision(const CollideInfo& collisionInfo);
+	void OnCollision(const CollideInfo& collisionInfo)override;
 protected:
 	virtual void CreateState()override;
 	virtual void CreateAnimation()override;
@@ -33,9 +33,10 @@ public:
 
 class FrogJumpState : public MonsterStateBase
 {
+	float mJumpPower;
 public:
-	FrogJumpState(class Monster* pMonster)
-		:MonsterStateBase(pMonster) {}
+	FrogJumpState(class Monster* pMonster,const float& jumpPower = 700.f)
+		:MonsterStateBase(pMonster) , mJumpPower(jumpPower){}
 
 	void Enter()override; 
 	void Execute()override; 

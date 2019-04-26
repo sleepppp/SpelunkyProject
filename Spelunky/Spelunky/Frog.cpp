@@ -71,7 +71,9 @@ void Frog::ExecuteDamage()
 
 void Frog::ExecuteDie()
 {
-	_SoundManager->Play("frogDeath", _Camera->GetDistanceFactor(mTransform->GetWorldPosition()) * 1.3f);
+	float factor = _Camera->GetDistanceFactor(mTransform->GetWorldPosition());
+	_SoundManager->Play("frogDeath", factor * 1.3f);
+	_SoundManager->Play("bone_shatter", factor);
 }
 
 /******************************************************************
@@ -114,7 +116,7 @@ void FrogJumpState::Enter()
 	else
 		mMonster->SetIsLeft(false);
 
-	mMonster->GetRigidbody()->Jump(700.f);
+	mMonster->GetRigidbody()->Jump(mJumpPower);
 }
 
 

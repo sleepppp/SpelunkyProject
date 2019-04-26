@@ -77,16 +77,21 @@ void TestScene::Init()
 		worldObject->GetTransform()->AddChild(player->GetTransform());
 		this->mObjectPool->AddObject(player);
 
-		ShotGun* gun = new ShotGun(player->GetTransform()->GetCenterPos() + Vector2(50,50),false);
+		ShotGun* gun = new ShotGun(player->GetTransform()->GetCenterPos() + Vector2(50.f,0.f),false);
 		mObjectPool->AddObject(gun);
 		worldObject->GetTransform()->AddChild(gun->GetTransform());
 
-		//Revolver* revolver = new Revolver(player->GetTransform()->GetCenterPos(), false);
-		//mObjectPool->AddObject(revolver);
-		//worldObject->GetTransform()->AddChild(revolver->GetTransform());
-		AK_47* revolver = new AK_47(player->GetTransform()->GetCenterPos(), false);
+		Revolver* revolver = new Revolver(player->GetTransform()->GetCenterPos() - Vector2(50.f,0.f), false);
 		mObjectPool->AddObject(revolver);
 		worldObject->GetTransform()->AddChild(revolver->GetTransform());
+
+		AK_47* ak = new AK_47(player->GetTransform()->GetCenterPos(), false);
+		mObjectPool->AddObject(ak);
+		worldObject->GetTransform()->AddChild(ak->GetTransform());
+
+		AWP* awp = new AWP(player->GetTransform()->GetCenterPos(), false);
+		mObjectPool->AddObject(awp);
+		worldObject->GetTransform()->AddChild(awp->GetTransform());
 
 		InventoryUI* inventory = new InventoryUI();
 		worldObject->GetTransform()->AddChild(inventory->GetTransform());
@@ -122,7 +127,10 @@ void TestScene::Init()
 		{
 			if (Tile* tile = TileMapGenerator::FindOnGroundTile(tileManager->GetTilePtr()))
 			{
-				RedFrog* frog = new RedFrog(tile);
+				//RedFrog* frog = new RedFrog(tile);
+				//worldObject->GetTransform()->AddChild(frog->GetTransform());
+				//mObjectPool->AddObject(frog);
+				BossFrog* frog = new BossFrog(tile);
 				worldObject->GetTransform()->AddChild(frog->GetTransform());
 				mObjectPool->AddObject(frog);
 			}

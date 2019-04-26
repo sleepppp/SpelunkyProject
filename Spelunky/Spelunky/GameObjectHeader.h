@@ -28,6 +28,7 @@
 #include "ShotGun.h"
 #include "AK_47.h"
 #include "Revolver.h"
+#include "AWP.h"
 #include "Bomb.h"
 #include "BombPool.h"
 /**********************************************
@@ -44,6 +45,7 @@
 #include "Snake.h"
 #include "Frog.h"
 #include "RedFrog.h"
+#include "BossFrog.h"
 
 /**********************************************
 ## Bullet Object ##

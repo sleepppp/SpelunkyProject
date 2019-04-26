@@ -145,6 +145,11 @@ void CameraManager::Shake(const float & shakeTime, const float & changeDirTime, 
 	mShakeStrength = shakeStrength;
 	mShakeChangeDirDelay = changeDirTime;
 	mIsShake = true;
+
+	float factor = mShakeCurrentTime / mShakeTime;
+	float strengh = mShakeStrength * factor;
+	strengh = strengh * mShakeDir.x * 0.5f;
+	mShakePosition += Vector2(0.f, -strengh);
 }
 
 void CameraManager::UpdateRenderRect()

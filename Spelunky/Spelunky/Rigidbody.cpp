@@ -16,7 +16,7 @@ float Rigidbody::GetDefaultJumpPower()
 
 Rigidbody::Rigidbody(GameObject * pObject)
 	:mIsOnGround(false),mObject(pObject), mJumpPower(0.f), mIsActiveGravity(true), 
-	mForcePower(-1.f),mRecuperativePower(_defaultRecuperativePower)
+	mForcePower(-1.f),mRecuperativePower(_defaultRecuperativePower), mCheckRange(1)
 {
 	mTransform = mObject->GetTransform();
 }
@@ -65,9 +65,9 @@ void Rigidbody::Update()
 	//해당 오브젝트가 충돌 인터페이스를 상속받았는지 검사
 	ICollision* iCollision = dynamic_cast<ICollision*>(mObject);
 
-	for (int y = indexY - 1; y <= indexY + 1; ++y)
+	for (int y = indexY - mCheckRange; y <= indexY + mCheckRange; ++y)
 	{
-		for (int x = indexX - 1; x <= indexX + 1; ++x)
+		for (int x = indexX - mCheckRange; x <= indexX + mCheckRange; ++x)
 		{
 			if (y == indexY && x == indexX)continue;
 			if (Tile* tile = mTileManager->GetTile(x, y))
