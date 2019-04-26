@@ -9,9 +9,13 @@
 #include "Tile.h"
 #include "FrameEffecter.h"
 #include "Item.h"
+#include "Aim.h"
 
 PlayerState::PlayerState(Player * pPlayer)
-	:mPlayer(pPlayer), UnitStateBase(pPlayer) {mPlayerKey = mPlayer->GetPlayerKey();}
+	:mPlayer(pPlayer), UnitStateBase(pPlayer)
+{
+	mPlayerKey = mPlayer->GetPlayerKey(); 
+}
 
 /*******************************************************************
 ## PlayerIdle ##

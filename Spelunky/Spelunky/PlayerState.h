@@ -6,6 +6,7 @@ class PlayerState : public UnitStateBase
 protected:
 	class Player* mPlayer; 
 	class PlayerKey* mPlayerKey;
+	class GameObject* mAim;
 public:
 	PlayerState(class Player* pPlayer);
 };

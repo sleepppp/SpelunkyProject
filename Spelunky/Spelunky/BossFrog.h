@@ -33,6 +33,7 @@ public:
 
 class BossFrogCreate : public MonsterStateBase
 {
+	bool mIsCreate;
 public:
 	BossFrogCreate(Monster* pMonster)
 		:MonsterStateBase(pMonster) {}

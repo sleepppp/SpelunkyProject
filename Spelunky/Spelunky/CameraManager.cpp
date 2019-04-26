@@ -5,7 +5,13 @@
 #include "Transform.h"
 
 const float CameraManager::_zoomMax = 2.5f;
-const float CameraManager::_zoomMin = 0.1f; 
+const float CameraManager::_zoomMin = 0.1f;
+
+
+const float CameraManager::_minSpeed = 50.f;
+const float CameraManager::_maxSpeed = 200.f;
+const float CameraManager::_minDistance = 250.f;
+const float CameraManager::_maxDistance = 10.f;
 
 CameraManager::CameraManager()
 	:mZoomFactor(1.f),mState(CameraManager::MoveState::FreeCamera),mIsShake(false),mShakeStrength(0.f),mShakeTime(0.f),
@@ -23,8 +29,10 @@ void CameraManager::Update()
 	Vector2 centerPos;
 	switch (mState)
 	{
-	case CameraManager::None:
 	case CameraManager::MoveToTarget:
+		this->UpdateMoveToTargetCameraMode();
+		break;
+	case CameraManager::Target:
 		this->UpdateTargetCameraMode();
 		break;
 	case CameraManager::FreeCamera:
@@ -186,6 +194,42 @@ void CameraManager::UpdateTargetCameraMode()
 		this->UpdateRenderRect();
 		this->AmendCamera();
 	}
+	this->UpdateShake();
+}
+
+void CameraManager::UpdateMoveToTargetCameraMode()
+{
+	if (mTarget)
+	{
+		Vector2 targetPos = mTarget->GetCenterPos();
+		Vector2 toTarget = targetPos - mPosition;
+		float length = Vector2::Length(&toTarget);
+
+		if (length < 10.f)
+		{
+			mPosition = targetPos;
+			this->UpdateRenderRect();
+			this->AmendCamera();
+
+			mState = MoveState::Target;
+		}
+		else
+		{
+			float speed;
+			speed = (length / (_maxDistance - _minDistance)) * (_maxSpeed - _minSpeed);
+			speed = Math::Clampf(speed, _minSpeed, _maxSpeed);
+
+			mPosition += toTarget * speed * _TimeManager->DeltaTime();
+			this->UpdateRenderRect();
+			this->AmendCamera();
+
+			this->UpdateShake();
+		}
+	}
+}
+
+void CameraManager::UpdateShake()
+{
 	if (mIsShake)
 	{
 		const float deltaTime = _TimeManager->DeltaTime();

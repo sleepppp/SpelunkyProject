@@ -203,6 +203,7 @@
     <ClInclude Include="Math.h" />
     <ClInclude Include="MessageComponent.h" />
     <ClInclude Include="MessageManager.h" />
+    <ClInclude Include="MiddleAim.h" />
     <ClInclude Include="ModuleHeader.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MonsterState.h" />
@@ -315,6 +316,7 @@
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="MessageComponent.cpp" />
     <ClCompile Include="MessageManager.cpp" />
+    <ClCompile Include="MiddleAim.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MonsterState.cpp" />
     <ClCompile Include="ObjectPool.cpp" />

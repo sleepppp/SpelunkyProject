@@ -35,6 +35,10 @@ void TestScene::Init()
 	Aim* aim = new Aim();	
 	this->mObjectPool->AddObject(aim);
 
+	MiddleAim* ma = new MiddleAim;
+	worldObject->GetTransform()->AddChild(ma->GetTransform());
+	this->mObjectPool->AddObject(ma);
+
 	/*****************************************************
 	## CreateObjectPooling ##
 	******************************************************/
@@ -127,10 +131,23 @@ void TestScene::Init()
 		{
 			if (Tile* tile = TileMapGenerator::FindOnGroundTile(tileManager->GetTilePtr()))
 			{
-				//RedFrog* frog = new RedFrog(tile);
-				//worldObject->GetTransform()->AddChild(frog->GetTransform());
-				//mObjectPool->AddObject(frog);
-				BossFrog* frog = new BossFrog(tile);
+				if (Tile* upTile = tileManager->GetTile(tile->GetIndexX(), tile->GetIndexY() - 1))
+				{
+					if (Tile* upTile2 = tileManager->GetTile(tile->GetIndexX(), tile->GetIndexY() - 2))
+					{
+						if (upTile->GetType() == Tile::Type::Empty &&
+							upTile2->GetType() == Tile::Type::Empty)
+						{
+							BossFrog* frog = new BossFrog(tile);
+							worldObject->GetTransform()->AddChild(frog->GetTransform());
+							mObjectPool->AddObject(frog);
+						}
+					}
+				}
+			}
+			if (Tile* tile = TileMapGenerator::FindOnGroundTile(tileManager->GetTilePtr()))
+			{
+				RedFrog* frog = new RedFrog(tile);
 				worldObject->GetTransform()->AddChild(frog->GetTransform());
 				mObjectPool->AddObject(frog);
 			}

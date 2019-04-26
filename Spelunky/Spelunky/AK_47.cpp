@@ -86,7 +86,7 @@ void AK_47::Update()
 
 void AK_47::EnterInstallation()
 {
-	_SoundManager->Play("cocked");
+	_SoundManager->Play("cocked", _Camera->GetDistanceFactor(mTransform->GetWorldPosition()));
 }
 
 void AK_47::Execute()
@@ -110,12 +110,12 @@ void AK_47::Execute()
 		mPointLight->GetTransform()->SetWorldPosition(firePos);
 
 		_Camera->Shake(0.35f, 0.01f, 3.f);
-		_SoundManager->Play("shootemup", 0.7f);
+		_SoundManager->Play("shootemup", _Camera->GetDistanceFactor(firePos) * 0.7f);
 		mEffecter->RequestPlayEffect("Smoke0", 0.07f, firePos, 0.5f, FrameEffecter::Option::ScaleAlphablending);
 	}
 }
 
 void AK_47::ExitInstallation()
 {
-	_SoundManager->Play("cocked");
+	_SoundManager->Play("cocked",_Camera->GetDistanceFactor(mTransform->GetWorldPosition()));
 }

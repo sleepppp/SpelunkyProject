@@ -6,6 +6,7 @@ class Frog : public Monster, public ICollision
 {
 public:
 	Frog(class Tile* pTile);
+	Frog(const Vector2& pos);
 	virtual ~Frog();
 
 	virtual void Init()override;

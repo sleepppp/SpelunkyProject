@@ -11,8 +11,13 @@ class CameraManager final : public SingletonBase<CameraManager>
 private:
 	static const float _zoomMax; 
 	static const float _zoomMin; 
+
+	static const float _minSpeed; 
+	static const float _maxSpeed; 
+	static const float _minDistance;
+	static const float _maxDistance;
 public:
-	enum MoveState { None, MoveToTarget, FreeCamera, End };		//카메라 상태 값
+	enum MoveState { Target, MoveToTarget, FreeCamera, End };		//카메라 상태 값
 private:
 	MoveState mState;
 	Figure::FloatRect mRect; 
@@ -60,6 +65,11 @@ public:
 	void SetTarget(class Transform* pTransform)
 	{
 		mTarget = pTransform;
+		mState = CameraManager::MoveState::Target;
+	}
+	void ChangeTarget(class Transform* pTransform)
+	{
+		mTarget = pTransform;
 		mState = CameraManager::MoveState::MoveToTarget;
 	}
 
@@ -70,6 +80,8 @@ private:
 	void UpdateRenderRect();
 	void UpdateFreeCameraMode();
 	void UpdateTargetCameraMode();
+	void UpdateMoveToTargetCameraMode();
+	void UpdateShake();
 	void AmendCamera();
 private:
 	friend class Window;

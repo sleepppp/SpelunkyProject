@@ -17,7 +17,7 @@ RedFrog::RedFrog(class Tile* pTile)
 {
 	mName = "RedFrog";
 	mDamage = 2;
-	mFullHp = mHp = 6.f;
+	mFullHp = mHp = 5.f;
 	this->AddCallbackMessage("Death", [this](TagMessage message) 
 	{
 		this->ExecuteDie();
@@ -111,7 +111,7 @@ void RedFrog::Damage(const float & damage, const Vector2 & forceDirection, const
 				{
 					Vector2 direction = target->GetTransform()->GetWorldPosition() - pos;
 					float distance = Vector2::Length(&direction);
-					if (distance < tileSize * 3.f)
+					if (distance < tileSize * 2.f)
 					{
 						if (Monster* monster = dynamic_cast<Monster*>(target))
 						{
@@ -124,7 +124,7 @@ void RedFrog::Damage(const float & damage, const Vector2 & forceDirection, const
 			GameObject* player = _World->GetRenderPool()->FindObjectInLayer(RenderPool::Layer::Character, "Player");
 			Vector2 direction = player->GetTransform()->GetWorldPosition() - pos;
 			float distance = Vector2::Length(&(player->GetTransform()->GetWorldPosition() - pos));
-			if (distance < tileSize * 3.f)
+			if (distance < tileSize * 2.f)
 			{
 				if (Unit* unit = dynamic_cast<Unit*>(player))
 				{

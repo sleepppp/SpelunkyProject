@@ -606,6 +606,9 @@
     <ClInclude Include="BossFrog.h">
       <Filter>InGameObject\Monster\Frog</Filter>
     </ClInclude>
+    <ClInclude Include="MiddleAim.h">
+      <Filter>InGameObject\Aim</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Spelunky.cpp">
@@ -925,6 +928,9 @@
     </ClCompile>
     <ClCompile Include="BossFrog.cpp">
       <Filter>InGameObject\Monster\Frog</Filter>
+    </ClCompile>
+    <ClCompile Include="MiddleAim.cpp">
+      <Filter>InGameObject\Aim</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

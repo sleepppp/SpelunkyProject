@@ -13,6 +13,18 @@ Frog::Frog(Tile* pTile)
 	mName = "Frog";
 	mSpeed = 200.f;
 	mPerceptionRange = 450.f;
+	mHp = mFullHp = 3.5f;
+	mImage = _ImageManager->FindImage("monsters2");
+	mTransform->SetPivot(Pivot::Bottom);
+	mTransform->SetSize(Vector2(mImage->GetFrameSize().x * 0.5f, mImage->GetFrameSize().y * 0.7f));
+}
+
+Frog::Frog(const Vector2 & pos)
+	:Monster(pos)
+{
+	mName = "Frog";
+	mSpeed = 200.f;
+	mPerceptionRange = 450.f;
 	mImage = _ImageManager->FindImage("monsters2");
 	mTransform->SetPivot(Pivot::Bottom);
 	mTransform->SetSize(Vector2(mImage->GetFrameSize().x * 0.5f, mImage->GetFrameSize().y * 0.7f));
@@ -67,6 +79,7 @@ void Frog::CreateAnimation()
 void Frog::ExecuteDamage()
 {
 	_SoundManager->Play("frog2", _Camera->GetDistanceFactor(mTransform->GetWorldPosition()));
+	_SoundManager->Play("FrogHouling", _Camera->GetDistanceFactor(mTransform->GetWorldPosition()* 1.4f));
 }
 
 void Frog::ExecuteDie()
@@ -74,6 +87,7 @@ void Frog::ExecuteDie()
 	float factor = _Camera->GetDistanceFactor(mTransform->GetWorldPosition());
 	_SoundManager->Play("frogDeath", factor * 1.3f);
 	_SoundManager->Play("bone_shatter", factor);
+	_SoundManager->Play("FrogHouling", factor* 1.4f);
 }
 
 /******************************************************************
@@ -143,9 +157,9 @@ void FrogJumpState::Exit()
 
 void FrogJumpState::OnCollision(const CollideInfo & collisionInfo)
 {
-	if (collisionInfo.direction & Direction::Bottom)
+	if (collisionInfo.direction & (Direction::Bottom))
 	{
-		if(mMonster->GetRigidbody()->GetJumpPower() > 0.f)
+		if(mMonster->GetRigidbody()->GetJumpPower() >= -Math::Epsilon)
 			mMonster->ChangeState("Idle");
 	}
 }

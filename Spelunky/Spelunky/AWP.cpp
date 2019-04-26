@@ -6,9 +6,10 @@
 #include "Monster.h"
 
 #include "Image.h"
-#include "Unit.h"
+#include "Player.h"
 #include "FrameEffecter.h"
 #include "PointLight.h"
+#include "PlayerKey.h"
 
 const float AWP::_maxRange = 1000.f;
 
@@ -18,7 +19,7 @@ const float AWP::_startGunFireIntensity = 5.0f;
 const float AWP::_endGunFireIntensity = 0.1f;
 
 AWP::AWP(const Vector2& worldPos,const bool& installation)
-	:Item(worldPos, installation)
+	:Item(worldPos, installation),mIsZoom(false)
 {
 	mImageInfo.image = _ImageManager->FindImage("AWP");
 }
@@ -34,7 +35,7 @@ void AWP::Init()
 	mTileManager = (TileManager*)_World->GetObjectPool()->FindObject("TileManager");
 
 	mEffecter = reinterpret_cast<FrameEffecter*>(_World->GetObjectPool()->FindObject("FrameEffecter"));
-
+	mPlayer = reinterpret_cast<Player*>(_World->GetObjectPool()->FindObject("Player"));
 	mPointLight = new PointLight(mTransform->GetWorldPosition());
 	mPointLight->SetActive(false);
 	mPointLight->Init();
@@ -95,6 +96,15 @@ void AWP::Update()
 				break;
 			}
 		}
+
+		if (mPlayer->GetPlayerKey()->GetKeyDown(PlayerKey::Key::Zoom))
+		{
+			mIsZoom = !mIsZoom;
+			if (mIsZoom)
+				_Camera->ChangeTarget(_World->GetObjectPool()->FindObject("MiddleAim")->GetTransform());
+			else
+				_Camera->ChangeTarget(this->mPlayer->GetTransform());
+		}
 	}
 }
 
@@ -104,14 +114,22 @@ void AWP::Render()
 	if (mUnit)
 	{
 		Vector2 firePos = mTransform->GetCenterPos() + mUnit->GetAimDirection() * (mImageInfo.image->GetFrameSize().x * 0.3f);
-		_D2DRenderer->DrawLine(firePos, endPos, D2DRenderer::DefaultBrush::Red, true, 2.f);
+		_D2DRenderer->DrawLine(firePos, endPos, D2D1::ColorF::Red,0.5f, true, 2.f);
+	}
+	if (mIsFire)
+	{
+		Vector2 firePos = mTransform->GetCenterPos() + mUnit->GetAimDirection() * (mImageInfo.image->GetFrameSize().x * 0.3f);
+		float factor = 1.f - mCurrentDelay / 1.f;
+		_D2DRenderer->DrawLine(firePos, endPos, D2D1::ColorF::Yellow, factor, true, 2.f);
 	}
 	
 }
 
 void AWP::EnterInstallation()
 {
-	_SoundManager->Play("cocked");
+	_SoundManager->Play("cocked",_Camera->GetDistanceFactor(mTransform->GetWorldPosition()));
+	_Camera->ChangeTarget(this->mPlayer->GetTransform());
+	mIsZoom = false;
 }
 
 void AWP::Execute()
@@ -147,11 +165,13 @@ void AWP::Execute()
 		mCurrentDelay = 0.f;
 		mEffecter->RequestPlayEffect("Smoke0", 0.07f, firePos, 1.f, FrameEffecter::Option::ScaleAlphablending);
 		_Camera->Shake(0.5f, 0.03f, 5.f);
-		_SoundManager->Play("AWPShot");
+		_SoundManager->Play("AWPShot",_Camera->GetDistanceFactor(firePos));
 	}
 }
 
 void AWP::ExitInstallation()
 {
-	_SoundManager->Play("cocked");
+	_SoundManager->Play("cocked",_Camera->GetDistanceFactor(mTransform->GetWorldPosition()));
+	_Camera->ChangeTarget(this->mPlayer->GetTransform());
+	mIsZoom = false;
 }

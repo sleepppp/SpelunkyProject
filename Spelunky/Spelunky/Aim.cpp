@@ -2,6 +2,7 @@
 #include "Aim.h"
 #include "Transform.h"
 Aim::Aim()
+	:GameObject("Aim")
 {
 }
 

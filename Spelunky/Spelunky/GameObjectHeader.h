@@ -10,6 +10,7 @@
 #include "PointLight.h"
 #include "Transform.h"
 #include "Aim.h"
+#include "MiddleAim.h"
 #include "InventoryUI.h"
 
 /**********************************************

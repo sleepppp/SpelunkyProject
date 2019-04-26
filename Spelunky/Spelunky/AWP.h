@@ -18,6 +18,9 @@ private:
 
 	class PointLight* mPointLight;
 	class FrameEffecter* mEffecter;
+	class Player* mPlayer;
+
+	bool mIsZoom;
 public:
 	AWP(const Vector2& worldPos,const bool& installation);
 	virtual ~AWP();

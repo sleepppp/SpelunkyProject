@@ -6,6 +6,7 @@
 #include "Frog.h"
 #include "Player.h"
 #include "Rigidbody.h"
+#include "Transform.h"
 
 BossFrog::BossFrog(Tile* pTile)
 	:Monster(pTile->GetRect().GetCenter() + Vector2(5.f,-50.f))
@@ -15,7 +16,7 @@ BossFrog::BossFrog(Tile* pTile)
 	mPerceptionRange = 550.f;
 	mImage = _ImageManager->FindImage("monstersbig2");
 	mTransform->SetPivot(Pivot::Bottom);
-	mTransform->SetSize(Vector2(mImage->GetFrameSize().x * 0.8f, mImage->GetFrameSize().y * 0.8f));
+	mTransform->SetSize(Vector2(mImage->GetFrameSize().x * 0.6f, mImage->GetFrameSize().y * 0.8f));
 	mRigidbody->SetCheckRange(2);
 }
 
@@ -82,10 +83,12 @@ void BossFrog::CreateAnimation()
 
 void BossFrog::ExecuteDamage()
 {
+	_SoundManager->Play("FrogHouling",_Camera->GetDistanceFactor(mTransform->GetWorldPosition())* 1.4f);
 }
 
 void BossFrog::ExecuteDie()
 {
+	_SoundManager->Play("FrogHouling", _Camera->GetDistanceFactor(mTransform->GetWorldPosition()) * 1.4f);
 }
 
 void BossFrogIdle::Enter()
@@ -118,11 +121,29 @@ void BossFrogIdle::Exit()
 
 void BossFrogCreate::Enter()
 {
+	if (mPlayer->GetTransform()->GetWorldPosition().x < mMonster->GetTransform()->GetWorldPosition().x)
+		mMonster->SetIsLeft(true);
+	else
+		mMonster->SetIsLeft(false);
+
 	mMonster->ChangeAnimation("Create");
+	mIsCreate = false;
 }
 
 void BossFrogCreate::Execute()
 {
+	if (mIsCreate == false)
+	{
+		if (mMonster->GetAnimations()->GetCurrentAnimation()->GetNowFrameX() == 2)
+		{
+			mIsCreate = true;
+			Frog* frog = new Frog(mMonster->GetTransform()->GetCenterPos());
+			frog->Init();
+			frog->ChangeState("MoveToPlayer");
+			_World->GetObjectPool()->FindObject("World")->GetTransform()->AddChild(frog->GetTransform());
+			_World->GetObjectPool()->AddObject(frog);
+		}
+	}
 }
 
 void BossFrogCreate::Exit()
