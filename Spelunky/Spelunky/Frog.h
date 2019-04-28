@@ -22,7 +22,6 @@ protected:
 
 class FrogIdleState : public MonsterStateBase
 {
-	float mDelayTime; 
 public:
 	FrogIdleState(Monster* pMonster)
 		:MonsterStateBase(pMonster) {}

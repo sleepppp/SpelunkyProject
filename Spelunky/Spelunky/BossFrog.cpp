@@ -94,13 +94,13 @@ void BossFrog::ExecuteDie()
 void BossFrogIdle::Enter()
 {
 	mMonster->ChangeAnimation("Idle");
-	mDelayTime = 0.f;
+	mMonster->SetAttackDelay(0.f);
 }
 
 void BossFrogIdle::Execute()
 {
-	mDelayTime += _TimeManager->DeltaTime();
-	if (mDelayTime >= 2.f)
+	mMonster->SetAttackDelay(mMonster->GetAttackDelay() + _TimeManager->DeltaTime());
+	if (mMonster->GetAttackDelay() >= 2.f)
 	{
 		float length = Vector2::Length(&(mMonster->GetTransform()->GetWorldPosition() -
 			mPlayer->GetTransform()->GetWorldPosition()));

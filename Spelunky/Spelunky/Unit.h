@@ -40,6 +40,7 @@ public:
 	void SetIsLeft(const bool& isLeft) { mIsLeft = isLeft; }
 	Vector2 GetAimDirection()const{return mAimDirection;}
 
+	bool GetIsLive() { return (mHp > 0); }
 	int GetFullHp()const { return mFullHp; }
 	int GetHp()const { return mHp; }
 	void SetFullHp(const int& fhp) { mFullHp = fhp; }

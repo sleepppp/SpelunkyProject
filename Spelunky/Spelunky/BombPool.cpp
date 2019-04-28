@@ -45,6 +45,13 @@ Bomb * BombPool::ActivationBomb(const Vector2& pos)
 
 void BombPool::DeActivationBomb(Bomb * bomb)
 {
+	for (UINT i = 0; i < mDeActiveBombList.size(); ++i)
+	{
+		if (mDeActiveBombList[i] == bomb)
+		{
+			return;
+		}
+	}
 	mDeActiveBombList.push_back(bomb);
 }
 

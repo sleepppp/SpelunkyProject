@@ -1,6 +1,8 @@
 #pragma once
 #include "Item.h"
 #include "Bullets.h"
+#include "RePlayDatas.h"
+#include "Rigidbody.h"
 class AK_47 : public Item
 {
 	static const float _revolverFireDelay;
@@ -19,6 +21,19 @@ private:
 	float mRaloadDelay;
 	float mCurrentTime;
 	int mFireCount;
+private:
+	struct SaveInfo
+	{
+		Vector2 position;
+		float currentDelay;
+		float currentTime;
+		int fireCount;
+		bool isFire;
+		bool isInstallation;
+		Rigidbody mRigidbody;
+		class Unit* mUnit;
+	};
+	RePlayDatas<SaveInfo>* mRePlayDatas;
 public:
 	AK_47(const Vector2 & worldPos, const bool & mIsInstallation);
 	virtual ~AK_47();
@@ -29,5 +44,7 @@ public:
 	void EnterInstallation()override;
 	void Execute()override;
 	void ExitInstallation()override;
+
+	void LoadRePlayData(const UINT64 & frame)override;
 };
 

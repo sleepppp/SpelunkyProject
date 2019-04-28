@@ -14,6 +14,10 @@ float Rigidbody::GetDefaultJumpPower()
 	return _defaultJumpPower;
 }
 
+Rigidbody::Rigidbody()
+{
+}
+
 Rigidbody::Rigidbody(GameObject * pObject)
 	:mIsOnGround(false),mObject(pObject), mJumpPower(0.f), mIsActiveGravity(true), 
 	mForcePower(-1.f),mRecuperativePower(_defaultRecuperativePower), mCheckRange(1)

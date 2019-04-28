@@ -26,10 +26,13 @@ Bomb::Bomb(class BombPool* pPool)
 	
 	mTransform->SetSize(mImage->GetFrameSize() * 0.4f);
 	mTransform->SetPivot(Pivot::Bottom);
+
+	mRePlayDatas = new RePlayDatas<SaveInfo>();
 }
 
 Bomb::~Bomb()
 {
+	SafeDelete(mRePlayDatas);
 }
 
 void Bomb::Init()
@@ -73,6 +76,19 @@ void Bomb::Update()
 			mIsSizeWidthUp = !mIsSizeWidthUp;
 	}
 	mTransform->SetSize(mSize * 0.4f);
+
+	if (mRePlayDatas->Update())
+	{
+		SaveInfo info;
+		info.isActive = mIsActive;
+		info.frameX = mFrameX;
+		info.isSizeWidthUp = mIsSizeWidthUp;
+		info.looper = mLooper;
+		info.position = mTransform->GetWorldPosition();
+		info.rigidbody = *mRigidbody;
+		info.size = mSize;
+		mRePlayDatas->UpdateInfo(info);
+	}
 }
 
 void Bomb::Render()
@@ -157,4 +173,28 @@ void Bomb::Explosion()
 	float shakePower = 10.4f * factor;
 	_Camera->Shake(shakeTime, shakeChangeDirTime, shakePower);
 	_SoundManager->Play("kaboom", factor);
+}
+
+void Bomb::LoadRePlayData(const UINT64 & frame)
+{
+	SaveInfo info;
+	info.isActive = mIsActive;
+	info.frameX = mFrameX;
+	info.isSizeWidthUp = mIsSizeWidthUp;
+	info.looper = mLooper;
+	info.position = mTransform->GetWorldPosition();
+	info.rigidbody = *mRigidbody;
+	info.size = mSize;
+
+	if (mRePlayDatas->GetData(frame, &info))
+	{
+		mIsActive = info.isActive;
+		mFrameX = info.frameX;
+		mIsSizeWidthUp = info.isSizeWidthUp;
+		mLooper = info.looper;
+		*mRigidbody = info.rigidbody;
+		mTransform->SetWorldPosition(info.position);
+		mSize = info.size;
+	}
+
 }

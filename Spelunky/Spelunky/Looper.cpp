@@ -3,21 +3,21 @@
 
 #include "Timer.h"
 Looper::Looper(const int & mLoopEnd,const float& loopTime)
-	:mIsStart(false),mLoopEnd(mLoopEnd),mCurrentCount(0),mTimer(new Timer(loopTime))
+	:mIsStart(false),mLoopEnd(mLoopEnd),mCurrentCount(0)
 {
-
+	mTimer.SetEndTime(loopTime);
 }
 
 Looper::~Looper()
 {
-	SafeDelete(mTimer);
+	
 }
 
 Looper::ReturnType Looper::Update()
 {
 	if (mIsStart)
 	{
-		if (mTimer->Update())
+		if (mTimer.Update())
 		{
 			if (++mCurrentCount >= mLoopEnd)
 			{
@@ -33,25 +33,25 @@ Looper::ReturnType Looper::Update()
 void Looper::Play()
 {
 	mIsStart = true;
-	mTimer->Play();
+	mTimer.Play();
 }
 
 void Looper::Pause()
 {
-	mTimer->Pause();
+	mTimer.Pause();
 	mIsStart = false;
 }
 
 void Looper::Stop()
 {
-	mTimer->Stop();
+	mTimer.Stop();
 	mIsStart = false;
 	mCurrentCount = 0;
 }
 
 void Looper::SetLoopTime(const float & loopTime)
 {
-	mTimer->SetEndTime(loopTime);
+	mTimer.SetEndTime(loopTime);
 }
 
 void Looper::SetLoopEnd(const int & loopEnd)

@@ -5,7 +5,7 @@
 
 #include "StringHelper.h"
 
-float TimeManager::_lockFps = 300.f;
+float TimeManager::_lockFps = 100.f;
 
 TimeManager::TimeManager()
 {

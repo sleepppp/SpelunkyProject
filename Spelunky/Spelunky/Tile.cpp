@@ -48,6 +48,7 @@ void Tile::Init()
 	{
 		mParticlePool = dynamic_cast<ParticleSystemPool*>(_World->GetObjectPool()->FindObject("ParticleSystemPool"));
 	}
+	
 }
 
 void Tile::Release()
@@ -127,6 +128,12 @@ void Tile::Explosion()
 		mImage = nullptr;
 		mType = Type::Empty;
 	}
+}
+
+
+void Tile::LoadRePlayData(const UINT64& frame)
+{
+
 }
 
 void Tile::SetType(const Type & type)

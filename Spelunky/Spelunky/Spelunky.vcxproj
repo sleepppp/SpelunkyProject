@@ -181,6 +181,7 @@
     <ClInclude Include="FrameEffect.h" />
     <ClInclude Include="FrameEffecter.h" />
     <ClInclude Include="Frog.h" />
+    <ClInclude Include="GameData.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectHeader.h" />
     <ClInclude Include="GameSystem.h" />
@@ -226,6 +227,7 @@
     <ClInclude Include="RedFrog.h" />
     <ClInclude Include="RenderPool.h" />
     <ClInclude Include="RenderTargetBuffer.h" />
+    <ClInclude Include="RePlayDatas.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Revolver.h" />
     <ClInclude Include="Rigidbody.h" />
@@ -297,6 +299,7 @@
     <ClCompile Include="FrameEffect.cpp" />
     <ClCompile Include="FrameEffecter.cpp" />
     <ClCompile Include="Frog.cpp" />
+    <ClCompile Include="GameData.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameSystem.cpp" />
     <ClCompile Include="GameUI.cpp" />
@@ -338,6 +341,7 @@
     <ClCompile Include="RedFrog.cpp" />
     <ClCompile Include="RenderPool.cpp" />
     <ClCompile Include="RenderTargetBuffer.cpp" />
+    <ClCompile Include="RePlayDatas.cpp" />
     <ClCompile Include="Revolver.cpp" />
     <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="SceneBase.cpp" />

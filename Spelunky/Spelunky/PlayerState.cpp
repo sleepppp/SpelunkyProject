@@ -453,7 +453,7 @@ void PlayerDead::Enter()
 {
 	mPlayer->ChangeAnimation(Unit::UnitAnimation::Dead);
 	mPlayer->GetTransform()->SetSize(Vector2(Tile::GetTileSize() * 0.6f, Tile::GetTileSize() * 0.8f));
-	mPlayer->GetRigidbody()->DisActiveGravity();
+	//mPlayer->GetRigidbody()->DisActiveGravity();
 }
 
 void PlayerDead::Execute()

@@ -7,6 +7,7 @@ class Animations
 private:
 	map<const T, class Animation*> mAnimationList;
 	class Animation* mCurrentAnimation;
+	T mCurrenyKey;
 public:
 	Animations() {}
 	~Animations()
@@ -38,6 +39,7 @@ public:
 				this->mCurrentAnimation->Stop();
 			this->mCurrentAnimation = iter->second;
 			this->mCurrentAnimation->Play();
+			mCurrenyKey = key;
 		}
 	}
 	
@@ -56,7 +58,7 @@ public:
 		if (mCurrentAnimation)
 			mCurrentAnimation->Stop();
 	}
-
+	T GetCurrentKey()const { return mCurrenyKey; }
 	class Animation* GetCurrentAnimation()const { return mCurrentAnimation; }
 	int GetFrameX()const
 	{

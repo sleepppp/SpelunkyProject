@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
 #include "Looper.h"
+#include "Rigidbody.h"
+#include "RePlayDatas.h"
 class Bomb : public GameObject
 {
 	BlockAssign(Bomb)
@@ -14,6 +16,18 @@ private:
 	Looper mLooper;
 	Vector2 mSize;
 	bool mIsSizeWidthUp;
+private:
+	struct SaveInfo
+	{
+		Vector2 position;
+		Vector2 size;
+		Rigidbody rigidbody;
+		int frameX;
+		Looper looper;
+		bool isSizeWidthUp;
+		bool isActive;
+	};
+	RePlayDatas<SaveInfo>* mRePlayDatas;
 public:
 	Bomb(class BombPool* pPool);
 	virtual ~Bomb();
@@ -27,5 +41,7 @@ public:
 public:
 	void Activation(const Vector2& pos);
 	void Explosion();
+
+	void LoadRePlayData(const UINT64& frame);
 };
 

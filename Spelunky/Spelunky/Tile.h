@@ -59,6 +59,8 @@ public:
 	void Render()override;
 	void Reset();
 	void Explosion();
+
+	void LoadRePlayData(const UINT64& frame)override; 
 public:
 	Figure::FloatRect& GetRect() { return mRect; }
 	const Type& GetType()const { return mType; }

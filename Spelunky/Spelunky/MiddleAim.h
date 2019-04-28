@@ -8,7 +8,6 @@ public:
 	virtual ~MiddleAim();
 
 	void Init()override;
-	void Update()override; 
-	void Render()override; 
+	void Update()override;  
 };
 

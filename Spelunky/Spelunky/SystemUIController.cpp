@@ -34,7 +34,7 @@ void SystemUIController::PopUI()
 	if (mUIStack.empty())
 	{
 		GameSystem* system = (GameSystem*)_World->GetObjectPool()->FindObject("GameSystem");
-		system->PlayGame();
+		system->ReturnPrevState();
 	}
 	else
 	{

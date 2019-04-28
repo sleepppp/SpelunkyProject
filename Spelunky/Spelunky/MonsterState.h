@@ -29,6 +29,7 @@ private:
 	map<string, class MonsterStateBase*> mStateList;
 	map<string, function<void(void)>> mFuncList;
 	class MonsterStateBase* mCurrentState;
+	string mCurrentKey;
 public:
 	MonsterStateManager();
 	virtual ~MonsterStateManager();
@@ -40,6 +41,7 @@ public:
 	void AddFunc(const string& key, const function<void(void)>& func);
 	void ChangeState(const string& key);
 	class MonsterStateBase* GetCurrentState()const { return mCurrentState; }
+	const string& GetCurrentKey()const { return mCurrentKey; }
 };
 
 
@@ -56,8 +58,6 @@ public:
 
 class MonsterFlyingToPlayer : public MonsterStateBase
 {
-private:
-	float mAttackDeley;
 public:
 	MonsterFlyingToPlayer(class Monster* pMonster)
 		:MonsterStateBase(pMonster) {}

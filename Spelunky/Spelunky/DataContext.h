@@ -1,4 +1,5 @@
 #pragma once
+#include "GameObject.h"
 /******************************************************************************************
 ## TagMessage , DataContextValue ##
 @@ Author : ±Ç¼ø¿ì , Data : 2019.03.22
@@ -17,7 +18,6 @@ struct TagMessage
 
 class DataContextValue
 {
-	class GameObject;
 	BlockAssign(DataContextValue)
 private:
 	void* data;
@@ -90,7 +90,7 @@ public:
 	{
 		*static_cast<string*>(data) = value;
 	}
-	void SetGameObject(GameObject*const value)
+	void SetGameObject(GameObject* value)
 	{
 		*static_cast<GameObject**>(data) = value;
 	}

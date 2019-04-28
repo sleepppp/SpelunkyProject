@@ -5,7 +5,6 @@
 *************************************************/
 class Animation final 
 {
-	BlockAssign(Animation)
 public:
 	enum class FrameDirection
 	{
@@ -41,10 +40,11 @@ public:
 	void SetCallbackFunc(function<void()> func);
 	void SetIsLoop(bool b) { this->isLoop = b; }
 	void SetFrameUpdateTime(float frameRate) { this->frameUpdateTime = frameRate; }
-	void SetCurrentFrameX(int i) { currentFrameIndex = i; }
+	void SetCurrentFrame(const int& i) { currentFrameIndex = i; }
 public:
 	float GetFrameUpdateTime()const { return this->frameUpdateTime; }
 	float GetTotalFrameTime();
+	int GetCurrentFrameIndex()const { return currentFrameIndex; }
 	float GetTotalCurrentTime()const { return this->totalCurrentTime; }
 	bool getIsLoop()const { return this->isLoop; }
 	pair<int, int> GetNowFrameData()const;

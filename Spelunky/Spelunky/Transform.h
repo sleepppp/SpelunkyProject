@@ -8,7 +8,6 @@
 ************************************************************************/
 class Transform final
 {
-	BlockAssign(Transform)
 private:
 	Vector2 mWorldPosition;
 	Vector2 mLocalPosition;

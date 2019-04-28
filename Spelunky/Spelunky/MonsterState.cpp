@@ -62,7 +62,7 @@ void MonsterStateManager::ChangeState(const string & key)
 		mCurrentState->Exit();
 	mCurrentState = iter->second;
 	mCurrentState->Enter();
-
+	mCurrentKey = key;
 	FuncIter funcIter = mFuncList.find(key);
 	if (funcIter != mFuncList.end())
 		funcIter->second();
@@ -97,13 +97,11 @@ void MonsterIdle::Exit()
 void MonsterFlyingToPlayer::Enter()
 {
 	mMonster->ChangeAnimation("MoveToPlayer");
-	mAttackDeley = 1.f;
 }
 
 void MonsterFlyingToPlayer::Execute()
 {
 	const float deltaTime = _TimeManager->DeltaTime();
-	mAttackDeley += deltaTime;
 
 	Vector2 pos = mMonster->GetTransform()->GetWorldPosition();
 	Vector2 targetPos = mPlayer->GetTransform()->GetWorldPosition();
@@ -154,34 +152,35 @@ void MonsterShuttling::Execute()
 	
 	Tile* tile = mTileManager->GetTile(indexX, indexY);
 	bool isSecondChecking = true;
-
-	if (tile->GetType() == Tile::Type::Soil ||
-		tile->GetType() == Tile::Type::Rock ||
-		tile->GetType() == Tile::Type::Trap)
+	if (tile)
 	{
-		if (Figure::IntersectRectToRect(&monsterTransform->GetRect(), &tile->GetRect()))
+		if (tile->GetType() == Tile::Type::Soil ||
+			tile->GetType() == Tile::Type::Rock ||
+			tile->GetType() == Tile::Type::Trap)
 		{
-			mMonster->SetIsLeft(!mMonster->GetIsLeft());
-			isSecondChecking = true;
-		}
-	}
-	if (isSecondChecking == true)
-	{
-		Tile* underTile = mTileManager->GetTile(indexX, indexY + 1);
-		if (underTile->GetType() == Tile::Type::Empty ||
-			underTile->GetType() == Tile::Type::Thorn)
-		{
-			if (Vector2::Length(&(monsterTransform->GetCenterPos() - tile->GetRect().GetCenter()))
-				<= monsterTransform->GetSize().x * 0.8f)
+			if (Figure::IntersectRectToRect(&monsterTransform->GetRect(), &tile->GetRect()))
+			{
 				mMonster->SetIsLeft(!mMonster->GetIsLeft());
+				isSecondChecking = true;
+			}
+		}
+		if (isSecondChecking == true)
+		{
+			Tile* underTile = mTileManager->GetTile(indexX, indexY + 1);
+			if (underTile->GetType() == Tile::Type::Empty ||
+				underTile->GetType() == Tile::Type::Thorn)
+			{
+				if (Vector2::Length(&(monsterTransform->GetCenterPos() - tile->GetRect().GetCenter()))
+					<= monsterTransform->GetSize().x * 0.8f)
+					mMonster->SetIsLeft(!mMonster->GetIsLeft());
+			}
+		}
+
+		if (Vector2::Length(&(mMonster->GetTransform()->GetCenterPos() - mPlayer->GetTransform()->GetCenterPos())) <= 50.f)
+		{
+			mMonster->ChangeState("Attack");
 		}
 	}
-	
-	if (Vector2::Length(&(mMonster->GetTransform()->GetCenterPos() - mPlayer->GetTransform()->GetCenterPos())) <= 50.f)
-	{
-		mMonster->ChangeState("Attack");
-	}
-
 	monsterTransform->Translate(moveValue * mMonster->GetSpeed() *_TimeManager->DeltaTime());
 }
 

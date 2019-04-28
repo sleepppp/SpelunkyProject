@@ -159,12 +159,16 @@ void RedFrog::Damage(const float & damage, const Vector2 & forceDirection, const
 			{
 				mPlayer->Damage(mDamage, toTarget);
 			}
+
+			DataContextValue* value = _GameData->GetData(GameData::DataType::Int, "KillingMonsterCount");
+			_GameData->SetData(GameData::DataType::Int, "KillingMonsterCount", value->GetInt() + 1);
 		}
 		else
 		{
 			this->ExecuteDamage();
 			mParticlePool->PlayParticle("BloodRubble", mTransform->GetWorldPosition());
 			mRigidbody->Force(forceDirection, forcePower, recuPower);
+
 		}
 	}
 }

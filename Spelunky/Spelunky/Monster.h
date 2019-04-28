@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include "Animations.h"
 #include "MonsterState.h"
+#include "Rigidbody.h"
+#include "RePlayDatas.h"
 class Monster : public GameObject
 {
 protected:
@@ -17,6 +19,21 @@ protected:
 	int mDamage;
 	float mPerceptionRange; 
 	float mSpeed; 
+	float mAttackDeley;
+protected:
+	struct SaveInfo
+	{
+		bool isActive;
+		Vector2 position;
+		float hp;
+		Rigidbody rigidbody;
+		bool isLeft;
+		string animationKey;
+		int currentAnimationIndex;
+		string stateKey;
+		float attackDelay;
+	};
+	RePlayDatas<SaveInfo>* mRePlayDatas;
 public:
 	Monster(const Vector2& pos);
 	virtual ~Monster();
@@ -32,6 +49,8 @@ public:
 	class ParticleSystemPool* GetParticlePool()const { return mParticlePool; }
 	Animations<string>* GetAnimations() { return &mAnimations; }
 	float GetPerceptionRange()const { return mPerceptionRange; }
+	float GetAttackDelay()const { return mAttackDeley; }
+	void SetAttackDelay(const float& attackDelay) { mAttackDeley = attackDelay; }
 	float GetSpeed()const { return mSpeed;  }
 	int GetDamage()const { return mDamage; }
 	bool GetIsLeft()const { return mIsLeft; }
@@ -47,5 +66,7 @@ public:
 protected:
 	virtual void Enable();
 	virtual void Disable();
+
+	void LoadRePlayData(const UINT64& frame)override;
 };
 

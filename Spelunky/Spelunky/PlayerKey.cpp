@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "PlayerKey.h"
 
-
+#include "Player.h"
 PlayerKey::PlayerKey()
 {
 	mPlayerKey[(int)PlayerKey::Key::Left] = 'A';
@@ -21,7 +21,7 @@ PlayerKey::PlayerKey()
 
 PlayerKey::~PlayerKey(){}
 
-void PlayerKey::Update()
+void PlayerKey::Update(RePlayDatas<InputData>* pInputDatas)
 {
 	/*********************************************************************
 	## KeyStay ##
@@ -31,62 +31,30 @@ void PlayerKey::Update()
 	/*********************************************************************
 	## KeyDown
 	**********************************************************************/
-	if (_Input->GetKeyDown(mPlayerKey[(int)PlayerKey::Key::Left]))
-		mPlayerKeyState[(int)PlayerKey::Key::Left] = KeyState::Down;
+	bool isInput = false;
+	for (int i = 0; i < (int)PlayerKey::Key::End; ++i)
+	{
+		if (_Input->GetKeyDown(mPlayerKey[i]))
+		{
+			mPlayerKeyState[i] = KeyState::Down;
+			isInput = true;
+		}
+		else if (_Input->GetKeyUp(mPlayerKey[i]))
+		{ 
+			mPlayerKeyState[i] = KeyState::Up;
+			isInput = true;
+		}
+	}
+	//if (isInput)
+	{
+		if (pInputDatas)
+		{
+			InputData data;
+			memcpy(&data.keyState, &mPlayerKeyState, sizeof(int) * (int)PlayerKey::Key::End);
+			pInputDatas->UpdateInfo(data);
+		}
+	}
 
-	if (_Input->GetKeyDown(mPlayerKey[(int)PlayerKey::Key::Right]))
-		mPlayerKeyState[(int)PlayerKey::Key::Right] = KeyState::Down;
-
-	if (_Input->GetKeyDown(mPlayerKey[(int)PlayerKey::Key::Down]))
-		mPlayerKeyState[(int)PlayerKey::Key::Down] = KeyState::Down;
-
-	if (_Input->GetKeyDown(mPlayerKey[(int)PlayerKey::Key::Jump]))
-		mPlayerKeyState[(int)PlayerKey::Key::Jump] = KeyState::Down;
-
-	if (_Input->GetKeyDown(mPlayerKey[(int)PlayerKey::Key::Bomb]))
-		mPlayerKeyState[(int)PlayerKey::Key::Bomb] = KeyState::Down;
-
-	if (_Input->GetKeyDown(mPlayerKey[(int)PlayerKey::Key::Attack]))
-		mPlayerKeyState[(int)PlayerKey::Key::Attack] = KeyState::Down;
-
-	if (_Input->GetKeyDown(mPlayerKey[(int)PlayerKey::Key::Shift]))
-		mPlayerKeyState[(int)PlayerKey::Key::Shift] = KeyState::Down;
-
-	if (_Input->GetKeyDown(mPlayerKey[(int)PlayerKey::Key::Interaction]))
-		mPlayerKeyState[(int)PlayerKey::Key::Interaction] = KeyState::Down;
-
-	if (_Input->GetKeyDown(mPlayerKey[(int)PlayerKey::Key::Zoom]))
-		mPlayerKeyState[(int)PlayerKey::Key::Zoom] = KeyState::Down;
-
-	/*********************************************************************
-	## KeyUp ##
-	**********************************************************************/
-	if (_Input->GetKeyUp(mPlayerKey[(int)PlayerKey::Key::Left]))
-		mPlayerKeyState[(int)PlayerKey::Key::Left] = KeyState::Up;
-
-	if (_Input->GetKeyUp(mPlayerKey[(int)PlayerKey::Key::Right]))
-		mPlayerKeyState[(int)PlayerKey::Key::Right] = KeyState::Up;
-
-	if (_Input->GetKeyUp(mPlayerKey[(int)PlayerKey::Key::Down]))
-		mPlayerKeyState[(int)PlayerKey::Key::Down] = KeyState::Up;
-
-	if (_Input->GetKeyUp(mPlayerKey[(int)PlayerKey::Key::Jump]))
-		mPlayerKeyState[(int)PlayerKey::Key::Jump] = KeyState::Up;
-
-	if (_Input->GetKeyUp(mPlayerKey[(int)PlayerKey::Key::Bomb]))
-		mPlayerKeyState[(int)PlayerKey::Key::Bomb] = KeyState::Up;
-
-	if (_Input->GetKeyUp(mPlayerKey[(int)PlayerKey::Key::Attack]))
-		mPlayerKeyState[(int)PlayerKey::Key::Attack] = KeyState::Up;
-
-	if (_Input->GetKeyUp(mPlayerKey[(int)PlayerKey::Key::Shift]))
-		mPlayerKeyState[(int)PlayerKey::Key::Shift] = KeyState::Up;
-
-	if (_Input->GetKeyUp(mPlayerKey[(int)PlayerKey::Key::Interaction]))
-		mPlayerKeyState[(int)PlayerKey::Key::Interaction] = KeyState::Up;
-
-	if (_Input->GetKeyUp(mPlayerKey[(int)PlayerKey::Key::Zoom]))
-		mPlayerKeyState[(int)PlayerKey::Key::Zoom] = KeyState::Up;
 }
 
 void PlayerKey::CheckPreKeyState()
@@ -98,6 +66,11 @@ void PlayerKey::CheckPreKeyState()
 		else if (mPlayerKeyState[i] == KeyState::Up)
 			mPlayerKeyState[i] = KeyState::None;
 	}
+}
+
+void PlayerKey::CopyKeyState(void * pKeyArr)
+{
+	memcpy(&mPlayerKeyState, pKeyArr, sizeof(int) * (int)PlayerKey::Key::End);
 }
 
 void PlayerKey::SetupKey(const PlayerKey::Key & key, const int & keyboard)

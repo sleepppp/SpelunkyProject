@@ -40,4 +40,5 @@ void UnitStateManager::ChangeState(const string & key)
 		mCurrentState->Exit();
 	mCurrentState = iter->second;
 	mCurrentState->Enter();
+	mCurrentKey = key;
 }

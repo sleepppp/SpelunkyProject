@@ -20,6 +20,8 @@ public:
 	virtual void Update() {}
 	virtual void Render() {}
 	virtual void OnGui() {}
+
+	virtual void LoadRePlayData(const UINT64& frame ) {}
 public:
 	inline class Transform* const GetTransform()const { return this->mTransform; }
 	const string& GetName()const { return this->mName; }

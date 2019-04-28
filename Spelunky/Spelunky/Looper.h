@@ -1,4 +1,5 @@
 #pragma once
+#include "Timer.h"
 class Looper
 {
 public:
@@ -7,7 +8,7 @@ public:
 		Timer,Loop,None
 	};
 private:
-	class Timer* mTimer;
+	Timer mTimer;
 	int mCurrentCount; 
 	int mLoopEnd;
 	bool mIsStart;

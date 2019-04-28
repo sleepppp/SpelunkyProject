@@ -8,7 +8,7 @@
 const Vector2 Item::_itemSize = Vector2(20, 20);
 
 Item::Item(const Vector2 & worldPos, const bool & mIsInstallation)
-	:GameObject("Item"), mRigidbody(new Rigidbody(this)), mUnit(nullptr), mAngle(0.f), mIsInstallation(false)
+	:GameObject("Item"), mRigidbody(new Rigidbody(this)), mUnit(nullptr), mAngle(0.f), mIsInstallation(mIsInstallation)
 {
 	mLayer = RenderPool::Layer::Object;
 	mTransform->SetWorldPosition(worldPos);
@@ -100,6 +100,8 @@ void Item::Installing(class Unit* pUnit)
 		this->EnterInstallation();
 	}
 }
+
+
 
 void Item::UnInstallation()
 {

@@ -1,7 +1,6 @@
 #pragma once
 class Rigidbody final
 {
-	BlockAssign(Rigidbody)
 private:
 	static const float _defaultJumpPower;
 	static const float _defaultRecuperativePower;
@@ -27,7 +26,7 @@ private:
 	bool mIsOnGround;
 	bool mIsActiveGravity;
 public:
-	Rigidbody() = delete;
+	Rigidbody();
 	explicit Rigidbody(class GameObject* pObject);
 	~Rigidbody();
 

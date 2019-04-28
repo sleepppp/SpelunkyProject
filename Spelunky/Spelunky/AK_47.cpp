@@ -18,12 +18,13 @@ AK_47::AK_47(const Vector2 & worldPos, const bool & mIsInstallation)
 	mCurrentDelay(0.f), mRebound(0.3f), mRaloadDelay(-1.f), mCurrentTime(0.f)
 {
 	mImageInfo.image = _ImageManager->FindImage("AK_47");
+	mRePlayDatas = new RePlayDatas<SaveInfo>();
 }
 
 
 AK_47::~AK_47()
 {
-
+	SafeDelete(mRePlayDatas);
 }
 
 void AK_47::Init()
@@ -36,7 +37,7 @@ void AK_47::Init()
 	mPointLight->Init();
 	mPointLight->SetColor(GameColor(1.f, 0.94f, 0.7f, 1.f));
 
-	mBullets = new Bullets<Bullet>();
+	mBullets = new Bullets<Bullet>(25);
 	mBullets->Init();
 	mBullets->InitAllBullet(_ImageManager->FindImage("YellowBullet"), 0.5f, 800.f,
 		(Bullet::TargetType)(Bullet::TargetType::CMonster | Bullet::TargetType::CTile));
@@ -82,6 +83,23 @@ void AK_47::Update()
 				mPointLight->SetActive(false);
 		}
 	}
+
+	if (RePlayManager::GetIsPlay())
+	{
+		if (mRePlayDatas->Update())
+		{
+			SaveInfo info;
+			info.position = mTransform->GetWorldPosition();
+			info.currentDelay = mCurrentDelay;
+			info.currentTime = mCurrentTime;
+			info.fireCount = mFireCount;
+			info.isFire = mIsFire;
+			info.isInstallation = mIsInstallation;
+			info.mRigidbody = *mRigidbody;
+			info.mUnit = mUnit;
+			mRePlayDatas->UpdateInfo(info);
+		}
+	}
 }
 
 void AK_47::EnterInstallation()
@@ -118,4 +136,27 @@ void AK_47::Execute()
 void AK_47::ExitInstallation()
 {
 	_SoundManager->Play("cocked",_Camera->GetDistanceFactor(mTransform->GetWorldPosition()));
+}
+
+void AK_47::LoadRePlayData(const UINT64 & frame)
+{
+	SaveInfo info;
+
+	if (mRePlayDatas->GetData(frame, &info))
+	{
+		mTransform->SetWorldPosition(info.position);
+		mCurrentDelay = info.currentDelay;
+		mCurrentTime = info.currentTime;
+		mFireCount = info.fireCount;
+		mIsFire = info.isFire;
+		mIsInstallation = info.isInstallation;
+		*mRigidbody = info.mRigidbody;
+		mUnit = info.mUnit;
+		if (mUnit)
+		{
+			mUnit->GetTransform()->AddChild(mTransform);
+			mTransform->SetPivot(Pivot::Center);
+			mRigidbody->DisActiveGravity();
+		}
+	}
 }

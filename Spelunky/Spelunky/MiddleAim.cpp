@@ -27,11 +27,3 @@ void MiddleAim::Update()
 	Vector2 dir = _Camera->GetWorldMouse() - mPlayer->GetTransform()->GetWorldPosition();
 	mTransform->SetWorldPosition(playerPos + dir * 0.5f);
 }
-
-void MiddleAim::Render()
-{
-	if (_isDebug)
-	{
-		_D2DRenderer->DrawEllipse(mTransform->GetWorldPosition(), 10.f, D2DRenderer::DefaultBrush::Red, true, 2.f);
-	}
-}

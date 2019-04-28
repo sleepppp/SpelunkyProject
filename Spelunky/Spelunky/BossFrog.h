@@ -21,7 +21,6 @@ protected:
 
 class BossFrogIdle : public MonsterStateBase
 {
-	float mDelayTime;
 public:
 	BossFrogIdle(Monster* pMonster)
 		:MonsterStateBase(pMonster) {}

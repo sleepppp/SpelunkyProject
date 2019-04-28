@@ -12,6 +12,8 @@ D2DRenderer::D2DRenderer()
 	this->CreateDefaultBrush();
 	this->AddTextFormat(L"¸¼Àº°íµñ");
 	this->AddTextFormat(L"Tekton Pro");
+	this->AddTextFormat(L"DOSGothic");
+	mD2DRenderTarget->SetAntialiasMode(D2D1_ANTIALIAS_MODE_ALIASED);
 }
 
 /*****************************************************

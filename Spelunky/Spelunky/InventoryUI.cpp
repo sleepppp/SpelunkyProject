@@ -46,11 +46,12 @@ void InventoryUI::Render()
 				DWRITE_TEXT_ALIGNMENT_CENTER, false);
 			_D2DRenderer->RenderTextField(75, 50, to_wstring(hp), 60, 100, 100, D2DRenderer::DefaultBrush::White,
 				DWRITE_TEXT_ALIGNMENT_CENTER, false);
+
+			_D2DRenderer->RenderTextField(237, 40, to_wstring(bomdCount), 60, 300, 100, D2DRenderer::DefaultBrush::Black,
+				DWRITE_TEXT_ALIGNMENT_LEADING, false);
+			_D2DRenderer->RenderTextField(240, 40, to_wstring(bomdCount), 60, 300, 100, D2DRenderer::DefaultBrush::White,
+				DWRITE_TEXT_ALIGNMENT_LEADING, false);
 		}
-		_D2DRenderer->RenderTextField(237, 40, to_wstring(bomdCount), 60, 300, 100, D2DRenderer::DefaultBrush::Black,
-			DWRITE_TEXT_ALIGNMENT_LEADING, false);
-		_D2DRenderer->RenderTextField(240, 40, to_wstring(bomdCount), 60, 300, 100, D2DRenderer::DefaultBrush::White,
-			DWRITE_TEXT_ALIGNMENT_LEADING, false);
 	}
 	if (mGoldImage)
 	{

@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "RePlayDatas.h"
 class Item : public GameObject
 {
 protected:
@@ -26,5 +27,6 @@ public:
 	void Installing(class Unit* pUnit);
 	void UnInstallation();
 	class Rigidbody* GetRigidBody()const { return mRigidbody; }
+
 };
 

@@ -193,6 +193,7 @@ void Window::CreateSingleton()
 	ImageManager::Create();
 	SceneManager::Create();
 	SoundManager::Create();
+	GameData::Create();
 	DebugSystem::Create();
 }
 /*************************************************
@@ -201,6 +202,7 @@ void Window::CreateSingleton()
 void Window::DeleteSingleton()
 {
 	DebugSystem::Delete();
+	GameData::Delete();
 	SoundManager::Delete();
 	SceneManager::Delete();
 	ImageManager::Delete();

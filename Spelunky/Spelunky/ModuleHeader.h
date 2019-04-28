@@ -21,3 +21,4 @@
 #include "MessageManager.h"
 #include "SoundManager.h"
 #include "DebugSystem.h"
+#include "GameData.h"

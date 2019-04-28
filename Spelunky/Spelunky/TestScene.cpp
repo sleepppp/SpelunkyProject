@@ -118,7 +118,7 @@ void TestScene::Init()
 			mObjectPool->AddObject(bat);
 		}
 	}
-
+	
 	for (int i = 0; i < 20; ++i)
 	{
 		if (Tile* tile = TileMapGenerator::FindOnGroundTile(tileManager->GetTilePtr()))
@@ -164,8 +164,13 @@ void TestScene::Init()
 		}
 	}
 
-	_SoundManager->PlayBGM("zone2");
 
+	/********************************************************************
+	## System Init##
+	********************************************************************/
+	_GameData->SetData(GameData::DataType::Int, "KillingMonsterCount", 0);  
+	_SoundManager->PlayBGM("zone2");
+	RePlayManager::Start();
 }
 
 void TestScene::Release()
@@ -176,6 +181,12 @@ void TestScene::Release()
 void TestScene::Update()
 {
 	SceneBase::Update();
+	RePlayManager::Update();
+	if (_Input->GetKeyDown('P'))
+	{
+		Player* player = (Player*)_World->GetRenderPool()->FindObjectInLayer(RenderPool::Layer::Character, "Player");
+		player->Damage(10, Vector2(0.f, -1.f));
+	}
 }
 
 void TestScene::Render()

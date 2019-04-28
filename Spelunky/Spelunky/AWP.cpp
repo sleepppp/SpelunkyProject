@@ -22,11 +22,14 @@ AWP::AWP(const Vector2& worldPos,const bool& installation)
 	:Item(worldPos, installation),mIsZoom(false)
 {
 	mImageInfo.image = _ImageManager->FindImage("AWP");
+
+	mRePlayDatas = new RePlayDatas<SaveInfo>();
 }
 
 
 AWP::~AWP()
 {
+	SafeDelete(mRePlayDatas);
 }
 
 void AWP::Init()
@@ -106,6 +109,22 @@ void AWP::Update()
 				_Camera->ChangeTarget(this->mPlayer->GetTransform());
 		}
 	}
+
+	if (RePlayManager::GetIsPlay())
+	{
+		if (mRePlayDatas->Update())
+		{
+			SaveInfo info;
+			info.mIsZoom = mIsZoom;
+			info.currentDelay = mCurrentDelay;
+			info.isFire = mIsFire;
+			info.mIsInstallation = mIsInstallation;
+			info.mRigidbody = *mRigidbody;
+			info.mUnit = mUnit;
+			info.position = mTransform->GetWorldPosition();
+			mRePlayDatas->UpdateInfo(info);
+		}
+	}
 }
 
 void AWP::Render()
@@ -115,12 +134,12 @@ void AWP::Render()
 	{
 		Vector2 firePos = mTransform->GetCenterPos() + mUnit->GetAimDirection() * (mImageInfo.image->GetFrameSize().x * 0.3f);
 		_D2DRenderer->DrawLine(firePos, endPos, D2D1::ColorF::Red,0.5f, true, 2.f);
-	}
-	if (mIsFire)
-	{
-		Vector2 firePos = mTransform->GetCenterPos() + mUnit->GetAimDirection() * (mImageInfo.image->GetFrameSize().x * 0.3f);
-		float factor = 1.f - mCurrentDelay / 1.f;
-		_D2DRenderer->DrawLine(firePos, endPos, D2D1::ColorF::Yellow, factor, true, 2.f);
+		if (mIsFire)
+		{
+			Vector2 firePos = mTransform->GetCenterPos() + mUnit->GetAimDirection() * (mImageInfo.image->GetFrameSize().x * 0.3f);
+			float factor = 1.f - mCurrentDelay / 1.f;
+			_D2DRenderer->DrawLine(firePos, endPos, D2D1::ColorF::Yellow, factor, true, 2.f);
+		}
 	}
 	
 }
@@ -174,4 +193,26 @@ void AWP::ExitInstallation()
 	_SoundManager->Play("cocked",_Camera->GetDistanceFactor(mTransform->GetWorldPosition()));
 	_Camera->ChangeTarget(this->mPlayer->GetTransform());
 	mIsZoom = false;
+}
+
+void AWP::LoadRePlayData(const UINT64 & frame)
+{
+	SaveInfo info;
+	if (mRePlayDatas->GetData(frame, &info))
+	{
+		mTransform->SetWorldPosition(info.position);
+		*mRigidbody = info.mRigidbody;
+		mCurrentDelay = info.currentDelay;
+		mIsFire = info.isFire;
+		mIsInstallation = info.mIsInstallation;
+		mUnit = info.mUnit;
+		mIsZoom = info.mIsZoom;
+
+		if (mUnit)
+		{
+			mUnit->GetTransform()->AddChild(mTransform);
+			mTransform->SetPivot(Pivot::Center);
+			mRigidbody->DisActiveGravity();
+		}
+	}
 }

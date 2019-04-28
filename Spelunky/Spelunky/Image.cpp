@@ -197,7 +197,7 @@ void Image::FrameRender(const Vector2& position,const int& frameX,const int& fra
 	_D2DRenderer->GetRenderTarget()->SetTransform(scale * rotation * translation);
 	//·»´õ¸µ ¿äÃ»
 	_D2DRenderer->GetRenderTarget()->DrawBitmap(mBitmap, dxArea, mAlpha,
-		D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &dxSrc);
+		D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR, &dxSrc);
 
 	this->ResetRenderOption();
 }

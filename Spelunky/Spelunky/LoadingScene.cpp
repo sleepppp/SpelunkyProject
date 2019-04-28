@@ -46,7 +46,7 @@ void LoadingScene::Update()
 void LoadingScene::Render()
 {
 	_D2DRenderer->RenderTextField(_WinSizeX / 2 - 200, _WinSizeY / 2 + 200,
-		L"Generating . . ", 50, 300, 100, D2DRenderer::DefaultBrush::White, DWRITE_TEXT_ALIGNMENT_JUSTIFIED,false, L"Tekton Pro");
+		L"Generating . . ", 50, 400, 100, D2DRenderer::DefaultBrush::White, DWRITE_TEXT_ALIGNMENT_JUSTIFIED,false, L"DOSGothic");
 	if (mImage)
 	{
 		mImage->SetScale(2.0f);

@@ -1,8 +1,7 @@
 #pragma once
 #include "Bullet.h"
-#include "Bullets.h"
 #include "GameObject.h"
-
+#include "RePlayDatas.h"
 template<typename T> 
 class Bullets : public GameObject
 {
@@ -12,6 +11,13 @@ private:
 	UINT mCapacity;
 	list<Bullet*> mActiveBullets;
 	list<Bullet*> mDeActiveBullets;
+
+	struct SaveInfo
+	{
+		UINT count;
+		vector<Bullet> activeBulletInfo;
+	};
+	RePlayDatas<SaveInfo>* mRePlayDatas;
 public:
 	Bullets(const UINT& capacity = 50)
 		:GameObject("Bullets"),mCapacity(capacity) 
@@ -22,9 +28,11 @@ public:
 			Bullet* newBullet = new T;
 			mDeActiveBullets.push_back(newBullet);
 		}
+		mRePlayDatas = new RePlayDatas<SaveInfo>();
 	}
 	virtual ~Bullets()
 	{
+		SafeDelete(mRePlayDatas);
 		BulletIter iter = mActiveBullets.begin();
 		for (; iter != mActiveBullets.end(); ++iter)
 			SafeDelete(*iter);
@@ -75,6 +83,22 @@ public:
 				iter = tempIter;
 			}
 			else ++iter;
+		}
+
+		if (RePlayManager::GetIsPlay())
+		{
+			if (mRePlayDatas->Update())
+			{
+				SaveInfo info;
+				info.count = mActiveBullets.size();
+				info.activeBulletInfo.assign(info.count, Bullet());
+				BulletIter iter = mActiveBullets.begin();
+				for (UINT i = 0; iter != mActiveBullets.end();++iter,++i)
+				{
+					info.activeBulletInfo[i] = **iter;
+				}
+				mRePlayDatas->UpdateInfo(info);
+			}
 		}
 	}
 
@@ -174,5 +198,27 @@ private:
 		return result;
 	}
 
+	void Reset()
+	{	
+		BulletIter iter = mActiveBullets.begin();
+		for (; iter != mActiveBullets.end(); ++iter)
+			mDeActiveBullets.push_back(*iter);
+		mActiveBullets.clear();
+	}
+
+	void LoadRePlayData(const UINT64& frame)override
+	{
+		SaveInfo info;
+		if (mRePlayDatas->GetData(frame, &info))
+		{
+			this->Reset();
+			for (UINT i = 0; i < info.activeBulletInfo.size(); ++i)
+			{
+				Bullet* bullet = GetDeActiveBullet();
+				*bullet = info.activeBulletInfo[i];
+				mActiveBullets.push_back(bullet);
+			}
+		}
+	}
 };
 

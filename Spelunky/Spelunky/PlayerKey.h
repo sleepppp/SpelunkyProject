@@ -1,27 +1,34 @@
 #pragma once
+#include "RePlayDatas.h"
 class PlayerKey final
 {
-	BlockAssign(PlayerKey)
+private:
+	enum class KeyState : int
+	{
+		None = 0, Down, Stay, Up, End
+	};
 public:
 	enum class Key : int
 	{
 		Left = 0, Right, Jump,Interaction ,Down, Attack,Zoom, Bomb, Shift, End
 	};
-private:
-	enum class KeyState : int
+	struct InputData
 	{
-		None = 0,Down,Stay,Up,End
+		PlayerKey::KeyState keyState[(int)PlayerKey::Key::End];
 	};
+
 private:
+	friend class Player;
 	int mPlayerKey[(int)Key::End];
 	KeyState mPlayerKeyState[(int)Key::End];
 public:
 	PlayerKey();
 	~PlayerKey();
 
-	void Update();
-
+	void Update(class RePlayDatas<InputData>* pInputDatas);
 	void CheckPreKeyState();
+	void CopyKeyState(void* pKeyArr);
+	int GetPlayerKey(const int& i) { return mPlayerKey[i]; }
 
 	void SetupKey(const PlayerKey::Key& key, const int& keyboard);
 	const int& GetPlayerKey(PlayerKey::Key key);

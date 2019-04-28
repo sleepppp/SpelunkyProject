@@ -12,9 +12,11 @@
 #include "Item.h"
 #include "Bomb.h"
 #include "BombPool.h"
+#include "GameSystem.h"
+#include "RePlayDatas.h"
 
 Player::Player(const Vector2& pos,const string& imageKey)
-	:Unit(pos), mSpeed(300.f)
+	:Unit(pos), mSpeed(300.f), mFrameCount(0)
 {
 	mHp = mFullHp = 3;
 	mName = "Player";
@@ -23,12 +25,18 @@ Player::Player(const Vector2& pos,const string& imageKey)
 	if (mUnitImage == nullptr)assert(SUCCEEDED(E_FAIL));
 #endif
 	mInventory.SetPlayer(this);
+
+	mInputDatas = new RePlayDatas<PlayerKey::InputData>(0,1000);
+	mStateDatas = new RePlayDatas<StateInfo>();
+	mMouseDatas = new RePlayDatas<Vector2>(0,1000);
 }
 
 
 Player::~Player()
 {
-	
+	SafeDelete(mMouseDatas);
+	SafeDelete(mStateDatas);
+	SafeDelete(mInputDatas);
 }
 
 void Player::Init()
@@ -37,6 +45,7 @@ void Player::Init()
 	Unit::Init();
 	this->mInventory.Init();
 	this->mStateManager->ChangeState("Idle");
+	mSystem = (GameSystem*)_World->GetObjectPool()->FindObject("GameSystem");
 }
 
 void Player::Release()
@@ -46,17 +55,43 @@ void Player::Release()
 
 void Player::Update()
 {
-	this->mPlayerKey.Update();
-	this->CalculationAim();
-	if (mPlayerKey.GetKeyDown(PlayerKey::Key::Interaction))
-		this->TryInstalling();
-	
-	Unit::Update();
+	GameSystem::SystemState state = mSystem->GetSystemState();
+	if (state == GameSystem::SystemState::PlayGame ||
+		state == GameSystem::SystemState::Continue)
+		this->UpdatePlayGame();
+	else if (state == GameSystem::SystemState::Replay)
+		this->UpdateRePlay();
 }
 
 void Player::Render()
 {
 	Unit::Render();
+}
+
+void Player::LoadRePlayData(const UINT64 & frame)
+{
+	StateInfo info;
+
+	if (mStateDatas->GetData(frame, &info))
+	{
+		mTransform->SetWorldPosition(info.position);
+		mStateManager->ChangeState(info.currentStateKey);
+		mAnimations->ChangeAnimation(info.animationKey);
+		mAnimations->GetCurrentAnimation()->SetCurrentFrame(info.currentAnimationFrame);
+		mInventory.SetBombCount(info.bombCount);
+		mHp = info.hp;
+		mInventory.SetMainWeapon(info.weaponPtr);
+		*mRigidbody = info.rigidbody;
+		mFrameCount = frame;
+		mIsDamage = info.isDamage;
+		mLooper = info.looper;
+	}
+
+	PlayerKey::InputData inputData;
+	if (mInputDatas->GetData(frame, &inputData))
+	{
+		mPlayerKey.CopyKeyState(&inputData.keyState);
+	}
 }
 
 void Player::SetupKey(const PlayerKey::Key & key, const int & keyboard)
@@ -176,4 +211,93 @@ void Player::CalculationAim()
 	Vector2 playerPos = mTransform->GetCenterPos();
 	Vector2 worldMouse = _Camera->GetWorldMouse();
 	mAimDirection = Vector2::Normalize(&(worldMouse - playerPos));
+}
+
+void Player::UpdatePlayGame()
+{
+	if (mHp > 0)
+	{
+		this->mPlayerKey.Update(mInputDatas);
+		this->CalculationAim();
+		if (mPlayerKey.GetKeyDown(PlayerKey::Key::Interaction))
+			this->TryInstalling();
+	}
+	Unit::Update();
+
+	if (mHp > 0)
+	{
+		if (mStateDatas->Update())
+		{
+			StateInfo info;
+			info.position = mTransform->GetWorldPosition();
+			info.hp = mHp;
+			info.weaponPtr = mInventory.GetMainWeapon();
+			info.bombCount = mInventory.GetBombCount();
+			info.animationKey = mAnimations->GetCurrentKey();
+			info.currentAnimationFrame = mAnimations->GetCurrentAnimation()->GetCurrentFrameIndex();
+			info.currentStateKey = mStateManager->GetCurrentKey();
+			info.rigidbody = *mRigidbody;
+			info.isDamage = mIsDamage;
+			info.looper = mLooper;
+			mStateDatas->UpdateInfo(info);
+		}
+		if (mMouseDatas->Update())
+		{
+			mMouseDatas->UpdateInfo(_Camera->GetWorldMouse());
+		}
+	}
+}
+
+void Player::UpdateRePlay()
+{
+	if (mHp > 0)
+	{
+		++mFrameCount;
+		mPlayerKey.CheckPreKeyState();
+		
+		Vector2 worldMouse;
+		if (mMouseDatas->GetData(mFrameCount, &worldMouse))
+		{
+			Vector2 playerPos = mTransform->GetCenterPos();
+			mAimDirection = Vector2::Normalize(&(worldMouse - playerPos));
+		}
+
+		PlayerKey::InputData inputData;
+		if (mInputDatas->GetData(mFrameCount, &inputData))
+		{
+			for (int i = 0; i < (int)PlayerKey::Key::End; ++i)
+			{
+				if (inputData.keyState[i] == PlayerKey::KeyState::Down)
+					mPlayerKey.PushKey((PlayerKey::Key)i);
+				else if (inputData.keyState[i] == PlayerKey::KeyState::Up)
+					mPlayerKey.PopKey((PlayerKey::Key)i);
+			}
+		}
+
+		if (mPlayerKey.GetKeyDown(PlayerKey::Key::Interaction))
+			this->TryInstalling();
+
+		mStateManager->Update();
+	}
+
+	mAnimations->Update();
+	mRigidbody->Update();
+
+	if (mIsDamage == true)
+	{
+		Looper::ReturnType result = mLooper.Update();
+		if (result == Looper::ReturnType::Timer)
+		{
+			if (mAlpha > 0.6f)
+				mAlpha = 0.5f;
+			else mAlpha = 1.f;
+		}
+		else if (result == Looper::ReturnType::Loop)
+		{
+			mAlpha = 1.f;
+			mIsDamage = false;
+			mLooper.Stop();
+		}
+	}
+
 }

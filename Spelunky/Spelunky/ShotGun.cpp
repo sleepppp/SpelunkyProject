@@ -20,10 +20,12 @@ ShotGun::ShotGun(const Vector2 & worldPos, const bool & mIsInstallation)
 	:Item(worldPos,mIsInstallation),mIsFire(false),mCurrentDelay(0.f)
 {
 	mImageInfo.image = _ImageManager->FindImage("ShotGunFrame");
+	mRePlayDatas = new RePlayDatas<SaveInfo>();
 }
 
 ShotGun::~ShotGun()
 {
+	SafeDelete(mRePlayDatas);
 }
 
 void ShotGun::Init()
@@ -67,6 +69,21 @@ void ShotGun::Update()
 		mTriangle.vertex1.y = worldPos.y - sinf(angle - _shotGunAngleRange) * _shotGunRange;
 		mTriangle.vertex2.x = worldPos.x + cosf(angle + _shotGunAngleRange) * _shotGunRange;
 		mTriangle.vertex2.y = worldPos.y - sinf(angle + _shotGunAngleRange) * _shotGunRange;
+	}
+
+	if (RePlayManager::GetIsPlay())
+	{
+		if (mRePlayDatas->Update())
+		{
+			SaveInfo info;
+			info.currentDelay = mCurrentDelay;
+			info.isFire = mIsFire;
+			info.mIsInstallation = mIsInstallation;
+			info.mRigidbody = *mRigidbody;
+			info.mUnit = mUnit;
+			info.position = mTransform->GetWorldPosition();
+			mRePlayDatas->UpdateInfo(info);
+		}
 	}
 }
 
@@ -131,4 +148,24 @@ void ShotGun::Execute()
 void ShotGun::ExitInstallation()
 {
 	_SoundManager->Play("ShotGunPump",_Camera->GetDistanceFactor(mTransform->GetWorldPosition()));
+}
+
+void ShotGun::LoadRePlayData(const UINT64 & frame)
+{
+	SaveInfo info;
+	if (mRePlayDatas->GetData(frame, &info))
+	{
+		mTransform->SetWorldPosition(info.position);
+		*mRigidbody = info.mRigidbody;
+		mCurrentDelay = info.currentDelay;
+		mIsFire = info.isFire;
+		mIsInstallation = info.mIsInstallation;
+		mUnit = info.mUnit;
+		if (mUnit)
+		{
+			mUnit->GetTransform()->AddChild(mTransform);
+			mTransform->SetPivot(Pivot::Center);
+			mRigidbody->DisActiveGravity();
+		}
+	}
 }
