@@ -77,17 +77,20 @@ void Bomb::Update()
 	}
 	mTransform->SetSize(mSize * 0.4f);
 
-	if (mRePlayDatas->Update())
+	if (RePlayManager::GetIsPlay())
 	{
-		SaveInfo info;
-		info.isActive = mIsActive;
-		info.frameX = mFrameX;
-		info.isSizeWidthUp = mIsSizeWidthUp;
-		info.looper = mLooper;
-		info.position = mTransform->GetWorldPosition();
-		info.rigidbody = *mRigidbody;
-		info.size = mSize;
-		mRePlayDatas->UpdateInfo(info);
+		if (RePlayManager::GetNowFrame() % 100 == 0)
+		{
+			SaveInfo info;
+			info.isActive = mIsActive;
+			info.frameX = mFrameX;
+			info.isSizeWidthUp = mIsSizeWidthUp;
+			info.looper = mLooper;
+			info.position = mTransform->GetWorldPosition();
+			info.rigidbody = *mRigidbody;
+			info.size = mSize;
+			mRePlayDatas->UpdateInfo(info);
+		}
 	}
 }
 

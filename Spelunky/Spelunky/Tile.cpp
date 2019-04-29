@@ -4,6 +4,7 @@
 
 #include "ParticleSystemPool.h"
 #include "ParticleSystem.h"
+#include "RePlayDatas.h"
 
 float Tile::_tileSize = 50.f;
 
@@ -48,6 +49,10 @@ void Tile::Init()
 	{
 		mParticlePool = dynamic_cast<ParticleSystemPool*>(_World->GetObjectPool()->FindObject("ParticleSystemPool"));
 	}
+
+	mSaveInfo.changeFrameTime = 0;
+	mSaveInfo.image = mImage;
+	mSaveInfo.type = mType;
 	
 }
 
@@ -119,11 +124,16 @@ void Tile::Reset()
 
 void Tile::Explosion()
 {
-	if (mType != Type::Rock)
+	if (mType != Type::Rock && 
+		mType != Type::Empty)
 	{
 		if (mType == Type::Soil)
 		{
 			mParticlePool->PlayParticle("Stage2RockExplosion", mRect.GetCenter());
+		}
+		if (RePlayManager::GetNowFrame() > mSaveInfo.changeFrameTime)
+		{
+			mSaveInfo.changeFrameTime = RePlayManager::GetNowFrame();
 		}
 		mImage = nullptr;
 		mType = Type::Empty;
@@ -133,7 +143,11 @@ void Tile::Explosion()
 
 void Tile::LoadRePlayData(const UINT64& frame)
 {
-
+	if (mSaveInfo.changeFrameTime != 0 && mSaveInfo.changeFrameTime >= frame -1)
+	{
+		mImage = mSaveInfo.image;
+		mType = mSaveInfo.type;
+	}
 }
 
 void Tile::SetType(const Type & type)

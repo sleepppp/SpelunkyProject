@@ -41,6 +41,12 @@ public:
 
 	void SetCurrentFrameDelay(const int& current) { mCurrentFrameDelay = current; }
 
+	void Reset()
+	{
+		mDatas.clear();
+		mCurrentFrameDelay = 0;
+	}
+
 	bool Update()
 	{
 		if (++mCurrentFrameDelay > mFrameDelay)
@@ -67,6 +73,7 @@ public:
 		{
 			if (mDatas[i].first == frameTime)
 			{
+				//memcpy(pOutput, &mDatas[i].second, sizeof(T));
 				*pOutput = mDatas[i].second;
 				return true;
 			}

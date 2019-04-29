@@ -105,16 +105,16 @@ void MonsterFlyingToPlayer::Execute()
 
 	Vector2 pos = mMonster->GetTransform()->GetWorldPosition();
 	Vector2 targetPos = mPlayer->GetTransform()->GetWorldPosition();
-	float angle = Math::GetAngle(pos.x, pos.y, targetPos.x, targetPos.y);
+	Vector2 normalize = Vector2::Normalize(&(targetPos - pos));
+	//float angle = Math::GetAngle(pos.x, pos.y, targetPos.x, targetPos.y);
 	Vector2 moveValue;
-	moveValue.x = cosf(angle) * mMonster->GetSpeed() * deltaTime;
-	moveValue.y = -sinf(angle) * mMonster->GetSpeed() *deltaTime;
+	moveValue.x = normalize.x * mMonster->GetSpeed() * deltaTime;
+	moveValue.y = normalize.y * mMonster->GetSpeed() *deltaTime;
 	mMonster->GetTransform()->Translate(moveValue);
 	//if (mAttackDeley > 1.f)
 	{
 		if (Figure::IntersectRectToRect(&mPlayer->GetTransform()->GetRect(), &mMonster->GetTransform()->GetRect()))
 		{
-			Vector2 normalize = Vector2::Normalize(&(targetPos - pos));
 			mPlayer->Damage(mMonster->GetDamage(),Vector2(normalize.x,-0.1f),200.f,500.f);
 		}
 	}

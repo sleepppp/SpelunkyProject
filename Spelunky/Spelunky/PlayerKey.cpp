@@ -50,7 +50,7 @@ void PlayerKey::Update(RePlayDatas<InputData>* pInputDatas)
 		if (pInputDatas)
 		{
 			InputData data;
-			memcpy(&data.keyState, &mPlayerKeyState, sizeof(int) * (int)PlayerKey::Key::End);
+			memcpy(data.keyState, mPlayerKeyState, sizeof(int) * 9);
 			pInputDatas->UpdateInfo(data);
 		}
 	}

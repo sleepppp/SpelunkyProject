@@ -73,6 +73,7 @@ public:
 	static int FloatToInt(const float& f);
 	static bool FloatEqual(const float& f1, const float& f2);
 
+	static float FixFloat(float f);
 	//두 점사이의 거리 반환
 	static float GetDistance(const float& startX, const float& startY, const float& endX, const float& endY);
 	//두 점 사이의 각을 반환

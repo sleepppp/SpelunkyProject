@@ -26,6 +26,8 @@ public:
 	}
 	vector<vector<Tile*>>* GetTilePtr() { return &mTileList; }
 	Vector2 GetMapSize();
+
+	void LoadRePlayData(const UINT64& frame)override;
 	
 };
 

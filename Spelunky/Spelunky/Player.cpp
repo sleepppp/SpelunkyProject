@@ -26,9 +26,9 @@ Player::Player(const Vector2& pos,const string& imageKey)
 #endif
 	mInventory.SetPlayer(this);
 
-	mInputDatas = new RePlayDatas<PlayerKey::InputData>(0,1000);
+	mInputDatas = new RePlayDatas<PlayerKey::InputData>(0,1100);
 	mStateDatas = new RePlayDatas<StateInfo>();
-	mMouseDatas = new RePlayDatas<Vector2>(0,1000);
+	mMouseDatas = new RePlayDatas<Vector2>(0,1100);
 }
 
 
@@ -85,6 +85,7 @@ void Player::LoadRePlayData(const UINT64 & frame)
 		mFrameCount = frame;
 		mIsDamage = info.isDamage;
 		mLooper = info.looper;
+		mSpeed = info.speed;
 	}
 
 	PlayerKey::InputData inputData;
@@ -226,7 +227,7 @@ void Player::UpdatePlayGame()
 
 	if (mHp > 0)
 	{
-		if (mStateDatas->Update())
+		if (RePlayManager::GetNowFrame() % 100 == 0)
 		{
 			StateInfo info;
 			info.position = mTransform->GetWorldPosition();
@@ -239,6 +240,7 @@ void Player::UpdatePlayGame()
 			info.rigidbody = *mRigidbody;
 			info.isDamage = mIsDamage;
 			info.looper = mLooper;
+			info.speed = mSpeed;
 			mStateDatas->UpdateInfo(info);
 		}
 		if (mMouseDatas->Update())
@@ -251,10 +253,7 @@ void Player::UpdatePlayGame()
 void Player::UpdateRePlay()
 {
 	if (mHp > 0)
-	{
-		++mFrameCount;
-		mPlayerKey.CheckPreKeyState();
-		
+	{	
 		Vector2 worldMouse;
 		if (mMouseDatas->GetData(mFrameCount, &worldMouse))
 		{
@@ -262,15 +261,18 @@ void Player::UpdateRePlay()
 			mAimDirection = Vector2::Normalize(&(worldMouse - playerPos));
 		}
 
+		//mPlayerKey.CheckPreKeyState();
+
 		PlayerKey::InputData inputData;
 		if (mInputDatas->GetData(mFrameCount, &inputData))
 		{
 			for (int i = 0; i < (int)PlayerKey::Key::End; ++i)
 			{
-				if (inputData.keyState[i] == PlayerKey::KeyState::Down)
-					mPlayerKey.PushKey((PlayerKey::Key)i);
-				else if (inputData.keyState[i] == PlayerKey::KeyState::Up)
-					mPlayerKey.PopKey((PlayerKey::Key)i);
+				mPlayerKey.mPlayerKeyState[i] = inputData.keyState[i];
+				//if (inputData.keyState[i] == PlayerKey::KeyState::Down)
+				//	mPlayerKey.PushKey((PlayerKey::Key)i);
+				//if (inputData.keyState[i] == PlayerKey::KeyState::Up)
+				//	mPlayerKey.PopKey((PlayerKey::Key)i);
 			}
 		}
 
@@ -278,6 +280,7 @@ void Player::UpdateRePlay()
 			this->TryInstalling();
 
 		mStateManager->Update();
+		++mFrameCount;
 	}
 
 	mAnimations->Update();

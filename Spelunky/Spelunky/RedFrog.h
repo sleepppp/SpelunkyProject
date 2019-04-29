@@ -10,7 +10,6 @@ public:
 	virtual ~RedFrog();
 	
 	void Init()override; 
-	void Render()override;
 
 	void CreateState()override;
 	void CreateAnimation()override;

@@ -156,6 +156,11 @@ bool Math::PercentageBool(const float & percentage)
 	return (fabs(f1 - f2) <= Math::Epsilon);
 }
 
+float Math::FixFloat(float f)
+{
+	return ((int)(f * pow(10.0f, 3))) / pow(10.0f, 3);
+}
+
 /*********************************************************************
 ## GetDistance ##
 두 점 사이의 거리를 구한다

@@ -87,7 +87,7 @@ public:
 
 		if (RePlayManager::GetIsPlay())
 		{
-			if (mRePlayDatas->Update())
+			if (RePlayManager::GetNowFrame() % 100 == 0)
 			{
 				SaveInfo info;
 				info.count = mActiveBullets.size();

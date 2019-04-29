@@ -5,18 +5,23 @@
 #include "Transform.h"
 #include "RePlayDatas.h"
 
+#include "Timer.h"
 GameSystem::GameSystem()
-	:GameObject("GameSystem"),mCurrentTime(0.f)
+	:GameObject("GameSystem"),mCurrentTime(0)
 {
 	mUIController = new SystemUIController;
 	mLayer = RenderPool::Layer::UI;
 	mState = SystemState::PlayGame;
 	mStateQueue.push_back(mState);
+	mTimer = new Timer(1.f);
+	mTimer->Play();
+	mCount = 0;
 }
 
 
 GameSystem::~GameSystem()
 {
+	SafeDelete(mTimer);
 	SafeDelete(mUIController);
 }
 
@@ -52,12 +57,17 @@ void GameSystem::Update()
 		break;
 	case GameSystem::SystemState::Replay:
 	{
-		mCurrentTime += _TimeManager->DeltaTime();
-		if (mCurrentTime >= 9.f)
+		++mCurrentTime;
+		if (mCurrentTime >= 1000)
 		{
 			this->OnReplayEnter();
 		}
-
+		if (mTimer->Update())
+		{
+			++mCount;
+			if (mCount >= 4)
+				mCount = 0;
+		}
 	}
 		break;
 	default:
@@ -83,8 +93,11 @@ void GameSystem::Render()
 	}
 	else if (mState == SystemState::Replay)
 	{
-		_D2DRenderer->RenderTextField(_WinSizeX / 2 - 400, _WinSizeY / 2 - 400, L"리플레이 중",
-			80, 800, 300, D2DRenderer::DefaultBrush::White, DWRITE_TEXT_ALIGNMENT_CENTER, false, L"DOSGothic");
+		wstring text = L"리플레이 중";
+		for (int i = 0; i < mCount; ++i)
+			text += L" ▶ ";
+		_D2DRenderer->RenderTextField(_WinSizeX / 2 - 500, _WinSizeY / 2 - 400, text,
+			80, 1000, 300, D2DRenderer::DefaultBrush::White, DWRITE_TEXT_ALIGNMENT_CENTER, false, L"DOSGothic");
 	}
 }
 
@@ -175,7 +188,7 @@ void GameSystem::ReturnPrevState()
 
 void GameSystem::OnReplayEnter()
 {
-	mCurrentTime = 0.f;
+	mCurrentTime = 0;
 	const vector<GameObject*>* list = _World->GetObjectPool()->GetObjectList();
 	UINT64 current = RePlayManager::GetNowFrame();
 	current = current - current % RePlayDatas<int>::RePlayUpdateDelay;
@@ -183,6 +196,5 @@ void GameSystem::OnReplayEnter()
 	for (UINT i = 0; i < list->size(); ++i)
 		list->at(i)->LoadRePlayData(current);
 	Math::InitRandomSystem(current);
-	_TimeManager->Stop();
-	_TimeManager->Start();
+	_TimeManager->StartSaveFrame(current);
 }

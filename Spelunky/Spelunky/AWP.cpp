@@ -112,7 +112,7 @@ void AWP::Update()
 
 	if (RePlayManager::GetIsPlay())
 	{
-		if (mRePlayDatas->Update())
+		if (RePlayManager::GetNowFrame() % 100 == 0)
 		{
 			SaveInfo info;
 			info.mIsZoom = mIsZoom;

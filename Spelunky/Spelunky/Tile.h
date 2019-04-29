@@ -47,6 +47,13 @@ private:
 	int mItemFrameX;
 	int mItemFrameY;
 	class ParticleSystemPool* mParticlePool;
+
+	struct SaveInfo
+	{
+		UINT64 changeFrameTime;
+		class Image* image;
+		Type type;
+	}mSaveInfo;
 public:
 	Tile() = delete;
 	explicit Tile(const float& x, const float& y ,const int& indexX,const int& indexY);

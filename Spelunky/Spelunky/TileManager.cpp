@@ -78,4 +78,15 @@ Vector2 TileManager::GetMapSize()
 	return result;
 }
 
+void TileManager::LoadRePlayData(const UINT64 & frame)
+{
+	for (UINT y = 0; y < mTileList.size(); ++y)
+	{
+		for (UINT x = 0; x < mTileList[y].size(); ++x)
+		{
+			mTileList[y][x]->LoadRePlayData(frame);
+		}
+	}
+}
+
 

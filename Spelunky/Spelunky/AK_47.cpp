@@ -86,7 +86,7 @@ void AK_47::Update()
 
 	if (RePlayManager::GetIsPlay())
 	{
-		if (mRePlayDatas->Update())
+		if (RePlayManager::GetNowFrame() % 100 == 0)
 		{
 			SaveInfo info;
 			info.position = mTransform->GetWorldPosition();

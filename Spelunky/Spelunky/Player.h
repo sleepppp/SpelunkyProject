@@ -16,6 +16,7 @@ private:
 		int currentAnimationFrame;
 		int hp;
 		int bombCount;
+		float speed;
 		class Item* weaponPtr; 
 		string currentStateKey;
 		Rigidbody rigidbody;

@@ -114,7 +114,7 @@ void Rigidbody::Update()
 			if(cDirection != Direction::RightTop && cDirection != Direction::LeftTop)
 				mJumpPower = 0.f;
 		}
-		mForcePower = mForcePower * 0.99f;
+		mForcePower = mForcePower * 0.998f;
 	}
 	else
 	{

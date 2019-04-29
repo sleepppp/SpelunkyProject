@@ -40,14 +40,6 @@ void RedFrog::Init()
 	mBombPool = (BombPool*)_World->GetObjectPool()->FindObject("BombPool");
 }
 
-void RedFrog::Render()
-{
-	Monster::Render();
-	if (_isDebug)
-	{
-		_D2DRenderer->DrawEllipse(mTransform->GetCenterPos(), 70.f, D2DRenderer::DefaultBrush::Red, true, 2.f);
-	}
-}
 
 void RedFrog::CreateState()
 {
@@ -84,6 +76,7 @@ void RedFrog::Damage(const float & damage, const Vector2 & forceDirection, const
 		mHp -= damage;
 		if (mHp <= 0.f)
 		{
+			this->mIsActive = false;
 			TileManager* tileManager =reinterpret_cast<TileManager*>
 				(_World->GetRenderPool()->FindObjectInLayer(RenderPool::Layer::Tile, "TileManager"));
 			
@@ -91,7 +84,7 @@ void RedFrog::Damage(const float & damage, const Vector2 & forceDirection, const
 			Vector2 pos = mTransform->GetWorldPosition() - Vector2(0.f, tileSize / 2.f);
 			int indexX = CastingInt(pos.x / tileSize);
 			int indexY = CastingInt(pos.y / tileSize);
-
+			
 			for (int y = indexY - 1; y <= indexY + 1; ++y)
 			{
 				for (int x = indexX - 1; x <= indexX + 1; ++x)
@@ -102,7 +95,7 @@ void RedFrog::Damage(const float & damage, const Vector2 & forceDirection, const
 					}
 				}
 			}
-
+			
 			const vector<GameObject*>* list = _World->GetRenderPool()->GetObjectList(RenderPool::Layer::Monster);
 			for (UINT i = 0; i < list->size(); ++i)
 			{
@@ -131,41 +124,33 @@ void RedFrog::Damage(const float & damage, const Vector2 & forceDirection, const
 					unit->Damage(6, direction, 1700.f, 2000.f);
 				}
 			}
-
+			
 			mBombPool->ActivationLight(pos);
-			mEffecter->RequestPlayEffect("Smoke0", 0.07f, pos, 1.8f, FrameEffecter::Option::ScaleAlphablending);
-			mRigidbody->ZeroForce();
-			_World->GetRenderPool()->RemoveRender(mLayer, this);
-			_World->GetUpdatePool()->RemoveUpdate(this);
-
+			
 			float factor = _Camera->GetDistanceFactor(pos);
-
+			
 			float shakeTime = 1.f * factor;
 			float shakeChangeDirTime = 0.03f * factor;
 			float shakePower = 10.4f * factor;
 			_Camera->Shake(shakeTime, shakeChangeDirTime, shakePower);
 			_SoundManager->Play("kaboom", factor);
-
-
-			this->ExecuteDie();
-			this->mIsActive = false;
+			
 			Vector2 worldPos = this->GetTransform()->GetWorldPosition();
 			this->GetParticlePool()->PlayParticle("BloodRubble", worldPos);
 			_SoundManager->Play("rubble", _Camera->GetDistanceFactor(worldPos));
 			mEffecter->RequestPlayEffect("SmokeOrange", 0.1f, mTransform->GetCenterPos(), 1.f, FrameEffecter::Option::ScaleAlphablending);
-
+			
 			Vector2 toTarget = mPlayer->GetTransform()->GetCenterPos() - mTransform->GetCenterPos();
 			if (Vector2::Length(&toTarget) < 70.f)
 			{
 				mPlayer->Damage(mDamage, toTarget);
 			}
-
+			
 			DataContextValue* value = _GameData->GetData(GameData::DataType::Int, "KillingMonsterCount");
 			_GameData->SetData(GameData::DataType::Int, "KillingMonsterCount", value->GetInt() + 1);
 		}
 		else
 		{
-			this->ExecuteDamage();
 			mParticlePool->PlayParticle("BloodRubble", mTransform->GetWorldPosition());
 			mRigidbody->Force(forceDirection, forcePower, recuPower);
 

@@ -11,7 +11,9 @@ private:
 	SystemState mState;
 	class SystemUIController* mUIController;
 	deque<SystemState> mStateQueue;
-	float mCurrentTime;
+	UINT mCurrentTime;
+	class Timer* mTimer;
+	int mCount;
 public:
 	GameSystem();
 	virtual ~GameSystem();

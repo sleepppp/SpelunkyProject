@@ -35,14 +35,14 @@ public:
 
 	inline bool GetKeyDown(const Key& key)
 	{
-		if (IsMouseOnGui == true)return false;
+		//if (IsMouseOnGui == true)return false;
 		if (mPlayerKeyState[(int)key] == KeyState::Down)
 			return true;
 		return false;
 	 }
 	inline bool GetKey(const Key& key)
 	{
-		if (IsMouseOnGui == true)return false;
+		//if (IsMouseOnGui == true)return false;
 		if (mPlayerKeyState[(int)key] == KeyState::Stay ||
 			mPlayerKeyState[(int)key] == KeyState::Down)
 			return true;
@@ -50,7 +50,7 @@ public:
 	 }
 	inline bool GetKeyUp(const Key& key)
 	{
-		if (IsMouseOnGui == true)return false;
+		//if (IsMouseOnGui == true)return false;
 		if (mPlayerKeyState[(int)key] == KeyState::Up)
 			return true;
 		return false;

@@ -112,7 +112,7 @@ Vector2 Vector2::Normalize(const Vector2 * const pVector2)
 {
 	Vector2 result = *pVector2;
 
-	float length = sqrt(result.x * result.x + result.y * result.y);
+	float length = sqrtf(result.x * result.x + result.y * result.y);
 	result.x /= length;
 	result.y /= length;
 

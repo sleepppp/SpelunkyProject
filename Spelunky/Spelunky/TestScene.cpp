@@ -75,13 +75,10 @@ void TestScene::Init()
 		worldObject->GetTransform()->AddChild(player->GetTransform());
 		this->mObjectPool->AddObject(player);
 		playerPos = player->GetTransform()->GetWorldPosition();
+
 		ShotGun* gun = new ShotGun(player->GetTransform()->GetCenterPos() + Vector2(50.f,0.f),false);
 		mObjectPool->AddObject(gun);
 		worldObject->GetTransform()->AddChild(gun->GetTransform());
-
-		Revolver* revolver = new Revolver(player->GetTransform()->GetCenterPos() - Vector2(50.f,0.f), false);
-		mObjectPool->AddObject(revolver);
-		worldObject->GetTransform()->AddChild(revolver->GetTransform());
 
 		AK_47* ak = new AK_47(player->GetTransform()->GetCenterPos(), false);
 		mObjectPool->AddObject(ak);
@@ -99,11 +96,6 @@ void TestScene::Init()
 		_Camera->SetMapSize(mapSize);
 		_Camera->SetZoom(1.5f);
 	}
-	/*****************************************************
-	## Create System Object ##
-	******************************************************/
-	GameSystem* system = new GameSystem;
-	this->mObjectPool->AddObject(system);
 
 	/*****************************************************
 	## CreateMonster ##
@@ -180,6 +172,11 @@ void TestScene::Init()
 		}
 	}
 	/*****************************************************
+	## Create System Object ##
+	******************************************************/
+	GameSystem* system = new GameSystem;
+	this->mObjectPool->AddObject(system);
+	/*****************************************************
 	## SetRandomSystem ##
 	******************************************************/
 	Math::ResetAllRandomValue();
@@ -199,6 +196,8 @@ void TestScene::Init()
 void TestScene::Release()
 {
 	SceneBase::Release();
+	_TimeManager->Stop();
+	_TimeManager->Start();
 }
 
 void TestScene::Update()

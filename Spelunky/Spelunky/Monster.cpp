@@ -40,6 +40,9 @@ void Monster::Init()
 
 	mPlayer = dynamic_cast<Player*>(_World->GetObjectPool()->FindObject("Player"));
 	mParticlePool = dynamic_cast<ParticleSystemPool*>(_World->GetObjectPool()->FindObject("ParticleSystemPool"));
+
+	GameObject* world = _World->GetObjectPool()->FindObject("World");
+	world->GetTransform()->AddChild(mTransform);
 }
 
 void Monster::Release()
@@ -57,7 +60,7 @@ void Monster::Update()
 
 	if (RePlayManager::GetIsPlay())
 	{
-		if (mRePlayDatas->Update())
+		if (RePlayManager::GetNowFrame() % 100 == 0)
 		{
 			SaveInfo info;
 			info.animationKey = mAnimations.GetCurrentKey();
@@ -111,6 +114,8 @@ void Monster::Damage(const float & damage, const Vector2 & forceDirection, const
 			this->mIsActive = false;
 			Vector2 worldPos = mTransform->GetWorldPosition();
 			mParticlePool->PlayParticle("BloodRubble", worldPos);
+			mParticlePool->PlayParticle("Meat", worldPos);
+			
 			_SoundManager->Play("rubble", _Camera->GetDistanceFactor(worldPos));
 			if (GameSystem* system = reinterpret_cast<GameSystem*>(_World->GetObjectPool()->FindObject("GameSystem")))
 			{
