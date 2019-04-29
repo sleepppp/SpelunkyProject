@@ -101,13 +101,13 @@ void Tile::Render()
 	}
 	else
 	{
-		if (_isDebug)
-		{
-			D2DRenderer::DefaultBrush brush(D2DRenderer::DefaultBrush::White);
-			if (mType != Tile::Type::Empty)
-				brush = D2DRenderer::DefaultBrush::Red;
-			_D2DRenderer->DrawRectangle(mRect, brush, true, 1.f);
-		}
+		//if (_isDebug)
+		//{
+		//	D2DRenderer::DefaultBrush brush(D2DRenderer::DefaultBrush::White);
+		//	if (mType != Tile::Type::Empty)
+		//		brush = D2DRenderer::DefaultBrush::Red;
+		//	_D2DRenderer->DrawRectangle(mRect, brush, true, 1.f);
+		//}
 	}
 }
 

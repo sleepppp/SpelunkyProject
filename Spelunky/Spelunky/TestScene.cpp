@@ -6,12 +6,6 @@
 void TestScene::Init()
 {
 	/*****************************************************
-	## Create System Object ##
-	******************************************************/
-	GameSystem* system = new GameSystem;
-	this->mObjectPool->AddObject(system);
-
-	/*****************************************************
 	## CreateGroupObject ##
 	******************************************************/
 	GameObject* worldObject = new GameObject("World");
@@ -38,7 +32,6 @@ void TestScene::Init()
 	MiddleAim* ma = new MiddleAim;
 	worldObject->GetTransform()->AddChild(ma->GetTransform());
 	this->mObjectPool->AddObject(ma);
-
 	/*****************************************************
 	## CreateObjectPooling ##
 	******************************************************/
@@ -73,6 +66,7 @@ void TestScene::Init()
 	/*****************************************************
 	## CreatePlayer ##
 	******************************************************/
+	Vector2 playerPos;
 	Tile* tile = TileMapGenerator::FindOnGroundTile(tileManager->GetTilePtr());
 	if (tile == nullptr)assert(SUCCEEDED(E_FAIL));
 	if (tile)
@@ -80,7 +74,7 @@ void TestScene::Init()
 		Player* player = new Player(Vector2(tile->GetRect().GetCenter().x,tile->GetRect().bottom - 3));
 		worldObject->GetTransform()->AddChild(player->GetTransform());
 		this->mObjectPool->AddObject(player);
-
+		playerPos = player->GetTransform()->GetWorldPosition();
 		ShotGun* gun = new ShotGun(player->GetTransform()->GetCenterPos() + Vector2(50.f,0.f),false);
 		mObjectPool->AddObject(gun);
 		worldObject->GetTransform()->AddChild(gun->GetTransform());
@@ -106,16 +100,26 @@ void TestScene::Init()
 		_Camera->SetZoom(1.5f);
 	}
 	/*****************************************************
+	## Create System Object ##
+	******************************************************/
+	GameSystem* system = new GameSystem;
+	this->mObjectPool->AddObject(system);
+
+	/*****************************************************
 	## CreateMonster ##
 	******************************************************/
+
 	for (int i = 0; i < 30; ++i)
 	{
 		Tile* tile = TileMapGenerator::FindUnderGroundTile(tileManager->GetTilePtr());
 		if (tile)
 		{
-			Bat* bat = new Bat(tile);
-			worldObject->GetTransform()->AddChild(bat->GetTransform());
-			mObjectPool->AddObject(bat);
+			if (Vector2::Length(&(tile->GetRect().GetCenter() - playerPos)) > 300.f)
+			{
+				Bat* bat = new Bat(tile);
+					worldObject->GetTransform()->AddChild(bat->GetTransform());
+					mObjectPool->AddObject(bat);
+			}
 		}
 	}
 	
@@ -123,33 +127,42 @@ void TestScene::Init()
 	{
 		if (Tile* tile = TileMapGenerator::FindOnGroundTile(tileManager->GetTilePtr()))
 		{
-			Frog* frog = new Frog(tile);
-			worldObject->GetTransform()->AddChild(frog->GetTransform());
-			mObjectPool->AddObject(frog);
+			if (Vector2::Length(&(tile->GetRect().GetCenter() - playerPos)) > 300.f)
+			{
+				Frog* frog = new Frog(tile);
+				worldObject->GetTransform()->AddChild(frog->GetTransform());
+				mObjectPool->AddObject(frog);
+			}
 		}
 		if (i < 10)
 		{
 			if (Tile* tile = TileMapGenerator::FindOnGroundTile(tileManager->GetTilePtr()))
 			{
-				if (Tile* upTile = tileManager->GetTile(tile->GetIndexX(), tile->GetIndexY() - 1))
+				if (Vector2::Length(&(tile->GetRect().GetCenter() - playerPos)) > 300.f)
 				{
-					if (Tile* upTile2 = tileManager->GetTile(tile->GetIndexX(), tile->GetIndexY() - 2))
+					if (Tile* upTile = tileManager->GetTile(tile->GetIndexX(), tile->GetIndexY() - 1))
 					{
-						if (upTile->GetType() == Tile::Type::Empty &&
-							upTile2->GetType() == Tile::Type::Empty)
+						if (Tile* upTile2 = tileManager->GetTile(tile->GetIndexX(), tile->GetIndexY() - 2))
 						{
-							BossFrog* frog = new BossFrog(tile);
-							worldObject->GetTransform()->AddChild(frog->GetTransform());
-							mObjectPool->AddObject(frog);
+							if (upTile->GetType() == Tile::Type::Empty &&
+								upTile2->GetType() == Tile::Type::Empty)
+							{
+								BossFrog* frog = new BossFrog(tile);
+								worldObject->GetTransform()->AddChild(frog->GetTransform());
+								mObjectPool->AddObject(frog);
+							}
 						}
 					}
 				}
 			}
 			if (Tile* tile = TileMapGenerator::FindOnGroundTile(tileManager->GetTilePtr()))
 			{
-				RedFrog* frog = new RedFrog(tile);
-				worldObject->GetTransform()->AddChild(frog->GetTransform());
-				mObjectPool->AddObject(frog);
+				if (Vector2::Length(&(tile->GetRect().GetCenter() - playerPos)) > 300.f)
+				{
+					RedFrog* frog = new RedFrog(tile);
+					worldObject->GetTransform()->AddChild(frog->GetTransform());
+					mObjectPool->AddObject(frog);
+				}
 			}
 		}
 	}
@@ -158,12 +171,20 @@ void TestScene::Init()
 	{
 		if (Tile* tile = TileMapGenerator::FindOnGroundTile(tileManager->GetTilePtr()))
 		{
-			Snake* snake = new Snake(tile);
-			worldObject->GetTransform()->AddChild(snake->GetTransform());
-			mObjectPool->AddObject(snake);
+			if (Vector2::Length(&(tile->GetRect().GetCenter() - playerPos)) > 300.f)
+			{
+				Snake* snake = new Snake(tile);
+				worldObject->GetTransform()->AddChild(snake->GetTransform());
+				mObjectPool->AddObject(snake);
+			}
 		}
 	}
-
+	/*****************************************************
+	## SetRandomSystem ##
+	******************************************************/
+	Math::ResetAllRandomValue();
+	Math::SetRandomSid((UINT)rand());
+	srand(Math::GetRandomSid());
 
 	/********************************************************************
 	## System Init##
@@ -171,6 +192,8 @@ void TestScene::Init()
 	_GameData->SetData(GameData::DataType::Int, "KillingMonsterCount", 0);  
 	_SoundManager->PlayBGM("zone2");
 	RePlayManager::Start();
+	_TimeManager->Stop();
+	_TimeManager->Start();
 }
 
 void TestScene::Release()
@@ -181,12 +204,9 @@ void TestScene::Release()
 void TestScene::Update()
 {
 	SceneBase::Update();
+	if (RePlayManager::GetIsPlay())
+		Math::UpdateRandomCount(RePlayManager::GetNowFrame());
 	RePlayManager::Update();
-	if (_Input->GetKeyDown('P'))
-	{
-		Player* player = (Player*)_World->GetRenderPool()->FindObjectInLayer(RenderPool::Layer::Character, "Player");
-		player->Damage(10, Vector2(0.f, -1.f));
-	}
 }
 
 void TestScene::Render()

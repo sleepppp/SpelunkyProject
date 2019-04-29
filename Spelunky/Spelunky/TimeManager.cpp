@@ -4,6 +4,8 @@
 #pragma comment(lib, "winmm.lib")
 
 #include "StringHelper.h"
+#include "RePlayDatas.h"
+
 
 float TimeManager::_lockFps = 100.f;
 
@@ -29,11 +31,14 @@ TimeManager::TimeManager()
 	this->frameRate = this->fpsFrameCount = 0;
 	this->fpsTimeElapsed = this->worldTime = 0.0f;
 	this->isStart = true;
+
+	mReplayDatas = new RePlayDatas<float>(0,1000);
 }
 
 
 TimeManager::~TimeManager()
 {
+	SafeDelete(mReplayDatas);
 }
 
 void TimeManager::Tick(float lockFPS)

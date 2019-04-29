@@ -20,6 +20,8 @@ private:
 	float worldTime;
 
 	bool isStart;
+
+	class RePlayDatas<float>* mReplayDatas;
 private:
 	void Tick(float lockFPS = 60.0f);
 	void StartClock();

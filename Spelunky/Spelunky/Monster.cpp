@@ -163,6 +163,14 @@ void Monster::LoadRePlayData(const UINT64 & frame)
 			*mRigidbody = info.rigidbody;
 		}
 	}
+	else
+	{
+		//해당 프레임의 세이브 데이터가 없다면 중간에 소환되었던 몬스터일 가능성이 있으므로 
+		//삭제 해준다.
+		this->mHp = 0;
+		this->mIsActive = false;
+		_World->GetObjectPool()->DeleteObject(this);
+	}
 
 
 }

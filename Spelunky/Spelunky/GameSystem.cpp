@@ -67,6 +67,7 @@ void GameSystem::Update()
 
 void GameSystem::Render()
 {
+
 	if (mState == SystemState::Continue)
 	{
 		_D2DRenderer->RenderTextField(_WinSizeX / 2 - 400, _WinSizeY / 2 - 400, L"요 약",
@@ -82,7 +83,7 @@ void GameSystem::Render()
 	}
 	else if (mState == SystemState::Replay)
 	{
-		_D2DRenderer->RenderTextField(_WinSizeX / 2 - 400, _WinSizeY / 2 - 400, L"리플레이 중 . . . ",
+		_D2DRenderer->RenderTextField(_WinSizeX / 2 - 400, _WinSizeY / 2 - 400, L"리플레이 중",
 			80, 800, 300, D2DRenderer::DefaultBrush::White, DWRITE_TEXT_ALIGNMENT_CENTER, false, L"DOSGothic");
 	}
 }
@@ -174,13 +175,14 @@ void GameSystem::ReturnPrevState()
 
 void GameSystem::OnReplayEnter()
 {
+	mCurrentTime = 0.f;
 	const vector<GameObject*>* list = _World->GetObjectPool()->GetObjectList();
 	UINT64 current = RePlayManager::GetNowFrame();
 	current = current - current % RePlayDatas<int>::RePlayUpdateDelay;
 	current = current - RePlayDatas<int>::RePlayUpdateDelay * 7;
 	for (UINT i = 0; i < list->size(); ++i)
 		list->at(i)->LoadRePlayData(current);
+	Math::InitRandomSystem(current);
 	_TimeManager->Stop();
 	_TimeManager->Start();
-	mCurrentTime = 0.f;
 }

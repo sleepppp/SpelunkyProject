@@ -1,6 +1,12 @@
 #include "stdafx.h"
 #include "Math.h"
 
+UINT Math::_randomCount = 0;
+UINT Math::_randomSid = 0;
+UINT64 Math::_frameCount = 0;
+deque<pair<UINT64, UINT>> Math::_randomList;
+
+
 const float Math::PI = 3.14159265f;
 const float Math::Epsilon = 1E-6f;
 const int Math::IntMin = -2147483647;
@@ -45,6 +51,7 @@ const float Math::FloatMax = 3.402823E+38f;
 **********************************************************/
  int Math::Random(const int & r1, const int & r2)
 {
+	 ++_randomCount;
 	return (int)(rand() % (r2 - r1 + 1)) + r1;
 }
 /**********************************************************
@@ -54,6 +61,7 @@ const float Math::FloatMax = 3.402823E+38f;
 **********************************************************/
  float Math::Random(const float& r1, const float& r2)
 {
+	 ++_randomCount;
 	float random = ((float)rand()) / (float)RAND_MAX;
 	float diff = r2 - r1;
 	float val = random * diff;
@@ -66,6 +74,7 @@ const float Math::FloatMax = 3.402823E+38f;
 **********************************************************/
  float Math::RandF()
 {
+	 ++_randomCount;
 	return (float)(rand()) / (float)RAND_MAX;
 }
 float Math::RandNegative()

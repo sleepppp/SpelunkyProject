@@ -5,6 +5,47 @@
 *****************************************************************************/
 class Math final
 {
+private:
+	static UINT _randomCount;
+	static UINT _randomSid;
+	static UINT64 _frameCount;
+	static deque<pair<UINT64,UINT>> _randomList;
+public:
+	static void SetRandomSid(const UINT& sid) { _randomSid = sid; }
+	static UINT GetRandomSid() { return _randomSid; }
+	static void SetRandomCount(const UINT& count = 0) { _randomCount = count; }
+	static void ResetAllRandomValue()
+	{
+		_randomSid = (UINT)time(NULL);
+		srand(_randomSid);
+		_randomCount = 0;
+		_frameCount = 0;
+		_randomList.clear();
+	}
+	static void UpdateRandomCount(const UINT64& frame)
+	{
+		if (frame % 100 == 0)
+		{
+			_randomList.push_back(make_pair(frame, _randomCount));
+			_frameCount = 1;
+			if (_randomList.size() >= 10)
+				_randomList.pop_front();
+		}
+	}
+	static void InitRandomSystem(const UINT64& frame)
+	{
+		for (UINT i = 0; i < _randomList.size(); ++i)
+		{
+			if (_randomList[i].first == frame)
+			{
+				srand(_randomSid);
+				for (UINT j = 0; j < _randomList[i].second; ++j)
+					rand();
+				break;
+			}
+		}
+	}
+
 public:
 	static const float PI;					//PI 3.14f
 	static const float Epsilon;				//¿¦½Ç·Ð(ºÎµ¿¼Ò¼ö ¿ÀÂ÷ ¹üÀ§)
@@ -19,8 +60,8 @@ public:
 		   
 	static int Random(const int& r1, const int& r2);				//int ·£´ý°ª 
 	static float Random(const float& r1, const float& r2);		//float ·£´ý°ª
-		   
 	static float RandF();							//float ·£´ý°ª
+
 	static float RandNegative();					//·£´ý -1,1°ª 
 	static bool RandomBool();
 	static bool PercentageBool(const float& percentage);
