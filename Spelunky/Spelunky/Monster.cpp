@@ -66,6 +66,7 @@ void Monster::Update()
 			info.animationKey = mAnimations.GetCurrentKey();
 			info.attackDelay = mAttackDeley;
 			info.currentAnimationIndex = mAnimations.GetCurrentAnimation()->GetCurrentFrameIndex();
+			info.animationTime = mAnimations.GetCurrentAnimation()->GetCurrentFrameTime();
 			info.hp = mHp;
 			info.isActive = mIsActive;
 			info.isLeft = mIsLeft;
@@ -160,6 +161,7 @@ void Monster::LoadRePlayData(const UINT64 & frame)
 			mStateManager.ChangeState(info.stateKey);
 			mAnimations.ChangeAnimation(info.animationKey);
 			mAnimations.GetCurrentAnimation()->SetCurrentFrame(info.currentAnimationIndex);
+			mAnimations.GetCurrentAnimation()->SetCurrentTime(info.animationTime);
 			mAttackDeley = info.attackDelay;
 			mHp = info.hp;
 			mIsActive = info.isActive;

@@ -25,7 +25,8 @@ public:
 	PlayerKey();
 	~PlayerKey();
 
-	void Update(class RePlayDatas<InputData>* pInputDatas);
+	void Update();
+	void SaveInput(class RePlayDatas<InputData>* pInputDatas);
 	void CheckPreKeyState();
 	void CopyKeyState(void* pKeyArr);
 	int GetPlayerKey(const int& i) { return mPlayerKey[i]; }

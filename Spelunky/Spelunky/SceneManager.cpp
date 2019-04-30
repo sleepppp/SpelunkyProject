@@ -149,13 +149,11 @@ void SceneManager::ChangeScene()
 		{
 			if (mNowScene)
 				mNowScene->Release();
-
 			mNowScene = tempScene;
 			if (mChangeSceneInfo.isInit)
 				mNowScene->Init();
 			mNowScene->PostInit();
 			mState = State::FadeIn;
-
 		}
 	}
 }

@@ -217,9 +217,6 @@
     <Filter Include="InGameObject\Item\Revolver">
       <UniqueIdentifier>{6884572c-9a5b-4f0f-bd83-187d8bddf6d0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="InGameObject\Item\AK_47">
-      <UniqueIdentifier>{ceeb26de-7bd0-4bdc-abcd-a7a3aed28a5d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="InGameObject\Monster">
       <UniqueIdentifier>{91d937c2-a9d9-4d0f-ba16-f5aa0eda1574}</UniqueIdentifier>
     </Filter>
@@ -267,6 +264,18 @@
     </Filter>
     <Filter Include="InGameObject\Bullet">
       <UniqueIdentifier>{b02c4953-b018-4ef2-b644-f786c2695be7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainEntry\Title">
+      <UniqueIdentifier>{7becede2-e00d-4be7-bd3e-40af920da54e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainEntry\Title\TitleObject">
+      <UniqueIdentifier>{cb985e6c-6617-4d18-9272-b65665693de3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\GameEngine\EventManager">
+      <UniqueIdentifier>{74d19df4-b549-4485-8ae7-708337423d93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\Item\AK_47">
+      <UniqueIdentifier>{ceeb26de-7bd0-4bdc-abcd-a7a3aed28a5d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -621,6 +630,21 @@
     <ClInclude Include="RePlayDatas.h">
       <Filter>Util\RePlay</Filter>
     </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>MainEntry\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleObject.h">
+      <Filter>MainEntry\Title\TitleObject</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleButtons.h">
+      <Filter>MainEntry\Title\TitleObject</Filter>
+    </ClInclude>
+    <ClInclude Include="EventManager.h">
+      <Filter>System\GameEngine\EventManager</Filter>
+    </ClInclude>
+    <ClInclude Include="InterfaceEvent.h">
+      <Filter>System\GameEngine\EventManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Spelunky.cpp">
@@ -949,6 +973,21 @@
     </ClCompile>
     <ClCompile Include="RePlayDatas.cpp">
       <Filter>Util\RePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>MainEntry\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleObject.cpp">
+      <Filter>MainEntry\Title\TitleObject</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleButtons.cpp">
+      <Filter>MainEntry\Title\TitleObject</Filter>
+    </ClCompile>
+    <ClCompile Include="EventManager.cpp">
+      <Filter>System\GameEngine\EventManager</Filter>
+    </ClCompile>
+    <ClCompile Include="InterfaceEvent.cpp">
+      <Filter>System\GameEngine\EventManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

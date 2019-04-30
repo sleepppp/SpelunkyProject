@@ -21,8 +21,12 @@ SystemMainUI::SystemMainUI()
 	option->SetFunction([this]() {GetController()->PushUI(_World->GetObjectPool()->FindObject("SystemOptionUI")); 
 	_SoundManager->Play("MenuOpen"); });
 	mButtonList.push_back(option);
-	TextButton* exit = new TextButton(L"Exit Game", 30, Vector2(807, 450), Vector2(275, 50));
-	exit->SetFunction([this]() {PostQuitMessage(0); });
+	TextButton* exit = new TextButton(L"To Title", 30, Vector2(807, 450), Vector2(275, 50));
+	exit->SetFunction([this]() 
+	{
+		_SceneManager->LoadSceneByLoading("LoadingScene", "TitleScene");
+		_SoundManager->FadeoutBGM();
+	});
 	mButtonList.push_back(exit);
 }
 

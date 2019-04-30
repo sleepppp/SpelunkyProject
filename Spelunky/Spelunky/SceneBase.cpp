@@ -3,15 +3,17 @@
 
 SceneBase::SceneBase()
 	:mObjectPool(new ObjectPool), mUpdatePool(new UpdatePool), mRenderPool(new RenderPool), 
-	mPhysics(new Physics),mMessagePool(new MessageManager){}
+	mPhysics(new Physics),mMessagePool(new MessageManager), mEventPool(new EventManager){}
 
 SceneBase::~SceneBase()
 {
+	mEventPool->Release();
 	mPhysics->Release();
 	mRenderPool->Release();
 	mUpdatePool->Release();
 	mObjectPool->Release();
 
+	SafeDelete(mEventPool);
 	SafeDelete(mMessagePool);
 	SafeDelete(mPhysics);
 	SafeDelete(mRenderPool);
@@ -26,6 +28,7 @@ void SceneBase::PostInit()
 
 void SceneBase::Release()
 {
+	mEventPool->Release();
 	mMessagePool->Release();
 	mPhysics->Release();
 	mRenderPool->Release();
@@ -38,6 +41,7 @@ void SceneBase::Update()
 	mUpdatePool->Update();
 	mMessagePool->Update();
 	mObjectPool->Update();
+	mEventPool->Update();
 }
 
 void SceneBase::Render()

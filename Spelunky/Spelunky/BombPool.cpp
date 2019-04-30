@@ -8,14 +8,7 @@ const UINT BombPool::_capacity = 20;
 BombPool::BombPool()
 	: GameObject("BombPool")
 {
-	for (UINT i = 0; i < _capacity; ++i)
-	{
-		mDeActiveBombList.push_back(new Bomb(this));
-		_World->GetObjectPool()->AddObject(mDeActiveBombList.back());
-
-		mDeActiveLightList.push_back(new BombPointLight(this));
-		_World->GetObjectPool()->AddObject(mDeActiveLightList.back());
-	}
+	
 }
 
 
@@ -27,6 +20,15 @@ BombPool::~BombPool()
 
 void BombPool::Init()
 {
+	for (UINT i = 0; i < _capacity; ++i)
+	{
+		mDeActiveBombList.push_back(new Bomb(this));
+		_World->GetObjectPool()->AddObject(mDeActiveBombList.back());
+
+		mDeActiveLightList.push_back(new BombPointLight(this));
+		_World->GetObjectPool()->AddObject(mDeActiveLightList.back());
+	}
+	
 	for (UINT i = 0; i < _capacity; ++i)
 		mDeActiveBombList[i]->Init();
 }

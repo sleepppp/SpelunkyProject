@@ -8,6 +8,7 @@ protected:
 	class RenderPool* mRenderPool;
 	class Physics* mPhysics;
 	class MessageManager* mMessagePool;
+	class EventManager* mEventPool;
 protected:
 	friend class SceneManager;
 	SceneBase();
@@ -24,5 +25,6 @@ public:
 	inline class RenderPool*const GetRenderPool()const { return this->mRenderPool; }
 	inline class MessageManager*const GetMessagePool()const { return this->mMessagePool; }
 	inline class Physics* const GetPhysics()const { return this->mPhysics; }
+	inline class EventManager*const GetEventPool()const { return mEventPool; }
 	class LightingManager* const GetLightManager()const;
 };

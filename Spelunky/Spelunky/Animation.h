@@ -46,6 +46,8 @@ public:
 	float GetTotalFrameTime();
 	int GetCurrentFrameIndex()const { return currentFrameIndex; }
 	float GetTotalCurrentTime()const { return this->totalCurrentTime; }
+	float GetCurrentFrameTime()const { return currentFrameTime; }
+	void SetCurrentTime(const float& f) { currentFrameTime = f; }
 	bool getIsLoop()const { return this->isLoop; }
 	pair<int, int> GetNowFrameData()const;
 	int GetNowFrameX()const;

@@ -54,7 +54,10 @@ void TestScene::Init()
 	/*****************************************************
 	## Create Tile & Background ##
 	******************************************************/
-	TileManager* tileManager = new TileManager(L"../GameData/Stage02/1.bin");
+	srand(UINT(time(NULL)));
+	int index = Math::Random(0, 3);
+
+	TileManager* tileManager = new TileManager(L"../GameData/Stage02/" + to_wstring(index) +L".bin");
 	this->mObjectPool->AddObject(tileManager);
 	Vector2 mapSize = tileManager->GetMapSize();
 	BackGround* background = new BackGround("BackGround2", mapSize);
@@ -71,7 +74,7 @@ void TestScene::Init()
 	if (tile == nullptr)assert(SUCCEEDED(E_FAIL));
 	if (tile)
 	{
-		Player* player = new Player(Vector2(tile->GetRect().GetCenter().x,tile->GetRect().bottom - 3));
+		Player* player = new Player(Vector2(tile->GetRect().GetCenter().x,tile->GetRect().bottom - 50.f));
 		worldObject->GetTransform()->AddChild(player->GetTransform());
 		this->mObjectPool->AddObject(player);
 		playerPos = player->GetTransform()->GetWorldPosition();
@@ -176,6 +179,11 @@ void TestScene::Init()
 	******************************************************/
 	GameSystem* system = new GameSystem;
 	this->mObjectPool->AddObject(system);
+}
+
+void TestScene::PostInit()
+{
+	SceneBase::PostInit();
 	/*****************************************************
 	## SetRandomSystem ##
 	******************************************************/
@@ -186,7 +194,7 @@ void TestScene::Init()
 	/********************************************************************
 	## System Init##
 	********************************************************************/
-	_GameData->SetData(GameData::DataType::Int, "KillingMonsterCount", 0);  
+	_GameData->SetData(GameData::DataType::Int, "KillingMonsterCount", 0);
 	_SoundManager->PlayBGM("zone2");
 	RePlayManager::Start();
 	_TimeManager->Stop();

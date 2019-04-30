@@ -14,6 +14,8 @@ private:
 	UINT mCurrentTime;
 	class Timer* mTimer;
 	int mCount;
+
+	class TextButton* mToTitleButton;
 public:
 	GameSystem();
 	virtual ~GameSystem();

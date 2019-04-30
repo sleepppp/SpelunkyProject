@@ -78,7 +78,9 @@ void Player::LoadRePlayData(const UINT64 & frame)
 		mStateManager->ChangeState(info.currentStateKey);
 		mAnimations->ChangeAnimation(info.animationKey);
 		mAnimations->GetCurrentAnimation()->SetCurrentFrame(info.currentAnimationFrame);
+		mAnimations->GetCurrentAnimation()->SetCurrentTime(info.currentAnimationTime);
 		mInventory.SetBombCount(info.bombCount);
+		mAimDirection = info.aimDirection;
 		mHp = info.hp;
 		mInventory.SetMainWeapon(info.weaponPtr);
 		*mRigidbody = info.rigidbody;
@@ -218,14 +220,19 @@ void Player::UpdatePlayGame()
 {
 	if (mHp > 0)
 	{
-		this->mPlayerKey.Update(mInputDatas);
+		this->mPlayerKey.Update();
+	}
+	mPlayerKey.SaveInput(mInputDatas);
+	if (mHp > 0)
+	{
 		this->CalculationAim();
 		if (mPlayerKey.GetKeyDown(PlayerKey::Key::Interaction))
 			this->TryInstalling();
 	}
+
 	Unit::Update();
 
-	if (mHp > 0)
+	if (RePlayManager::GetIsPlay())
 	{
 		if (RePlayManager::GetNowFrame() % 100 == 0)
 		{
@@ -236,11 +243,14 @@ void Player::UpdatePlayGame()
 			info.bombCount = mInventory.GetBombCount();
 			info.animationKey = mAnimations->GetCurrentKey();
 			info.currentAnimationFrame = mAnimations->GetCurrentAnimation()->GetCurrentFrameIndex();
+			info.currentAnimationTime = mAnimations->GetCurrentAnimation()->GetCurrentFrameTime();
 			info.currentStateKey = mStateManager->GetCurrentKey();
 			info.rigidbody = *mRigidbody;
 			info.isDamage = mIsDamage;
 			info.looper = mLooper;
+			info.isLeft = mIsLeft;
 			info.speed = mSpeed;
+			info.aimDirection = mAimDirection;
 			mStateDatas->UpdateInfo(info);
 		}
 		if (mMouseDatas->Update())
@@ -269,10 +279,6 @@ void Player::UpdateRePlay()
 			for (int i = 0; i < (int)PlayerKey::Key::End; ++i)
 			{
 				mPlayerKey.mPlayerKeyState[i] = inputData.keyState[i];
-				//if (inputData.keyState[i] == PlayerKey::KeyState::Down)
-				//	mPlayerKey.PushKey((PlayerKey::Key)i);
-				//if (inputData.keyState[i] == PlayerKey::KeyState::Up)
-				//	mPlayerKey.PopKey((PlayerKey::Key)i);
 			}
 		}
 

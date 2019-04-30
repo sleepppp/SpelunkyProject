@@ -37,6 +37,7 @@ void PointLight::OnGui()
 	{
 		ImGui::Begin("PointLight");
 		{
+			ImGui::Text("X : %d , Y : %d", (int)mTransform->GetWorldPosition().x, (int)mTransform->GetWorldPosition().y);
 			ImGui::SliderFloat("OriginRange", &mOriginRange, 0.f, 500.0f);
 			ImGui::SliderFloat("Intensity", &mIntensity, 0.f, 10.0f);
 			ImGui::ColorEdit4("Color", &mColor.r,

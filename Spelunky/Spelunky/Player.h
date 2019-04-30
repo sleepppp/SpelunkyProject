@@ -13,14 +13,17 @@ private:
 	{
 		Vector2 position;
 		Unit::UnitAnimation animationKey; 
+		float currentAnimationTime;
 		int currentAnimationFrame;
 		int hp;
 		int bombCount;
 		float speed;
 		class Item* weaponPtr; 
 		string currentStateKey;
+		Vector2 aimDirection;
 		Rigidbody rigidbody;
 		bool isDamage;
+		bool isLeft;
 		Looper looper;
 	};
 private:

@@ -24,7 +24,6 @@ private:
 
 	bool isSaveMode;
 	RePlayDatas<float>* mReplayDatas;
-	vector<float> mVector;
 	UINT64 mFrameCount;
 private:
 	void Tick(float lockFPS = 60.0f);
@@ -34,7 +33,7 @@ private:
 	TimeManager();
 	virtual ~TimeManager();
 public:
-	void Start() { isStart = true; StartClock(); }
+	void Start() { isSaveMode = true; isStart = true; StartClock(); }
 	void Stop() { isStart = false; }
 	void Update();
 	void Render();

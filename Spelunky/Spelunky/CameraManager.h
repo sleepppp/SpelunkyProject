@@ -40,6 +40,7 @@ private:
 	CameraManager();
 	virtual ~CameraManager();
 public:
+	void InitCamera();
 	void Update();
 	void OnGui();
 

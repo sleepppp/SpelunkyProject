@@ -30,6 +30,7 @@ protected:
 		bool isLeft;
 		string animationKey;
 		int currentAnimationIndex;
+		float animationTime;
 		string stateKey;
 		float attackDelay;
 	};

@@ -100,6 +100,7 @@ void TimeManager::Tick(float lockFPS)
 		{
 			timeElapsed = 0.f;
 		}
+
 		if (RePlayManager::GetIsPlay())
 		{
 			mReplayDatas->UpdateInfo(timeElapsed);

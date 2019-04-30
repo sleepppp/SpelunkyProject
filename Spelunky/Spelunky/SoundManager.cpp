@@ -81,7 +81,7 @@ void SoundManager::Update()
 		this->fadeoutList[i]->getVolume(&volume);
 		if (volume > 0.001f)
 		{
-			this->fadeoutList[i]->setVolume(volume - 0.0015f);
+			this->fadeoutList[i]->setVolume(volume - 1.0f * _TimeManager->DeltaTime());
 		}
 		else
 		{
@@ -485,6 +485,8 @@ void SoundManager::LoadAllSound()
 	this->AddSound("yeah", "../Resources/Sound/yeah.ogg", false, false);
 	this->AddSound("AWPShot", "../Resources/Sound/AWPShot.mp3", false, false);
 	this->AddSound("FrogHouling", "../Resources/Sound/FrogHouling.ogg", false, false);
+	this->AddSound("lobby", "../Resources/Sound/lobby.ogg", true, true);
+	this->AddSound("tikifire", "../Resources/Sound/tikifire.wav", true, true);
 	
 }
 

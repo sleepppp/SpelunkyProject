@@ -27,6 +27,7 @@ private:
 		Vector2 position;
 		float currentDelay;
 		float currentTime;
+		float reloadDelay;
 		int fireCount;
 		bool isFire;
 		bool isInstallation;

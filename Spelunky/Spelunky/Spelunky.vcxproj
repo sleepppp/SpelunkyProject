@@ -176,6 +176,7 @@
     <ClInclude Include="DelaunayScene.h" />
     <ClInclude Include="EffectOption.h" />
     <ClInclude Include="EnumStructHeader.h" />
+    <ClInclude Include="EventManager.h" />
     <ClInclude Include="Figure.h" />
     <ClInclude Include="FloatEllipse.h" />
     <ClInclude Include="FloatRect.h" />
@@ -191,6 +192,7 @@
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InterfaceCollision.h" />
+    <ClInclude Include="InterfaceEvent.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="InventoryUI.h" />
     <ClInclude Include="Item.h" />
@@ -258,6 +260,9 @@
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="SingletonBase.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="TitleButtons.h" />
+    <ClInclude Include="TitleObject.h" />
+    <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="UIModule.h" />
@@ -294,6 +299,7 @@
     <ClCompile Include="DebugSystem.cpp" />
     <ClCompile Include="DelaunayScene.cpp" />
     <ClCompile Include="EffectOption.cpp" />
+    <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="Figure.cpp" />
     <ClCompile Include="FloatEllipse.cpp" />
     <ClCompile Include="FloatRect.cpp" />
@@ -308,6 +314,7 @@
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InterfaceCollision.cpp" />
+    <ClCompile Include="InterfaceEvent.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="InventoryUI.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -374,6 +381,9 @@
     <ClCompile Include="TileMapGenerator.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="TitleButtons.cpp" />
+    <ClCompile Include="TitleObject.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="UIModule.cpp" />

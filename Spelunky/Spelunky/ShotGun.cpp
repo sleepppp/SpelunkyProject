@@ -30,13 +30,15 @@ ShotGun::~ShotGun()
 
 void ShotGun::Init()
 {
+	Item::Init();
+
 	mPointLight = new PointLight(mTransform->GetWorldPosition());
 	mPointLight->SetActive(false);
 	mPointLight->Init();
 	mPointLight->SetColor(GameColor(1.f, 0.94f, 0.7f, 1.f));
 	_World->GetObjectPool()->AddObject(mPointLight);
+
 	mEffecter = dynamic_cast<FrameEffecter*>(_World->GetObjectPool()->FindObject("FrameEffecter"));
-	Item::Init();
 }
 
 void ShotGun::Update()
@@ -156,16 +158,22 @@ void ShotGun::LoadRePlayData(const UINT64 & frame)
 	if (mRePlayDatas->GetData(frame, &info))
 	{
 		mTransform->SetWorldPosition(info.position);
-		*mRigidbody = info.mRigidbody;
 		mCurrentDelay = info.currentDelay;
 		mIsFire = info.isFire;
 		mIsInstallation = info.mIsInstallation;
 		mUnit = info.mUnit;
+		*mRigidbody = info.mRigidbody;
 		if (mUnit)
 		{
 			mUnit->GetTransform()->AddChild(mTransform);
 			mTransform->SetPivot(Pivot::Center);
 			mRigidbody->DisActiveGravity();
+		}
+		else
+		{
+			mTransform->ReleaseParent();
+			GameObject* worldObject = _World->GetObjectPool()->FindObject("World");
+			worldObject->GetTransform()->AddChild(mTransform);
 		}
 	}
 }

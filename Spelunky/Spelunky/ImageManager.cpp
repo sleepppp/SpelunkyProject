@@ -199,7 +199,9 @@ void ImageManager::LoadAllResource()
 	this->AddFrameImage("Smoke0", PathResources(L"./Effect/Smoke0.png"), 6, 1);
 	this->AddFrameImage("SmokeOrange", PathResources(L"./Effect/SmokeOrange.png"), 6, 1);
 	
+	this->AddFrameImage("Fire01", PathResources(L"./Effect/Fire01.png"), 8, 4);
 	this->AddFrameImage("effects", PathResources(L"Effect/effects.png"),8,8);
+
 	this->AddFrameImage("Bomb", PathResources(L"./Item/Bomb.png"), 3, 1);
 	this->AddFrameImage("monsters3", PathResources(L"./Monster/monsters3.png"), 13, 13);
 	this->AddFrameImage("monsters2", PathResources(L"./Monster/monsters2.png"), 12, 12);
@@ -215,4 +217,5 @@ void ImageManager::LoadAllResource()
 	this->LoadFolder("../Resources/UI/", "*.png");
 	this->LoadFolder("../Resources/Item/", "*.png");
 	this->LoadFolder("../Resources/Bullet/", "*.png");
+	this->LoadFolder("../Resources/Title/", "*.png");
 }

@@ -42,6 +42,7 @@ void AK_47::Init()
 	mBullets->InitAllBullet(_ImageManager->FindImage("YellowBullet"), 0.5f, 800.f,
 		(Bullet::TargetType)(Bullet::TargetType::CMonster | Bullet::TargetType::CTile));
 	mBullets->SetSize(Vector2(15, 15));
+
 	_World->GetObjectPool()->AddObject(mBullets);
 }
 
@@ -94,6 +95,7 @@ void AK_47::Update()
 			info.currentTime = mCurrentTime;
 			info.fireCount = mFireCount;
 			info.isFire = mIsFire;
+			info.reloadDelay = mRaloadDelay;
 			info.isInstallation = mIsInstallation;
 			info.mRigidbody = *mRigidbody;
 			info.mUnit = mUnit;
@@ -149,6 +151,7 @@ void AK_47::LoadRePlayData(const UINT64 & frame)
 		mCurrentTime = info.currentTime;
 		mFireCount = info.fireCount;
 		mIsFire = info.isFire;
+		mRaloadDelay = info.reloadDelay;
 		mIsInstallation = info.isInstallation;
 		*mRigidbody = info.mRigidbody;
 		mUnit = info.mUnit;
@@ -157,6 +160,12 @@ void AK_47::LoadRePlayData(const UINT64 & frame)
 			mUnit->GetTransform()->AddChild(mTransform);
 			mTransform->SetPivot(Pivot::Center);
 			mRigidbody->DisActiveGravity();
+		}
+		else
+		{
+			mTransform->ReleaseParent();
+			GameObject* worldObject = _World->GetObjectPool()->FindObject("World");
+			worldObject->GetTransform()->AddChild(mTransform);
 		}
 	}
 }

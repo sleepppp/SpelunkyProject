@@ -17,11 +17,20 @@ CameraManager::CameraManager()
 	:mZoomFactor(1.f),mState(CameraManager::MoveState::FreeCamera),mIsShake(false),mShakeStrength(0.f),mShakeTime(0.f),
 	mShakeChangeDirDelay(0.f),mShakeCurrentTime(0.f),mShakeChangeDirCurrentTime(0.f), mShakeDir(1.f,0.f)
 {
+	mShakePosition = Vector2();
 	mSaveMouse = _Input->GetMousePosition();
 	this->UpdateRenderRect();
 }
 
 CameraManager::~CameraManager() {}
+
+void CameraManager::InitCamera()
+{
+	mPosition = Vector2(0, 0);
+	mZoomFactor = 1.f;
+	mState = End;
+	this->UpdateRenderRect();
+}
 
 void CameraManager::Update()
 {

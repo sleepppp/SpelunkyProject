@@ -6,6 +6,7 @@
 #include "RePlayDatas.h"
 
 #include "Timer.h"
+#include "TextButton.h"
 GameSystem::GameSystem()
 	:GameObject("GameSystem"),mCurrentTime(0)
 {
@@ -16,12 +17,20 @@ GameSystem::GameSystem()
 	mTimer = new Timer(1.f);
 	mTimer->Play();
 	mCount = 0;
+
+	mToTitleButton = new TextButton(L"To Title", 60, Vector2(_WinSizeX / 2, _WinSizeY / 2), Vector2(400, 200));
+	mToTitleButton->SetFunction([]() 
+	{
+		_SceneManager->LoadSceneByLoading("LoadingScene", "TitleScene");
+		_SoundManager->FadeoutBGM();
+	});
 }
 
 
 GameSystem::~GameSystem()
 {
 	SafeDelete(mTimer);
+	SafeDelete(mToTitleButton);
 	SafeDelete(mUIController);
 }
 
@@ -68,6 +77,8 @@ void GameSystem::Update()
 			if (mCount >= 4)
 				mCount = 0;
 		}
+
+		mToTitleButton->Update();
 	}
 		break;
 	default:
@@ -81,15 +92,15 @@ void GameSystem::Render()
 	if (mState == SystemState::Continue)
 	{
 		_D2DRenderer->RenderTextField(_WinSizeX / 2 - 400, _WinSizeY / 2 - 400, L"요 약",
-			80, 800, 300, D2DRenderer::DefaultBrush::White, DWRITE_TEXT_ALIGNMENT_CENTER, false, L"DOSGothic");
+			80, 800, 300, D2DRenderer::DefaultBrush::White, DWRITE_TEXT_ALIGNMENT_CENTER, false, L"Tekton Pro");
 
 		int killCount = _GameData->GetData(GameData::DataType::Int, "KillingMonsterCount")->GetInt();
 
 		_D2DRenderer->RenderTextField(_WinSizeX / 2 - 400, _WinSizeY / 2 - 100, L"잡은 몬스터 수 : " + to_wstring(killCount),
-			40, 800, 300, D2DRenderer::DefaultBrush::White, DWRITE_TEXT_ALIGNMENT_CENTER, false, L"DOSGothic");
+			40, 800, 300, D2DRenderer::DefaultBrush::White, DWRITE_TEXT_ALIGNMENT_CENTER, false, L"Tekton Pro");
 
 		_D2DRenderer->RenderTextField(_WinSizeX / 2 - 400, _WinSizeY / 2 + 100, L"죽었습니다! 계속 하려면 Space를 누르세요.",
-			35, 800, 300, D2DRenderer::DefaultBrush::White, DWRITE_TEXT_ALIGNMENT_CENTER, false, L"DOSGothic");
+			35, 800, 300, D2DRenderer::DefaultBrush::White, DWRITE_TEXT_ALIGNMENT_CENTER, false, L"Tekton Pro");
 	}
 	else if (mState == SystemState::Replay)
 	{
@@ -97,7 +108,9 @@ void GameSystem::Render()
 		for (int i = 0; i < mCount; ++i)
 			text += L" ▶ ";
 		_D2DRenderer->RenderTextField(_WinSizeX / 2 - 500, _WinSizeY / 2 - 400, text,
-			80, 1000, 300, D2DRenderer::DefaultBrush::White, DWRITE_TEXT_ALIGNMENT_CENTER, false, L"DOSGothic");
+			80, 1000, 300, D2DRenderer::DefaultBrush::White, DWRITE_TEXT_ALIGNMENT_CENTER, false, L"Tekton Pro");
+
+		mToTitleButton->Render();
 	}
 }
 

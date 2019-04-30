@@ -7,9 +7,13 @@
 #include "MapToolScene.h"
 #include "TestScene.h"
 #include "TileMapGenerator.h"
+#include "TitleScene.h"
 
 Program::Program()
 {
+	TitleScene* title = new TitleScene;
+	_SceneManager->AddScene("TitleScene", title);
+
 	MapToolScene* scene = new MapToolScene;
 	_SceneManager->AddScene("MapToolScene",scene);
 
@@ -25,7 +29,7 @@ Program::Program()
 	load->AddThreadFunc([]() {_ImageManager->LoadAllResource(); });
 	load->AddThreadFunc([]() {_SoundManager->LoadAllSound(); });
 	load->AddThreadFunc([]() {TileMapGenerator::BuildDataTable(); });
-	_SceneManager->LoadSceneByLoading("LoadingScene","TestScene");
+	_SceneManager->LoadSceneByLoading("LoadingScene","TitleScene");
 	_SceneManager->InitFirstScene();
 }
 

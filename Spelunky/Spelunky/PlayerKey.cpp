@@ -21,7 +21,7 @@ PlayerKey::PlayerKey()
 
 PlayerKey::~PlayerKey(){}
 
-void PlayerKey::Update(RePlayDatas<InputData>* pInputDatas)
+void PlayerKey::Update()
 {
 	/*********************************************************************
 	## KeyStay ##
@@ -45,16 +45,20 @@ void PlayerKey::Update(RePlayDatas<InputData>* pInputDatas)
 			isInput = true;
 		}
 	}
-	//if (isInput)
+
+}
+
+void PlayerKey::SaveInput(RePlayDatas<InputData>* pInputDatas)
+{
+	if (RePlayManager::GetIsPlay())
 	{
 		if (pInputDatas)
 		{
 			InputData data;
-			memcpy(data.keyState, mPlayerKeyState, sizeof(int) * 9);
+			memcpy(&data.keyState[0], &mPlayerKeyState[0], sizeof(int) * 9);
 			pInputDatas->UpdateInfo(data);
 		}
 	}
-
 }
 
 void PlayerKey::CheckPreKeyState()

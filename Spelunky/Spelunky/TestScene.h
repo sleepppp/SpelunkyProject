@@ -8,6 +8,7 @@ public:
 	virtual ~TestScene() {}
 
 	void Init()override;
+	void PostInit()override;
 	void Release()override; 
 	void Update()override; 
 	void Render()override; 

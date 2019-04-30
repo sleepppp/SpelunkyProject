@@ -9,6 +9,8 @@
 #include "DataContext.h"
 #include "GameSystem.h"
 #include "RePlayDatas.h"
+#include "InterfaceEvent.h"
+
 const float Unit::_invincibilityTime = 1.f;
 
 Unit::Unit(const Vector2& pos)
@@ -135,12 +137,10 @@ void Unit::Damage(const int & damage, const Vector2 & forceDirection, const floa
 				mStateManager->ChangeState("Dead");
 				//TODO 플레이어 죽는 사운드 추가
 				_Camera->Shake(0.4f, 0.04f, 2.4f);
-
 				GameSystem* system = dynamic_cast<GameSystem*>(_World->GetObjectPool()->FindObject("GameSystem"));
 				if (system->GetSystemState() == GameSystem::SystemState::PlayGame)
 				{
-					system->ChangeState(GameSystem::SystemState::Continue);
-					RePlayManager::Stop();
+					_World->GetEventPool()->PushEvent(new IPlayerDead);
 				}
 			}
 		}

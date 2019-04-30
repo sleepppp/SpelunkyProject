@@ -181,6 +181,7 @@ WPARAM Window::Run()
 **************************************************/
 void Window::CreateSingleton()
 {
+	SoundManager::Create();
 	TimeManager::Create();
 	Input::Create();
 	CameraManager::Create();
@@ -192,7 +193,6 @@ void Window::CreateSingleton()
 	}
 	ImageManager::Create();
 	SceneManager::Create();
-	SoundManager::Create();
 	GameData::Create();
 	DebugSystem::Create();
 }
@@ -203,7 +203,6 @@ void Window::DeleteSingleton()
 {
 	DebugSystem::Delete();
 	GameData::Delete();
-	SoundManager::Delete();
 	SceneManager::Delete();
 	ImageManager::Delete();
 	ImGui::Delete();
@@ -212,6 +211,7 @@ void Window::DeleteSingleton()
 	CameraManager::Delete();
 	Input::Delete();
 	TimeManager::Delete();
+	SoundManager::Delete();
 }
 /*************************************************
 ## UpdateSingleton ##

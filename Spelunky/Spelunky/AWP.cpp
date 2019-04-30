@@ -214,5 +214,11 @@ void AWP::LoadRePlayData(const UINT64 & frame)
 			mTransform->SetPivot(Pivot::Center);
 			mRigidbody->DisActiveGravity();
 		}
+		else
+		{
+			mTransform->ReleaseParent();
+			GameObject* worldObject = _World->GetObjectPool()->FindObject("World");
+			worldObject->GetTransform()->AddChild(mTransform);
+		}
 	}
 }
