@@ -33,6 +33,10 @@ public:
 		UINT32 colorref = RGB((BYTE)(arr[2] * 255.f), (BYTE)(arr[1] * 255.f), (BYTE)(arr[0] * 255.f));
 		return D2D1::ColorF(colorref, this->a);
 	}
+	UINT32 GetColorref()
+	{
+		return RGB((BYTE)(arr[2] * 255.f), (BYTE)(arr[1] * 255.f), (BYTE)(arr[0] * 255.f));
+	}
 };
 
 namespace Direction

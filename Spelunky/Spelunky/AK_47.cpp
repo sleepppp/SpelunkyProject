@@ -39,7 +39,7 @@ void AK_47::Init()
 
 	mBullets = new Bullets<Bullet>(25);
 	mBullets->Init();
-	mBullets->InitAllBullet(_ImageManager->FindImage("YellowBullet"), 0.5f, 800.f,
+	mBullets->InitAllBullet(_ImageManager->FindImage("YellowBullet"), 10, 800.f,
 		(Bullet::TargetType)(Bullet::TargetType::CMonster | Bullet::TargetType::CTile));
 	mBullets->SetSize(Vector2(15, 15));
 

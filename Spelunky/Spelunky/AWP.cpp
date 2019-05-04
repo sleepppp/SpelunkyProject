@@ -169,7 +169,7 @@ void AWP::Execute()
 				{
 					if (Figure::IntersectLineToRect(nullptr, line, monster->GetCollisionRect()))
 					{
-						monster->Damage(5.f, direction);
+						monster->Damage(100, direction);
 					}
 				}
 			}

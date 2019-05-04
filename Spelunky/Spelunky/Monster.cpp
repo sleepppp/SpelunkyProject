@@ -6,9 +6,11 @@
 #include "Player.h"
 #include "GameSystem.h"
 #include "ParticleSystemPool.h"
+#include "DamageFont.h"
+#include "GoldItem.h"
 
 Monster::Monster(const Vector2& pos)
-	:GameObject("Monster"),mImage(nullptr),mFullHp(5.f),mHp(5.f),mIsLeft(false), mRigidbody(new Rigidbody(this)),mSpeed(300.f)
+	:GameObject("Monster"),mImage(nullptr),mFullHp(100),mHp(100),mIsLeft(false), mRigidbody(new Rigidbody(this)),mSpeed(300.f)
 	, mPlayer(nullptr), mDamage(1), mPerceptionRange(300.f)
 {
 	mLayer = RenderPool::Layer::Monster;
@@ -40,7 +42,7 @@ void Monster::Init()
 
 	mPlayer = dynamic_cast<Player*>(_World->GetObjectPool()->FindObject("Player"));
 	mParticlePool = dynamic_cast<ParticleSystemPool*>(_World->GetObjectPool()->FindObject("ParticleSystemPool"));
-
+	mDamageFont = dynamic_cast<DamageFont*>(_World->GetObjectPool()->FindObject("DamageFont"));
 	GameObject* world = _World->GetObjectPool()->FindObject("World");
 	world->GetTransform()->AddChild(mTransform);
 }
@@ -104,12 +106,12 @@ void Monster::ChangeState(const string & key)
 	mStateManager.ChangeState(key);
 }
 
-void Monster::Damage(const float & damage, const Vector2 & forceDirection, const float & forcePower, const float & recuPower)
+void Monster::Damage(const int & damage, const Vector2 & forceDirection, const float & forcePower, const float & recuPower)
 {
-	if (mHp > 0.f)
+	if (mHp > 0)
 	{
 		mHp -= damage;
-		if (mHp <= 0.f)
+		if (mHp <= 0)
 		{
 			this->ExecuteDie();
 			this->mIsActive = false;
@@ -126,12 +128,19 @@ void Monster::Damage(const float & damage, const Vector2 & forceDirection, const
 					_GameData->SetData(GameData::DataType::Int, "KillingMonsterCount", value->GetInt() + 1);
 				}
 			}
+			mDamageFont->RequestDamageFont(to_wstring(damage), mTransform->GetCenterPos(),230.f,45,GameColor(1.f,0.f,0.f,1.f));
+
+			GoldItem* gold = new GoldItem(mTransform->GetCenterPos(), Math::Random(100, 500));
+			gold->Init();
+			gold->GetRigidbody()->Jump(500.f);
+			_World->GetObjectPool()->AddObject(gold);
 		}
 		else
 		{
 			this->ExecuteDamage();
 			mParticlePool->PlayParticle("BloodRubble", mTransform->GetWorldPosition());
 			mRigidbody->Force(forceDirection, forcePower, recuPower);
+			mDamageFont->RequestDamageFont(to_wstring(damage), mTransform->GetCenterPos());
 		}
 	}
 }

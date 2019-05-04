@@ -13,7 +13,7 @@ Bat::Bat(class Tile* pTile)
 	mName = "Bat";
 	mPerceptionRange = 300.f;
 	mSpeed = 200.f;
-	mHp = mFullHp = 4.f;
+	mHp = mFullHp = 100;
 	mImage = _ImageManager->FindImage("monsters3");
 	mRigidbody->DisActiveGravity();
 	mTransform->SetPivot(Pivot::Center);
@@ -28,10 +28,6 @@ Bat::~Bat()
 void Bat::Update()
 {
 	Monster::Update();
-	if (mTransform->GetWorldPosition().x < mPlayer->GetTransform()->GetWorldPosition().x)
-		mIsLeft = false;
-	else
-		mIsLeft = true;
 }
 
 void Bat::CreateState()

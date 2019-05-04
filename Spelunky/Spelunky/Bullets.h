@@ -119,7 +119,7 @@ public:
 		}
 	}
 
-	void InitAllBullet(class Image* pImage, const float& damage, const float& speed, const Bullet::TargetType& type)
+	void InitAllBullet(class Image* pImage, const int& damage, const float& speed, const Bullet::TargetType& type)
 	{
 		BulletIter iter = mDeActiveBullets.begin();
 		for (; iter != mDeActiveBullets.end(); ++iter)

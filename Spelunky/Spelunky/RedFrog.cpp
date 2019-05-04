@@ -11,13 +11,14 @@
 #include "Tile.h"
 #include "TileManager.h"
 #include "BombPool.h"
+#include "DamageFont.h"
 
 RedFrog::RedFrog(class Tile* pTile)
 	:Frog(pTile)
 {
 	mName = "RedFrog";
 	mDamage = 2;
-	mFullHp = mHp = 5.f;
+	mFullHp = mHp = 100;
 	this->AddCallbackMessage("Death", [this](TagMessage message) 
 	{
 		this->ExecuteDie();
@@ -69,12 +70,12 @@ void RedFrog::CreateAnimation()
 	mAnimations.AddAnimation("MoveToPlayer", jump);
 }
 
-void RedFrog::Damage(const float & damage, const Vector2 & forceDirection, const float & forcePower, const float & recuPower)
+void RedFrog::Damage(const int & damage, const Vector2 & forceDirection, const float & forcePower, const float & recuPower)
 {
-	if (mHp > 0.f)
+	if (mHp > 0)
 	{
 		mHp -= damage;
-		if (mHp <= 0.f)
+		if (mHp <= 0)
 		{
 			this->mIsActive = false;
 			TileManager* tileManager =reinterpret_cast<TileManager*>
@@ -109,7 +110,7 @@ void RedFrog::Damage(const float & damage, const Vector2 & forceDirection, const
 						if (Monster* monster = dynamic_cast<Monster*>(target))
 						{
 							if(monster != this)
-								monster->Damage(3, direction, 1000, 1500.f);
+								monster->Damage(50, direction, 1000, 1500.f);
 						}
 					}
 				}
@@ -121,7 +122,7 @@ void RedFrog::Damage(const float & damage, const Vector2 & forceDirection, const
 			{
 				if (Unit* unit = dynamic_cast<Unit*>(player))
 				{
-					unit->Damage(6, direction, 1700.f, 2000.f);
+					unit->Damage(2, direction, 1700.f, 2000.f);
 				}
 			}
 			
@@ -140,20 +141,15 @@ void RedFrog::Damage(const float & damage, const Vector2 & forceDirection, const
 			_SoundManager->Play("rubble", _Camera->GetDistanceFactor(worldPos));
 			mEffecter->RequestPlayEffect("SmokeOrange", 0.1f, mTransform->GetCenterPos(), 1.f, FrameEffecter::Option::ScaleAlphablending);
 			
-			Vector2 toTarget = mPlayer->GetTransform()->GetCenterPos() - mTransform->GetCenterPos();
-			if (Vector2::Length(&toTarget) < 70.f)
-			{
-				mPlayer->Damage(mDamage, toTarget);
-			}
-			
 			DataContextValue* value = _GameData->GetData(GameData::DataType::Int, "KillingMonsterCount");
 			_GameData->SetData(GameData::DataType::Int, "KillingMonsterCount", value->GetInt() + 1);
+			mDamageFont->RequestDamageFont(to_wstring(damage), mTransform->GetCenterPos(), 230.f, 45, GameColor(1.f, 0.f, 0.f, 1.f));
 		}
 		else
 		{
 			mParticlePool->PlayParticle("BloodRubble", mTransform->GetWorldPosition());
 			mRigidbody->Force(forceDirection, forcePower, recuPower);
-
+			mDamageFont->RequestDamageFont(to_wstring(damage), mTransform->GetCenterPos());
 		}
 	}
 }

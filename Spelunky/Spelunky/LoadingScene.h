@@ -4,10 +4,10 @@ class LoadingScene : public SceneBase
 {
 protected:
 	class Image* mImage;
-	class Animation* mAnimation;
 	class Loading* mLoading;
 	string mNextSceneName;
 	float mDelayTime;
+	float mAngle;
 public:
 	LoadingScene();
 	virtual ~LoadingScene();

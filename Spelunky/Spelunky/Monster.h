@@ -13,9 +13,10 @@ protected:
 	MonsterStateManager mStateManager;
 	class Rigidbody* mRigidbody;
 	class ParticleSystemPool* mParticlePool;
+	class DamageFont* mDamageFont;
 	bool mIsLeft;
-	float mFullHp;
-	float mHp;
+	int mFullHp;
+	int mHp;
 	int mDamage;
 	float mPerceptionRange; 
 	float mSpeed; 
@@ -25,7 +26,7 @@ protected:
 	{
 		bool isActive;
 		Vector2 position;
-		float hp;
+		int hp;
 		Rigidbody rigidbody;
 		bool isLeft;
 		string animationKey;
@@ -56,8 +57,8 @@ public:
 	int GetDamage()const { return mDamage; }
 	bool GetIsLeft()const { return mIsLeft; }
 	void SetIsLeft(const bool& b) { mIsLeft = b; }
-	void SetHP(const float& hp) { mHp = hp; }
-	virtual void Damage(const float& damage, const Vector2& forceDirection, 
+	void SetHP(const int& hp) { mHp = hp; }
+	virtual void Damage(const int& damage, const Vector2& forceDirection, 
 		const float& forcePower = 300.f, const float& recuPower = 500.f);
 public:
 	virtual void CreateState() = 0;

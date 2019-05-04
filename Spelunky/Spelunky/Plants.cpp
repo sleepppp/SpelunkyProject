@@ -1,34 +1,33 @@
 #include "stdafx.h"
-#include "Snake.h"
+#include "Plants.h"
 
 #include "Tile.h"
 #include "Transform.h"
 #include "Animation.h"
 #include "Player.h"
+#include "Snake.h"
 
-Snake::Snake(Tile* pTile)
-	:Monster(pTile->GetRect().GetCenter()) 
+Plants::Plants(Tile * pTile)
+	:Monster(pTile->GetRect().GetCenter())
 {
-	mName = "Snake";
-	mImage = _ImageManager->FindImage("monsters");
+	mName = "Plants";
+	mImage = _ImageManager->FindImage("monsters2");
 	mTransform->SetPivot(Pivot::Bottom);
 	mTransform->SetSize(mImage->GetFrameSize() * 0.5f);
-	mSpeed = 150.f;
+	mSpeed = 100.f;
 }
-Snake::~Snake() {}
 
-void Snake::Init()
+Plants::~Plants()
+{
+}
+
+void Plants::Init()
 {
 	Monster::Init();
 	mStateManager.ChangeState("Shuttling");
 }
 
-void Snake::Update()
-{
-	Monster::Update();
-}
-
-void Snake::CreateState()
+void Plants::CreateState()
 {
 	MonsterShuttling* shuttling = new MonsterShuttling(this);
 	mStateManager.AddState("Shuttling", shuttling);
@@ -36,38 +35,37 @@ void Snake::CreateState()
 	mStateManager.AddState("Attack", bite);
 }
 
-void Snake::CreateAnimation()
+void Plants::CreateAnimation()
 {
 	constexpr float defaultUpdateTime = 0.1f;
 
 	Animation* shuttling = new Animation;
-	shuttling->SetStartEndFrame(0, 0, 10, 0, false);
+	shuttling->SetStartEndFrame(0, 1, 5, 1, false);
 	shuttling->SetFrameUpdateTime(defaultUpdateTime);
 	shuttling->SetIsLoop(true);
 	mAnimations.AddAnimation("Shuttling", shuttling);
 
 	Animation* bite = new Animation;
-	bite->SetStartEndFrame(0, 1, 6, 1, false);
+	bite->SetStartEndFrame(0, 2, 6, 2, false);
 	bite->SetFrameUpdateTime(defaultUpdateTime);
 	bite->SetIsLoop(false);
 	bite->SetCallbackFunc([this]() {
-		this->ChangeState("Shuttling"); 
+		this->ChangeState("Shuttling");
 	});
 	mAnimations.AddAnimation("Attack", bite);
 }
 
-void Snake::ExecuteDamage()
+void Plants::ExecuteDamage()
 {
 	_SoundManager->Play("MonsterHit", _Camera->GetDistanceFactor(mTransform->GetWorldPosition()));
 }
 
-void Snake::ExecuteDie()
+void Plants::ExecuteDie()
 {
 	_SoundManager->Play("splat", _Camera->GetDistanceFactor(mTransform->GetWorldPosition()) * 1.5f);
 }
 
-
-void SnakeBiteState::Enter()
+void PlantsBiteState::Enter()
 {
 	Vector2 worldPos = mMonster->GetTransform()->GetWorldPosition();
 	mMonster->ChangeAnimation("Attack");
@@ -78,11 +76,11 @@ void SnakeBiteState::Enter()
 	_SoundManager->Play("snakebite", _Camera->GetDistanceFactor(worldPos));
 }
 
-void SnakeBiteState::Execute()
+void PlantsBiteState::Execute()
 {
 	if (mMonster->GetAnimations()->GetCurrentAnimation()->GetNowFrameX() == 3)
 	{
-		Figure::FloatRect collider; 
+		Figure::FloatRect collider;
 		Vector2 offset;
 		if (mMonster->GetIsLeft())
 			offset = Vector2(-50.f, 0.f);
@@ -95,22 +93,11 @@ void SnakeBiteState::Execute()
 			Vector2 normalize = Vector2::Normalize(&(mPlayer->GetTransform()->GetCenterPos() - mMonster->GetTransform()->GetCenterPos()));
 			mPlayer->Damage(mMonster->GetDamage(), Vector2(normalize.x, -0.1f), 200.f, 500.f);
 		}
-	
+
 	}
 }
 
-void SnakeBiteState::Exit()
+void PlantsBiteState::Exit()
 {
 }
 
-void SnakeBiteState::OnGui()
-{
-	Figure::FloatRect collider;
-	Vector2 offset;
-	if (mMonster->GetIsLeft())
-		offset = Vector2(-50.f, 0.f);
-	else
-		offset = Vector2(50.f, 0.f);
-	collider.Update(mMonster->GetTransform()->GetCenterPos() + offset, Vector2(50.f, 50.f), Pivot::Center);
-	_D2DRenderer->DrawRectangle(collider, D2DRenderer::DefaultBrush::Red, true,2.f);
-}

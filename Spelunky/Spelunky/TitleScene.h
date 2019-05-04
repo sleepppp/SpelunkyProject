@@ -7,6 +7,7 @@ public:
 	virtual ~TitleScene();
 
 	void Init()override; 
+	void PostInit()override;
 	void Release()override; 
 };
 

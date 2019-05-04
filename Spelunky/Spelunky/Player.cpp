@@ -61,6 +61,9 @@ void Player::Update()
 		this->UpdatePlayGame();
 	else if (state == GameSystem::SystemState::Replay)
 		this->UpdateRePlay();
+
+	if (_Input->GetKeyDown('G'))
+		mInventory.SetGold(mInventory.GetGold() + 1000);
 }
 
 void Player::Render()
@@ -71,7 +74,7 @@ void Player::Render()
 void Player::LoadRePlayData(const UINT64 & frame)
 {
 	StateInfo info;
-
+	mFrameCount = frame;
 	if (mStateDatas->GetData(frame, &info))
 	{
 		mTransform->SetWorldPosition(info.position);
@@ -84,10 +87,10 @@ void Player::LoadRePlayData(const UINT64 & frame)
 		mHp = info.hp;
 		mInventory.SetMainWeapon(info.weaponPtr);
 		*mRigidbody = info.rigidbody;
-		mFrameCount = frame;
 		mIsDamage = info.isDamage;
 		mLooper = info.looper;
 		mSpeed = info.speed;
+		mInventory.SetGold(info.gold);
 	}
 
 	PlayerKey::InputData inputData;
@@ -220,14 +223,10 @@ void Player::UpdatePlayGame()
 {
 	if (mHp > 0)
 	{
-		this->mPlayerKey.Update();
-	}
-	mPlayerKey.SaveInput(mInputDatas);
-	if (mHp > 0)
-	{
+		mPlayerKey.Update();
+		mPlayerKey.SaveInput(mInputDatas);
+
 		this->CalculationAim();
-		if (mPlayerKey.GetKeyDown(PlayerKey::Key::Interaction))
-			this->TryInstalling();
 	}
 
 	Unit::Update();
@@ -251,6 +250,7 @@ void Player::UpdatePlayGame()
 			info.isLeft = mIsLeft;
 			info.speed = mSpeed;
 			info.aimDirection = mAimDirection;
+			info.gold = mInventory.GetGold();
 			mStateDatas->UpdateInfo(info);
 		}
 		if (mMouseDatas->Update())
@@ -271,8 +271,6 @@ void Player::UpdateRePlay()
 			mAimDirection = Vector2::Normalize(&(worldMouse - playerPos));
 		}
 
-		//mPlayerKey.CheckPreKeyState();
-
 		PlayerKey::InputData inputData;
 		if (mInputDatas->GetData(mFrameCount, &inputData))
 		{
@@ -281,9 +279,6 @@ void Player::UpdateRePlay()
 				mPlayerKey.mPlayerKeyState[i] = inputData.keyState[i];
 			}
 		}
-
-		if (mPlayerKey.GetKeyDown(PlayerKey::Key::Interaction))
-			this->TryInstalling();
 
 		mStateManager->Update();
 		++mFrameCount;

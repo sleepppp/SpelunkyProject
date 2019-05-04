@@ -32,6 +32,9 @@ void TestScene::Init()
 	MiddleAim* ma = new MiddleAim;
 	worldObject->GetTransform()->AddChild(ma->GetTransform());
 	this->mObjectPool->AddObject(ma);
+
+	DamageFont* damageFont = new DamageFont;
+	mObjectPool->AddObject(damageFont);
 	/*****************************************************
 	## CreateObjectPooling ##
 	******************************************************/
@@ -173,7 +176,33 @@ void TestScene::Init()
 				mObjectPool->AddObject(snake);
 			}
 		}
+		if (Tile* tile = TileMapGenerator::FindOnGroundTile(tileManager->GetTilePtr()))
+		{
+			if (Vector2::Length(&(tile->GetRect().GetCenter() - playerPos)) > 300.f)
+			{
+				Plants* snake = new Plants(tile);
+				worldObject->GetTransform()->AddChild(snake->GetTransform());
+				mObjectPool->AddObject(snake);
+			}
+		}
 	}
+
+	while (true)
+	{
+		Tile* tile = TileMapGenerator::FindUnderGroundTile(tileManager->GetTilePtr());
+		if (tile)
+		{
+			float length = Vector2::Length(&(tile->GetRect().GetCenter() - playerPos));
+			if (length > 500.f )//&&  length  700.f)
+			{
+				Vampire* boss = new Vampire(tile);
+				worldObject->GetTransform()->AddChild(boss->GetTransform());
+				mObjectPool->AddObject(boss);
+				break;
+			}
+		}
+	}
+
 	/*****************************************************
 	## Create System Object ##
 	******************************************************/
@@ -204,6 +233,7 @@ void TestScene::PostInit()
 void TestScene::Release()
 {
 	SceneBase::Release();
+	_Camera->InitCamera();
 	_TimeManager->Stop();
 	_TimeManager->Start();
 }

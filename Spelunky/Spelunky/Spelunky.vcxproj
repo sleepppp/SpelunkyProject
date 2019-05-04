@@ -170,6 +170,7 @@
     <ClInclude Include="CheckBoxButton.h" />
     <ClInclude Include="D2DRenderer.h" />
     <ClInclude Include="D3DRenderer.h" />
+    <ClInclude Include="DamageFont.h" />
     <ClInclude Include="DataContext.h" />
     <ClInclude Include="DebugSystem.h" />
     <ClInclude Include="DefineHeader.h" />
@@ -188,6 +189,7 @@
     <ClInclude Include="GameObjectHeader.h" />
     <ClInclude Include="GameSystem.h" />
     <ClInclude Include="GameUI.h" />
+    <ClInclude Include="GoldItem.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="Input.h" />
@@ -221,6 +223,7 @@
     <ClInclude Include="ParticleSystemPool.h" />
     <ClInclude Include="Path.h" />
     <ClInclude Include="Physics.h" />
+    <ClInclude Include="Plants.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerKey.h" />
     <ClInclude Include="PlayerState.h" />
@@ -270,6 +273,7 @@
     <ClInclude Include="UnitStateBase.h" />
     <ClInclude Include="UnitStateManager.h" />
     <ClInclude Include="UpdatePool.h" />
+    <ClInclude Include="Vampire.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
@@ -295,6 +299,7 @@
     <ClCompile Include="D2DRenderer + DrawFunc.cpp" />
     <ClCompile Include="D2DRenderer.cpp" />
     <ClCompile Include="D3DRenderer.cpp" />
+    <ClCompile Include="DamageFont.cpp" />
     <ClCompile Include="DataContext.cpp" />
     <ClCompile Include="DebugSystem.cpp" />
     <ClCompile Include="DelaunayScene.cpp" />
@@ -310,6 +315,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameSystem.cpp" />
     <ClCompile Include="GameUI.cpp" />
+    <ClCompile Include="GoldItem.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -340,6 +346,7 @@
     <ClCompile Include="ParticleSystemPool.cpp" />
     <ClCompile Include="Path.cpp" />
     <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="Plants.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerKey.cpp" />
     <ClCompile Include="PlayerState.cpp" />
@@ -391,6 +398,7 @@
     <ClCompile Include="UnitStateBase.cpp" />
     <ClCompile Include="UnitStateManager.cpp" />
     <ClCompile Include="UpdatePool.cpp" />
+    <ClCompile Include="Vampire.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>

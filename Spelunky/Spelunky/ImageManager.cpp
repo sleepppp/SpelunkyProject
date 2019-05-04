@@ -211,6 +211,8 @@ void ImageManager::LoadAllResource()
 	this->AddFrameImage("Revolver", PathResources(L"./Item/Revolver.png"), 2, 1);
 	this->AddFrameImage("AK_47", PathResources(L"./Item/AK47.png"), 2, 1);
 	this->AddFrameImage("AWP", PathResources(L"./Item/AWP.png"), 2, 1);
+
+	this->AddFrameImage("dmscore", PathResources(L"./UI/dmscore.png"),3,4);
 	
 	this->LoadFolder("../Resources/Tile/", "*.png");
 	this->LoadFolder("../Resources/Object/", "*.png");

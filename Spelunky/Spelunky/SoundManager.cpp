@@ -488,6 +488,13 @@ void SoundManager::LoadAllSound()
 	this->AddSound("lobby", "../Resources/Sound/lobby.ogg", true, true);
 	this->AddSound("tikifire", "../Resources/Sound/tikifire.wav", true, true);
 	
+	this->AddSound("batBossAttack", "../Resources/Sound/batBossAttack.ogg", false, false);
+	this->AddSound("batBossCry", "../Resources/Sound/batBossCry.ogg", false, false);
+	this->AddSound("batBossDeath", "../Resources/Sound/batBossDeath.ogg", false, false);
+	this->AddSound("gold_poop", "../Resources/Sound/gold_poop.wav", false, false);
+	this->AddSound("PlayerDeath", "../Resources/Sound/PlayerDeath.ogg", false, false);
+	this->AddSound("MonsterHit", "../Resources/Sound/heroHit2.ogg", false, false);
+	
 }
 
 

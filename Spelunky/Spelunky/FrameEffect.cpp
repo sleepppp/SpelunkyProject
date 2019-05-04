@@ -16,8 +16,6 @@ FrameEffect::~FrameEffect()
 	SafeDelete(mAnimation);
 }
 
-
-
 bool FrameEffect::UpdateEffect()
 {
 	for (UINT i = 0; i < mOption.size(); ++i)

@@ -11,7 +11,10 @@ Transform::Transform()
 
 Transform::Transform(const Vector2 & pos, const Vector2 & size, const Pivot::Enum & pivot, GameObject*const pObject)
 	: mWorldPosition(pos), mLocalPosition(pos), mSize(size), mPivot(pivot),mGameObject(pObject),
-	mParent(nullptr), mFirstChild(nullptr), mNextSibling(nullptr), mRect(pos, size, pivot) {}
+	mParent(nullptr), mFirstChild(nullptr), mNextSibling(nullptr), mRect(pos, size, pivot)
+{
+	this->UpdateTransform();
+}
 
 
 Transform::~Transform()

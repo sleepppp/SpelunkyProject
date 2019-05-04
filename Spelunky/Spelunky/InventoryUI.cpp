@@ -8,8 +8,8 @@
 
 InventoryUI::InventoryUI()
 	:GameObject("Inventory", Vector2(60, 50), Vector2(0, 0), Pivot::LeftTop, RenderPool::Layer::UI),
-	mPlayer(nullptr), mInventoryImage(nullptr), mGoldImage(nullptr)
-{
+	mPlayer(nullptr), mInventoryImage(nullptr), mGoldImage(nullptr),mCurrentTime(0.f)
+{	
 }
 
 
@@ -23,11 +23,47 @@ void InventoryUI::Init()
 	mGoldImage = _ImageManager->FindImage("moneyhud");
 	mPlayer = (Player*)_World->GetObjectPool()->FindObject("Player");
 	_World->GetRenderPool()->RequestRender(mLayer, this);
+	_World->GetUpdatePool()->RequestUpdate(this);
+
+	mGold = mPlayer->GetInventory()->GetGold();
 }
 
 void InventoryUI::Release()
 {
+	_World->GetUpdatePool()->RemoveUpdate(this);
 	_World->GetRenderPool()->RemoveRender(mLayer, this);
+}
+
+void InventoryUI::Update()
+{
+	mUpdateGold = false;
+
+	static const float updateTime = 0.002f;
+	int currentGold = mPlayer->GetInventory()->GetGold();
+	if (mGold != currentGold)
+	{
+		mUpdateGold = true;
+		mCurrentTime += _TimeManager->DeltaTime();
+		if (mCurrentTime >= updateTime)
+		{
+			int temp = mGold < currentGold ? 1 : -1;
+			while (mCurrentTime >= updateTime)
+			{
+				mCurrentTime -= updateTime;
+				mGold += temp;
+				if (temp > 0 && mGold > currentGold)
+				{
+					mGold = currentGold;
+					break;
+				}
+				else if (temp < 0 && mGold < currentGold)
+				{
+					mGold = currentGold;
+					break;
+				}
+			}
+		}
+	}
 }
 
 void InventoryUI::Render()
@@ -55,13 +91,26 @@ void InventoryUI::Render()
 	}
 	if (mGoldImage)
 	{
+		D2DRenderer::DefaultBrush brush(D2DRenderer::DefaultBrush::White);
+		int fontSize = 50;
+		if (mUpdateGold)
+		{
+			brush = D2DRenderer::DefaultBrush::Yellow;
+			fontSize = 65;
+		}
+
 		mGoldImage->SetScale(0.9f);
 		mGoldImage->Render(Vector2(0, 200), Pivot::LeftTop, false);
 
-		_D2DRenderer->RenderTextField(157, 195, to_wstring(gold), 50, 300, 100, D2DRenderer::DefaultBrush::Black,
+		_D2DRenderer->RenderTextField(157, 195, to_wstring(mGold), fontSize, 300, 100, D2DRenderer::DefaultBrush::Black,
 			DWRITE_TEXT_ALIGNMENT_LEADING, false);
-		_D2DRenderer->RenderTextField(160, 195, to_wstring(gold), 50, 300, 100, D2DRenderer::DefaultBrush::White,
+		_D2DRenderer->RenderTextField(160, 195, to_wstring(mGold), fontSize, 300, 100, brush,
 			DWRITE_TEXT_ALIGNMENT_LEADING, false);
 	}
 
+}
+
+void InventoryUI::LoadRePlayData(const UINT64 & frame)
+{
+	mGold = mPlayer->GetInventory()->GetGold();
 }

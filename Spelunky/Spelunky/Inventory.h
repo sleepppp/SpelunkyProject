@@ -18,4 +18,7 @@ public:
 	void InstallationWeapon(class Item* pItem);
 	class Item* GetMainWeapon() { return mMainWeapon; }
 	void SetMainWeapon(class Item* pItem) { mMainWeapon = pItem; }
+
+	void AddGold(const int& added) { mGold += added; }
+	void SpendGold(const int& spend) { mGold -= spend; if (mGold < 0)mGold = 0; }
 };

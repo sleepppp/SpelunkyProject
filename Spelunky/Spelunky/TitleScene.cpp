@@ -22,6 +22,11 @@ void TitleScene::Init()
 
 	_Camera->InitCamera();
 	_SoundManager->SetMusicVolume(1.f);
+}
+
+void TitleScene::PostInit()
+{
+	SceneBase::PostInit();
 	_SoundManager->PlayBGM("tikifire");
 }
 

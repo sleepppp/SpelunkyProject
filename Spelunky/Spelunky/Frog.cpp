@@ -13,7 +13,7 @@ Frog::Frog(Tile* pTile)
 	mName = "Frog";
 	mSpeed = 200.f;
 	mPerceptionRange = 450.f;
-	mHp = mFullHp = 3.5f;
+	mHp = mFullHp = 100;
 	mImage = _ImageManager->FindImage("monsters2");
 	mTransform->SetPivot(Pivot::Bottom);
 	mTransform->SetSize(Vector2(mImage->GetFrameSize().x * 0.5f, mImage->GetFrameSize().y * 0.7f));
@@ -25,6 +25,7 @@ Frog::Frog(const Vector2 & pos)
 	mName = "Frog";
 	mSpeed = 200.f;
 	mPerceptionRange = 450.f;
+	mHp = mFullHp = 100;
 	mImage = _ImageManager->FindImage("monsters2");
 	mTransform->SetPivot(Pivot::Bottom);
 	mTransform->SetSize(Vector2(mImage->GetFrameSize().x * 0.5f, mImage->GetFrameSize().y * 0.7f));

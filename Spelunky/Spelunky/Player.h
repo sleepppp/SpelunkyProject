@@ -17,6 +17,7 @@ private:
 		int currentAnimationFrame;
 		int hp;
 		int bombCount;
+		int gold;
 		float speed;
 		class Item* weaponPtr; 
 		string currentStateKey;

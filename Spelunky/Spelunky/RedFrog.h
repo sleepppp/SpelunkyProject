@@ -14,6 +14,6 @@ public:
 	void CreateState()override;
 	void CreateAnimation()override;
 
-	void Damage(const float& damage, const Vector2& forceDirection,
+	void Damage(const int& damage, const Vector2& forceDirection,
 		const float& forcePower = 300.f, const float& recuPower = 500.f)override;
 };

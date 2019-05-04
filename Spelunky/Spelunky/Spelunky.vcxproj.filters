@@ -253,9 +253,6 @@
     <Filter Include="InGameObject\Player">
       <UniqueIdentifier>{986a432f-731b-40ce-9eac-db6dd3c53281}</UniqueIdentifier>
     </Filter>
-    <Filter Include="InGameObject\MonsterState">
-      <UniqueIdentifier>{5079e828-fffd-4263-a83b-d78c1a93db91}</UniqueIdentifier>
-    </Filter>
     <Filter Include="InGameObject\GameSystem">
       <UniqueIdentifier>{b0b7b2a7-cc48-4e52-8833-519191d3b0a2}</UniqueIdentifier>
     </Filter>
@@ -276,6 +273,21 @@
     </Filter>
     <Filter Include="InGameObject\Item\AK_47">
       <UniqueIdentifier>{ceeb26de-7bd0-4bdc-abcd-a7a3aed28a5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\Monster\Plants">
+      <UniqueIdentifier>{d3c01168-45ec-47cd-98b9-25efdc15e791}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\Monster\Vampire">
+      <UniqueIdentifier>{e4eeaaa1-5388-40c0-ad95-b73a291c2415}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\GoldItem">
+      <UniqueIdentifier>{31750fae-d79b-42e1-8558-49c2f7b2b6e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\DamageFont">
+      <UniqueIdentifier>{1fe05143-f125-42ea-9131-0c73607a92ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InGameObject\MonsterState">
+      <UniqueIdentifier>{5079e828-fffd-4263-a83b-d78c1a93db91}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -645,6 +657,18 @@
     <ClInclude Include="InterfaceEvent.h">
       <Filter>System\GameEngine\EventManager</Filter>
     </ClInclude>
+    <ClInclude Include="Plants.h">
+      <Filter>InGameObject\Monster\Plants</Filter>
+    </ClInclude>
+    <ClInclude Include="Vampire.h">
+      <Filter>InGameObject\Monster\Vampire</Filter>
+    </ClInclude>
+    <ClInclude Include="GoldItem.h">
+      <Filter>InGameObject\GoldItem</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageFont.h">
+      <Filter>InGameObject\DamageFont</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Spelunky.cpp">
@@ -988,6 +1012,18 @@
     </ClCompile>
     <ClCompile Include="InterfaceEvent.cpp">
       <Filter>System\GameEngine\EventManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Plants.cpp">
+      <Filter>InGameObject\Monster\Plants</Filter>
+    </ClCompile>
+    <ClCompile Include="Vampire.cpp">
+      <Filter>InGameObject\Monster\Vampire</Filter>
+    </ClCompile>
+    <ClCompile Include="GoldItem.cpp">
+      <Filter>InGameObject\GoldItem</Filter>
+    </ClCompile>
+    <ClCompile Include="DamageFont.cpp">
+      <Filter>InGameObject\DamageFont</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

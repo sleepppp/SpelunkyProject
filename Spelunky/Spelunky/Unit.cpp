@@ -132,10 +132,11 @@ void Unit::Damage(const int & damage, const Vector2 & forceDirection, const floa
 			}
 			else
 			{
+				mIsDamage = true;
 				mRigidbody->Jump(700.f);
 				mRigidbody->Force(forceDirection, forcePower, recuPower);
 				mStateManager->ChangeState("Dead");
-				//TODO 플레이어 죽는 사운드 추가
+				_SoundManager->Play("PlayerDeath");
 				_Camera->Shake(0.4f, 0.04f, 2.4f);
 				GameSystem* system = dynamic_cast<GameSystem*>(_World->GetObjectPool()->FindObject("GameSystem"));
 				if (system->GetSystemState() == GameSystem::SystemState::PlayGame)

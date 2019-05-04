@@ -4,20 +4,14 @@
 #include "Loading.h"
 #include "Animation.h"
 LoadingScene::LoadingScene()
-	:mLoading(nullptr), mDelayTime(0.f)
+	:mLoading(nullptr), mDelayTime(0.f), mAngle(0.f)
 {
-	mImage = _ImageManager->AddFrameImage("LoadingSprites", PathResources(L"./UI/LoadingSprites.png"), 4, 1);
-	mAnimation = new Animation;
-	mAnimation->SetStartEndFrame(0, 0, 3, 0, true);
-	mAnimation->SetFrameUpdateTime(0.15f);
-	mAnimation->SetIsLoop(true);
-	mAnimation->Play();
+	mImage = _ImageManager->AddImage("lobbyring", PathResources(L"./UI/lobbyring.png"));
 }
 
 
 LoadingScene::~LoadingScene()
 {
-	SafeDelete(mAnimation);
 	SafeDelete(mLoading);
 }
 
@@ -26,6 +20,7 @@ void LoadingScene::Init()
 	if (mLoading)
 		mLoading->Start();
 	mDelayTime = 0.f;
+	mAngle = 0.f;
 }
 
 void LoadingScene::Release()
@@ -40,7 +35,9 @@ void LoadingScene::Update()
 	{
 		_SceneManager->LoadScene(mNextSceneName, false);
 	}
-	mAnimation->UpdateFrame();
+	mAngle += 200.f * _TimeManager->DeltaTime();
+	if (mAngle >= 360.f)
+		mAngle -= 360.f;
 }
 
 void LoadingScene::Render()
@@ -49,8 +46,8 @@ void LoadingScene::Render()
 		L"Generating . . ", 50, 400, 100, D2DRenderer::DefaultBrush::White, DWRITE_TEXT_ALIGNMENT_JUSTIFIED,false, L"DOSGothic");
 	if (mImage)
 	{
-		mImage->SetScale(2.0f);
-		mImage->FrameRender(Vector2(_WinSizeX - 600, _WinSizeY - 400), mAnimation->GetNowFrameX(), 0, Pivot::LeftTop, false);
+		mImage->SetAngle(mAngle);
+		mImage->Render(Vector2(_WinSizeX / 2 + 500, _WinSizeY / 2 + 200), Pivot::Center, false);
 	}
 }
 

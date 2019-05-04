@@ -67,6 +67,8 @@ void PlayerIdle::Execute()
 	}
 	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Bomb))
 		mPlayer->ThrowBomb();
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Interaction))
+		mPlayer->TryInstalling();
 
 }
 
@@ -120,6 +122,8 @@ void PlayerMove::Execute()
 	}
 	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Bomb))
 		mPlayer->ThrowBomb();
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Interaction))
+		mPlayer->TryInstalling();
 }
 
 void PlayerMove::Exit()
@@ -174,6 +178,8 @@ void PlayerJumpUp::Execute()
 	}
 	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Bomb))
 		mPlayer->ThrowBomb();
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Interaction))
+		mPlayer->TryInstalling();
 }
 
 void PlayerJumpUp::Exit()
@@ -225,6 +231,8 @@ void PlayerJumpDown::Execute()
 	}
 	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Bomb))
 		mPlayer->ThrowBomb();
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Interaction))
+		mPlayer->TryInstalling();
 }
 
 void PlayerJumpDown::Exit()
@@ -250,9 +258,13 @@ void PlayerJumpDown::OnCollision(const CollideInfo & info)
 		if (mPlayerKey->GetKey(PlayerKey::Key::Right))
 		{
 			Figure::FloatRect collideRect = info.collisionObject->GetCollisionRect();
-			if (Math::Abs(collideRect.top - mPlayer->GetCollisionRect().top) < 5.f)
+			if (Math::Abs(collideRect.top - mPlayer->GetCollisionRect().top) < 10.f)
 			{
-				mPlayer->ChangeState("Grab");
+				//if (Tile* tile = dynamic_cast<Tile*>(info.collisionObject))
+				{
+					
+					mPlayer->ChangeState("Grab");
+				}
 			}
 		}
 	}
@@ -261,7 +273,7 @@ void PlayerJumpDown::OnCollision(const CollideInfo & info)
 		if (mPlayerKey->GetKey(PlayerKey::Key::Left))
 		{
 			Figure::FloatRect collideRect = info.collisionObject->GetCollisionRect();
-			if (Math::Abs(collideRect.top - mPlayer->GetCollisionRect().top) < 5.f)
+			if (Math::Abs(collideRect.top - mPlayer->GetCollisionRect().top) < 10.f)
 			{
 				mPlayer->ChangeState("Grab");
 			}
@@ -291,6 +303,8 @@ void PlayerGrab::Execute()
 	}
 	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Bomb))
 		mPlayer->ThrowBomb();
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Interaction))
+		mPlayer->TryInstalling();
 }
 
 void PlayerGrab::Exit()
@@ -363,6 +377,8 @@ void PlayerDownIdle::Execute()
 		if (Item* item = mPlayer->GetInventory()->GetMainWeapon())
 			item->Execute();
 	}
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Interaction))
+		mPlayer->TryInstalling();
 }
 
 void PlayerDownIdle::Exit()
@@ -416,6 +432,8 @@ void PlayerDownMove::Execute()
 		if (Item* item = mPlayer->GetInventory()->GetMainWeapon())
 			item->Execute();
 	}
+	if (mPlayerKey->GetKeyDown(PlayerKey::Key::Interaction))
+		mPlayer->TryInstalling();
 }
 
 void PlayerDownMove::Exit()

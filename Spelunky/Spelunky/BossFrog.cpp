@@ -18,6 +18,7 @@ BossFrog::BossFrog(Tile* pTile)
 	mTransform->SetPivot(Pivot::Bottom);
 	mTransform->SetSize(Vector2(mImage->GetFrameSize().x * 0.6f, mImage->GetFrameSize().y * 0.8f));
 	mRigidbody->SetCheckRange(2);
+	mHp = mFullHp = 200;
 }
 
 

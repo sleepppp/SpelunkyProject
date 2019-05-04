@@ -205,3 +205,12 @@ float Math::FixFloat(float f)
 	return angle;
 }
 
+float Math::Floor(const float & f, const int & cipher)
+{
+	int tempCipher = 10;
+	for (int i = 0; i < cipher;++i)
+		tempCipher *= 10;
+	float result = std::floorf(((f + Math::Epsilon) * (float)tempCipher)) / (float)tempCipher;
+	return result;
+}
+

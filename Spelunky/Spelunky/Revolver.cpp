@@ -24,7 +24,7 @@ void Revolver::Init()
 
 	mBullets = new Bullets<Bullet>();
 	mBullets->Init();
-	mBullets->InitAllBullet(_ImageManager->FindImage("RedBullet"), 1.f, 600.f, 
+	mBullets->InitAllBullet(_ImageManager->FindImage("RedBullet"), 1, 600.f, 
 		(Bullet::TargetType)(Bullet::TargetType::CMonster | Bullet::TargetType::CTile));
 	mBullets->SetSize(Vector2(15, 15));
 	_World->GetObjectPool()->AddObject(mBullets);

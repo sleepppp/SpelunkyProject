@@ -126,7 +126,7 @@ void ShotGun::Execute()
 					Figure::IntersectLineToRect(nullptr,Figure::FloatLine(origin,origin + direction * _shotGunRange),rc))
 				{
 					if(Monster* monster = dynamic_cast<Monster*>(list->at(i)))
-						monster->Damage(3.f, mUnit->GetAimDirection(),600.f,800.f);
+						monster->Damage(30, mUnit->GetAimDirection(),600.f,800.f);
 					
 				}
 			}

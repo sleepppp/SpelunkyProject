@@ -26,6 +26,7 @@ CameraManager::~CameraManager() {}
 
 void CameraManager::InitCamera()
 {
+	mTarget = nullptr;
 	mPosition = Vector2(0, 0);
 	mZoomFactor = 1.f;
 	mState = End;

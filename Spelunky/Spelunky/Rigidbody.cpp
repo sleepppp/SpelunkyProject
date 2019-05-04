@@ -40,7 +40,7 @@ void Rigidbody::Update()
 {
 	//뭔가에 충돌을 했다면
 	Direction::Enum cDirection(Direction::End);
-	float deltaTime = _TimeManager->DeltaTime();
+	const float deltaTime = _TimeManager->DeltaTime();
 	if (mIsOnGround == false && mIsActiveGravity == true)
 	{
 		mJumpPower += Physics::GetGravity() * deltaTime;

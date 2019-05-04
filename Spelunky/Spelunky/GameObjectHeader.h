@@ -22,7 +22,7 @@
 #include "SystemOptionUI.h"
 #include "SystemAudioUI.h"
 #include "SystemVideoUI.h"
-
+#include "DamageFont.h"
 /**********************************************
 ## Item ##
 **********************************************/
@@ -32,6 +32,7 @@
 #include "AWP.h"
 #include "Bomb.h"
 #include "BombPool.h"
+#include "GoldItem.h"
 /**********************************************
 ## Effect Object ##
 **********************************************/
@@ -47,7 +48,8 @@
 #include "Frog.h"
 #include "RedFrog.h"
 #include "BossFrog.h"
-
+#include "Plants.h"
+#include "Vampire.h"
 /**********************************************
 ## Bullet Object ##
 **********************************************/

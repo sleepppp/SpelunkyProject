@@ -18,7 +18,7 @@ private:
 	Vector2 mDirection;
 	TargetType mTargetType; 
 	float mSpeed; 
-	float mDamage;
+	int mDamage;
 	bool mIsDeActive;
 
 	class TileManager* mTileManager; 
@@ -33,12 +33,12 @@ public:
 
 	inline TargetType GetTatgetType()const { return mTargetType; }
 	inline Transform* GetTransform() { return &mTransform; }
-	inline float GetDamage()const { return mDamage; }
+	inline int GetDamage()const { return mDamage; }
 	inline float GetSpeed()const { return mSpeed;  }
 	inline Vector2 GetDirection()const { return mDirection; }
 
 	void SetSpeed(const float& speed) { mSpeed = speed; }
-	void SetDamage(const float& damage) { mDamage = damage; }
+	void SetDamage(const int& damage) { mDamage = damage; }
 	void SetTargetType(const TargetType& type) { mTargetType = type; }
 	void SetImage(class Image* pImage);
 	void SetSize(const Vector2& size);

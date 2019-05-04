@@ -16,6 +16,8 @@ private:
 	int mCount;
 
 	class TextButton* mToTitleButton;
+	class TextButton* mReGameButton;
+	class TextButton* mExitButton;
 public:
 	GameSystem();
 	virtual ~GameSystem();

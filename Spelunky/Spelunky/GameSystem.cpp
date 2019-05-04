@@ -18,19 +18,32 @@ GameSystem::GameSystem()
 	mTimer->Play();
 	mCount = 0;
 
-	mToTitleButton = new TextButton(L"To Title", 60, Vector2(_WinSizeX / 2, _WinSizeY / 2), Vector2(400, 200));
+	mToTitleButton = new TextButton(L"To Title", 60, Vector2(_WinSizeX / 2, _WinSizeY / 2), Vector2(300, 100));
 	mToTitleButton->SetFunction([]() 
 	{
 		_SceneManager->LoadSceneByLoading("LoadingScene", "TitleScene");
 		_SoundManager->FadeoutBGM();
+	});
+	mReGameButton = new TextButton(L"ReGame", 60, Vector2(_WinSizeX / 2, _WinSizeY / 2 + 100), Vector2(300, 100));
+	mReGameButton->SetFunction([]() 
+	{
+		_SceneManager->LoadSceneByLoading("LoadingScene", "TestScene");
+		_SoundManager->FadeoutBGM();
+	});
+	mExitButton = new TextButton(L"Exit", 60, Vector2(_WinSizeX / 2, _WinSizeY / 2 + 200), Vector2(300, 100));
+	mExitButton->SetFunction([]() 
+	{
+		PostQuitMessage(0);
 	});
 }
 
 
 GameSystem::~GameSystem()
 {
-	SafeDelete(mTimer);
+	SafeDelete(mExitButton);
+	SafeDelete(mReGameButton);
 	SafeDelete(mToTitleButton);
+	SafeDelete(mTimer);
 	SafeDelete(mUIController);
 }
 
@@ -79,6 +92,8 @@ void GameSystem::Update()
 		}
 
 		mToTitleButton->Update();
+		mReGameButton->Update();
+		mExitButton->Update();
 	}
 		break;
 	default:
@@ -111,6 +126,8 @@ void GameSystem::Render()
 			80, 1000, 300, D2DRenderer::DefaultBrush::White, DWRITE_TEXT_ALIGNMENT_CENTER, false, L"Tekton Pro");
 
 		mToTitleButton->Render();
+		mReGameButton->Render();
+		mExitButton->Render();
 	}
 }
 
