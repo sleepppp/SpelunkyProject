@@ -9,20 +9,29 @@ TitleButtons::TitleButtons()
 	mPlayButton = new TextButton(L"PlayGame", 70, Vector2(1300, 450), Vector2(500, 100));
 	mPlayButton->SetFunction([]()
 	{
-		_SceneManager->LoadSceneByLoading("LoadingScene", "TestScene");
-		_SoundManager->FadeoutBGM();
+		if (_SceneManager->GetCanChangeScene())
+		{
+			_SceneManager->LoadSceneByLoading("LoadingScene", "TestScene");
+			_SoundManager->FadeoutBGM();
+		}
 	});
 	mMapToolButton = new TextButton(L"Map Generator", 70, Vector2(1300, 550), Vector2(500, 100));
 	mMapToolButton->SetFunction([]()
 	{
-		_SceneManager->LoadSceneByLoading("LoadingScene", "DelaunayScene");
-		_SoundManager->FadeoutBGM();
+		if (_SceneManager->GetCanChangeScene())
+		{
+			_SceneManager->LoadSceneByLoading("LoadingScene", "DelaunayScene");
+			_SoundManager->FadeoutBGM();
+		}
 	});
 	mGeneratingButton = new TextButton(L"MapMovie",70, Vector2(1300, 650), Vector2(500, 100));
 	mGeneratingButton->SetFunction([]()
 	{
-		_SceneManager->LoadSceneByLoading("LoadingScene", "MapToolScene");
-		_SoundManager->FadeoutBGM();
+		if (_SceneManager->GetCanChangeScene())
+		{
+			_SceneManager->LoadSceneByLoading("LoadingScene", "MapToolScene");
+			_SoundManager->FadeoutBGM();
+		}
 	});
 	mExitButton = new TextButton(L"Exit", 70, Vector2(1300, 750), Vector2(500, 100));
 	mExitButton->SetFunction([]()

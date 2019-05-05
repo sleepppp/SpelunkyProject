@@ -100,7 +100,7 @@ void TimeManager::Tick(float lockFPS)
 		{
 			timeElapsed = 0.f;
 		}
-		timeElapsed = Math::Floor(timeElapsed, 6) + Math::Epsilon;
+		//timeElapsed = Math::Floor(timeElapsed, 6) + Math::Epsilon;
 		if (RePlayManager::GetIsPlay())
 		{
 			mReplayDatas->UpdateInfo(timeElapsed);
@@ -162,7 +162,7 @@ void TimeManager::Tick(float lockFPS)
 		if (mReplayDatas->GetData(mFrameCount++, &timeElapsed)) {}
 		else timeElapsed = 0.01f;
 
-		timeElapsed = Math::Floor(timeElapsed, 6) + Math::Epsilon;
+		//timeElapsed = Math::Floor(timeElapsed, 6) + Math::Epsilon;
 		timeElapsed = 0.01f;
  	}
 }

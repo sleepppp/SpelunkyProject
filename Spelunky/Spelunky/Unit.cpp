@@ -142,6 +142,9 @@ void Unit::Damage(const int & damage, const Vector2 & forceDirection, const floa
 				if (system->GetSystemState() == GameSystem::SystemState::PlayGame)
 				{
 					_World->GetEventPool()->PushEvent(new IPlayerDead);
+					_World->GetEventPool()->PushEvent(new IZoomInPlayer);
+					_World->GetEventPool()->PushEvent(new IDelay(0.8f));
+					_World->GetEventPool()->PushEvent(new IZoomOutPlayer);
 				}
 			}
 		}

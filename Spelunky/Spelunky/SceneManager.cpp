@@ -98,6 +98,13 @@ SceneBase * const SceneManager::GetNowScene() const
 	return mNowScene;
 }
 
+bool SceneManager::GetCanChangeScene()
+{
+	if (mState == State::None)
+		return true;
+	return false;
+}
+
 void SceneManager::LoadScene(const string & name, const bool & init)
 {
 	mChangeSceneInfo.name = name;

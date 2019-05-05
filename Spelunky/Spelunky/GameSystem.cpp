@@ -21,14 +21,20 @@ GameSystem::GameSystem()
 	mToTitleButton = new TextButton(L"To Title", 60, Vector2(_WinSizeX / 2, _WinSizeY / 2), Vector2(300, 100));
 	mToTitleButton->SetFunction([]() 
 	{
-		_SceneManager->LoadSceneByLoading("LoadingScene", "TitleScene");
-		_SoundManager->FadeoutBGM();
+		if (_SceneManager->GetCanChangeScene())
+		{
+			_SceneManager->LoadSceneByLoading("LoadingScene", "TitleScene");
+			_SoundManager->FadeoutBGM();
+		}
 	});
 	mReGameButton = new TextButton(L"ReGame", 60, Vector2(_WinSizeX / 2, _WinSizeY / 2 + 100), Vector2(300, 100));
 	mReGameButton->SetFunction([]() 
 	{
-		_SceneManager->LoadSceneByLoading("LoadingScene", "TestScene");
-		_SoundManager->FadeoutBGM();
+		if (_SceneManager->GetCanChangeScene())
+		{
+			_SceneManager->LoadSceneByLoading("LoadingScene", "TestScene");
+			_SoundManager->FadeoutBGM();
+		}
 	});
 	mExitButton = new TextButton(L"Exit", 60, Vector2(_WinSizeX / 2, _WinSizeY / 2 + 200), Vector2(300, 100));
 	mExitButton->SetFunction([]() 

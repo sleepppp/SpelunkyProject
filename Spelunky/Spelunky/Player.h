@@ -9,7 +9,7 @@
 class Player : public Unit ,public ICollision
 {
 private:
-	struct StateInfo
+	struct SaveInfo
 	{
 		Vector2 position;
 		Unit::UnitAnimation animationKey; 
@@ -35,7 +35,7 @@ private:
 	class GameSystem* mSystem;
 
 	class RePlayDatas<PlayerKey::InputData>* mInputDatas;
-	class RePlayDatas<StateInfo>* mStateDatas;
+	class RePlayDatas<SaveInfo>* mStateDatas;
 	class RePlayDatas<Vector2>* mMouseDatas;
 	UINT64 mFrameCount;
 public:

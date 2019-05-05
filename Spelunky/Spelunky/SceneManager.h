@@ -45,6 +45,7 @@ public:
 	class SceneBase*const FindScene(const string& name);
 	class LoadingScene*const FindLoadingScene(const string& name);
 	class SceneBase*const GetNowScene()const;
+	bool GetCanChangeScene();
 	void LoadScene(const string& name,const bool& init = true);
 	void LoadSceneByLoading(const string& loadingName, const string& nextSceneName);
 

@@ -27,7 +27,7 @@ Player::Player(const Vector2& pos,const string& imageKey)
 	mInventory.SetPlayer(this);
 
 	mInputDatas = new RePlayDatas<PlayerKey::InputData>(0,1100);
-	mStateDatas = new RePlayDatas<StateInfo>();
+	mStateDatas = new RePlayDatas<SaveInfo>();
 	mMouseDatas = new RePlayDatas<Vector2>(0,1100);
 }
 
@@ -73,7 +73,7 @@ void Player::Render()
 
 void Player::LoadRePlayData(const UINT64 & frame)
 {
-	StateInfo info;
+	SaveInfo info;
 	mFrameCount = frame;
 	if (mStateDatas->GetData(frame, &info))
 	{
@@ -235,7 +235,7 @@ void Player::UpdatePlayGame()
 	{
 		if (RePlayManager::GetNowFrame() % 100 == 0)
 		{
-			StateInfo info;
+			SaveInfo info;
 			info.position = mTransform->GetWorldPosition();
 			info.hp = mHp;
 			info.weaponPtr = mInventory.GetMainWeapon();

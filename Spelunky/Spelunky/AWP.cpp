@@ -184,7 +184,7 @@ void AWP::Execute()
 		mCurrentDelay = 0.f;
 		mEffecter->RequestPlayEffect("Smoke0", 0.07f, firePos, 1.f, FrameEffecter::Option::ScaleAlphablending);
 		_Camera->Shake(0.5f, 0.03f, 5.f);
-		_SoundManager->Play("AWPShot",_Camera->GetDistanceFactor(firePos));
+		_SoundManager->Play("AWPShot",_Camera->GetDistanceFactor(firePos) * 0.4f);
 	}
 }
 
