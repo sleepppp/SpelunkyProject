@@ -95,17 +95,16 @@ void TimeManager::Tick(float lockFPS)
 				this->fpsFrameCount = 0;
 				this->fpsTimeElapsed = 0.0f;
 			}
+			if (RePlayManager::GetIsPlay())
+			{
+				mReplayDatas->UpdateInfo(timeElapsed);
+			}
+			timeElapsed = 0.01f;
 		}
 		else
 		{
 			timeElapsed = 0.f;
 		}
-		//timeElapsed = Math::Floor(timeElapsed, 6) + Math::Epsilon;
-		if (RePlayManager::GetIsPlay())
-		{
-			mReplayDatas->UpdateInfo(timeElapsed);
-		}
-		timeElapsed = 0.01f;
 	}
 	else
 	{

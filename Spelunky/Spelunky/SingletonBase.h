@@ -2,9 +2,6 @@
 /****************************************************************************
 ## SingletonBase ##
 @@ Author : 권순우 , Date : 2019.03.20
-
-dynamicSingleton이 아니므로 직접 생성 및 해제 해주어야 함.
-./System/Window/Window.h의 private CreateManager에서 해줘야함
 *****************************************************************************/
 template <typename T>
 class SingletonBase

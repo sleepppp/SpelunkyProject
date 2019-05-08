@@ -27,7 +27,7 @@ CameraManager::~CameraManager() {}
 void CameraManager::InitCamera()
 {
 	mTarget = nullptr;
-	mPosition = Vector2(0, 0);
+	mPosition = Vector2(_WinSizeX / 2, _WinSizeY / 2);
 	mZoomFactor = 1.f;
 	mState = End;
 	this->UpdateRenderRect();
@@ -133,6 +133,13 @@ bool CameraManager::IsInCamera(const Figure::FloatRect & rc)
 	return Figure::IntersectRectToRect(&rc, &mRect);
 }
 
+void CameraManager::SetFreeCameraMode()
+{
+	mState = MoveState::FreeCamera;
+	mTarget = nullptr;
+	mZoomFactor = 1.f;
+}
+
 
 void CameraManager::CameraProc(WPARAM wParam)
 {
@@ -164,10 +171,10 @@ void CameraManager::Shake(const float & shakeTime, const float & changeDirTime, 
 	mShakeChangeDirDelay = changeDirTime;
 	mIsShake = true;
 
-	float factor = mShakeCurrentTime / mShakeTime;
-	float strengh = mShakeStrength * factor;
-	strengh = strengh * mShakeDir.x * 0.5f;
-	mShakePosition += Vector2(0.f, -strengh);
+	//float factor = mShakeCurrentTime / mShakeTime;
+	//float strengh = mShakeStrength * factor;
+	//strengh = strengh * mShakeDir.x * 0.5f;
+	//mShakePosition += Vector2(0.f, -strengh);
 }
 
 void CameraManager::UpdateRenderRect()
@@ -175,7 +182,7 @@ void CameraManager::UpdateRenderRect()
 	mRect.Update(mPosition + mShakePosition, 
 		Vector2(CastingFloat(_WinSizeX) / mZoomFactor, CastingFloat(_WinSizeY) / mZoomFactor),
 		Pivot::Center);
-}
+}	
 
 void CameraManager::UpdateFreeCameraMode()
 {

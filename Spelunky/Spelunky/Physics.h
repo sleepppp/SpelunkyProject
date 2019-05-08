@@ -1,11 +1,5 @@
 #pragma once
 
-class PhysicsTile
-{
-public:
-	vector<class Transform*> transformList;
-};
-
 class Physics final
 {
 	BlockAssign(Physics)
@@ -13,8 +7,6 @@ private:
 	static float _gravity;
 public:
 	static const float& GetGravity() { return _gravity; }
-private:
-	
 private:
 	friend class SceneBase; 
 	Physics();

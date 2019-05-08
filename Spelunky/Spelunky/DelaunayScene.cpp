@@ -41,6 +41,8 @@ void DelaunayScene::Init()
 		node->isSelect = false;
 		mRoomList.push_back(node);
 	}
+
+	_Camera->SetFreeCameraMode();
 }
 
 void DelaunayScene::Release()

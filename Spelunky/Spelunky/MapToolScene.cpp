@@ -17,6 +17,7 @@ MapToolScene::~MapToolScene()
 void MapToolScene::Init()
 {
 	mProcedureGen = new ProcedureGeneration;
+	_Camera->SetFreeCameraMode();
 }
 
 void MapToolScene::Release()

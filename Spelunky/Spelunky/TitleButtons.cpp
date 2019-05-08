@@ -20,16 +20,16 @@ TitleButtons::TitleButtons()
 	{
 		if (_SceneManager->GetCanChangeScene())
 		{
-			_SceneManager->LoadSceneByLoading("LoadingScene", "DelaunayScene");
+			_SceneManager->LoadSceneByLoading("LoadingScene", "MapToolScene");
 			_SoundManager->FadeoutBGM();
 		}
 	});
-	mGeneratingButton = new TextButton(L"MapMovie",70, Vector2(1300, 650), Vector2(500, 100));
+	mGeneratingButton = new TextButton(L"ParticleScene",70, Vector2(1300, 650), Vector2(500, 100));
 	mGeneratingButton->SetFunction([]()
 	{
 		if (_SceneManager->GetCanChangeScene())
 		{
-			_SceneManager->LoadSceneByLoading("LoadingScene", "MapToolScene");
+			_SceneManager->LoadSceneByLoading("LoadingScene", "ParticleScene");
 			_SoundManager->FadeoutBGM();
 		}
 	});

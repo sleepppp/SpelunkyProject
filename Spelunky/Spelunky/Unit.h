@@ -24,6 +24,8 @@ protected:
 	bool mIsDamage;
 	Looper mLooper;
 	Vector2 mAimDirection;
+
+	class ParticleSystemPool* mParticlePool;
 public:
 	Unit(const Vector2& pos);
 	virtual ~Unit();

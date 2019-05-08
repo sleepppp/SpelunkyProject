@@ -289,6 +289,9 @@
     <Filter Include="InGameObject\MonsterState">
       <UniqueIdentifier>{5079e828-fffd-4263-a83b-d78c1a93db91}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainEntry\ParticleSystemScene">
+      <UniqueIdentifier>{44c7f12a-1f88-45f9-892f-acc39dd93a17}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -669,6 +672,9 @@
     <ClInclude Include="DamageFont.h">
       <Filter>InGameObject\DamageFont</Filter>
     </ClInclude>
+    <ClInclude Include="ParticleGenerationScene.h">
+      <Filter>MainEntry\ParticleSystemScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Spelunky.cpp">
@@ -1024,6 +1030,9 @@
     </ClCompile>
     <ClCompile Include="DamageFont.cpp">
       <Filter>InGameObject\DamageFont</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleGenerationScene.cpp">
+      <Filter>MainEntry\ParticleSystemScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

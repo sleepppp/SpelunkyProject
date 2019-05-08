@@ -45,7 +45,7 @@ public:	inline VarType Get##FuncName(void) const { return VarName; }	\
 public:	inline void Set##FuncName(VarType value) { VarName = value; }
 /*********************************************************************************
 ## Assert Checking ##
-안정섬 검사 문들
+안정섬 검사 전처리기들
 *********************************************************************************/
 #if defined(DEBUG) | defined(_DEBUG)
 #ifndef HResult
@@ -106,3 +106,13 @@ void ClassName::Delete()					\
 {											\
 	SafeDelete(instance);					\
 }			
+/********************************************************
+## DefaultSingleton ##
+*********************************************************/
+#define DataMemorySingleton(ClassName) \
+private:\
+static ClassName* Get()\
+{\
+	static ClassName instance;\
+	return &instance;\
+}

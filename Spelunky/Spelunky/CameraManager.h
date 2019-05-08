@@ -62,6 +62,7 @@ public:
 	void SetZoom(const float& zoom) { mZoomFactor = zoom; }
 	void Move(const Vector2& moveValue);
 	bool IsInCamera(const Figure::FloatRect& rc);
+	void SetFreeCameraMode();
 
 	void SetTarget(class Transform* pTransform)
 	{

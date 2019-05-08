@@ -7,6 +7,7 @@
 #include "MapToolScene.h"
 #include "TestScene.h"
 #include "TileMapGenerator.h"
+#include "ParticleGenerationScene.h"
 #include "TitleScene.h"
 
 Program::Program()
@@ -19,6 +20,9 @@ Program::Program()
 
 	DelaunayScene* delaunayScene = new DelaunayScene;
 	_SceneManager->AddScene("DelaunayScene", delaunayScene);
+
+	ParticleGenerationScene* particleScene = new ParticleGenerationScene;
+	_SceneManager->AddScene("ParticleScene", particleScene);
 
 	TestScene* testScene = new TestScene;
 	_SceneManager->AddScene("TestScene", testScene);

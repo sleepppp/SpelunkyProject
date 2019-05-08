@@ -135,7 +135,7 @@ void RedFrog::Damage(const int & damage, const Vector2 & forceDirection, const f
 			float shakePower = 10.4f * factor;
 			_Camera->Shake(shakeTime, shakeChangeDirTime, shakePower);
 			_SoundManager->Play("kaboom", factor);
-			
+			_SoundManager->Play("FrogHouling", _Camera->GetDistanceFactor(mTransform->GetWorldPosition()* 1.4f));
 			Vector2 worldPos = this->GetTransform()->GetWorldPosition();
 			this->GetParticlePool()->PlayParticle("BloodRubble", worldPos);
 			_SoundManager->Play("rubble", _Camera->GetDistanceFactor(worldPos));
@@ -150,6 +150,7 @@ void RedFrog::Damage(const int & damage, const Vector2 & forceDirection, const f
 			mParticlePool->PlayParticle("BloodRubble", mTransform->GetWorldPosition());
 			mRigidbody->Force(forceDirection, forcePower, recuPower);
 			mDamageFont->RequestDamageFont(to_wstring(damage), mTransform->GetCenterPos());
+			_SoundManager->Play("FrogHouling", _Camera->GetDistanceFactor(mTransform->GetWorldPosition()* 1.4f));
 		}
 	}
 }

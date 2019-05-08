@@ -27,6 +27,7 @@ Window::Window()
 
 	UINT centerX = (GetSystemMetrics(SM_CXSCREEN) - (UINT)_windowDesc.width) / 2;
 	UINT centerY = (GetSystemMetrics(SM_CYSCREEN) - (UINT)_windowDesc.height) / 2;
+	
 	//윈도우 정보 초기화 
 	WNDCLASS wndClass;
 	wndClass.cbClsExtra = 0;										//클래스 여분 메모리 설정

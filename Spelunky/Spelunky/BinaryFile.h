@@ -1,5 +1,8 @@
 #pragma once
-
+/*************************************************************
+## BinaryWriter ##
+@@ Author : ±Ç¼ø¿ì , Date : 2019.02.24
+**************************************************************/
 class BinaryWriter final
 {
 	BlockAssign(BinaryWriter)

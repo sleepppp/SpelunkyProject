@@ -8,7 +8,7 @@ class BackGround : public GameObject
 	float mGridSize; 
 public:
 	BackGround() = delete;
-	BackGround(const string& key,const Vector2 mMapSize);
+	BackGround(const string& key,const Vector2& mMapSize);
 	virtual ~BackGround();
 
 	void Init()override; 

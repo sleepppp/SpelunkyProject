@@ -1,16 +1,16 @@
 #pragma once
 /*************************************************************
 ## Loading ##
-스레드 로딩 클래스
+@@ Author : 권순우 , Date : 2019.03.25
 **************************************************************/
 #include <thread>
 class Loading
 {
 	BlockAssign(Loading)
 private:
-	thread* mLoadingThread;							//로딩해줄 쓰레드 
-	bool mIsLoadingEnd;								//로딩이 끝났는가 
-	vector<function<void()>> mLoadingFuncList;		//로딩해야 할 함수
+	thread* mLoadingThread;						
+	bool mIsLoadingEnd;							
+	vector<function<void()>> mLoadingFuncList;	
 public: 
 	Loading();
 	virtual ~Loading();

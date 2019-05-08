@@ -2,7 +2,7 @@
 #include "BackGround.h"
 
 
-BackGround::BackGround(const string & key, const Vector2 mMapSize)
+BackGround::BackGround(const string & key, const Vector2& mMapSize)
 	:GameObject("BackGround")
 {
 	this->mImage = _ImageManager->FindImage(key);

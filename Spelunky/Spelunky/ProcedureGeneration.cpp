@@ -65,7 +65,7 @@ void ProcedureGeneration::Update()
 		}
 		else if (type == Looper::ReturnType::Loop)
 		{
-			this->AddPass();
+			//this->AddPass();
 		}
 	}
 	/***************************************************************
@@ -126,7 +126,7 @@ void ProcedureGeneration::Update()
 		}
 		else if (type == Looper::ReturnType::Loop)
 		{
-			this->AddPass();
+			//this->AddPass();
 		}
 	}
 	/***************************************************************
@@ -155,7 +155,7 @@ void ProcedureGeneration::Update()
 		}
 		else if (type == Looper::ReturnType::Loop)
 		{
-			this->AddPass();
+			//this->AddPass();
 		}
 	}
 	/***************************************************************
@@ -268,7 +268,7 @@ void ProcedureGeneration::Update()
 				return false;
 			});
 
-			this->AddPass();
+			//this->AddPass();
 		}
 	}
 	/***************************************************************
@@ -361,7 +361,7 @@ void ProcedureGeneration::Update()
 					if (mVertexList[i]->isLink == true)
 						mTempVertexList.push_back(mVertexList[i]->pos);
 				}
-				this->AddPass();
+				//this->AddPass();
 
 			}
 		}/*end while*/
@@ -409,7 +409,7 @@ void ProcedureGeneration::Update()
 		else if (type == Looper::ReturnType::Loop)
 		{
 			mLineList.clear();
-			this->AddPass();
+			//this->AddPass();
 		}
 	}
 	/***************************************************************
@@ -436,7 +436,7 @@ void ProcedureGeneration::Update()
 		}
 		else if (type == Looper::ReturnType::Loop)
 		{
-			this->AddPass();
+			//this->AddPass();
 		}
 	}
 	/***************************************************************
@@ -489,7 +489,7 @@ void ProcedureGeneration::Update()
 		}
 		else if (type == Looper::ReturnType::Loop)
 		{
-			this->AddPass();
+			//this->AddPass();
 		}
 	}
 	/***************************************************************
@@ -572,7 +572,7 @@ void ProcedureGeneration::Update()
 				}
 			}
 			_Camera->Move(Vector2(-startMap.x, -startMap.y));
-			this->AddPass();
+			//this->AddPass();
 		}
 	}
 	/***************************************************************
@@ -667,7 +667,7 @@ void ProcedureGeneration::Update()
 			}
 
 			_isDebug = false;
-			this->AddPass();
+			//this->AddPass();
 		}
 	}
 	/***************************************************************
@@ -692,7 +692,7 @@ void ProcedureGeneration::Update()
 		}
 		else if (type == Looper::ReturnType::Loop)
 		{
-			this->AddPass();
+			//this->AddPass();
 		}
 	}
 	/***************************************************************
@@ -716,7 +716,7 @@ void ProcedureGeneration::Update()
 		}
 		else if (type == Looper::ReturnType::Loop)
 		{
-			this->AddPass();
+			//this->AddPass();
 		}
 	}
 	/***************************************************************
@@ -735,7 +735,7 @@ void ProcedureGeneration::Update()
 		}
 		else if (type == Looper::ReturnType::Loop)
 		{
-			this->AddPass();
+			//this->AddPass();
 		}
 	}
 	/***************************************************************
@@ -759,7 +759,7 @@ void ProcedureGeneration::Update()
 		}
 		else if (type == Looper::ReturnType::Loop)
 		{
-			this->AddPass();
+			//this->AddPass();
 		}
 	}
 	/***************************************************************
@@ -781,7 +781,7 @@ void ProcedureGeneration::Update()
 		}
 		else if (type == Looper::ReturnType::Loop)
 		{
-			this->AddPass();
+			//this->AddPass();
 		}
 	}
 }
@@ -874,6 +874,8 @@ void ProcedureGeneration::OnGui()
 				++mPass;
 			mLooper->Play();
 		}
+		if (ImGui::Button("NextPass"))
+			AddPass();
 		ImGui::End();
 	}
 }

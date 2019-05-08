@@ -172,10 +172,11 @@ void Bomb::Explosion()
 	float factor = _Camera->GetDistanceFactor(pos);
 
 	float shakeTime = 1.f * factor;
-	float shakeChangeDirTime = 0.03f * factor;
-	float shakePower = 10.4f * factor;
+	float shakeChangeDirTime = 0.01f * factor;
+	float shakePower = 20.4f * factor;
 	_Camera->Shake(shakeTime, shakeChangeDirTime, shakePower);
 	_SoundManager->Play("kaboom", factor);
+
 }
 
 void Bomb::LoadRePlayData(const UINT64 & frame)

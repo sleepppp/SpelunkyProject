@@ -10,6 +10,7 @@
 #include "GameSystem.h"
 #include "RePlayDatas.h"
 #include "InterfaceEvent.h"
+#include "ParticleSystemPool.h"
 
 const float Unit::_invincibilityTime = 1.f;
 
@@ -49,6 +50,8 @@ void Unit::Init()
 	mRigidbody->Init();
 	_World->GetRenderPool()->RequestRender(mLayer, this);
 	_World->GetUpdatePool()->RequestUpdate(this);
+
+	mParticlePool = reinterpret_cast<ParticleSystemPool*>(_World->GetObjectPool()->FindObject("ParticleSystemPool"));
 }
 
 void Unit::Release()
@@ -138,6 +141,7 @@ void Unit::Damage(const int & damage, const Vector2 & forceDirection, const floa
 				mStateManager->ChangeState("Dead");
 				_SoundManager->Play("PlayerDeath");
 				_Camera->Shake(0.4f, 0.04f, 2.4f);
+				mParticlePool->PlayParticle("BloodRubble", mTransform->GetWorldPosition());
 				GameSystem* system = dynamic_cast<GameSystem*>(_World->GetObjectPool()->FindObject("GameSystem"));
 				if (system->GetSystemState() == GameSystem::SystemState::PlayGame)
 				{
